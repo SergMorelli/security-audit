@@ -1,0 +1,14 @@
+# 🏛 Executive Security Audit Report / Отчет для топ-менеджмента
+
+## EN
+This folder contains sample **executive-level security audit reports**.  
+They are intended for CEOs, CTOs, CISOs, and board members.  
+Focus: business risks, financial impact, security investment ROI , and strategic KPIs.
+
+## RU
+Эта папка содержит примеры **отчетов для топ-менеджмента**.  
+Они предназначены для CEO, CTO, CISO и совета директоров.  
+Фокус: бизнес-риски, финансовые последствия, ROI от инвестиций в безопасность и стратегические KPI.
+
+## AR 
+تحتوي هذه المجلدات على أمثلة لتقارير التدقيق الأمني على مستوى الإدارة العليا. موجهة للرؤساء التنفيذيين (CEO)، ومديري التكنولوجيا (CTO)، ومديري الأمن (CISO)، وأعضاء مجلس الإدارة. التركيز: المخاطر التجارية، التأثير المالي، العائد على الاستثمار (ROI)، ومؤشرات الأداء الاستراتيجية (KPIs).

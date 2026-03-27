@@ -1,0 +1,24 @@
+{
+  "name": "sergmorelli-security-audit-report-samples",
+  "version": "1.0.0",
+  "description": "Этот репозиторий содержит примеры многоуровневой отчетности по результатам аудита безопасности.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "tailwindcss -i ./assets/css/main.css -o ./assets/css/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SergMorelli/SergMorelli-security-audit-report-samples.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SergMorelli/SergMorelli-security-audit-report-samples/issues"
+  },
+  "homepage": "https://github.com/SergMorelli/SergMorelli-security-audit-report-samples#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0"
+  }
+}

@@ -1,0 +1,501 @@
+/* ============================================================
+   GLOBAL PAGE STYLE
+   ============================================================ */
+
+body {
+    background: #0a0a0a;
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', monospace;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #4da6ff;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+a:hover {
+    color: #fff;
+    text-shadow: 0 0 6px #4da6ff;
+}
+
+/* === GLOBAL RED SCAN WAVE (behind everything) === */
+
+html {
+    overflow-x: hidden;
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* === RESPONSIVE CONTENT ELEMENTS === */
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+pre {
+    overflow-x: auto;
+    max-width: 100%;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+}
+
+table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: -200%;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 0, 0, 0) 0%,
+        rgba(255, 0, 0, 0.18) 50%,
+        rgba(255, 0, 0, 0) 100%
+    );
+    filter: blur(14px);
+    animation: red-scan 7s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes red-scan {
+    0% { top: -200%; }
+    100% { top: 200%; }
+}
+
+
+/* === SECOND HOLOGRAPHIC WAVE (blue/purple) === */
+
+body::after {
+    content: "";
+    position: fixed;
+    top: -200%;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(
+        to bottom,
+        rgba(77, 166, 255, 0) 0%,
+        rgba(77, 166, 255, 0.12) 50%,
+        rgba(77, 166, 255, 0) 80%
+    );
+    filter: blur(18px);
+    animation: blue-scan 11s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes blue-scan {
+    0% { top: -200%; }
+    100% { top: 200%; }
+}
+
+
+/* Optional hero block 
+.hero {
+    background: #111;
+    padding: 32px;
+    border: 1px solid #4da6ff;
+    box-shadow: 0 0 20px rgba(77,166,255,0.5);
+    border-radius: 6px;
+    margin-bottom: 24px;
+}*/
+
+/* ============================================================
+   NAVIGATION BAR (DataDef Cyberpunk)
+   ============================================================ */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: #0a0a0a;
+    border-bottom: 1px solid #4da6ff;
+    box-shadow: 0 0 12px rgba(77,166,255,0.3);
+    z-index: 1000;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.nav-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 16px;
+    font-weight: 700;
+    color: #4da6ff;
+    text-shadow: 0 0 6px rgba(77,166,255,0.6);
+}
+
+/* Desktop menu */
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    font-weight: 600;
+}
+
+/* Hover */
+.nav-links a:hover {
+    color: #fff;
+    text-shadow: 0 0 6px #4da6ff;
+}
+
+/* Active link highlight */
+.nav-links a.active {
+    color: #fff;
+    text-shadow: 0 0 10px #4da6ff;
+    border-bottom: 2px solid #4da6ff;
+}
+
+/* Icons */
+.menu-icon,
+.github-icon {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+    vertical-align: middle;
+    transition: 0.25s ease;
+}
+
+.nav-links a:hover .menu-icon,
+.repo-link:hover .github-icon {
+    filter: drop-shadow(0 0 6px #4da6ff);
+}
+
+/* Spacer below fixed nav */
+.nav-spacer {
+    height: 48px;
+}
+
+/* ============================================================
+   MOBILE NAVIGATION
+   ============================================================ */
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+}
+
+.nav-toggle span {
+    width: 22px;
+    height: 2px;
+    background: #4da6ff;
+    transition: 0.3s ease;
+    box-shadow: 0 0 6px rgba(77,166,255,0.6);
+}
+
+/* Hamburger animation */
+.nav-toggle.open span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.nav-toggle.open span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.open span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+/* Mobile layout */
+@media (max-width: 720px) {
+
+    .container-wrap {
+        padding: 4px;
+    }
+
+    .container {
+        padding: 16px;
+    }
+
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 48px;
+        right: 0;
+        background: #0a0a0a;
+        width: 100%;
+        flex-direction: column;
+        gap: 12px;
+        padding: 16px;
+        border-bottom: 1px solid #4da6ff;
+        box-shadow: 0 0 12px rgba(77,166,255,0.3);
+        display: none;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 10px 4px;
+        font-size: 16px;
+    }
+}
+
+
+/* === WRAPPER FOR HOLOGRAPHIC FRAME === */
+
+.container-wrap {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 8px;
+    z-index: 1;
+}
+
+
+/* Голографическая рамка */
+.container-wrap::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    padding: 2px;
+
+    background: linear-gradient(
+        120deg,
+        rgba(77,166,255,0.9),
+        rgba(255,0,200,0.9),
+        rgba(77,166,255,0.9)
+    );
+    background-size: 300% 300%;
+    animation: holo-shift 6s ease-in-out infinite;
+    
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+
+    pointer-events: none;
+    z-index: -1;
+}
+
+
+/* === MAIN CONTENT BLOCK — HOLOGRAPHIC FRAME (FIXED) === */
+
+.container {
+    max-width: 960px;
+    margin: 0;
+    padding: 32px;
+
+    background: radial-gradient(circle at center, #0a0a0a 0%, #050505 60%, #000000 100%);
+    border-radius: 10px;
+
+    position: relative;
+    z-index: 1;
+
+    background-image:
+        linear-gradient(rgba(77,166,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77,166,255,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+
+    animation: grid-glow 4s ease-in-out infinite;
+}
+
+
+
+/* === Анимации === */
+@keyframes holo-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes inner-pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+@keyframes grid-glow {
+    0% {
+        background-image:
+            linear-gradient(rgba(77,166,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(77,166,255,0.04) 1px, transparent 1px);
+    }
+    50% {
+        background-image:
+            linear-gradient(rgba(77,166,255,0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(77,166,255,0.12) 1px, transparent 1px);
+    }
+    100% {
+        background-image:
+            linear-gradient(rgba(77,166,255,0.04) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(77,166,255,0.04) 1px, transparent 1px);
+    }
+}
+
+
+/* ============================================================
+   HERO BLOCK (DataDef Cyberpunk)
+   ============================================================ */
+
+.hero {
+    background: #0d0d0d;
+    padding: 48px 32px;
+    margin: 0 auto 32px auto;
+    max-width: 960px;
+
+    /* Неоновая рамка */
+    border: 1px solid rgba(77,166,255,0.5);
+
+    /* Внешнее + внутреннее свечение */
+    box-shadow: 
+        0 0 20px rgba(77,166,255,0.45),
+        0 0 40px rgba(77,166,255,0.25),
+        inset 0 0 16px rgba(77,166,255,0.15);
+
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    /* Сетка */
+    background-image:
+        linear-gradient(rgba(77,166,255,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(77,166,255,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: -150%;
+    left: 0;
+    width: 100%;
+    height: 150%;
+    background: linear-gradient(
+        to bottom,
+        rgba(77,166,255,0) 0%,
+        rgba(77,166,255,0.15) 50%,
+        rgba(77,166,255,0) 100%
+    );
+    filter: blur(8px);
+    animation: hero-scan 6s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.hero h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 32px;
+    margin: 0 0 16px 0;
+    color: #4da6ff;
+    text-shadow: 0 0 12px rgba(77,166,255,0.6);
+}
+
+.hero p {
+    font-size: 18px;
+    margin: 0 0 24px 0;
+    color: #e0e0e0;
+    opacity: 0.9;
+}
+
+.hero-lang {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.hero-lang a {
+    font-family: 'Orbitron', sans-serif;
+    padding: 6px 14px;
+    border: 1px solid rgba(77,166,255,0.5);
+    border-radius: 6px;
+    color: #4da6ff;
+    transition: 0.25s ease;
+    box-shadow: 0 0 8px rgba(77,166,255,0.3);
+}
+
+.hero-lang a:hover {
+    color: #fff;
+    border-color: #4da6ff;
+    box-shadow: 0 0 12px rgba(77,166,255,0.6);
+    text-shadow: 0 0 6px #4da6ff;
+}
+
+/* Mobile */
+@media (max-width: 720px) {
+    .hero {
+        padding: 32px 20px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+}
+
+  
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+footer {
+    text-align: center;
+    margin: 40px 0;
+    color: #4da6ff;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+footer a {
+    color: #4da6ff;
+}
+
+footer a:hover {
+    color: #fff;
+    text-shadow: 0 0 6px #4da6ff;
+}
+
+@keyframes hero-scan {
+    0% {
+        top: -150%;
+    }
+    100% {
+        top: 150%;
+    }
+}

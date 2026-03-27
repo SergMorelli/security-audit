@@ -1,0 +1,50 @@
+en:
+  dir: ltr
+  language_switch: Language switcher
+  nav:
+    home: Home
+    reports: Reports
+    lab: Lab
+    documents: Documents
+    about: About
+  attack:
+    heading: Attack Activity Overview
+    chart_live_label: "Cloudflare Radar: Detected Attacks"
+    chart_fallback_label: Detected Attacks (fallback)
+    last_updated: Last updated
+    source: "Source: Cloudflare Radar"
+    unavailable: Live data unavailable, showing fallback sample.
+
+ru:
+  dir: ltr
+  language_switch: Выбор языка
+  nav:
+    home: Главная
+    reports: Отчеты
+    lab: Лаборатория
+    documents: Документы
+    about: О проекте
+  attack:
+    heading: Обзор активности атак
+    chart_live_label: "Cloudflare Radar: Обнаруженные атаки"
+    chart_fallback_label: Обнаруженные атаки (резервные данные)
+    last_updated: Последнее обновление
+    source: "Источник: Cloudflare Radar"
+    unavailable: Нет доступа к live-данным, показаны резервные значения.
+
+ar:
+  dir: rtl
+  language_switch: تبديل اللغة
+  nav:
+    home: الرئيسية
+    reports: التقارير
+    lab: المختبر
+    documents: المستندات
+    about: حول
+  attack:
+    heading: نظرة عامة على نشاط الهجمات
+    chart_live_label: "Cloudflare Radar: الهجمات المكتشفة"
+    chart_fallback_label: الهجمات المكتشفة (بيانات احتياطية)
+    last_updated: آخر تحديث
+    source: "المصدر: Cloudflare Radar"
+    unavailable: تعذر تحميل البيانات الحية، تم عرض بيانات احتياطية.

@@ -1,0 +1,55 @@
+# 📊 Executive ZAP Reports / Управленческие отчёты ZAP
+
+## EN
+This folder contains examples of executive reports generated using OWASP ZAP — a popular open-source tool for automated web application security testing.
+Reports are organized by language in subfolders:
+
+en — English version
+ru — Russian version
+ar — Arabic version
+
+These executive reports include:
+
+High-level overview of security posture and risk assessment
+Executive summary with key findings and business impact
+Strategic recommendations for management and decision-makers
+Visual charts, graphs, and metrics suitable for presentations
+Minimal technical jargon, focused on business perspective
+
+Ideal for presenting security findings to executives, management, and stakeholders.
+
+## RU
+Эта папка содержит примеры управленческих (executive) отчётов, сгенерированных с помощью OWASP ZAP — популярного инструмента с открытым исходным кодом для автоматизированного тестирования безопасности веб-приложений.
+Отчёты организованы по языкам в подпапках:
+
+en — англоязычная версия
+ru — русскоязычная версия
+ar — арабоязычная версия
+
+Управленческие отчёты включают:
+
+Общий обзор состояния безопасности и оценка рисков
+Краткое резюме с ключевыми выводами и влиянием на бизнес
+Стратегические рекомендации для руководства и лиц, принимающих решения
+Визуальные графики, диаграммы и метрики, подходящие для презентаций
+Минимум технического жаргона, фокус на бизнес-перспективе
+
+Подходят для представления результатов безопасности руководителям, менеджменту и заинтересованным сторонам.
+
+## AR
+يحتوي هذا المجلد على أمثلة لـ تقارير تنفيذية (executive) تم إنشاؤها باستخدام OWASP ZAP — أداة مفتوحة المصدر شهيرة لاختبار أمان تطبيقات الويب بشكل آلي.
+التقارير منظمة حسب اللغة في مجلدات فرعية:
+
+en — النسخة الإنجليزية
+ru — النسخة الروسية
+ar — النسخة العربية
+
+تشمل التقارير التنفيذية:
+
+نظرة عامة رفيعة المستوى على وضع الأمان وتقييم المخاطر
+ملخص تنفيذي مع النتائج الرئيسية والتأثير على الأعمال
+توصيات استراتيجية للإدارة وصناع القرار
+رسوم بيانية ومخططات ومقاييس مناسبة للعروض التقديمية
+الحد الأدنى من المصطلحات التقنية، مع التركيز على المنظور التجاري
+
+مثالية لتقديم نتائج الأمان للمديرين التنفيذيين والإدارة وأصحاب المصلحة.

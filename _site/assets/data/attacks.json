@@ -1,0 +1,24 @@
+{
+  "source": "cloudflare-radar",
+  "updated_at": "2026-03-23T00:00:00Z",
+  "labels": [
+    "00:00",
+    "04:00",
+    "08:00",
+    "12:00",
+    "16:00",
+    "20:00"
+  ],
+  "values": [
+    5,
+    12,
+    9,
+    18,
+    7,
+    14
+  ],
+  "meta": {
+    "points": 6,
+    "note": "This file is automatically updated by scripts/fetch_attacks.py via GitHub Actions."
+  }
+}

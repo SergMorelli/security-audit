@@ -1,0 +1,55 @@
+# 📋 Management ZAP Reports / Отчёты для менеджмента ZAP
+
+## EN
+This folder contains examples of management reports generated using OWASP ZAP — a popular open-source tool for automated web application security testing.
+Reports are organized by language in subfolders:
+
+en — English version
+ru — Russian version
+ar — Arabic version
+
+These management reports include:
+
+Balanced view combining technical details with managerial insights
+Risk prioritization and impact assessment for project planning
+Actionable recommendations with timelines and resource estimates
+Summary dashboards and detailed vulnerability breakdowns
+Suitable for middle management, project managers, and team leads
+
+Ideal for bridging technical teams and upper management with comprehensive security insights.
+
+## RU
+Эта папка содержит примеры отчётов для менеджмента (management), сгенерированных с помощью OWASP ZAP — популярного инструмента с открытым исходным кодом для автоматизированного тестирования безопасности веб-приложений.
+Отчёты организованы по языкам в подпапках:
+
+en — англоязычная версия
+ru — русскоязычная версия
+ar — арабоязычная версия
+
+Отчёты для менеджмента включают:
+
+Сбалансированный взгляд, сочетающий технические детали и управленческие инсайты
+Приоритизация рисков и оценка влияния для планирования проектов
+Практичные рекомендации с временными рамками и оценкой ресурсов
+Сводные дашборды и детальные описания уязвимостей
+Подходят для среднего менеджмента, руководителей проектов и тимлидов
+
+Идеально подходят для связи между техническими командами и высшим руководством с комплексными инсайтами по безопасности.
+
+## AR
+يحتوي هذا المجلد على أمثلة لـ تقارير الإدارة (management) تم إنشاؤها باستخدام OWASP ZAP — أداة مفتوحة المصدر شهيرة لاختبار أمان تطبيقات الويب بشكل آلي.
+التقارير منظمة حسب اللغة في مجلدات فرعية:
+
+en — النسخة الإنجليزية
+ru — النسخة الروسية
+ar — النسخة العربية
+
+تشمل تقارير الإدارة:
+
+رؤية متوازنة تجمع بين التفاصيل التقنية والرؤى الإدارية
+تحديد أولويات المخاطر وتقييم التأثير لتخطيط المشاريع
+توصيات قابلة للتنفيذ مع جداول زمنية وتقديرات الموارد
+لوحات معلومات موجزة وتفصيلات الثغرات الشاملة
+مناسبة للإدارة الوسطى ومديري المشاريع وقادة الفرق
+
+مثالية لربط الفرق التقنية والإدارة العليا برؤى أمنية شاملة.

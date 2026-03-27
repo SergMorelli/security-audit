@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+{% assign current_lang = page.lang | default: 'en' %}
+{% assign t = site.data.i18n[current_lang] %}
+{% assign lang_prefix = '' %}
+{% if current_lang != 'en' %}
+  {% assign lang_prefix = '/' | append: current_lang %}
+{% endif %}
+{% assign normalized_url = page.url | default: '/' %}
+{% assign normalized_url = normalized_url | replace_first: '/ru/', '/' | replace_first: '/ar/', '/' %}
+{% if normalized_url == '' %}
+  {% assign normalized_url = '/' %}
+{% endif %}
+{% assign en_url = normalized_url %}
+{% assign ru_url = '/ru' | append: normalized_url %}
+{% assign ar_url = '/ar' | append: normalized_url %}
+<html lang="{{ current_lang }}" dir="{{ t.dir | default: 'ltr' }}">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind -->
+  <link rel="stylesheet" href="/assets/css/output.css">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    .site-desktop-nav {
+      display: none;
+    }
+
+    .site-mobile-toggle {
+      display: inline-flex;
+    }
+
+    .site-mobile-menu {
+      display: none;
+    }
+
+    .site-mobile-menu:not([hidden]) {
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .site-desktop-nav {
+        display: flex;
+      }
+
+      .site-mobile-toggle {
+        display: none;
+      }
+
+      .site-mobile-menu {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-black text-gray-200 font-mono">
+
+<!-- 🔴 NAVBAR -->
+<header class="fixed w-full z-50 bg-black/70 backdrop-blur border-b border-red-500/20">
+  <div class="max-w-7xl mx-auto p-3 md:px-4 md:pb-4 md:pt-5">
+    <div class="flex items-center justify-between">
+      <div class="text-xl text-cyan-400 font-bold tracking-widest">
+        Vulnerability Management Specialist
+      </div>
+
+      <div class="flex items-center gap-3 md:gap-4">
+        <div class="site-desktop-nav md:flex md:items-center md:justify-end md:gap-6 text-lg">
+          <nav class="flex flex-wrap items-center justify-end gap-x-3 gap-y-2" aria-label="Main navigation">
+            <a href="{{ lang_prefix }}/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'home' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.home }}</a>
+            <a href="{{ lang_prefix }}/reports/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'reports' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.reports }}</a>
+            <a href="{{ lang_prefix }}/lab/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'lab' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.lab }}</a>
+            <a href="{{ lang_prefix }}/documents/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'documents' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.documents }}</a>
+            <a href="{{ lang_prefix }}/about/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'about' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.about }}</a>
+          </nav>
+
+          <div class="flex items-center justify-center gap-10 px-4 py-2 rounded-lg bg-black/40 ml-6 pl-6" aria-label="{{ t.language_switch }}">
+            <a href="{{ en_url }}" class="text-2xl leading-none hover:scale-110 transition {% if current_lang == 'en' %}opacity-100{% else %}opacity-60{% endif %}" title="English" aria-label="English">&#x1F1EC;&#x1F1E7;</a>
+            <a href="{{ ru_url }}" class="text-2xl leading-none hover:scale-110 transition {% if current_lang == 'ru' %}opacity-100{% else %}opacity-60{% endif %}" title="Русский" aria-label="Русский">&#x1F1F7;&#x1F1FA;</a>
+            <a href="{{ ar_url }}" class="text-2xl leading-none hover:scale-110 transition {% if current_lang == 'ar' %}opacity-100{% else %}opacity-60{% endif %}" title="العربية" aria-label="العربية">&#x1F1F8;&#x1F1E6;</a>
+          </div>
+        </div>
+
+        <button
+          id="menuToggle"
+          type="button"
+          class="site-mobile-toggle md:hidden inline-flex items-center justify-center w-10 h-10 rounded border border-gray-700 text-gray-200 hover:text-cyan-400 hover:border-cyan-400 transition"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          aria-label="Toggle menu"
+        >
+          <span class="text-xl leading-none">☰</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="site-mobile-menu md:hidden mt-3 rounded-lg border border-gray-800 bg-black/90 p-3" hidden>
+      <nav class="flex flex-col gap-2 text-sm" aria-label="Mobile navigation">
+        <a href="{{ lang_prefix }}/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'home' %}text-cyan-400{% endif %}">{{ t.nav.home }}</a>
+        <a href="{{ lang_prefix }}/reports/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'reports' %}text-cyan-400{% endif %}">{{ t.nav.reports }}</a>
+        <a href="{{ lang_prefix }}/lab/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'lab' %}text-cyan-400{% endif %}">{{ t.nav.lab }}</a>
+        <a href="{{ lang_prefix }}/documents/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'documents' %}text-cyan-400{% endif %}">{{ t.nav.documents }}</a>
+        <a href="{{ lang_prefix }}/about/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'about' %}text-cyan-400{% endif %}">{{ t.nav.about }}</a>
+      </nav>
+
+      <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-center gap-7" aria-label="{{ t.language_switch }}">
+        <a href="{{ en_url }}" class="text-2xl leading-none hover:scale-110 transition {% if current_lang == 'en' %}opacity-100{% else %}opacity-60{% endif %}" title="English" aria-label="English">&#x1F1EC;&#x1F1E7;</a>
+        <a href="{{ ru_url }}" class="text-2xl leading-none hover:scale-110 transition {% if current_lang == 'ru' %}opacity-100{% else %}opacity-60{% endif %}" title="Русский" aria-label="Русский">&#x1F1F7;&#x1F1FA;</a>
+        <a href="{{ ar_url }}" class="text-2xl leading-none hover:scale-110 transition {% if current_lang == 'ar' %}opacity-100{% else %}opacity-60{% endif %}" title="العربية" aria-label="العربية">&#x1F1F8;&#x1F1E6;</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="pt-24 md:pt-28">
+  {{ content }}
+</main>
+
+<!-- 📊 DASHBOARD PREVIEW -->
+<section class="py-20 bg-black border-t border-gray-800">
+
+  <div class="max-w-6xl mx-auto px-4 text-center">
+
+    <h2 class="text-3xl text-cyan-400 mb-10" data-aos="fade-up">
+      {{ t.attack.heading }}
+    </h2>
+
+    <canvas id="attackChart" height="100" data-aos="fade-up"></canvas>
+    <p id="attackChartStatus" class="mt-4 text-xs text-gray-500" data-aos="fade-up"></p>
+
+  </div>
+
+</section>
+
+<!-- JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script id="attackChartI18n" type="application/json">{{ t.attack | jsonify }}</script>
+
+<script>
+AOS.init({
+  duration: 800,
+  once: true
+});
+
+const ctx = document.getElementById('attackChart');
+const statusNode = document.getElementById('attackChartStatus');
+const i18nNode = document.getElementById('attackChartI18n');
+const chartText = i18nNode ? JSON.parse(i18nNode.textContent) : {};
+
+function renderAttackChart(labels, values, sourceLabel) {
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: sourceLabel,
+        data: values,
+        borderColor: '#00f0ff',
+        backgroundColor: 'rgba(0, 240, 255, 0.15)',
+        borderWidth: 2,
+        pointRadius: 2,
+        pointHoverRadius: 4,
+        fill: true,
+        tension: 0.3
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          labels: {
+            color: '#ccc'
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#666' },
+          grid: { color: 'rgba(255,255,255,0.05)' }
+        },
+        y: {
+          beginAtZero: true,
+          ticks: { color: '#666' },
+          grid: { color: 'rgba(255,255,255,0.05)' }
+        }
+      }
+    }
+  });
+}
+
+function initAttackChart() {
+  const fallbackLabels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'];
+  const fallbackValues = [5, 12, 9, 18, 7, 14];
+
+  fetch('/assets/data/attacks.json', { cache: 'no-store' })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Failed to fetch attack data');
+      }
+
+      return response.json();
+    })
+    .then((payload) => {
+      const labels = Array.isArray(payload.labels) ? payload.labels : [];
+      const values = Array.isArray(payload.values) ? payload.values : [];
+
+      if (!labels.length || labels.length !== values.length) {
+        throw new Error('Invalid attack data shape');
+      }
+
+      renderAttackChart(labels, values, chartText.chart_live_label || 'Cloudflare Radar: Detected Attacks');
+
+      if (statusNode) {
+        const updatedAt = payload.updated_at ? new Date(payload.updated_at) : null;
+        statusNode.textContent = updatedAt && !Number.isNaN(updatedAt.getTime())
+          ? `${chartText.last_updated || 'Last updated'}: ${updatedAt.toUTCString()}`
+          : (chartText.source || 'Source: Cloudflare Radar');
+      }
+    })
+    .catch(() => {
+      renderAttackChart(fallbackLabels, fallbackValues, chartText.chart_fallback_label || 'Detected Attacks (fallback)');
+
+      if (statusNode) {
+        statusNode.textContent = chartText.unavailable || 'Live data unavailable, showing fallback sample.';
+      }
+    });
+}
+
+if (ctx) {
+  initAttackChart();
+}
+
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener('click', () => {
+    const isOpen = !mobileMenu.hasAttribute('hidden');
+    if (isOpen) {
+      mobileMenu.setAttribute('hidden', '');
+    } else {
+      mobileMenu.removeAttribute('hidden');
+    }
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      mobileMenu.setAttribute('hidden', '');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+</script>
+
+</body>
+</html>
+

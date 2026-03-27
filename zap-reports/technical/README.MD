@@ -1,0 +1,52 @@
+# 📚 Technical ZAP Reports / Технические отчёты ZAP
+
+## EN
+This folder contains examples of technical reports generated using OWASP ZAP — a popular open-source tool for automated web application security testing.
+Reports are organized by language in subfolders:
+
+en — English version
+ru — Russian version
+ar — Arabic version
+
+These technical reports include:
+
+Focused technical details of detected vulnerabilities
+Concise summaries of security issues categorized by risk level
+Technical evidence and implementation-focused recommendations
+Essential vulnerability data without extensive background information
+
+Ideal for technical teams needing quick actionable security findings or as streamlined templates.
+
+## RU
+Эта папка содержит примеры технических (technical) отчётов, сгенерированных с помощью OWASP ZAP — популярного инструмента с открытым исходным кодом для автоматизированного тестирования безопасности веб-приложений.
+Отчёты организованы по языкам в подпапках:
+
+en — англоязычная версия
+ru — русскоязычная версия
+ar — арабоязычная версия
+
+Технические отчёты включают:
+
+Сфокусированные технические детали обнаруженных уязвимостей
+Краткие сводки проблем безопасности с классификацией по уровню риска
+Технические доказательства и рекомендации, ориентированные на реализацию
+Основные данные об уязвимостях без обширной справочной информации
+
+Подходят для технических команд, которым нужны быстрые и практичные результаты, или для использования в качестве компактных шаблонов.
+
+## AR
+يحتوي هذا المجلد على أمثلة لـ تقارير تقنية (technical) تم إنشاؤها باستخدام OWASP ZAP — أداة مفتوحة المصدر شهيرة لاختبار أمان تطبيقات الويب بشكل آلي.
+التقارير منظمة حسب اللغة في مجلدات فرعية:
+
+en — النسخة الإنجليزية
+ru — النسخة الروسية
+ar — النسخة العربية
+
+تشمل التقارير التقنية:
+
+تفاصيل تقنية مركزة للثغرات المكتشفة
+ملخصات موجزة لمشاكل الأمان مصنفة حسب مستوى المخاطر
+أدلة تقنية وتوصيات موجهة للتنفيذ
+بيانات الثغرات الأساسية دون معلومات خلفية مطولة
+
+مثالية للفرق التقنية التي تحتاج إلى نتائج أمنية سريعة وقابلة للتنفيذ أو كقوالب مبسطة.

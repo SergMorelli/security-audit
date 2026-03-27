@@ -1,0 +1,16 @@
+# 🛠 Technical Security Audit Report / Технический отчет по аудиту безопасности
+
+## EN
+This folder contains sample **technical-level security audit reports**.  
+They are intended for engineers, system administrators, and SOC analysts.  
+Focus: detailed findings, CVE references, commands, configurations, and scripts.
+
+## RU
+Эта папка содержит примеры **технических отчетов по аудиту безопасности**.  
+Они предназначены для инженеров, системных администраторов и SOC-аналитиков.  
+Фокус: детальные результаты, ссылки на CVE, команды, конфигурации и скрипты.
+
+## AR
+تحتوي هذه المجلدات على أمثلة لتقارير التدقيق الأمني على المستوى الفني.  
+موجهة للمهندسين ومديري الأنظمة ومحللي SOC.  
+التركيز: النتائج التفصيلية، مراجع CVE، الأوامر، التكوينات والبرمجيات النصية.
