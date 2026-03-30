@@ -121,26 +121,11 @@
 
 </main>
 
-<!-- 📊 DASHBOARD PREVIEW -->
-<section class="py-20 bg-black border-t border-gray-800">
 
-  <div class="max-w-6xl mx-auto px-4 text-center">
-
-    <h2 class="text-3xl text-cyan-400 mb-10" data-aos="fade-up">
-      Обзор активности атак
-    </h2>
-
-    <canvas id="attackChart" height="100" data-aos="fade-up"></canvas>
-    <p id="attackChartStatus" class="mt-4 text-xs text-gray-500" data-aos="fade-up"></p>
-
-  </div>
-
-</section>
 
 <!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script id="attackChartI18n" type="application/json">{"heading":"Обзор активности атак","chart_live_label":"Cloudflare Radar: Обнаруженные атаки","chart_fallback_label":"Обнаруженные атаки (резервные данные)","last_updated":"Последнее обновление","source":"Источник: Cloudflare Radar","unavailable":"Нет доступа к live-данным, показаны резервные значения."}</script>
+
 
 <script>
 AOS.init({
@@ -148,92 +133,7 @@ AOS.init({
   once: true
 });
 
-const ctx = document.getElementById('attackChart');
-const statusNode = document.getElementById('attackChartStatus');
-const i18nNode = document.getElementById('attackChartI18n');
-const chartText = i18nNode ? JSON.parse(i18nNode.textContent) : {};
 
-function renderAttackChart(labels, values, sourceLabel) {
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: sourceLabel,
-        data: values,
-        borderColor: '#00f0ff',
-        backgroundColor: 'rgba(0, 240, 255, 0.15)',
-        borderWidth: 2,
-        pointRadius: 2,
-        pointHoverRadius: 4,
-        fill: true,
-        tension: 0.3
-      }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          labels: {
-            color: '#ccc'
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: { color: '#666' },
-          grid: { color: 'rgba(255,255,255,0.05)' }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#666' },
-          grid: { color: 'rgba(255,255,255,0.05)' }
-        }
-      }
-    }
-  });
-}
-
-function initAttackChart() {
-  const fallbackLabels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'];
-  const fallbackValues = [5, 12, 9, 18, 7, 14];
-
-  fetch('/assets/data/attacks.json', { cache: 'no-store' })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch attack data');
-      }
-
-      return response.json();
-    })
-    .then((payload) => {
-      const labels = Array.isArray(payload.labels) ? payload.labels : [];
-      const values = Array.isArray(payload.values) ? payload.values : [];
-
-      if (!labels.length || labels.length !== values.length) {
-        throw new Error('Invalid attack data shape');
-      }
-
-      renderAttackChart(labels, values, chartText.chart_live_label || 'Cloudflare Radar: Detected Attacks');
-
-      if (statusNode) {
-        const updatedAt = payload.updated_at ? new Date(payload.updated_at) : null;
-        statusNode.textContent = updatedAt && !Number.isNaN(updatedAt.getTime())
-          ? `${chartText.last_updated || 'Last updated'}: ${updatedAt.toUTCString()}`
-          : (chartText.source || 'Source: Cloudflare Radar');
-      }
-    })
-    .catch(() => {
-      renderAttackChart(fallbackLabels, fallbackValues, chartText.chart_fallback_label || 'Detected Attacks (fallback)');
-
-      if (statusNode) {
-        statusNode.textContent = chartText.unavailable || 'Live data unavailable, showing fallback sample.';
-      }
-    });
-}
-
-if (ctx) {
-  initAttackChart();
-}
 
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');

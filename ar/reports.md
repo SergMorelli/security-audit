@@ -8,17 +8,17 @@ translation_key: reports
 
 <section class="pt-32 pb-20 text-center">
   <h1 class="text-4xl text-cyan-400 mb-6">تقارير الأمن</h1>
-  <p class="text-gray-400">مجموعة من تقارير فحص الثغرات واختبارات الاختراق.</p>
+  <p class="text-gray-400">مجموعة من نتائج فحص الثغرات واختبارات الاختراق.</p>
 </section>
 
 <section class="max-w-6xl mx-auto px-4 pb-8" data-reports-filter>
   <div class="overflow-x-auto">
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="all">🌐 All</button>
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="technical">🛠 Technical</button>
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="management">📋 Management</button>
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="executive">🏛 Executive</button>
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="comprehensive">📚 Comprehensive</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="all">🌐 الكل</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="technical">🛠 تقني</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="management">📋 إداري</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="executive">🏛 تنفيذي</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="comprehensive">📚 شامل</button>
     </div>
   </div>
   <div id="reportsFilterDescription" class="mt-4 rounded-lg bg-slate-900/40 ring-1 ring-cyan-400/20 px-4 py-3">
@@ -28,119 +28,93 @@ translation_key: reports
   </div>
 </section>
 
-# 🔐 نماذج تقارير التدقيق الأمني
-### Multilingual RU / EN / AR
----
+{% assign reportLang = page.lang | default: 'ar' %}
 
-# Nmap
-# SSLScan
-# OpenSSL
-# OWASP ZAP
-# Nikto
----
+<style>
+  .soc-card {
+    border: 1px solid rgba(71, 85, 105, 0.65);
+    background: linear-gradient(165deg, rgba(8, 14, 28, 0.96), rgba(2, 8, 23, 0.86));
+    padding-top: 2.4rem;
+    padding-left: 2rem;
+    padding-right: 1.25rem;
+    padding-bottom: 1.25rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
 
-# 🛠 التقارير / Reports / Отчеты
+  .soc-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(34, 211, 238, 0.85);
+    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+  }
 
-<div class="report-filter-item" data-report-category="technical" markdown="1">
+  .soc-title {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
 
-## 🛠️ التقرير الفني
+  .soc-card:hover .soc-title {
+    color: rgb(34, 211, 238);
+    text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+  }
 
-مخصص للمهندسين ومديري الأنظمة ومحللي SOC.
-التركيز: نتائج تفصيلية، مراجع CVE، أوامر، إعدادات وسكربتات.
+  .report-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.42rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(71, 85, 105, 0.85);
+    background: rgba(15, 23, 42, 0.75);
+    border-radius: 0.45rem;
+  }
 
-### 🔗 المستندات
-- [English]({{ site.baseurl }}/reports/technical/en/)
-- [Русская версия]({{ site.baseurl }}/reports/technical/ru/)
-- [النسخة العربية]({{ site.baseurl }}/reports/technical/ar/)
+  .report-link:hover {
+    border-color: rgba(34, 211, 238, 0.75);
+    color: rgb(165, 243, 252);
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  }
+</style>
 
-</div>
+<section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">تدقيق أمن البنية التحتية</h3>
+      <p class="text-xs text-slate-400">الأدوات: Nmap, SSLScan, OpenSSL</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/reports/technical/{{ reportLang }}/technical-report-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/reports/technical/{{ reportLang }}/reports-technical-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
 
----
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص ثغرات تطبيق الويب</h3>
+      <p class="text-xs text-slate-400">الأدوات: OWASP ZAP, Passive/Active Scan Rules</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/zap-reports/technical/{{ reportLang }}/zapreports-technical-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/zap-reports/technical/{{ reportLang }}/zap-reports-technical-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
 
-<div class="report-filter-item" data-report-category="management" markdown="1">
-
-## 📋 التقرير الإداري
-
-مخصص لمديري تقنية المعلومات والأمن وقادة المشاريع.
-التركيز: مصفوفة المخاطر، ترتيب الأولويات (P0–P3)، الامتثال وخطط المعالجة.
-
-### 🔗 المستندات
-- [English]({{ site.baseurl }}/reports/management/en/)
-- [Русская версия]({{ site.baseurl }}/reports/management/ru/)
-- [النسخة العربية]({{ site.baseurl }}/reports/management/ar/)
-
-</div>
-
----
-
-<div class="report-filter-item" data-report-category="executive" markdown="1">
-
-## 🏛️ التقرير التنفيذي
-
-مخصص للمديرين التنفيذيين.
-التركيز: مخاطر الأعمال، الأثر المالي، عائد الاستثمار في الأمن ومؤشرات الأداء.
-
-### 🔗 المستندات
-- [English]({{ site.baseurl }}/reports/executive/en/)
-- [Русская версия]({{ site.baseurl }}/reports/executive/ru/)
-- [النسخة العربية]({{ site.baseurl }}/reports/executive/ar/)
-
-</div>
-
----
-
-# 🕷️ تقارير فحص ثغرات تطبيقات الويب / Web Application Vulnerability Scan Reports / Отчеты сканирования уязвимостей веб-приложений
-
-<div class="report-filter-item" data-report-category="comprehensive" markdown="1">
-
-## 📚 Comprehensive Reports
-
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/comprehensive/ru/) | 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/comprehensive/en/) | 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/comprehensive/ar/)
-
-</div>
-
-<div class="report-filter-item" data-report-category="technical" markdown="1">
-
-## 🛠 Technical Reports
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/technical/ru/)
-- 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/technical/en/)
-- 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/technical/ar/)
-
-</div>
-
-<div class="report-filter-item" data-report-category="management" markdown="1">
-
-## 📋 Management Reports
-
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/management/ru/)
-- 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/management/en/)
-- 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/management/ar/)
-
-</div>
-
-<div class="report-filter-item" data-report-category="executive" markdown="1">
-
-## 🏛 Executive Reports
-
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/executive/ru/)
-- 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/executive/en/)
-- 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/executive/ar/)
-
-</div>
-
-# 🕷️ تقرير Nikto / Nikto Scan Report / Отчет сканирования Nikto
-
-<div class="report-filter-item" data-report-category="comprehensive" markdown="1">
-
-## 📚 Comprehensive Reports
-
-🇷🇺 [RU]({{ site.baseurl }}/nikto-report/comprehensive/ru/) | 🇬🇧 [EN]({{ site.baseurl }}/nikto-report/comprehensive/en/) | 🇸🇦 [AR]({{ site.baseurl }}/nikto-report/comprehensive/ar/)
-
-</div>
-
----
-
-إذا كان لديك أي أسئلة حول بنية التقارير، افتح issue في المستودع.
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص أمن خادم الويب</h3>
+      <p class="text-xs text-slate-400">الأدوات: Nikto, HTTP Header Checks</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/nikto-report/comprehensive/{{ reportLang }}/niktoreport-comprehensive-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/nikto-report/comprehensive/{{ reportLang }}/nikto-report-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -158,28 +132,28 @@ translation_key: reports
     var descriptions = {
       all: {
         title: 'جميع التقارير',
-        audience: 'نظرة عامة على جميع فئات التقارير في مكان واحد.',
-        focus: 'التركيز: استعراض التقارير الفنية والإدارية والتنفيذية والشاملة معاً.'
-      },
-      technical: {
-        title: 'التقرير الفني',
-        audience: 'مخصص للمهندسين ومديري الأنظمة ومحللي SOC.',
-        focus: 'التركيز: نتائج تفصيلية، مراجع CVE، أوامر، إعدادات وسكربتات.'
-      },
-      management: {
-        title: 'التقرير الإداري',
-        audience: 'مخصص لمديري تقنية المعلومات والأمن وقادة المشاريع.',
-        focus: 'التركيز: مصفوفة المخاطر، ترتيب الأولويات (P0-P3)، مراجع الامتثال والجداول الزمنية للمعالجة.'
-      },
-      executive: {
-        title: 'التقرير التنفيذي',
-        audience: 'مخصص للرؤساء التنفيذيين CTO وCISO وأعضاء مجلس الإدارة.',
-        focus: 'التركيز: مخاطر الأعمال، الأثر المالي، عائد الاستثمار في الأمن ومؤشرات الأداء الاستراتيجية.'
+        audience: 'عرض موحد لجميع بطاقات التقارير.',
+        focus: 'التركيز: كل بطاقة تحتوي على رابط PDF ورابط HTML حسب اللغة الحالية.'
       },
       comprehensive: {
-        title: 'التقرير الشامل',
-        audience: 'مخصص لمراجعة شاملة للثغرات عبر الأنظمة وتطبيقات الويب.',
-        focus: 'التركيز: نتائج الفحوصات المجمعة، الأدلة الأساسية، ولقطات تغطية شاملة من البداية للنهاية.'
+        title: 'Comprehensive / Комплексный / شامل',
+        audience: 'تغطية واسعة للتقارير بلغات EN / RU / AR.',
+        focus: 'التركيز: نظرة شاملة وملخص كامل للنتائج.'
+      },
+      technical: {
+        title: 'Technical / Технический / تقني',
+        audience: 'للمهندسين ومديري الأنظمة ومحللي SOC.',
+        focus: 'التركيز: روابط مباشرة لنسخ PDF وHTML التقنية.'
+      },
+      management: {
+        title: 'Management / Менеджмент / إداري',
+        audience: 'للمديرين وقادة الفرق.',
+        focus: 'التركيز: سياق إداري، مخاطر، وأولويات المعالجة.'
+      },
+      executive: {
+        title: 'Executive / Исполнительный / تنفيذي',
+        audience: 'لأصحاب القرار والإدارة العليا.',
+        focus: 'التركيز: العرض الاستراتيجي وتأثير الأعمال.'
       }
     };
 

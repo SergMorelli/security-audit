@@ -11,6 +11,7 @@ translation_key: reports
   <p class="text-gray-400">Collection of vulnerability scans and penetration testing reports.</p>
 </section>
 
+<!-- ── Filter bar ─────────────────────────────────────────────────── -->
 <section class="max-w-6xl mx-auto px-4 pb-8" data-reports-filter>
   <div class="overflow-x-auto">
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
@@ -28,125 +29,96 @@ translation_key: reports
   </div>
 </section>
 
-# 🔐 Security Audit Report Samples  
-### Multilingual RU / EN / AR  
---- 
+{% assign reportLang = page.lang | default: 'en' %}
 
-# Nmap
-# SSLScan
-# OpenSSL
-# OWASP ZAP
-# Nikto
----
+<style>
+  .soc-card {
+    border: 1px solid rgba(71, 85, 105, 0.65);
+    background: linear-gradient(165deg, rgba(8, 14, 28, 0.96), rgba(2, 8, 23, 0.86));
+    padding-top: 2.4rem;
+    padding-left: 2rem;
+    padding-right: 1.25rem;
+    padding-bottom: 1.25rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
 
-# 🛠 Reports / Отчёты / التقارير
+  .soc-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(34, 211, 238, 0.85);
+    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+  }
 
+  .soc-title {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
 
+  .soc-card:hover .soc-title {
+    color: rgb(34, 211, 238);
+    text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+  }
 
-<div class="report-filter-item" data-report-category="technical" markdown="1">
+  .report-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.42rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(71, 85, 105, 0.85);
+    background: rgba(15, 23, 42, 0.75);
+    border-radius: 0.45rem;
+  }
 
-## 🛠️ Technical Report
+  .report-link:hover {
+    border-color: rgba(34, 211, 238, 0.75);
+    color: rgb(165, 243, 252);
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  }
+</style>
 
-Intended for engineers, system administrators, and SOC analysts.  
-Focus: detailed findings, CVE references, commands, configurations, and scripts.
+<!-- ── SOC Report Cards ───────────────────────────────────────────── -->
+<section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
 
-### 🔗 Documents
-- [English]({{ site.baseurl }}/reports/technical/en/)
-- [Русская версия]({{ site.baseurl }}/reports/technical/ru/)
-- [النسخة العربية]({{ site.baseurl }}/reports/technical/ar/)
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">Infrastructure Security Audit</h3>
+      <p class="text-xs text-slate-400">Tools: Nmap, SSLScan, OpenSSL</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/reports/technical/{{ reportLang }}/technical-report-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/reports/technical/{{ reportLang }}/reports-technical-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
 
-</div>
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Web Application Vulnerability Scan</h3>
+      <p class="text-xs text-slate-400">Tools: OWASP ZAP, Passive/Active Scan Rules</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/zap-reports/technical/{{ reportLang }}/zapreports-technical-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/zap-reports/technical/{{ reportLang }}/zap-reports-technical-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
 
----
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Web Server Security Scan</h3>
+      <p class="text-xs text-slate-400">Tools: Nikto, HTTP Header Checks</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/nikto-report/comprehensive/{{ reportLang }}/niktoreport-comprehensive-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/nikto-report/comprehensive/{{ reportLang }}/nikto-report-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+  </div>
 
-<div class="report-filter-item" data-report-category="management" markdown="1">
-
-## 📋 Management Report
-
-Intended for IT and security managers, project leads.  
-Focus: risk matrix, prioritization (P0–P3), compliance references, and remediation timelines.
-
-### 🔗 Documents
-- [English]({{ site.baseurl }}/reports/management/en/)
-- [Русская версия]({{ site.baseurl }}/reports/management/ru/)
-- [النسخة العربية]({{ site.baseurl }}/reports/management/ar/)
-
-</div>
-
----
-
-<div class="report-filter-item" data-report-category="executive" markdown="1">
-
-## 🏛️ Executive Report
-
-Intended for CEOs, CTOs, CISOs, and board members.  
-Focus: business risks, financial impact, ROI of security investments, and strategic KPIs.
-
-### 🔗 Documents
-- [English]({{ site.baseurl }}/reports/executive/en/)
-- [Русская версия]({{ site.baseurl }}/reports/executive/ru/)
-- [النسخة العربية]({{ site.baseurl }}/reports/executive/ar/)
-
-</div>
-
---- 
-
-# 🕷️ Web Application Vulnerability Scan Reports / Отчёты сканирования уязвимостей веб-приложений / تقارير فحص ثغرات تطبيقات الويب
-
-<div class="report-filter-item" data-report-category="comprehensive" markdown="1">
-
-## 📚 Comprehensive Reports
-
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/comprehensive/ru/)  |    - 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/comprehensive/en/)  |   - 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/comprehensive/ar/)  |
-
-</div>
-
-
-
-<div class="report-filter-item" data-report-category="technical" markdown="1">
-
-## 🛠 Technical Reports
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/technical/ru/) 
-- 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/technical/en/) 
-- 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/technical/ar/) 
-
-</div>
-
-
-<div class="report-filter-item" data-report-category="management" markdown="1">
-
-## 📋 Management Reports
-
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/management/ru/)
-- 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/management/en/) 
-- 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/management/ar/)
-
-</div>
-
-<div class="report-filter-item" data-report-category="executive" markdown="1">
-
-## 🏛 Executive Reports
-
-- 🇷🇺 [RU]({{ site.baseurl }}/zap-reports/executive/ru/)
-- 🇬🇧 [EN]({{ site.baseurl }}/zap-reports/executive/en/) 
-- 🇸🇦 [AR]({{ site.baseurl }}/zap-reports/executive/ar/)
-
-</div>
-
-# 🕷️ Nikto Scan Report / Отчёт сканирования Nikto / تقرير مسح نيكتو
-
-<div class="report-filter-item" data-report-category="comprehensive" markdown="1">
-
-## 📚 Comprehensive Reports
-
-  🇷🇺 [RU]({{ site.baseurl }}/nikto-report/comprehensive/ru/)  |        |  🇬🇧 [EN]({{ site.baseurl }}/nikto-report/comprehensive/en/)  |       | 🇸🇦 [AR]({{ site.baseurl }}/nikto-report/comprehensive/ar/)  |
-
-</div>
-
-  
----
-
-If you have questions about the reports or their structure, feel free to open an issue in the repository.
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -164,28 +136,28 @@ If you have questions about the reports or their structure, feel free to open an
     var descriptions = {
       all: {
         title: 'All Reports',
-        audience: 'Overview of all report categories in one place.',
-        focus: 'Focus: browse Technical, Management, Executive, and Comprehensive reports together.'
-      },
-      technical: {
-        title: 'Technical Report',
-        audience: 'Intended for engineers, system administrators, and SOC analysts.',
-        focus: 'Focus: detailed findings, CVE references, commands, configurations, and scripts.'
-      },
-      management: {
-        title: 'Management Report',
-        audience: 'Intended for IT and security managers, project leads.',
-        focus: 'Focus: risk matrix, prioritization (P0-P3), compliance references, and remediation timelines.'
-      },
-      executive: {
-        title: 'Executive Report',
-        audience: 'Intended for CEOs, CTOs, CISOs, and board members.',
-        focus: 'Focus: business risks, financial impact, ROI of security investments, and strategic KPIs.'
+        audience: 'Overview of all report cards in one place.',
+        focus: 'Focus: each card includes report title, tools, and language-specific Technical/General links.'
       },
       comprehensive: {
-        title: 'Comprehensive Report',
-        audience: 'Intended for full-spectrum vulnerability review across systems and web applications.',
-        focus: 'Focus: aggregated scan outcomes, key evidence, and end-to-end coverage snapshots.'
+        title: 'Comprehensive / Комплексный / شامل',
+        audience: 'Broad report coverage for EN / RU / AR audiences.',
+        focus: 'Focus: summary-level and full-scope findings across available report groups.'
+      },
+      technical: {
+        title: 'Technical / Технический / تقني',
+        audience: 'For engineers, system administrators, and SOC analysts.',
+        focus: 'Focus: direct links to technical PDF files and technical report pages.'
+      },
+      management: {
+        title: 'Management / Менеджмент / إداري',
+        audience: 'For managers and team leads who need prioritization and planning context.',
+        focus: 'Focus: management-level summaries, risks, and remediation direction.'
+      },
+      executive: {
+        title: 'Executive / Исполнительный / تنفيذي',
+        audience: 'For decision makers and leadership stakeholders.',
+        focus: 'Focus: strategic impact and high-level reporting view.'
       }
     };
 

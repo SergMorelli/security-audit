@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>التقرير التقني لنتائج ZAP</title>
+  <style>
+    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
+    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+    h1 { font-size: 1.6rem; margin: 0 0 16px; }
+    h2 { font-size: 1.1rem; margin: 20px 0 8px; }
+    p, li, code { line-height: 1.8; }
+    .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>التقرير التقني لنتائج ZAP - example.com</h1>
+    <div class="card">
+      <p><strong>التاريخ:</strong> 2025-12-31</p>
+      <h2>منهجية الفحص</h2>
+      <p>تم تنفيذ فحص ديناميكي للتطبيق باستخدام OWASP ZAP مع مراجعة تحليلية للنتائج لتحديد الثغرات الحقيقية وتجنب الإنذارات الكاذبة قدر الإمكان.</p>
+      <h2>أهم الفئات المكتشفة</h2>
+      <ul>
+        <li>ثغرات مرتبطة بسياسات المتصفح وحماية المحتوى.</li>
+        <li>نقاط كشف معلومات قد تساعد على الاستطلاع الهجومي.</li>
+        <li>ضعف في بعض ضوابط التحقق والمدخلات.</li>
+      </ul>
+      <h2>معالجة تقنية مقترحة</h2>
+      <ul>
+        <li>فرض سياسة <code>Content-Security-Policy</code> صارمة ومراجعة الاستثناءات.</li>
+        <li>تطبيق <code>Subresource Integrity</code> للموارد الخارجية.</li>
+        <li>تحسين التحقق على الخادم ومنع الاستجابات الكاشفة للتفاصيل الداخلية.</li>
+      </ul>
+      <h2>التحقق والاختبار</h2>
+      <p>بعد الإصلاح، يوصى بإعادة الفحص بنفس الإعدادات، ثم مقارنة النتائج وتوثيق كل ثغرة مغلقة مع دليل إثبات واضح.</p>
+    </div>
+  </main>
+</body>
+</html>

@@ -146,6 +146,7 @@
 
 </main>
 
+
 <!-- 📊 DASHBOARD PREVIEW -->
 <section class="py-20 bg-black border-t border-gray-800">
 
@@ -162,16 +163,20 @@
 
 </section>
 
+
 <!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script id="attackChartI18n" type="application/json">{"heading":"نظرة عامة على نشاط الهجمات","chart_live_label":"Cloudflare Radar: الهجمات المكتشفة","chart_fallback_label":"الهجمات المكتشفة (بيانات احتياطية)","last_updated":"آخر تحديث","source":"المصدر: Cloudflare Radar","unavailable":"تعذر تحميل البيانات الحية، تم عرض بيانات احتياطية."}</script>
+
 
 <script>
 AOS.init({
   duration: 800,
   once: true
 });
+
 
 const ctx = document.getElementById('attackChart');
 const statusNode = document.getElementById('attackChartStatus');
@@ -259,6 +264,7 @@ function initAttackChart() {
 if (ctx) {
   initAttackChart();
 }
+
 
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');

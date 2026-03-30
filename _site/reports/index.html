@@ -119,6 +119,7 @@
   <p class="text-gray-400">Collection of vulnerability scans and penetration testing reports.</p>
 </section>
 
+<!-- ── Filter bar ─────────────────────────────────────────────────── -->
 <section class="max-w-6xl mx-auto px-4 pb-8" data-reports-filter="">
   <div class="overflow-x-auto">
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
@@ -136,153 +137,94 @@
   </div>
 </section>
 
-<h1 id="-security-audit-report-samples">🔐 Security Audit Report Samples</h1>
-<h3 id="multilingual-ru--en--ar">Multilingual RU / EN / AR</h3>
-<hr />
+<style>
+  .soc-card {
+    border: 1px solid rgba(71, 85, 105, 0.65);
+    background: linear-gradient(165deg, rgba(8, 14, 28, 0.96), rgba(2, 8, 23, 0.86));
+    padding-top: 2.4rem;
+    padding-left: 2rem;
+    padding-right: 1.25rem;
+    padding-bottom: 1.25rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
 
-<h1 id="nmap">Nmap</h1>
-<h1 id="sslscan">SSLScan</h1>
-<h1 id="openssl">OpenSSL</h1>
-<h1 id="owasp-zap">OWASP ZAP</h1>
-<h1 id="nikto">Nikto</h1>
-<hr />
+  .soc-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(34, 211, 238, 0.85);
+    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+  }
 
-<h1 id="-reports--отчёты--التقارير">🛠 Reports / Отчёты / التقارير</h1>
+  .soc-title {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
 
-<div class="report-filter-item" data-report-category="technical">
+  .soc-card:hover .soc-title {
+    color: rgb(34, 211, 238);
+    text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+  }
 
-  <h2 id="technical-report">🛠️ Technical Report</h2>
+  .report-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.42rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(71, 85, 105, 0.85);
+    background: rgba(15, 23, 42, 0.75);
+    border-radius: 0.45rem;
+  }
 
-  <p>Intended for engineers, system administrators, and SOC analysts.<br />
-Focus: detailed findings, CVE references, commands, configurations, and scripts.</p>
+  .report-link:hover {
+    border-color: rgba(34, 211, 238, 0.75);
+    color: rgb(165, 243, 252);
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  }
+</style>
 
-  <h3 id="documents">🔗 Documents</h3>
-  <ul>
-    <li><a href="/reports/technical/en/">English</a></li>
-    <li><a href="/reports/technical/ru/">Русская версия</a></li>
-    <li><a href="/reports/technical/ar/">النسخة العربية</a></li>
-  </ul>
+<!-- ── SOC Report Cards ───────────────────────────────────────────── -->
+<section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
 
-</div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">Infrastructure Security Audit</h3>
+      <p class="text-xs text-slate-400">Tools: Nmap, SSLScan, OpenSSL</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/reports/technical/en/technical-report-en.pdf" class="report-link transition">PDF</a>
+          <a href="/reports/technical/en/" class="report-link transition">View</a>
+        </div>
+      </div>
+    </article>
 
-<hr />
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Web Application Vulnerability Scan</h3>
+      <p class="text-xs text-slate-400">Tools: OWASP ZAP, Passive/Active Scan Rules</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/zap-reports/technical/en/zapreports-technical-en.pdf" class="report-link transition">PDF</a>
+          <a href="/zap-reports/technical/en/" class="report-link transition">View</a>
+        </div>
+      </div>
+    </article>
 
-<div class="report-filter-item" data-report-category="management">
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Web Server Security Scan</h3>
+      <p class="text-xs text-slate-400">Tools: Nikto, HTTP Header Checks</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/nikto-report/comprehensive/en/niktoreport-comprehensive-en.pdf" class="report-link transition">PDF</a>
+          <a href="/nikto-report/comprehensive/en/" class="report-link transition">View</a>
+        </div>
+      </div>
+    </article>
+  </div>
 
-  <h2 id="management-report">📋 Management Report</h2>
-
-  <p>Intended for IT and security managers, project leads.<br />
-Focus: risk matrix, prioritization (P0–P3), compliance references, and remediation timelines.</p>
-
-  <h3 id="documents-1">🔗 Documents</h3>
-  <ul>
-    <li><a href="/reports/management/en/">English</a></li>
-    <li><a href="/reports/management/ru/">Русская версия</a></li>
-    <li><a href="/reports/management/ar/">النسخة العربية</a></li>
-  </ul>
-
-</div>
-
-<hr />
-
-<div class="report-filter-item" data-report-category="executive">
-
-  <h2 id="executive-report">🏛️ Executive Report</h2>
-
-  <p>Intended for CEOs, CTOs, CISOs, and board members.<br />
-Focus: business risks, financial impact, ROI of security investments, and strategic KPIs.</p>
-
-  <h3 id="documents-2">🔗 Documents</h3>
-  <ul>
-    <li><a href="/reports/executive/en/">English</a></li>
-    <li><a href="/reports/executive/ru/">Русская версия</a></li>
-    <li><a href="/reports/executive/ar/">النسخة العربية</a></li>
-  </ul>
-
-</div>
-
-<hr />
-
-<h1 id="️-web-application-vulnerability-scan-reports--отчёты-сканирования-уязвимостей-веб-приложений--تقارير-فحص-ثغرات-تطبيقات-الويب">🕷️ Web Application Vulnerability Scan Reports / Отчёты сканирования уязвимостей веб-приложений / تقارير فحص ثغرات تطبيقات الويب</h1>
-
-<div class="report-filter-item" data-report-category="comprehensive">
-
-  <h2 id="comprehensive-reports">📚 Comprehensive Reports</h2>
-
-  <ul>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>🇷🇺 <a href="/zap-reports/comprehensive/ru/">RU</a></td>
-            <td>- 🇬🇧 <a href="/zap-reports/comprehensive/en/">EN</a></td>
-            <td>- 🇸🇦 <a href="/zap-reports/comprehensive/ar/">AR</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-  </ul>
-
-</div>
-
-<div class="report-filter-item" data-report-category="technical">
-
-  <h2 id="technical-reports">🛠 Technical Reports</h2>
-  <ul>
-    <li>🇷🇺 <a href="/zap-reports/technical/ru/">RU</a></li>
-    <li>🇬🇧 <a href="/zap-reports/technical/en/">EN</a></li>
-    <li>🇸🇦 <a href="/zap-reports/technical/ar/">AR</a></li>
-  </ul>
-
-</div>
-
-<div class="report-filter-item" data-report-category="management">
-
-  <h2 id="management-reports">📋 Management Reports</h2>
-
-  <ul>
-    <li>🇷🇺 <a href="/zap-reports/management/ru/">RU</a></li>
-    <li>🇬🇧 <a href="/zap-reports/management/en/">EN</a></li>
-    <li>🇸🇦 <a href="/zap-reports/management/ar/">AR</a></li>
-  </ul>
-
-</div>
-
-<div class="report-filter-item" data-report-category="executive">
-
-  <h2 id="executive-reports">🏛 Executive Reports</h2>
-
-  <ul>
-    <li>🇷🇺 <a href="/zap-reports/executive/ru/">RU</a></li>
-    <li>🇬🇧 <a href="/zap-reports/executive/en/">EN</a></li>
-    <li>🇸🇦 <a href="/zap-reports/executive/ar/">AR</a></li>
-  </ul>
-
-</div>
-
-<h1 id="️-nikto-scan-report--отчёт-сканирования-nikto--تقرير-مسح-نيكتو">🕷️ Nikto Scan Report / Отчёт сканирования Nikto / تقرير مسح نيكتو</h1>
-
-<div class="report-filter-item" data-report-category="comprehensive">
-
-  <h2 id="comprehensive-reports-1">📚 Comprehensive Reports</h2>
-
-  <table>
-    <tbody>
-      <tr>
-        <td>🇷🇺 <a href="/nikto-report/comprehensive/ru/">RU</a></td>
-        <td> </td>
-        <td>🇬🇧 <a href="/nikto-report/comprehensive/en/">EN</a></td>
-        <td> </td>
-        <td>🇸🇦 <a href="/nikto-report/comprehensive/ar/">AR</a></td>
-      </tr>
-    </tbody>
-  </table>
-
-</div>
-
-<hr />
-
-<p>If you have questions about the reports or their structure, feel free to open an issue in the repository.</p>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -300,28 +242,28 @@ Focus: business risks, financial impact, ROI of security investments, and strate
     var descriptions = {
       all: {
         title: 'All Reports',
-        audience: 'Overview of all report categories in one place.',
-        focus: 'Focus: browse Technical, Management, Executive, and Comprehensive reports together.'
-      },
-      technical: {
-        title: 'Technical Report',
-        audience: 'Intended for engineers, system administrators, and SOC analysts.',
-        focus: 'Focus: detailed findings, CVE references, commands, configurations, and scripts.'
-      },
-      management: {
-        title: 'Management Report',
-        audience: 'Intended for IT and security managers, project leads.',
-        focus: 'Focus: risk matrix, prioritization (P0-P3), compliance references, and remediation timelines.'
-      },
-      executive: {
-        title: 'Executive Report',
-        audience: 'Intended for CEOs, CTOs, CISOs, and board members.',
-        focus: 'Focus: business risks, financial impact, ROI of security investments, and strategic KPIs.'
+        audience: 'Overview of all report cards in one place.',
+        focus: 'Focus: each card includes report title, tools, and language-specific Technical/General links.'
       },
       comprehensive: {
-        title: 'Comprehensive Report',
-        audience: 'Intended for full-spectrum vulnerability review across systems and web applications.',
-        focus: 'Focus: aggregated scan outcomes, key evidence, and end-to-end coverage snapshots.'
+        title: 'Comprehensive / Комплексный / شامل',
+        audience: 'Broad report coverage for EN / RU / AR audiences.',
+        focus: 'Focus: summary-level and full-scope findings across available report groups.'
+      },
+      technical: {
+        title: 'Technical / Технический / تقني',
+        audience: 'For engineers, system administrators, and SOC analysts.',
+        focus: 'Focus: direct links to technical PDF files and technical report pages.'
+      },
+      management: {
+        title: 'Management / Менеджмент / إداري',
+        audience: 'For managers and team leads who need prioritization and planning context.',
+        focus: 'Focus: management-level summaries, risks, and remediation direction.'
+      },
+      executive: {
+        title: 'Executive / Исполнительный / تنفيذي',
+        audience: 'For decision makers and leadership stakeholders.',
+        focus: 'Focus: strategic impact and high-level reporting view.'
       }
     };
 
@@ -362,26 +304,11 @@ Focus: business risks, financial impact, ROI of security investments, and strate
 
 </main>
 
-<!-- 📊 DASHBOARD PREVIEW -->
-<section class="py-20 bg-black border-t border-gray-800">
 
-  <div class="max-w-6xl mx-auto px-4 text-center">
-
-    <h2 class="text-3xl text-cyan-400 mb-10" data-aos="fade-up">
-      Attack Activity Overview
-    </h2>
-
-    <canvas id="attackChart" height="100" data-aos="fade-up"></canvas>
-    <p id="attackChartStatus" class="mt-4 text-xs text-gray-500" data-aos="fade-up"></p>
-
-  </div>
-
-</section>
 
 <!-- JS -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script id="attackChartI18n" type="application/json">{"heading":"Attack Activity Overview","chart_live_label":"Cloudflare Radar: Detected Attacks","chart_fallback_label":"Detected Attacks (fallback)","last_updated":"Last updated","source":"Source: Cloudflare Radar","unavailable":"Live data unavailable, showing fallback sample."}</script>
+
 
 <script>
 AOS.init({
@@ -389,92 +316,7 @@ AOS.init({
   once: true
 });
 
-const ctx = document.getElementById('attackChart');
-const statusNode = document.getElementById('attackChartStatus');
-const i18nNode = document.getElementById('attackChartI18n');
-const chartText = i18nNode ? JSON.parse(i18nNode.textContent) : {};
 
-function renderAttackChart(labels, values, sourceLabel) {
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels,
-      datasets: [{
-        label: sourceLabel,
-        data: values,
-        borderColor: '#00f0ff',
-        backgroundColor: 'rgba(0, 240, 255, 0.15)',
-        borderWidth: 2,
-        pointRadius: 2,
-        pointHoverRadius: 4,
-        fill: true,
-        tension: 0.3
-      }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          labels: {
-            color: '#ccc'
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: { color: '#666' },
-          grid: { color: 'rgba(255,255,255,0.05)' }
-        },
-        y: {
-          beginAtZero: true,
-          ticks: { color: '#666' },
-          grid: { color: 'rgba(255,255,255,0.05)' }
-        }
-      }
-    }
-  });
-}
-
-function initAttackChart() {
-  const fallbackLabels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'];
-  const fallbackValues = [5, 12, 9, 18, 7, 14];
-
-  fetch('/assets/data/attacks.json', { cache: 'no-store' })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Failed to fetch attack data');
-      }
-
-      return response.json();
-    })
-    .then((payload) => {
-      const labels = Array.isArray(payload.labels) ? payload.labels : [];
-      const values = Array.isArray(payload.values) ? payload.values : [];
-
-      if (!labels.length || labels.length !== values.length) {
-        throw new Error('Invalid attack data shape');
-      }
-
-      renderAttackChart(labels, values, chartText.chart_live_label || 'Cloudflare Radar: Detected Attacks');
-
-      if (statusNode) {
-        const updatedAt = payload.updated_at ? new Date(payload.updated_at) : null;
-        statusNode.textContent = updatedAt && !Number.isNaN(updatedAt.getTime())
-          ? `${chartText.last_updated || 'Last updated'}: ${updatedAt.toUTCString()}`
-          : (chartText.source || 'Source: Cloudflare Radar');
-      }
-    })
-    .catch(() => {
-      renderAttackChart(fallbackLabels, fallbackValues, chartText.chart_fallback_label || 'Detected Attacks (fallback)');
-
-      if (statusNode) {
-        statusNode.textContent = chartText.unavailable || 'Live data unavailable, showing fallback sample.';
-      }
-    });
-}
-
-if (ctx) {
-  initAttackChart();
-}
 
 const menuToggle = document.getElementById('menuToggle');
 const mobileMenu = document.getElementById('mobileMenu');
