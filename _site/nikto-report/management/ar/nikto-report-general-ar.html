@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>خطة العمليات - أمان الويب</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; direction: rtl; text-align: right; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-right: 8px solid #26c6da; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: right; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34595e; margin-bottom: 20px; }
+    
+    h2 { font-size: 1.8em; color: #26c6da; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34595e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; margin-bottom: 10px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: right; }
+    
+    .task-card { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); border-right: 5px solid #00897b; padding: 25px; margin: 20px 0; border-radius: 6px; }
+    .task-card h4 { color: #004d40; margin-top: 0; }
+    
+    .checklist { list-style: none; padding-right: 0; }
+    .checklist li { padding-right: 30px; margin: 12px 0; position: relative; text-align: right; }
+    .checklist li:before { content: "☐ "; position: absolute; right: 0; color: #26c6da; font-weight: bold; font-size: 1.2em; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: right; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; text-align: right; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; color: #d63384; font-size: 0.95em; direction: ltr; }
+    pre { background: #282c34; color: #abb2bf; padding: 20px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; direction: ltr; text-align: left; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-medium { background: #fff3e0; color: #e65100; }
+    .badge-low { background: #e8f5e9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-right: 25px; }
+    li { margin: 8px 0; color: #34595e; }
+    
+    .alert { padding: 20px; border-radius: 6px; margin: 20px 0; text-align: right; }
+    .alert-warning { background: #fff3e0; border-right: 5px solid #e65100; color: #e65100; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="report-header">
+      <h1>خطة العمليات لأمان الويب</h1>
+      <p class="subtitle">تعليمات التنفيذ للفرق</p>
+      <p style="color: #7f8c8d; margin-top: 20px;">تاريخ الفحص: 13 يناير 2026 | الأداة: Nikto 2.1.5</p>
+    </div>
+
+    <div class="section">
+      <h2>الملخص للفريق</h2>
+      <p style="font-size: 1.05em;">حدد فحص Nikto 3 مشاكل في إعدادات أمان خادم الويب. يحتوي هذا المستند على تعليمات خطوة بخطوة لمعالجة المشاكل مع أمثلة التكوين وقوائم التحقق.</p>
+
+      <h3>مصفوفة المسؤولية:</h3>
+      <table>
+        <thead><tr><th>المشكلة</th><th>الفريق المسؤول</th><th>الجدول الزمني</th><th>الأولوية</th></tr></thead>
+        <tbody>
+          <tr><td>رأس X-Frame-Options</td><td>DevOps / Sys Admin</td><td>اليوم 1-2</td><td><span class="badge badge-medium">عالية</span></td></tr>
+          <tr><td>شهادة SSL</td><td>DevOps / البنية الأساسية</td><td>اليوم 3-5</td><td><span class="badge badge-medium">عالية</span></td></tr>
+          <tr><td>رؤوس إضافية</td><td>DevOps / الأمان</td><td>اليوم 5-7</td><td><span class="badge badge-low">متوسطة</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>المرحلة 1: الإصلاحات الطارئة (الأيام 1-7)</h2>
+
+      <div class="alert alert-warning">
+        <strong>⚠️ حرج:</strong> يجب إكمال جميع مهام المرحلة 1 في غضون 7 أيام. التأخير في التنفيذ يزيد من المخاطر التشغيلية.
+      </div>
+
+      <h3 style="color: #c0392b;">المهمة 1: تكوين رأس X-Frame-Options</h3>
+
+      <div class="task-card">
+        <h4>الأولوية: عالية | الجدول الزمني: اليوم 1-2 | المسؤول: قائد DevOps</h4>
+        
+        <h5>الوصف:</h5>
+        <p>إضافة رأس X-Frame-Options لتكوين خادم الويب للحماية من هجمات clickjacking.</p>
+
+        <h5 style="margin-top: 20px;">حل Nginx/LiteSpeed:</h5>
+        <pre>server {
+    # إضافة إلى تكوين الخادم
+    add_header X-Frame-Options "DENY" always;
+    
+    # خيار بديل SAMEORIGIN
+    # add_header X-Frame-Options "SAMEORIGIN" always;
+}</pre>
+
+        <h5 style="margin-top: 20px;">التحقق على الخادم الاختباري:</h5>
+        <ul class="checklist">
+          <li>نشر التكوين على خادم التحضير</li>
+          <li>التحقق من الرأس: <code>curl -I https://staging.example.com</code></li>
+          <li>التأكد من: <code>X-Frame-Options: DENY</code> مُرجعة</li>
+          <li>اختبار جميع نقاط النهاية</li>
+        </ul>
+
+        <h5 style="margin-top: 20px;">نشر الإنتاج:</h5>
+        <ol style="font-size: 1.05em;">
+          <li>نسخ احتياطي: <code>cp nginx.conf nginx.conf.backup</code></li>
+          <li>تحديث التكوين الإنتاجي</li>
+          <li>إعادة تحميل: <code>systemctl reload nginx</code> (بدون توقف)</li>
+          <li>تحقق من الإنتاج: <code>curl -I https://example.com</code></li>
+          <li>توثيق التغيير في السجل</li>
+        </ol>
+
+        <h5 style="margin-top: 20px;">الرجوع (إذا لزم الأمر):</h5>
+        <pre>cp nginx.conf.backup nginx.conf
+systemctl reload nginx</pre>
+      </div>
+
+      <h3 style="color: #e65100; margin-top: 30px;">المهمة 2: إصلاح شهادة SSL</h3>
+
+      <div class="task-card">
+        <h4>الأولوية: عالية | الجدول الزمني: اليوم 3-5 | المسؤول: قائد البنية الأساسية</h4>
+        
+        <h5>الوصف:</h5>
+        <p>شهادة SSL الحالية لا تطابق اسم النطاق. الحصول على وتثبيت الشهادة الصحيحة لـ example.com.</p>
+
+        <h5 style="margin-top: 20px;">عملية Cloudflare:</h5>
+        <ol style="font-size: 1.05em;">
+          <li>الانتقال إلى Cloudflare Dashboard → SSL/TLS</li>
+          <li>النقر على "إنشاء شهادة" لـ example.com</li>
+          <li>اختيار نوع الشهادة "Comodo/Universal"</li>
+          <li>الانتظار للتحقق (~5 دقائق)</li>
+          <li>نسخ الشهادة والمفتاح إلى الخادم</li>
+          <li>تحديث تكوين Nginx</li>
+        </ol>
+
+        <h5 style="margin-top: 20px;">تحديث تكوين Nginx:</h5>
+        <pre>server {
+    listen 443 ssl http2;
+    server_name example.com www.example.com;
+    
+    # تحديث مسارات الشهادة
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+    
+    # معاملات SSL الموصى بها
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+}</pre>
+
+        <h5 style="margin-top: 20px;">التحقق:</h5>
+        <ul class="checklist">
+          <li>فحص الشهادة: <code>openssl s_client -connect example.com:443</code></li>
+          <li>التحقق من CN = example.com (ليس cdnjs.cloudflare.com)</li>
+          <li>التحقق من تاريخ انتهاء الصلاحية</li>
+          <li>فتح في المتصفح - التحقق من عدم وجود تحذيرات</li>
+          <li>فحص SSL Report: https://www.ssllabs.com/</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #2e7d32; margin-top: 30px;">المهمة 3: رؤوس أمان إضافية</h3>
+
+      <div class="task-card">
+        <h4>الأولوية: متوسطة | الجدول الزمني: اليوم 5-7 | المسؤول: DevOps + الأمان</h4>
+        
+        <h5>مجموعة رؤوس الأمان المتكاملة:</h5>
+        <pre>server {
+    # حماية Clickjacking
+    add_header X-Frame-Options "DENY" always;
+    
+    # منع كشف نوع MIME
+    add_header X-Content-Type-Options "nosniff" always;
+    
+    # حماية XSS
+    add_header X-XSS-Protection "1; mode=block" always;
+    
+    # سياسة Referrer
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    
+    # سياسة الميزات/الأذونات
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+    
+    # HSTS
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+}</pre>
+
+        <h5 style="margin-top: 20px;">الاختبار:</h5>
+        <ul class="checklist">
+          <li>التحقق من جميع الرؤوس: <code>curl -I https://example.com</code></li>
+          <li>التأكد من وجود جميع الرؤوس الـ 6</li>
+          <li>فحص HSTS preload: https://hstspreload.org</li>
+          <li>اختبار وظيفي شامل للتطبيق</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>المرحلة 2: التحقق وإعادة الفحص (اليوم 8)</h2>
+
+      <h3>عملية التحقق:</h3>
+      <ul class="checklist">
+        <li>إعادة تشغيل Nikto: <code>nikto -h https://example.com -ssl -o rescan.html</code></li>
+        <li>مقارنة مع التقرير الأصلي</li>
+        <li>التحقق من حل جميع المشاكل الـ 3</li>
+        <li>توثيق النتائج في CHANGELOG</li>
+        <li>إبلاغ الإدارة بالاكتمال</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">التوثيق:</h3>
+      <pre>## 2026-01-14 - إصلاحات أمان Nikto
+
+### الإجراءات المكتملة:
+- [x] إضافة رأس X-Frame-Options: DENY
+- [x] تثبيت شهادة SSL لـ example.com  
+- [x] نشر رؤوس أمان إضافية
+- [x] إعادة فحص Nikto مكتملة
+
+### الحالة:
+✓ تمت معالجة جميع المشاكل
+✓ الشهادة صالحة حتى 2027-01-14
+✓ جميع رؤوس الأمان نشطة</pre>
+    </div>
+
+    <div class="section">
+      <h2>الصيانة المنتظمة</h2>
+
+      <h3>أسبوعيا (كل يوم اثنين):</h3>
+      <ul class="checklist">
+        <li>فحص سجلات أخطاء Nginx لمشاكل SSL</li>
+        <li>التحقق من وجود جميع الرؤوس</li>
+        <li>فحص حالة الشهادة</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">شهريا:</h3>
+      <ul class="checklist">
+        <li>تشغيل فحص Nikto</li>
+        <li>البحث عن CVEs جديدة</li>
+        <li>التحقق من انتهاء صلاحية الشهادة</li>
+        <li>تحديث توثيق التكوين</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">سنويا:</h3>
+      <ul class="checklist">
+        <li>تجديد شهادة SSL (30 يوم قبل انتهاء الصلاحية)</li>
+        <li>تدقيق أمان خادم ويب شامل</li>
+        <li>تحديث سياسات الأمان</li>
+      </ul>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>خطة عملياتية من فحص أمان Nikto.<br>التاريخ: 13 يناير 2026<br>حدّث عند الانتهاء من الإجراءات.</p>
+    </div>
+  </main>
+</body>
+</html>

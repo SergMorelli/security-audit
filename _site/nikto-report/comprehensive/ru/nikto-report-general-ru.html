@@ -3,183 +3,277 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>niktoreport comprehensive ru</title>
+  <title>Комплексный отчет Nikto - example.com</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 6px solid #26c6da; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #26c6da; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    .report-header .tool { font-size: 1.1em; color: #7f8c8d; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-medium { background: #fff3e0; color: #e65100; }
+    .badge-low { background: #e8f5e9; color: #2e7d32; }
+    .badge-info { background: #e3f2fd; color: #1565c0; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .vulnerability-card { background: white; border-left: 5px solid #e65100; padding: 20px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .vulnerability-card h4 { color: #e65100; margin-bottom: 10px; }
+    
+    .tech-info { background: #f0f7ff; border-left: 5px solid #26c6da; padding: 20px; margin: 20px 0; border-radius: 4px; }
+    .tech-info h4 { color: #00838f; }
   </style>
 </head>
 <body>
   <main>
-    <h1>niktoreport comprehensive ru</h1>
-    <pre>
-   Отчет по результатам сканирования безопасности: веб-
-                     сайт example.com
-                      Специалист по информационной безопасности
-                                        2026-01-17
+    <div class="report-header">
+      <h1>Комплексный отчет безопасности веб-сервера</h1>
+      <p class="subtitle">Сканирование Nikto для веб-приложений</p>
+      <p class="domain">example.com</p>
+      <p class="tool">Инструмент: <strong>Nikto 2.1.5</strong> | Дата: <strong>13 января 2026</strong></p>
+    </div>
 
+    <div class="section">
+      <h2>Резюме сканирования</h2>
+      <p>Отчет представляет результаты комплексного сканирования безопасности веб-сайта https://example.com с использованием инструмента <strong>Nikto 2.1.5</strong>. Сканирование выявило <strong>3 потенциальные проблемы</strong>, требующие внимания администраторов.</p>
+      
+      <h3>Статистика сканирования:</h3>
+      <table>
+        <thead><tr><th>Параметр</th><th>Значение</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Целевой хост</strong></td><td>example.com (188.114.96.12)</td></tr>
+          <tr><td><strong>Порт</strong></td><td>443 (HTTPS)</td></tr>
+          <tr><td><strong>HTTP-сервер</strong></td><td>Cloudflare</td></tr>
+          <tr><td><strong>Дата сканирования</strong></td><td>13 января 2026 г., 05:24:40</td></tr>
+          <tr><td><strong>Время выполнения</strong></td><td>6 минут 31 секунда (391 сек)</td></tr>
+          <tr><td><strong>Проверено элементов</strong></td><td>6,544</td></tr>
+          <tr><td><strong>Выявлено проблем</strong></td><td>3</td></tr>
+          <tr><td><strong>Обнаружено ошибок</strong></td><td>0</td></tr>
+        </tbody>
+      </table>
 
-Краткое резюме
-Данный отчет представляет результаты комплексного сканирования безопасности веб-
-сайта example.com (IP: 188.114.96.12), проведенного 13 января 2026 года с
-использованием инструмента Nikto 2.1.5. Сканирование выявило 3 потенциальные
-проблемы безопасности, требующие внимания администраторов.
-      Общая оценка безопасности: СРЕДНИЙ УРОВЕНЬ РИСКА
-      Выявленные проблемы не представляют критической угрозы, но требуют
-      устранения для повышения общего уровня безопасности.
+      <h3 style="margin-top: 30px;">Общая оценка безопасности: СРЕДНИЙ УРОВЕНЬ РИСКА</h3>
+      <p style="margin: 15px 0;">Выявленные проблемы не представляют критической угрозы, но требуют устранения для повышения общего уровня безопасности веб-приложения и защиты пользователей.</p>
+    </div>
 
+    <div class="section">
+      <h2>Выявленные проблемы</h2>
 
+      <h3 style="color: #e65100;">🟡 (1) Отсутствие заголовка X-Frame-Options</h3>
 
-Детали сканирования
-Технические параметры
-Параметр                    Значение
-Целевой хост                example.com
-IP-адрес                    188.114.96.12
-Порт                        443 (HTTPS)
-HTTP-сервер                 Cloudflare
-Инструмент сканирования Nikto 2.1.5
-Дата проведения             13 января 2026 г.
-Время начала                05:24:40
-Время завершения            05:31:11
-Общее время                 6 минут 31 секунда (391 сек)
+      <div class="vulnerability-card">
+        <h4>Уровень риска: СРЕДНИЙ</h4>
+        <p><span class="badge badge-medium">OSVDB-0</span></p>
+        
+        <h5 style="margin-top: 15px; color: #e65100;">Описание проблемы:</h5>
+        <p>Отсутствует заголовок безопасности X-Frame-Options, который защищает от атак типа clickjacking. Этот заголовок критичен для предотвращения встраивания сайта в iframe на вредоносных ресурсах.</p>
 
-Статистика сканирования
-  •     Проверено элементов: 6,544
-  •     Обнаружено ошибок: 0
-  •     Выявлено проблем: 3
+        <h5 style="margin-top: 15px; color: #e65100;">Техническая информация:</h5>
+        <ul>
+          <li><strong>URI:</strong> /</li>
+          <li><strong>HTTP-метод:</strong> GET</li>
+          <li><strong>Затронутые эндпоинты:</strong> https://example.com:443/</li>
+        </ul>
 
-Параметры командной строки
-nikto -h https://example.com -ssl -o https_scan.html -F html
-Выявленные уязвимости и проблемы
-1. Отсутствие заголовка X-Frame-Options
-Уровень риска: 🟡 Средний
+        <h5 style="margin-top: 15px; color: #e65100;">Потенциальные последствия:</h5>
+        <ul>
+          <li>Возможность проведения атак clickjacking</li>
+          <li>Встраивание сайта в iframe на вредоносных ресурсах</li>
+          <li>Обман пользователей через скрытые элементы интерфейса</li>
+          <li>Перенаправление действий пользователя на вредоносные ресурсы</li>
+        </ul>
 
-Описание проблемы: Отсутствует заголовок безопасности X-Frame-Options, который
-защищает от атак типа clickjacking.
-Техническая информация:
-  •   URI: /
-  •   HTTP-метод: GET
-  •   OSVDB ID: OSVDB-0
-  •   Тестовые ссылки: https://example.com:443/
-Потенциальные последствия:
-  •   Возможность проведения атак clickjacking
-  •   Встраивание сайта в iframe на вредоносных ресурсах
-  •   Обман пользователей через скрытые элементы интерфейса
+        <h5 style="margin-top: 15px; color: #27ae60;">Решение:</h5>
+        <pre>// Конфигурация LiteSpeed/Nginx
+add_header X-Frame-Options "DENY" always;
+// или
+add_header X-Frame-Options "SAMEORIGIN" always;
 
-2. Нестандартный заголовок cf-ray
-Уровень риска: 🟢 Низкий (информационный)
+// Альтернатива через CSP
+add_header Content-Security-Policy "frame-ancestors 'none';" always;</pre>
+      </div>
 
-Описание проблемы: Обнаружен нестандартный заголовок 'cf-ray' с содержимым:
-9bd22015ba62bc6c-ZRH
-Техническая информация:
-  •   URI: /
-  •   HTTP-метод: GET
-  •   Значение заголовка: 9bd22023ba62bc6c-ZRH
-  •   OSVDB ID: OSVDB-0
-  •   Тестовые ссылки: https://example.com:443/
-Комментарий: Данный заголовок является стандартным для сервисов Cloudflare и
-используется для трассировки запросов. Не представляет угрозы безопасности.
+      <h3 style="color: #2e7d32; margin-top: 30px;">🟢 (2) Нестандартный заголовок cf-ray</h3>
 
-3. Несоответствие SSL-сертификата
-Уровень риска: 🟡 Средний
+      <div class="vulnerability-card" style="border-left-color: #2e7d32;">
+        <h4>Уровень риска: НИЗКИЙ (Информационный)</h4>
+        <p><span class="badge badge-info">Информация</span></p>
+        
+        <h5 style="margin-top: 15px;">Описание:</h5>
+        <p>Обнаружен нестандартный заголовок <code>cf-ray</code> с содержимым: <code>9bd22015ba62bc6c-ZRH</code></p>
 
-Описание проблемы: Имя хоста 'example.com' не соответствует Common Name (CN) SSL-
-сертификата 'cdnjs.cloudflare.com'
-Техническая информация:
-  •   URI: /
-  •   HTTP-метод: GET
-  •   Ожидаемое CN: example.com
-  •   Фактическое CN: cdnjs.cloudflare.com
-  •    OSVDB ID: OSVDB-0
-  •    Тестовые ссылки: https://example.com:443/
-Потенциальные последствия:
-  •    Предупреждения браузера о небезопасном соединении
-  •    Снижение доверия пользователей
-  •    Возможные проблемы с SEO и индексацией
+        <h5 style="margin-top: 15px;">Анализ:</h5>
+        <p>Данный заголовок является <strong>стандартным для сервисов Cloudflare</strong> и используется для трассировки запросов и диагностики проблем. <strong>Не представляет угрозы безопасности</strong> и может использоваться для отладки.</p>
 
+        <h5 style="margin-top: 15px;">Статус:</h5>
+        <p style="color: #27ae60;">✓ Информационно, не требует действий</p>
+      </div>
 
+      <h3 style="color: #e65100; margin-top: 30px;">🟡 (3) Несоответствие SSL-сертификата</h3>
 
-Рекомендации по устранению
-Приоритетные действия
-  1.   Настройка заголовка X-Frame-Options
+      <div class="vulnerability-card">
+        <h4>Уровень риска: СРЕДНИЙ</h4>
+        <p><span class="badge badge-medium">OSVDB-0</span></p>
+        
+        <h5 style="margin-top: 15px; color: #e65100;">Описание проблемы:</h5>
+        <p>Имя хоста <code>example.com</code> не соответствует Common Name (CN) SSL-сертификата <code>cdnjs.cloudflare.com</code>. Это может вызвать предупреждения браузера и снизить доверие пользователей.</p>
 
-         –   Добавить заголовок X-Frame-Options: DENY или X-Frame-Options:
-             SAMEORIGIN
-         –   Альтернативно: использовать CSP-заголовок с директивой frame-ancestors
-  2.   Исправление SSL-сертификата
+        <h5 style="margin-top: 15px; color: #e65100;">Техническая информация:</h5>
+        <ul>
+          <li><strong>Ожидаемое CN:</strong> example.com</li>
+          <li><strong>Фактическое CN:</strong> cdnjs.cloudflare.com</li>
+          <li><strong>Тип проблемы:</strong> Mismatch в сертификате</li>
+        </ul>
 
-         –   Получить корректный SSL-сертификат для домена example.com
-         –   Обновить конфигурацию Cloudflare для использования правильного
-             сертификата
-         –   Проверить настройки DNS и проксирования
+        <h5 style="margin-top: 15px; color: #e65100;">Потенциальные последствия:</h5>
+        <ul>
+          <li>Предупреждения браузера о небезопасном соединении</li>
+          <li>Снижение доверия пользователей к сайту</li>
+          <li>Возможные проблемы с SEO и индексацией</li>
+          <li>Блокирование доступа некоторыми браузерами</li>
+        </ul>
 
-Дополнительные меры безопасности
-  •    Внедрение Content Security Policy (CSP)
+        <h5 style="margin-top: 15px; color: #27ae60;">Решение:</h5>
+        <ul>
+          <li>Получить корректный SSL-сертификат для домена example.com</li>
+          <li>Обновить конфигурацию Cloudflare для использования правильного сертификата</li>
+          <li>Проверить настройки DNS и проксирования в панели управления Cloudflare</li>
+          <li>Пересоздать правило маршрутизации с корректным CN</li>
+        </ul>
+      </div>
+    </div>
 
-         –   Настройка комплексной политики безопасности контента
-         –   Защита от XSS-атак и других векторов
-  •    Добавление дополнительных заголовков безопасности:
+    <div class="section">
+      <h2>Технические параметры сканирования</h2>
 
-         –   X-Content-Type-Options: nosniff
-         –   X-XSS-Protection: 1; mode=block
-         –   Strict-Transport-Security: max-age=31536000
-  •    Регулярное сканирование безопасности
+      <div class="tech-info">
+        <h4>Параметры командной строки Nikto:</h4>
+        <pre>nikto -h https://example.com -ssl -o https_scan.html -F html</pre>
+      </div>
 
-         –   Проведение ежемесячных проверок
-         –   Мониторинг новых уязвимостей
+      <h3>Статистика по категориям:</h3>
+      <table>
+        <thead><tr><th>Категория</th><th>Количество</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Проверенные элементы</strong></td><td>6,544</td><td>✓</td></tr>
+          <tr><td><strong>Ошибки сканирования</strong></td><td>0</td><td>✓</td></tr>
+          <tr><td><strong>Выявленные проблемы</strong></td><td>3</td><td>⚠</td></tr>
+          <tr><td><strong>Критические уязвимости</strong></td><td>0</td><td>✓</td></tr>
+          <tr><td><strong>Средний риск</strong></td><td>2</td><td>⚠</td></tr>
+          <tr><td><strong>Низкий риск</strong></td><td>1</td><td>ℹ</td></tr>
+        </tbody>
+      </table>
+    </div>
 
+    <div class="section">
+      <h2>План устранения проблем</h2>
 
+      <h3 style="color: #c0392b;">Немедленные действия (1-3 дня)</h3>
+      <ul>
+        <li><strong>Настроить заголовок X-Frame-Options</strong> в конфигурации веб-сервера (Nginx/LiteSpeed):
+          <ul style="margin-top: 10px;">
+            <li>Добавить <code>add_header X-Frame-Options "DENY"</code></li>
+            <li>Провести тестирование на staging</li>
+            <li>Развернуть на production</li>
+          </ul>
+        </li>
+        <li><strong>Связаться с технической поддержкой Cloudflare</strong> по вопросу SSL-сертификата</li>
+      </ul>
 
-План действий
-Немедленные действия (1-3 дня)
-  •    ☐ Настроить заголовок X-Frame-Options в конфигурации веб-сервера
-  •    ☐ Связаться с технической поддержкой Cloudflare по вопросу SSL-сертификата
+      <h3 style="color: #e65100; margin-top: 25px;">Краткосрочные действия (1-2 недели)</h3>
+      <ul>
+        <li><strong>Получить и установить корректный SSL-сертификат</strong>:
+          <ul style="margin-top: 10px;">
+            <li>Создать CSR для example.com</li>
+            <li>Установить сертификат через Cloudflare SSL/TLS</li>
+            <li>Провести проверку браузером</li>
+          </ul>
+        </li>
+        <li><strong>Внедрить дополнительные заголовки безопасности</strong>:
+          <ul style="margin-top: 10px;">
+            <li><code>X-Content-Type-Options: nosniff</code></li>
+            <li><code>X-XSS-Protection: 1; mode=block</code></li>
+            <li><code>Strict-Transport-Security: max-age=31536000</code></li>
+          </ul>
+        </li>
+        <li><strong>Провести повторное сканирование</strong> Nikto для проверки исправлений</li>
+      </ul>
 
-Краткосрочные действия (1-2 недели)
-  •    ☐ Получить и установить корректный SSL-сертификат
-  •   ☐ Внедрить дополнительные заголовки безопасности
-  •   ☐ Провести повторное сканирование для проверки исправлений
+      <h3 style="color: #2980b9; margin-top: 25px;">Долгосрочные действия (1 месяц+)</h3>
+      <ul>
+        <li>Разработать политику регулярного сканирования безопасности (ежемесячно)</li>
+        <li>Внедрить систему мониторинга безопасности для отслеживания новых уязвимостей</li>
+        <li>Обучение команды лучшим практикам веб-безопасности и конфигурации заголовков</li>
+        <li>Автоматизация проверок безопасности в CI/CD pipeline</li>
+      </ul>
+    </div>
 
-Долгосрочные действия (1 месяц)
-  •   ☐ Разработать политику регулярного сканирования безопасности
-  •   ☐ Внедрить систему мониторинга безопасности
-  •   ☐ Обучение команды лучшим практикам веб-безопасности
+    <div class="section">
+      <h2>Рекомендации по дополнительным мерам</h2>
 
+      <h3>Внедрение Content Security Policy (CSP)</h3>
+      <pre>add_header Content-Security-Policy "
+  default-src 'self';
+  script-src 'self' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+  font-src 'self';
+  connect-src 'self';
+  frame-ancestors 'none';
+  upgrade-insecure-requests;" always;</pre>
 
+      <h3 style="margin-top: 25px;">Все рекомендуемые заголовки безопасности:</h3>
+      <pre>add_header X-Frame-Options "DENY" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-XSS-Protection "1; mode=block" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;</pre>
+    </div>
 
-Заключение
-Проведенное сканирование безопасности веб-сайта example.com выявило 3 проблемы
-средней и низкой критичности. Несмотря на отсутствие критических уязвимостей,
-рекомендуется устранить выявленные проблемы для повышения общего уровня
-безопасности.
-Особое внимание следует уделить настройке корректного SSL-сертификата и внедрению
-заголовков безопасности. Эти меры значительно повысят защищенность сайта и доверие
-пользователей.
-Следующее сканирование рекомендуется провести через 2 недели после внедрения
-исправлений для подтверждения их эффективности.
+    <div class="section">
+      <h2>Заключение</h2>
+      <p style="font-size: 1.05em;">Проведенное сканирование безопасности веб-сайта example.com выявило 3 проблемы средней и низкой критичности. Несмотря на отсутствие критических уязвимостей, <strong>рекомендуется устранить выявленные проблемы</strong> для повышения общего уровня безопасности.</p>
 
+      <p style="margin-top: 15px;">Особое внимание следует уделить:</p>
+      <ol style="font-size: 1.05em;">
+        <li><strong>Настройке заголовка X-Frame-Options</strong> - для защиты от clickjacking</li>
+        <li><strong>Исправлению SSL-сертификата</strong> - для обеспечения доверия пользователей</li>
+        <li><strong>Внедрению дополнительных заголовков безопасности</strong> - для комплексной защиты</li>
+      </ol>
 
+      <p style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 6px; color: #1b5e20;">
+        <strong>Рекомендация:</strong> Следующее сканирование провести через 1-2 недели после внедрения исправлений для подтверждения их эффективности.<br>
+        <strong>Частота проверок:</strong> Ежемесячное сканирование безопасности с использованием Nikto
+      </p>
+    </div>
 
-
-Приложение: Техническая информация
-Детали сканирования Nikto
-Программное обеспечение: Nikto 2.1.5
-Количество протестированных хостов: 1
-Общее время выполнения: 391 секунда
-
-Статистика по категориям
-Категория                Количество
-Проверенные элементы     6,544
-Ошибки сканирования      0
-Выявленные проблемы      3
-Критические уязвимости 0
-Средний риск           2
-Низкий риск              1
-
-© 2008 CIRT, Inc. - данные получены с использованием инструмента Nikto
-    </pre>
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Отчет создан на основе Nikto 2.1.5 сканирования безопасности.<br>Дата проведения: 13 января 2026<br>© 2008 CIRT, Inc.</p>
+    </div>
   </main>
 </body>
 </html>

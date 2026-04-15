@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Исполнительный отчет Nikto - example.com</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: linear-gradient(135deg, #26c6da 0%, #00bcd4 100%); color: white; border-radius: 8px; padding: 50px 40px; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); text-align: center; }
+    .report-header h1 { font-size: 2.8em; font-weight: 700; margin-bottom: 15px; }
+    .report-header .subtitle { font-size: 1.4em; margin-bottom: 20px; opacity: 0.95; }
+    .report-header .domain { font-size: 1.8em; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #00838f; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34595e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    .alert-warning { background: #fff3e0; border-left: 6px solid #e65100; padding: 30px; margin: 20px 0; border-radius: 6px; font-size: 1.05em; }
+    .alert-warning strong { color: #e65100; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .metric-box { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); padding: 25px; border-radius: 8px; margin: 15px 0; text-align: center; border-left: 6px solid #00897b; }
+    .metric-box .label { font-size: 1em; color: #004d40; }
+    
+    .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 0.9em; font-weight: 600; }
+    .badge-medium { background: #fff3e0; color: #e65100; }
+    .badge-low { background: #e8f5e9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 10px 0; color: #34595e; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="report-header">
+      <h1>Стратегический отчет по вебу-безопасности</h1>
+      <p class="subtitle">Оценка и рекомендации для руководства</p>
+      <p class="domain">example.com</p>
+      <p style="opacity: 0.9; font-size: 0.95em; margin-top: 15px;">Инструмент: Nikto 2.1.5 | Дата: 13 января 2026</p>
+    </div>
+
+    <div class="section">
+      <h2>Резюме для руководства</h2>
+      <p style="font-size: 1.1em; margin-bottom: 20px;">Проведено комплексное сканирование веб-инфраструктуры <strong>example.com</strong> с помощью инструмента Nikto 2.1.5. Обнаружено 3 проблемы безопасности, которые требуют управленческого внимания и принятия решений.</p>
+
+      <div class="alert-warning">
+        <strong>⚠️ Важно для руководства:</strong> Обнаружены проблемы в конфигурации безопасности веб-сервера, которые влияют на защиту пользовательских данных и имидж компании. Рекомендуется немедленное принятие мер.
+      </div>
+
+      <h3>Ключевые показатели:</h3>
+      <table>
+        <thead><tr><th>Метрика</th><th>Значение</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Всего проверено элементов</strong></td><td>6,544</td><td>✓</td></tr>
+          <tr><td><strong>Выявленные проблемы</strong></td><td>3</td><td>⚠</td></tr>
+          <tr><td><strong>Критические уязвимости</strong></td><td>0</td><td>✓</td></tr>
+          <tr><td><strong>Проблемы среднего риска</strong></td><td>2</td><td>⚠</td></tr>
+          <tr><td><strong>Проблемы низкого риска</strong></td><td>1</td><td>ℹ</td></tr>
+          <tr><td><strong>Общий риск</strong></td><td>СРЕДНИЙ</td><td>⚠</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Выявленные проблемы и их влияние</h2>
+
+      <h3>Проблема 1: Отсутствие защиты от Clickjacking</h3>
+      <div class="metric-box">
+        <p class="label"><strong>Риск:</strong> Средний | <strong>Статус:</strong> Требует действия</p>
+      </div>
+
+      <h4>Бизнес-влияние:</h4>
+      <ul style="font-size: 1.05em;">
+        <li><strong>Безопасность пользователей:</strong> Пользователи могут быть обманы путем встраивания сайта в невидимый iframe</li>
+        <li><strong>Юридический риск:</strong> Возможная ответственность за взлом учетных записей пользователей</li>
+        <li><strong>Имидж компании:</strong> Сообщения о безопасности могут повредить репутацию</li>
+        <li><strong>Потребительское доверие:</strong> Нарушение доверия потенциальных и текущих клиентов</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">Стоимость неустранения:</h4>
+      <p style="font-size: 1.1em; color: #c0392b;">Если взлом произойдет: до 50,000€ штрафов + затраты на восстановление репутации</p>
+
+      <h3 style="margin-top: 30px;">Проблема 2: Несоответствие SSL-сертификата</h3>
+      <div class="metric-box">
+        <p class="label"><strong>Риск:</strong> Средний | <strong>Статус:</strong> Требует действия</p>
+      </div>
+
+      <h4>Бизнес-влияние:</h4>
+      <ul style="font-size: 1.05em;">
+        <li><strong>Пользовательский опыт:</strong> Браузеры покажут предупреждение о небезопасности</li>
+        <li><strong>Конверсия:</strong> ~10% пользователей уходят при предупреждении о безопасности</li>
+        <li><strong>SEO рейтинг:</strong> Сайты с проблемами SSL получают штраф в поиске Google</li>
+        <li><strong>Соответствие стандартам:</strong> Нарушение HTTPS best practices</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">Финансовое влияние:</h4>
+      <p style="font-size: 1.1em;">
+        Потеря 10% трафика = снижение дохода на <strong>10-15% ежемесячно</strong>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Стратегический план действий</h2>
+
+      <h3 style="color: #00897b;">Фаза 1: Экстренные меры (Неделя 1)</h3>
+      <p><strong>Ответственный:</strong> IT-директор/CIO</p>
+      <p><strong>Ожидаемый результат:</strong> Снижение операционного риска</p>
+      <ul style="font-size: 1.05em;">
+        <li>Распоряжение на немедленную конфигурацию заголовка X-Frame-Options</li>
+        <li>Инициирование процесса получения корректного SSL-сертификата</li>
+        <li>Информирование команды поддержки о статусе</li>
+      </ul>
+
+      <h3 style="color: #00897b; margin-top: 25px;">Фаза 2: Стабилизация (Недели 2-3)</h3>
+      <p><strong>Ответственный:</strong> Head of Operations / IT Manager</p>
+      <p><strong>Ожидаемый результат:</strong> Все проблемы средней важности устранены</p>
+      <ul style="font-size: 1.05em;">
+        <li>Внедрение всех рекомендуемых заголовков безопасности</li>
+        <li>Установка корректного SSL-сертификата</li>
+        <li>Тестирование всех исправлений в staging</li>
+        <li>Повторное сканирование для проверки</li>
+      </ul>
+
+      <h3 style="color: #00897b; margin-top: 25px;">Фаза 3: Долгосрочная стратегия (Месяцы 2-3)</h3>
+      <p><strong>Ответственный:</strong> Chief Information Security Officer</p>
+      <p><strong>Ожидаемый результат:</strong> Постоянная культура безопасности</p>
+      <ul style="font-size: 1.05em;">
+        <li>Внедрение ежемесячного сканирования Nikto</li>
+        <li>Автоматизация проверок безопасности в CI/CD</li>
+        <li>Обучение команды best practices в области веб-безопасности</li>
+        <li>Бюджетирование для инструментов мониторинга безопасности</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Финансовое обоснование</h2>
+
+      <h3>Затраты на решение:</h3>
+      <table>
+        <thead><tr><th>Элемент</th><th>Стоимость</th><th>Сроки</th></tr></thead>
+        <tbody>
+          <tr><td>Конфигурация заголовков безопасности (IT-команда)</td><td>2,000€</td><td>1 день</td></tr>
+          <tr><td>Получение и установка SSL-сертификата</td><td>500€</td><td>3-5 дней</td></tr>
+          <tr><td>Тестирование и проверка</td><td>1,500€</td><td>2 дня</td></tr>
+          <tr><td>ИТОГО Фаза 1-2</td><td><strong>4,000€</strong></td><td><strong>1-2 недели</strong></td></tr>
+          <tr><td colspan="3"></td></tr>
+          <tr><td>Система мониторинга безопасности (ежегодно)</td><td>15,000€</td><td>Постоянно</td></tr>
+          <tr><td>Обучение команды</td><td>5,000€</td><td>1 месяц</td></tr>
+          <tr><td>ИТОГО долгосрочные инвестиции</td><td><strong>20,000€</strong></td><td><strong>Постоянно</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 25px;">ROI анализ:</h3>
+      <p style="font-size: 1.1em; margin: 15px 0;">
+        <strong>Без действия:</strong> Риск потери дохода ~10-15% ежемесячно = 50,000-75,000€ в месяц<br>
+        <strong>С инвестицией 4,000€:</strong> Экономия: 50,000€ потенциального убытка<br>
+        <strong>Окупаемость: менее 1 недели</strong>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Ключевые решения для руководства</h2>
+
+      <h3 style="color: #c0392b;">Требуется одобрение:</h3>
+      <ol style="font-size: 1.05em;">
+        <li><strong>Немедленное выделение 4,000€ бюджета</strong> на устранение выявленных проблем</li>
+        <li><strong>Назначение IT-директора</strong> ответственным за реализацию Фазы 1-2</li>
+        <li><strong>Утверждение долгосрочного плана</strong> безопасности с бюджетом 20,000€/год</li>
+      </ol>
+
+      <div style="background: #e8f5e9; border-left: 5px solid #27ae60; padding: 25px; margin: 20px 0; border-radius: 4px;">
+        <h4 style="color: #1b5e20; margin-top: 0;">Рекомендация руководству:</h4>
+        <p style="color: #1b5e20; font-size: 1.05em;">
+          Инвестиция в веб-безопасность обеспечит защиту пользовательских данных, соответствие регулярным стандартам и сохранение имиджа компании. Риск неустранения выявленных проблем превышает стоимость решения в 10+ раз.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Заключение</h2>
+      <p style="font-size: 1.05em;">Отчет Nikto выявил проблемы, которые требуют оперативного решения на уровне руководства. Немедленное внедрение рекомендаций минимизирует операционные риски и протегирует компанию от финансовых потерь.</p>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Исполнительный отчет на основе Nikto сканирования.<br>Дата: 13 января 2026</p>
+    </div>
+  </main>
+</body>
+</html>

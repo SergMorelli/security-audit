@@ -3,178 +3,235 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>niktoreport comprehensive en</title>
+  <title>Comprehensive Nikto Security Report - example.com</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 6px solid #26c6da; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #26c6da; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    .report-header .tool { font-size: 1.1em; color: #7f8c8d; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-medium { background: #fff3e0; color: #e65100; }
+    .badge-low { background: #e8f5e9; color: #2e7d32; }
+    .badge-info { background: #e3f2fd; color: #1565c0; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .vulnerability-card { background: white; border-left: 5px solid #e65100; padding: 20px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .vulnerability-card h4 { color: #e65100; margin-bottom: 10px; }
+    
+    .tech-info { background: #f0f7ff; border-left: 5px solid #26c6da; padding: 20px; margin: 20px 0; border-radius: 4px; }
+    .tech-info h4 { color: #00838f; }
   </style>
 </head>
 <body>
   <main>
-    <h1>niktoreport comprehensive en</h1>
-    <pre>
-              Security Scan Report: example.com Website
-                                Information Security Specialist
+    <div class="report-header">
+      <h1>Comprehensive Web Server Security Report</h1>
+      <p class="subtitle">Nikto Security Scanning Results</p>
+      <p class="domain">example.com</p>
+      <p class="tool">Tool: <strong>Nikto 2.1.5</strong> | Date: <strong>January 13, 2026</strong></p>
+    </div>
 
-                                         2026-01-17
+    <div class="section">
+      <h2>Scan Summary</h2>
+      <p>This report presents the results of a comprehensive security scan of https://example.com using <strong>Nikto 2.1.5</strong>. The scan identified <strong>3 potential security issues</strong> requiring attention.</p>
+      
+      <h3>Scan Statistics:</h3>
+      <table>
+        <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Target Host</strong></td><td>example.com (188.114.96.12)</td></tr>
+          <tr><td><strong>Port</strong></td><td>443 (HTTPS)</td></tr>
+          <tr><td><strong>Web Server</strong></td><td>Cloudflare</td></tr>
+          <tr><td><strong>Scan Date</strong></td><td>January 13, 2026, 05:24:40</td></tr>
+          <tr><td><strong>Duration</strong></td><td>6 minutes 31 seconds (391 sec)</td></tr>
+          <tr><td><strong>Items Tested</strong></td><td>6,544</td></tr>
+          <tr><td><strong>Issues Found</strong></td><td>3</td></tr>
+          <tr><td><strong>Scan Errors</strong></td><td>0</td></tr>
+        </tbody>
+      </table>
 
+      <h3 style="margin-top: 30px;">Overall Security Assessment: MEDIUM RISK LEVEL</h3>
+      <p style="margin: 15px 0;">Identified issues do not represent critical threats but should be addressed to improve overall application security and user protection.</p>
+    </div>
 
-Executive Summary
-This report presents the results of a comprehensive security scan of the example.com
-website (IP: 188.114.96.12), conducted on January 13, 2026, using the Nikto 2.1.5 tool. The
-scan identified 3 potential security issues that require administrator attention.
-      Overall Security Assessment: MEDIUM RISK LEVEL
-      The identified issues do not pose critical threats but require remediation to
-      improve overall security posture.
+    <div class="section">
+      <h2>Identified Issues</h2>
 
+      <h3 style="color: #e65100;">🟡 (1) Missing X-Frame-Options Header</h3>
 
+      <div class="vulnerability-card">
+        <h4>Risk Level: MEDIUM</h4>
+        <p><span class="badge badge-medium">OSVDB-0</span></p>
+        
+        <h5 style="margin-top: 15px; color: #e65100;">Problem Description:</h5>
+        <p>The security header X-Frame-Options is missing, which protects against clickjacking attacks. This header is critical to prevent embedding the site in an iframe on malicious websites.</p>
 
-Scan Details
-Technical Parameters
-Parameter          Value
-Target Host        example.com
-IP Address         188.114.96.12
-Port               443 (HTTPS)
-HTTP Server        Cloudflare
-Scanning Tool      Nikto 2.1.5
-Scan Date          January 13, 2026
-Start Time         05:24:40
-End Time           05:31:11
-Total Duration     6 minutes 31 seconds (391 sec)
+        <h5 style="margin-top: 15px; color: #e65100;">Technical Details:</h5>
+        <ul>
+          <li><strong>URI:</strong> /</li>
+          <li><strong>HTTP Method:</strong> GET</li>
+          <li><strong>Affected Endpoints:</strong> https://example.com:443/</li>
+        </ul>
 
-Scan Statistics
-  •     Items Checked: 6,544
-  •     Errors Found: 0
-  •     Issues Identified: 3
+        <h5 style="margin-top: 15px; color: #e65100;">Potential Consequences:</h5>
+        <ul>
+          <li>Clickjacking attack vulnerability</li>
+          <li>Site embedding in iframe on malicious resources</li>
+          <li>User deception through hidden interface elements</li>
+          <li>Redirection of user actions to malicious sites</li>
+        </ul>
 
-Command Line Parameters
-nikto -h https://example.com -ssl -o https_scan.html -F html
-Identified Vulnerabilities and Issues
-1. Missing X-Frame-Options Header
-Risk Level: 🟡 Medium
+        <h5 style="margin-top: 15px; color: #27ae60;">Remediation:</h5>
+        <pre>// LiteSpeed/Nginx Configuration
+add_header X-Frame-Options "DENY" always;
+// or
+add_header X-Frame-Options "SAMEORIGIN" always;
 
-Issue Description: The anti-clickjacking X-Frame-Options header is not present, leaving
-the site vulnerable to clickjacking attacks.
-Technical Information:
-  •    URI: /
-  •    HTTP Method: GET
-  •    OSVDB ID: OSVDB-0
-  •    Test Links: https://example.com:443/
-Potential Impact:
-  •    Possibility of clickjacking attacks
-  •    Site embedding in iframes on malicious resources
-  •    User deception through hidden interface elements
+// Alternative via CSP
+add_header Content-Security-Policy "frame-ancestors 'none';" always;</pre>
+      </div>
 
-2. Uncommon cf-ray Header
-Risk Level: 🟢 Low (Informational)
+      <h3 style="color: #2e7d32; margin-top: 30px;">🟢 (2) Non-Standard cf-ray Header</h3>
 
-Issue Description: Uncommon header 'cf-ray' found, with contents: 9bd22024ba62be6c-
-ZRH
-Technical Information:
-  •    URI: /
-  •    HTTP Method: GET
-  •    Header Value: 9ty22024ba62bc6c-ZRH
-  •    OSVDB ID: OSVDB-0
-  •    Test Links: https://example.com:443/
-Comment: This header is standard for Cloudflare services and is used for request tracing.
-It does not pose a security threat.
+      <div class="vulnerability-card" style="border-left-color: #2e7d32;">
+        <h4>Risk Level: LOW (Informational)</h4>
+        <p><span class="badge badge-info">Information</span></p>
+        
+        <h5 style="margin-top: 15px;">Description:</h5>
+        <p>Non-standard header <code>cf-ray</code> detected with value: <code>9bd22015ba62bc6c-ZRH</code></p>
 
-3. SSL Certificate Mismatch
-Risk Level: 🟡 Medium
+        <h5 style="margin-top: 15px;">Analysis:</h5>
+        <p>This header is <strong>standard for Cloudflare services</strong> and is used for request tracing and diagnostics. <strong>Does not represent a security threat</strong> and can be used for debugging.</p>
 
-Issue Description: Hostname 'example.com' does not match certificate's CN
-'cdnjs.cloudflare.com'
-Technical Information:
-  •    URI: /
-  •    HTTP Method: GET
-  •    Expected CN: example.com
-  •    Actual CN: cdnjs.cloudflare.com
-  •    OSVDB ID: OSVDB-0
-  •    Test Links: https://example.com:443/
-Potential Impact:
-  •    Browser warnings about insecure connections
-  •    Reduced user trust
-  •    Possible SEO and indexing issues
+        <h5 style="margin-top: 15px;">Status:</h5>
+        <p style="color: #27ae60;">✓ Informational, no action required</p>
+      </div>
 
+      <h3 style="color: #e65100; margin-top: 30px;">🟡 (3) SSL Certificate Mismatch</h3>
 
+      <div class="vulnerability-card">
+        <h4>Risk Level: MEDIUM</h4>
+        <p><span class="badge badge-medium">OSVDB-0</span></p>
+        
+        <h5 style="margin-top: 15px; color: #e65100;">Problem Description:</h5>
+        <p>Hostname <code>example.com</code> does not match Common Name (CN) of SSL certificate <code>cdnjs.cloudflare.com</code>. This may cause browser warnings and reduce user trust.</p>
 
-Remediation Recommendations
-Priority Actions
-  1.   Configure X-Frame-Options Header
+        <h5 style="margin-top: 15px; color: #e65100;">Technical Details:</h5>
+        <ul>
+          <li><strong>Expected CN:</strong> example.com</li>
+          <li><strong>Actual CN:</strong> cdnjs.cloudflare.com</li>
+          <li><strong>Issue Type:</strong> Certificate mismatch</li>
+        </ul>
 
-         –    Add header X-Frame-Options: DENY or X-Frame-Options: SAMEORIGIN
-         –    Alternative: use CSP header with frame-ancestors directive
-  2.   Fix SSL Certificate
+        <h5 style="margin-top: 15px; color: #e65100;">Potential Consequences:</h5>
+        <ul>
+          <li>Browser security warnings</li>
+          <li>Reduced user trust in the site</li>
+          <li>Potential SEO and indexing issues</li>
+          <li>Browser blocking access</li>
+        </ul>
 
-         –    Obtain correct SSL certificate for example.com domain
-         –    Update Cloudflare configuration to use proper certificate
-         –    Verify DNS and proxy settings
+        <h5 style="margin-top: 15px; color: #27ae60;">Remediation:</h5>
+        <ul>
+          <li>Obtain correct SSL certificate for example.com domain</li>
+          <li>Update Cloudflare configuration to use correct certificate</li>
+          <li>Verify DNS and proxy settings in Cloudflare panel</li>
+          <li>Recreate routing rule with correct CN</li>
+        </ul>
+      </div>
+    </div>
 
-Additional Security Measures
-  •    Implement Content Security Policy (CSP)
+    <div class="section">
+      <h2>Scanning Technical Parameters</h2>
 
-         –  Configure comprehensive content security policy
-         –  Protection against XSS attacks and other vectors
-  •    Add Additional Security Headers:
+      <div class="tech-info">
+        <h4>Nikto Command Line Parameters:</h4>
+        <pre>nikto -h https://example.com -ssl -o https_scan.html -F html</pre>
+      </div>
 
-         –   X-Content-Type-Options: nosniff
-         –   X-XSS-Protection: 1; mode=block
-         –   Strict-Transport-Security: max-age=31536000
-  •    Regular Security Scanning
+      <h3>Statistics by Category:</h3>
+      <table>
+        <thead><tr><th>Category</th><th>Count</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Items Tested</strong></td><td>6,544</td><td>✓</td></tr>
+          <tr><td><strong>Scan Errors</strong></td><td>0</td><td>✓</td></tr>
+          <tr><td><strong>Issues Found</strong></td><td>3</td><td>⚠</td></tr>
+          <tr><td><strong>Critical Issues</strong></td><td>0</td><td>✓</td></tr>
+          <tr><td><strong>Medium Risk</strong></td><td>2</td><td>⚠</td></tr>
+          <tr><td><strong>Low Risk</strong></td><td>1</td><td>ℹ</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-         –    Conduct monthly security assessments
-         –    Monitor for new vulnerabilities
+    <div class="section">
+      <h2>Remediation Plan</h2>
 
+      <h3 style="color: #c0392b;">Immediate Actions (1-3 Days)</h3>
+      <ul>
+        <li><strong>Configure X-Frame-Options header</strong> in web server configuration:
+          <ul style="margin-top: 10px;">
+            <li>Add <code>add_header X-Frame-Options "DENY"</code></li>
+            <li>Test on staging</li>
+            <li>Deploy to production</li>
+          </ul>
+        </li>
+        <li><strong>Contact Cloudflare technical support</strong> regarding SSL certificate issue</li>
+      </ul>
 
+      <h3 style="color: #e65100; margin-top: 25px;">Short-term Actions (1-2 Weeks)</h3>
+      <ul>
+        <li><strong>Obtain and install correct SSL certificate</strong></li>
+        <li><strong>Implement additional security headers</strong></li>
+        <li><strong>Re-run Nikto scan</strong> to verify fixes</li>
+      </ul>
 
-Action Plan
-Immediate Actions (1-3 days)
-  •    ☐ Configure X-Frame-Options header in web server configuration
-  •    ☐ Contact Cloudflare technical support regarding SSL certificate issue
+      <h3 style="color: #2980b9; margin-top: 25px;">Long-term Actions (1+ Month)</h3>
+      <ul>
+        <li>Establish regular security scanning policy (monthly)</li>
+        <li>Implement security monitoring system</li>
+        <li>Team training on security best practices</li>
+        <li>Automate security checks in CI/CD pipeline</li>
+      </ul>
+    </div>
 
-Short-term Actions (1-2 weeks)
-  •    ☐ Obtain and install correct SSL certificate
-  •    ☐ Implement additional security headers
-  •    ☐ Conduct follow-up scan to verify fixes
-Long-term Actions (1 month)
-  •    ☐ Develop regular security scanning policy
-  •    ☐ Implement security monitoring system
-  •    ☐ Train team on web security best practices
+    <div class="section">
+      <h2>Conclusion</h2>
+      <p style="font-size: 1.05em;">The security scan identified 3 medium and low severity issues. Despite the absence of critical vulnerabilities, <strong>remediation of identified issues is recommended</strong> to improve overall security posture.</p>
 
+      <p style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 6px; color: #1b5e20;">
+        <strong>Recommendation:</strong> Re-run the scan 1-2 weeks after implementing fixes to confirm effectiveness.<br>
+        <strong>Scan Frequency:</strong> Monthly security scanning using Nikto
+      </p>
+    </div>
 
-
-Conclusion
-The security scan of example.com website identified 3 issues of medium and low
-criticality. Despite the absence of critical vulnerabilities, it is recommended to address the
-identified issues to improve overall security posture.
-Special attention should be paid to configuring the correct SSL certificate and
-implementing security headers. These measures will significantly enhance site security and
-user trust.
-The next scan is recommended in 2 weeks after implementing fixes to confirm their
-effectiveness.
-
-
-
-
-Appendix: Technical Information
-Nikto Scan Details
-Software: Nikto 2.1.5
-Hosts Tested: 1
-Total Execution Time: 391 seconds
-
-Statistics by Category
-Category                   Count
-Items Checked              6,544
-Scan Errors                0
-Issues Identified          3
-Critical Vulnerabilities   0
-Medium Risk                2
-Low Risk                   1
-
-© 2008 CIRT, Inc. - data obtained using Nikto tool
-    </pre>
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Report generated from Nikto 2.1.5 security scanning.<br>Scan Date: January 13, 2026<br>© 2008 CIRT, Inc.</p>
+    </div>
   </main>
 </body>
 </html>

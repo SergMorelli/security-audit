@@ -3,48 +3,98 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>technical report ru</title>
+  <title>Technical Security Report - Технический отчет</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.6; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 6px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #2980b9; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .alert-critical { background: #ffebee; border-left: 5px solid #c0392b; padding: 25px; margin: 20px 0; border-radius: 4px; font-size: 1.05em; color: #a00; }
+    .alert-critical strong { color: #c0392b; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .critical-row { background: #ffebee; color: #c62828; }
+    .critical-row:hover { background: #ffcdd2 !important; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    .badge-low { background: #c8e6c9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .vulnerability-cve { background: white; border-left: 5px solid #e74c3c; padding: 20px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .vulnerability-cve h4 { color: #c0392b; margin-bottom: 10px; }
+    
+    .fix-section { background: #e8f5e9; border-left: 5px solid #27ae60; padding: 20px; margin: 15px 0; border-radius: 4px; }
+    .fix-section h4 { color: #1b5e20; margin-bottom: 10px; }
+    .fix-section li { color: #1b5e20; }
   </style>
 </head>
 <body>
   <main>
-    <h1>technical report ru</h1>
-    <pre>
- Технический отчет по аудиту безопасности: example.com
-            Старший специалист по информационной безопасности
+    <div class="report-header">
+      <h1>Технический отчет</h1>
+      <p class="subtitle">Аудит безопасности</p>
+      <p class="domain">example.com</p>
+      <p style="color: #7f8c8d; font-size: 0.95em; margin-top: 15px;">Старший специалист по информационной безопасности</p>
+      <p class="report-meta" style="color: #7f8c8d; font-size: 0.9em; margin-top: 5px;">Дата отчета: 17 декабря 2025</p>
+    </div>
 
-                                        2025-12-17
+    <div class="section">
+      <h2>Исполнительное резюме</h2>
+      <p>Проведен комплексный технический аудит веб-инфраструктуры <strong>example.com</strong> с использованием стандартных инструментов сканирования. Выявлены критические уязвимости конфигурации, требующие немедленного устранения в соответствии с Microsoft Security Development Lifecycle (SDL).</p>
+      
+      <h3 style="color: #c0392b;">Критические находки:</h3>
+      <ul>
+        <li>Ошибка конфигурации порта 8443 (HTTP 523)</li>
+        <li>Открытый нестандартный порт 8080</li>
+        <li>Раскрытая версия WordPress 6.9</li>
+        <li>Отсутствие критических security headers</li>
+      </ul>
+    </div>
 
+    <div class="section">
+      <h2>Техническая информация о тестировании</h2>
+      <h3>Инструменты и версии</h3>
+      <table>
+        <thead><tr><th>Инструмент</th><th>Версия</th><th>Назначение</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Nmap</strong></td><td>7.94SVN</td><td>Сканирование портов и сервисов</td></tr>
+          <tr><td><strong>SSLScan</strong></td><td>2.1.2</td><td>Анализ SSL/TLS конфигурации</td></tr>
+          <tr><td><strong>OpenSSL</strong></td><td>3.0.13</td><td>Криптографический анализ</td></tr>
+          <tr><td><strong>cURL</strong></td><td>8,.5.0</td><td>HTTP/HTTPS тестирование</td></tr>
+        </tbody>
+      </table>
 
-Исполнительное резюме
-Проведен комплексный технический аудит веб-инфраструктуры example.com с
-использованием стандартных инструментов сканирования. Выявлены
-критические уязвимости конфигурации, требующие немедленного устранения
-в соответствии с Microsoft Security Development Lifecycle (SDL).
-
-Критические находки: - Ошибка конфигурации порта 8443 (HTTP 523) -
-Открытый нестандартный порт 8080 - Раскрытая версия WordPress 6.9 -
-Отсутствие критических security headers
-
-
-Техническая информация о тестировании
-Инструменты и версии
-Инструмент Версия        Назначение
-Nmap           7.94SVN Сканирование портов и сервисов
-SSLScan        2.1.2     Анализ SSL/TLS конфигурации
-OpenSSL        3.0.13    Криптографический анализ
-cURL           8.5.0     HTTP/HTTPS тестирование
-
-Команды для воспроизведения
-# Базовое сканирование портов
+      <h3 style="margin-top: 25px;">Команды для воспроизведения</h3>
+      <pre># Базовое сканирование портов
 nmap -Pn -sV example.com
 
-# Детальное сканирование с NSE скриптами
+# Детальное сканирование
 nmap -sV -sC -p 80,443,8080,8443 example.com
 
 # SSL/TLS анализ
@@ -55,294 +105,230 @@ sslscan example.com:8443
 curl -I http://example.com/
 curl -I http://example.com:8080/
 curl -I https://example.com/wp-admin/
-curl -v https://example.com:8443/
-Детальные результаты сканирования
-1. Сканирование портов (Nmap)
-Команда выполнения:
+curl -v https://example.com:8443/</pre>
+    </div>
 
-nmap -sV -sC -p 80,443,8080,8443 example.com
-
-Результаты:
-
-Starting Nmap 7.94SVN at 2025-12-17 13:09 CET
+    <div class="section">
+      <h2>Детальные результаты сканирования</h2>
+      
+      <h3>1. Сканирование портов (Nmap)</h3>
+      <p><strong>Команда выполнения:</strong></p>
+      <pre>nmap -sV -sC -p 80,443,8080,8443 example.com</pre>
+      
+      <p style="margin-top: 20px;"><strong>Результаты:</strong></p>
+      <pre>Starting Nmap 7.94SVN at 2025-12-17 13:09 CET
 Nmap scan report for example.com (192.0.2.1)
 Host is up (0.0023s latency).
-Other addresses: 192.0.2.1 2a06:98c1:3120::c 2a06:98c1:3121::c
+Other addresses for example.com: 192.0.2.1, 2a06:98c1:3120::c
 
 PORT STATE SERVICE VERSION
 80/tcp open http Cloudflare http proxy
 443/tcp open ssl/http Cloudflare http proxy
 8080/tcp open http Cloudflare http proxy
-8443/tcp open ssl/http Cloudflare http proxy
+8443/tcp open ssl/http Cloudflare http proxy</pre>
 
-Технический анализ: - Все порты проксируются через Cloudflare Edge Network -
-IPv4: 192.0.2.1 (Cloudflare ASN 13335) - IPv6: 2a06:98c1:3120::c, 2a06:98c1:3121::c -
-Latency: 2.3ms (оптимальная производительность)
+      <p style="margin-top: 15px;"><strong>Технический анализ:</strong></p>
+      <ul>
+        <li>Все порты проксируются через Cloudflare Edge Network</li>
+        <li>IPv4: 192.0.2.1 (Cloudflare ASN 13335)</li>
+        <li>IPv6: 2a06:98c1:3120::c, 2a06:98c1:3121::c</li>
+        <li>Latency: 2.3ms (оптимальная производительность)</li>
+      </ul>
 
-2. SSL/TLS конфигурация (SSLScan)
-Команды выполнения:
+      <h3 style="margin-top: 30px;">2. SSL/TLS конфигурация (SSLScan)</h3>
+      <h4>Поддерживаемые протоколы</h4>
+      <table>
+        <thead><tr><th>Протокол</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td>SSLv2</td><td><span class="badge badge-low">✓ Отключен</span></td></tr>
+          <tr><td>SSLv3</td><td><span class="badge badge-low">✓ Отключен</span></td></tr>
+          <tr><td>TLSv1.0</td><td><span class="badge badge-low">✓ Отключен</span></td></tr>
+          <tr><td>TLSv1.1</td><td><span class="badge badge-low">✓ Отключен</span></td></tr>
+          <tr><td>TLSv1.2</td><td><span class="badge badge-high">⚠️ Включен (с CBC)</span></td></tr>
+          <tr><td>TLSv1.3</td><td><span class="badge badge-low">✓ Включен</span></td></tr>
+        </tbody>
+      </table>
 
-sslscan example.com:443
-sslscan example.com:8443
+      <h4 style="margin-top: 20px;">Cipher Suites (TLS 1.3)</h4>
+      <ul>
+        <li>Preferred: TLS_AES_128_GCM_SHA256 (Curve 25519 DHE 253)</li>
+        <li>Accepted: TLS_AES_256_GCM_SHA384 (Curve 25519 DHE 253)</li>
+        <li>Accepted: TLS_CHACHA20_POLY1305_SHA256 (Curve 25519 DHE 253)</li>
+      </ul>
 
-Поддерживаемые протоколы
-SSLv2 disabled ✓
-SSLv3 disabled ✓
-TLSv1.0 disabled ✓
-TLSv1.1 disabled ✓
-TLSv1.2 enabled ⚠️
-TLSv1.3 enabled ✓
+      <h4 style="margin-top: 20px;">Cipher Suites (TLS 1.2) - Проблемные</h4>
+      <ul>
+        <li><code>ECDHE-ECDSA-AES128-SHA</code> <span class="badge badge-critical">❌ CBC + SHA-1</span></li>
+        <li><code>ECDHE-ECDSA-AES256-SHA</code> <span class="badge badge-critical">❌ CBC + SHA-1</span></li>
+        <li><code>ECDHE-ECDSA-AES128-SHA256</code> <span class="badge badge-high">⚠️ CBC mode</span></li>
+        <li><code>ECDHE-ECDSA-AES256-SHA384</code> <span class="badge badge-high">⚠️ CBC mode</span></li>
+      </ul>
 
-Cipher Suites (TLS 1.3)
-Preferred TLS_AES_128_GCM_SHA256  Curve 25519 DHE 253
-Accepted TLS_AES_256_GCM_SHA384   Curve 25519 DHE 253
-Accepted TLS_CHACHA20_POLY1305_SHA256 Curve 25519 DHE 253
+      <h4 style="margin-top: 20px;">Сертификат</h4>
+      <ul>
+        <li><strong>Subject:</strong> example.com</li>
+        <li><strong>Alt names:</strong> DNS:example.com, DNS:*.example.com</li>
+        <li><strong>Issuer:</strong> WE1 (Google Trust Services)</li>
+        <li><strong>Valid:</strong> 2025-11-02 10:29:18 GMT - 2026-01-31 11:27:59 GMT</li>
+        <li><strong>Algorithm:</strong> ecdsa-with-SHA256</li>
+        <li><strong>Curve:</strong> prime256v1 (256/128 bits)</li>
+      </ul>
 
-Cipher Suites (TLS 1.2) - Проблемные
-ECDHE-ECDSA-AES128-SHA   ❌ CBC + SHA-1
-ECDHE-ECDSA-AES256-SHA   ❌ CBC + SHA-1
-ECDHE-ECDSA-AES128-SHA256 ⚠️CBC mode
-ECDHE-ECDSA-AES256-SHA384 ⚠️CBC mode
-Сертификат
-Subject: example.com
-Altnames: DNS:example.com, DNS:*.example.com
-Issuer: WE1 (Google Trust Services)
-Valid: 2025-11-02 10:29:18 GMT - 2026-01-31 11:27:59 GMT
-Algorithm: ecdsa-with-SHA256
-Curve: prime256v1 (256/128 bits)
-
-3. HTTP заголовки и конфигурация
-Порт 80 (HTTP → HTTPS редирект)
-
-Команда:
-
-curl -I http://example.com/
-
-Результат:
-
-HTTP/1.1 301 Moved Permanently
+      <h3 style="margin-top: 30px;">3. HTTP заголовки и конфигурация</h3>
+      <h4>Порт 80 (HTTP → HTTPS редирект)</h4>
+      <pre>HTTP/1.1 301 Moved Permanently
 Date: Wed, 17 Dec 2025 12:13:25 GMT
 Location: https://example.com/
 X-Content-Type-Options: nosniff
-Server: cloudflare
-CF-RAY: 9af6559a7f1fb159-ZRH
-alt-svc: h3=":443"; ma=86400
+Server: cloudflare</pre>
 
-Порт 8080 (Проблемная конфигурация)
-
-Команда:
-
-curl -I http://example.com:8080/
-
-Результат:
-
-HTTP/1.1 301 Moved Permanently
-Location: https://example.com:8080/ ⚠️Редирект на нестандартный порт
+      <h4 style="margin-top: 20px;">Порт 8080 (Проблемная конфигурация)</h4>
+      <pre>HTTP/1.1 301 Moved Permanently
+Location: https://example.com:8080/ ⚠️ Редирект на нестандартный порт
 X-Content-Type-Options: nosniff
-Server: cloudflare
+Server: cloudflare</pre>
 
-Порт 8443 (Критическая ошибка)
-
-Команда:
-
-curl -v https://example.com:8443/
-
-Результат:
-
-HTTP/2 523
+      <h4 style="margin-top: 20px;">Порт 8443 (Критическая ошибка)</h4>
+      <pre>HTTP/2 523
 content-type: text/plain; charset=UTF-8
 content-length: 15
 server: cloudflare
 
-error code: 523
-Техническая диагностика: - TLS handshake успешен (TLSv1.3 /
-TLS_AES_256_GCM_SHA384) - HTTP/2 соединение установлено - Cloudflare не
-может подключиться к origin серверу - Origin server не слушает на порту 8443
+error code: 523</pre>
 
-4. WordPress анализ
-Обнаруженная информация:
+      <h4 style="margin-top: 20px;">WordPress анализ</h4>
+      <table>
+        <thead><tr><th>Компонент</th><th>Статус</th><th>Риск</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CMS</strong></td><td>WordPress 6.9</td><td><span class="badge badge-high">Высокий</span></td></tr>
+          <tr class="critical-row"><td><strong>Admin panel</strong></td><td>/wp-admin/ доступна</td><td><span class="badge badge-critical">CRITICAL</span></td></tr>
+          <tr><td><strong>Robots.txt</strong></td><td>Раскрывает структуру</td><td><span class="badge badge-medium">Средний</span></td></tr>
+          <tr><td><strong>Generator</strong></td><td>Версия раскрыта</td><td><span class="badge badge-medium">Средний</span></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-CMS: WordPress 6.9
-Generator: WordPress 6.9 (раскрыто в meta тегах)
-Admin panel: /wp-admin/ (упоминается в robots.txt)
-Robots.txt entries: /, /wp-admin/
+    <div class="section">
+      <h2>Выявленные уязвимости</h2>
+      
+      <h3 style="color: #c0392b;">🔴 Критический уровень (CVSS 7.0-10.0)</h3>
 
-Команды для дополнительной проверки:
+      <div class="vulnerability-cve">
+        <h4>CVE-2025-001: Ошибка конфигурации порта 8443</h4>
+        <span class="badge badge-critical">CVSS 7.5 (High)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> Cloudflare проксирует порт 8443, но origin недоступен</li>
+          <li><strong>Техническая причина:</strong> Cloudflare Edge → Origin недоступен → HTTP 523</li>
+          <li><strong>Эксплуатация:</strong> Информационная утечка, возможность обхода защиты</li>
+          <li><strong>Проверка:</strong> <code>curl -v https://example.com:8443/</code></li>
+        </ul>
+      </div>
 
-# Проверка доступности админ-панели
-curl -I https://example.com/wp-admin/
+      <div class="vulnerability-cve">
+        <h4>CVE-2025-002: Открытый нестандартный порт 8080</h4>
+        <span class="badge badge-critical">CVSS 7.2 (High)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> Альтернативная точка входа может обходить WAF правила</li>
+          <li><strong>Техническая причина:</strong> Различные security policies для разных портов</li>
+          <li><strong>Эксплуатация:</strong> Обход rate limiting, WAF bypass</li>
+        </ul>
+      </div>
 
-# Проверка XML-RPC
-curl -X POST https://example.com/xmlrpc.php \
- -d '&lt;methodCall&gt;&lt;methodName&gt;system.listMethods&lt;/methodName&gt;&lt;/methodCall&gt;'
+      <h3 style="color: #e65100; margin-top: 30px;">🟠 Высокий уровень (CVSS 4.0-6.9)</h3>
 
-# Проверка стандартных WordPress файлов
-for file in readme.html license.txt wp-config.php; do
- echo -n "$file: "
- curl -s -o /dev/null -w "%{http_code}" https://example.com/$file
- echo
-done
+      <div class="vulnerability-cve" style="border-left-color: #f39c12;">
+        <h4 style="color: #e65100;">CVE-2025-003: WordPress информационная утечка</h4>
+        <span class="badge badge-high">CVSS 6.8 (Medium)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> Раскрыта версия WordPress и структура админ-панели</li>
+          <li><strong>HTML мета тег:</strong> <code>&lt;meta name="generator" content="WordPress 6.9" /&gt;</code></li>
+          <li><strong>Robots.txt содержимое:</strong> Раскрывает /wp-admin/ структуру</li>
+          <li><strong>Эксплуатация:</strong> Targeted attacks на известные уязвимости WordPress 6.9</li>
+        </ul>
+      </div>
 
+      <div class="vulnerability-cve" style="border-left-color: #f39c12;">
+        <h4 style="color: #e65100;">CVE-2025-004: Отсутствие критических security headers</h4>
+        <span class="badge badge-high">CVSS 5.5 (Medium)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Отсутствующие заголовки:</strong></li>
+          <li style="margin-left: 20px;"><code>Strict-Transport-Security</code> - ОТСУТСТВУЕТ</li>
+          <li style="margin-left: 20px;"><code>X-Frame-Options</code> - ОТСУТСТВУЕТ</li>
+          <li style="margin-left: 20px;"><code>Content-Security-Policy</code> - ОТСУТСТВУЕТ</li>
+          <li style="margin-left: 20px;"><code>Referrer-Policy</code> - ОТСУТСТВУЕТ</li>
+          <li><strong>Эксплуатация:</strong> Clickjacking, downgrade attacks, XSS</li>
+        </ul>
+      </div>
 
-Выявленные уязвимости
-  Критический уровень (CVSS 7.0-10.0)
-CVE-2025-001: Ошибка конфигурации порта 8443
-  •   CVSS Score: 7.5 (High)
+      <h3 style="color: #6a1b9a; margin-top: 30px;">🟡 Средний уровень (CVSS 2.0-3.9)</h3>
 
-  •    Описание: Cloudflare проксирует порт 8443, но origin недоступен
+      <div class="vulnerability-cve" style="border-left-color: #8e44ad;">
+        <h4 style="color: #6a1b9a;">CVE-2025-005: Устаревшие CBC-шифры</h4>
+        <span class="badge badge-medium">CVSS 3.7 (Low)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Уязвимые шифры:</strong></li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES128-SHA</code> (CBC + SHA-1)</li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES256-SHA</code> (CBC + SHA-1)</li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES128-SHA256</code> (CBC mode)</li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES256-SHA384</code> (CBC mode)</li>
+          <li><strong>Уязвимости:</strong> BEAST, Lucky13, POODLE</li>
+        </ul>
+      </div>
+    </div>
 
-  •    Техническая причина:
+    <div class="section">
+      <h2>Технические рекомендации по устранению</h2>
 
-       Cloudflare Edge → Origin Server:8443
-                    ↓
-                 Connection Failed
-                    ↓
-                 HTTP 523 Error
+      <h3>Немедленные действия (0-24 часа)</h3>
 
-  •    Эксплуатация: Информационная утечка, возможность обхода защиты
+      <div class="fix-section">
+        <h4>1. Исправление порта 8443</h4>
+        <p><strong>Cloudflare Dashboard:</strong></p>
+        <ol>
+          <li>Войти в dash.cloudflare.com</li>
+          <li>Выбрать домен example.com</li>
+          <li>DNS → Найти записи для порта 8443</li>
+          <li>Отключить прокси или удалить запись</li>
+        </ol>
 
-  •    Воспроизведение:
-      curl -v https://example.com:8443/
-      # Ожидаемый результат: HTTP/2 523
-
-CVE-2025-002: Открытый нестандартный порт 8080
-  •   CVSS Score: 7.2 (High)
-
-  •   Описание: Альтернативная точка входа может обходить WAF правила
-
-  •   Техническая причина: Различные security policies для разных портов
-
-  •   Эксплуатация: Обход rate limiting, WAF bypass
-
-  •   Воспроизведение:
-
-      # Сравнение security headers
-      curl -s -I https://example.com/ | grep -i "strict-transport\|x-frame"
-      curl -s -I https://example.com:8080/ | grep -i "strict-transport\|x-frame"
-
-🟠 Высокий уровень (CVSS 4.0-6.9)
-
-CVE-2025-003: WordPress информационная утечка
-  •   CVSS Score: 6.8 (Medium)
-
-  •   Описание: Раскрыта версия WordPress и структура админ-панели
-
-  •   Техническая причина:
-
-      &lt;meta name="generator" content="WordPress 6.9" /&gt;
-
-  •   Robots.txt содержимое:
-
-      User-agent: *
-      Disallow: /
-      Disallow: /wp-admin/
-
-  •   Эксплуатация: Targeted attacks на известные уязвимости WordPress 6.9
-
-CVE-2025-004: Отсутствие критических security headers
-  •   CVSS Score: 5.5 (Medium)
-
-  •   Отсутствующие заголовки:
-
-      Strict-Transport-Security: ОТСУТСТВУЕТ
-      X-Frame-Options: ОТСУТСТВУЕТ
-      Content-Security-Policy: ОТСУТСТВУЕТ
-      Referrer-Policy: ОТСУТСТВУЕТ
-
-  •   Эксплуатация: Clickjacking, downgrade attacks, XSS
-
-🟡 Средний уровень (CVSS 2.0-3.9)
-
-CVE-2025-005: Устаревшие CBC-шифры
-  •   CVSS Score: 3.7 (Low)
-  •   Уязвимые шифры:
-
-      ECDHE-ECDSA-AES128-SHA   (CBC + SHA-1)
-      ECDHE-ECDSA-AES256-SHA   (CBC + SHA-1)
-      ECDHE-ECDSA-AES128-SHA256 (CBC mode)
-      ECDHE-ECDSA-AES256-SHA384 (CBC mode)
-
-  •   Уязвимости: BEAST, Lucky13, POODLE
-
-  •   Проверка:
-
-      sslscan example.com:443 | grep -E "(CBC|SHA\s)"
-
-
-Технические рекомендации по устранению
-Немедленные действия (0-24 часа)
-1. Исправление порта 8443
-Cloudflare Dashboard:
-1. Войти в dash.cloudflare.com
-2. Выбрать домен example.com
-3. DNS → Найти записи для порта 8443
-4. Отключить прокси (серое облако) или удалить запись
-
-Origin Server (Nginx):
-# Вариант 1: Полное отключение
-# Закомментировать или удалить:
-# server {
-# listen 8443 ssl http2;
-# server_name example.com;
-# ...
-#}
-
-# Вариант 2: Редирект на основной порт
-server {
+        <p style="margin-top: 15px;"><strong>Origin Server (Nginx) - Вариант 2: Редирект</strong></p>
+        <pre>server {
   listen 8443 ssl http2;
   server_name example.com;
   ssl_certificate /path/to/cert.pem;
   ssl_certificate_key /path/to/key.pem;
   return 301 https://example.com$request_uri;
-}
+}</pre>
+      </div>
 
-Проверка исправления:
-
-curl -v https://example.com:8443/
-# Ожидаемый результат: Connection refused или 301 redirect
-2. Ограничение порта 8080
-
-Nginx конфигурация:
-
-server {
+      <div class="fix-section">
+        <h4>2. Ограничение порта 8080</h4>
+        <pre>server {
   listen 8080;
   server_name example.com;
 
-    # Только внутренняя сеть
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/8;
-    allow 172.16.0.0/12;
-    deny all;
+  # Только внутренняя сеть
+  allow 192.168.0.0/16;
+  allow 10.0.0.0/8;
+  allow 172.16.0.0/12;
+  deny all;
 
-    # Или полное закрытие
-    # return 444;
-}
+  # Или полное закрытие: return 444;
+}</pre>
+      </div>
 
-Iptables правило:
-
-# Блокировать внешний доступ к порту 8080
-iptables -A INPUT -p tcp --dport 8080 -s 192.168.0.0/16 -j ACCEPT
-iptables -A INPUT -p tcp --dport 8080 -j DROP
-
-3. WordPress hardening
-
-Скрытие версии:
-
-// functions.php
+      <div class="fix-section">
+        <h4>3. WordPress hardening - Скрытие версии</h4>
+        <pre>// functions.php
 function remove_wp_version() {
    return '';
 }
-add_filter('the_generator', 'remove_wp_version');
+add_filter('the_generator', 'remove_wp_version');</pre>
+      </div>
 
-// Удалить из RSS
-function remove_wp_version_rss() {
-   return '';
-}
-add_filter('the_generator', 'remove_wp_version_rss');
-
-Защита wp-admin (.htaccess):
-
-# /wp-admin/.htaccess
+      <div class="fix-section">
+        <h4>4. Защита wp-admin (.htaccess)</h4>
+        <pre># /wp-admin/.htaccess
 AuthType Basic
 AuthName "Admin Area"
 AuthUserFile /var/www/.htpasswd
@@ -351,305 +337,160 @@ Require valid-user
 # IP whitelist альтернатива
 &lt;RequireAll&gt;
   Require ip 192.168.1.0/24
-  Require ip 10.0.0.0/8
-&lt;/RequireAll&gt;
+  Require ip 10.0.0.0/8
+&lt;/RequireAll&gt;</pre>
+      </div>
 
-Создание .htpasswd:
+      <h3 style="margin-top: 30px;">Краткосрочные улучшения (1-7 дней)</h3>
 
-htpasswd -c /var/www/.htpasswd admin
-# Введите пароль при запросе
-
-Краткосрочные улучшения (1-7 дней)
-4. Добавление security headers
-
-Nginx конфигурация:
-
-server {
+      <div class="fix-section">
+        <h4>5. Добавление security headers (Nginx)</h4>
+        <pre>server {
   listen 443 ssl http2;
   server_name example.com;
 
-  # Security Headers
-  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-always;
+  # HSTS
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+  
+  # Framing & Content
   add_header X-Frame-Options "DENY" always;
   add_header X-Content-Type-Options "nosniff" always;
   add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-  add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+  
+  # CSP
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline'" always;
+  
+  # Additional
+  add_header X-XSS-Protection "1; mode=block" always;
+  add_header Expect-CT "max-age=86400, enforce" always;
+}</pre>
+      </div>
 
-  # Content Security Policy (базовый)
-  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;" always;
-
-    # Дополнительные заголовки
-    add_header X-XSS-Protection "1; mode=block" always;
-    add_header Expect-CT "max-age=86400, enforce" always;
-}
-
-Cloudflare Transform Rules:
-// Cloudflare Dashboard → Rules → Transform Rules → Modify Response Header
-// Rule 1: Add HSTS
-if (http.host eq "example.com") {
-  set_response_header("Strict-Transport-Security", "max-age=31536000;
-includeSubDomains; preload");
-}
-
-// Rule 2: Add X-Frame-Options
-if (http.host eq "example.com") {
-  set_response_header("X-Frame-Options", "DENY");
-}
-
-5. SSL/TLS оптимизация
-
-Отключение CBC-шифров:
-ssl_protocols TLSv1.2 TLSv1.3;
-ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-
-SHA384:ECDHE-ECDSA-CHACHA20-
-POLY1305:TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY13
-05_SHA256';
+      <div class="fix-section">
+        <h4>6. SSL/TLS оптимизация</h4>
+        <pre>ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256';
 ssl_prefer_server_ciphers off;
 
-# Дополнительные настройки
+# Session config
 ssl_session_cache shared:SSL:10m;
 ssl_session_timeout 10m;
 ssl_stapling on;
-ssl_stapling_verify on;
+ssl_stapling_verify on;</pre>
+      </div>
 
-Проверка изменений:
+      <div class="fix-section">
+        <h4>7. Cloudflare WAF настройка</h4>
+        <p><strong>Правило 1: Block wp-admin access</strong></p>
+        <pre>Expression: (http.request.uri.path contains "/wp-admin/") and (ip.src ne 192.168.1.1)
+Action: Block</pre>
 
-# Проверить отключение CBC
-sslscan example.com:443 | grep -v "CBC\|SHA\s"
+        <p style="margin-top: 15px;"><strong>Правило 2: Rate limit wp-login</strong></p>
+        <pre>Expression: (http.request.uri.path contains "/wp-login.php")
+Action: Rate limit (5 requests per 5 minutes)</pre>
 
-# Проверить OCSP Stapling
-echo | openssl s_client -connect example.com:443 -status 2&gt;/dev/null | grep -A 17 "OCSP
-response"
+        <p style="margin-top: 15px;"><strong>Правило 3: Block XML-RPC</strong></p>
+        <pre>Expression: (http.request.uri.path eq "/xmlrpc.php")
+Action: Block</pre>
+      </div>
 
-6. Cloudflare WAF настройка
+      <h3 style="margin-top: 30px;">Долгосрочные меры (7-30 дней)</h3>
 
-Правила WAF:
+      <div class="fix-section">
+        <h4>8. Мониторинг и автоматизация</h4>
+        <ul>
+          <li>Автоматическое обновление SSL-сертификатов (Certbot)</li>
+          <li>Мониторинг попыток доступа к защищенным ресурсам</li>
+          <li>Регулярное сканирование на уязвимости</li>
+          <li>Настройка логирования и алертин</li>
+        </ul>
+      </div>
 
-Rule 1: Block wp-admin access
-- Expression: (http.request.uri.path contains "/wp-admin/") and (ip.src ne 192.168.1.1)
-- Action: Block
+      <div class="fix-section">
+        <h4>9. WordPress security плагины</h4>
+        <ul>
+          <li>Wordfence или iThemes Security для защиты</li>
+          <li>Двухфакторная аутентификация (2FA/MFA)</li>
+          <li>Скрытие версии WordPress</li>
+          <li>Автоматические обновления ядра и плагинов</li>
+        </ul>
+      </div>
+    </div>
 
-Rule 2: Rate limit wp-login
-- Expression: (http.request.uri.path contains "/wp-login.php")
-- Action: Rate limit (5 requests per 5 minutes)
+    <div class="section">
+      <h2>Матрица рисков</h2>
+      <table>
+        <thead><tr><th>Уязвимость</th><th>Вероятность</th><th>Воздействие</th><th>Общий риск</th><th>Приоритет</th></tr></thead>
+        <tbody>
+          <tr class="critical-row"><td><strong>Порт 8443</strong></td><td><span class="badge badge-critical">Высокая</span></td><td><span class="badge badge-critical">Высокое</span></td><td><span class="badge badge-critical">CRITICAL</span></td><td><strong>P0</strong></td></tr>
+          <tr><td><strong>Порт 8080</strong></td><td><span class="badge badge-high">Средняя</span></td><td><span class="badge badge-high">Высокое</span></td><td><span class="badge badge-high">HIGH</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>WordPress админ</strong></td><td><span class="badge badge-high">Высокая</span></td><td><span class="badge badge-high">Среднее</span></td><td><span class="badge badge-high">HIGH</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>Security headers</strong></td><td><span class="badge badge-medium">Средняя</span></td><td><span class="badge badge-medium">Среднее</span></td><td><span class="badge badge-medium">MEDIUM</span></td><td><strong>P2</strong></td></tr>
+          <tr><td><strong>CBC-шифры</strong></td><td><span class="badge badge-low">Низкая</span></td><td><span class="badge badge-low">Низкое</span></td><td><span class="badge badge-low">LOW</span></td><td><strong>P3</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-Rule 3: Block XML-RPC
-- Expression: (http.request.uri.path eq "/xmlrpc.php")
-- Action: Block
+    <div class="section">
+      <h2>План устранения</h2>
+      
+      <h3>Фаза 1: Критические исправления (1-2 дня)</h3>
+      <ul>
+        <li>☐ Закрыть порт 8443 в Cloudflare</li>
+        <li>☐ Ограничить доступ к порту 8080</li>
+        <li>☐ Защитить WordPress админ-панель</li>
+        <li>☐ Добавить базовые security headers</li>
+      </ul>
 
-Долгосрочные меры (7-30 дней)
-7. Мониторинг и автоматизация
+      <h3 style="margin-top: 25px;">Фаза 2: Улучшения безопасности (1 неделя)</h3>
+      <ul>
+        <li>☐ Оптимизировать SSL/TLS конфигурацию</li>
+        <li>☐ Настроить Cloudflare WAF правила</li>
+        <li>☐ Установить WordPress security плагины</li>
+        <li>☐ Настроить мониторинг и алертинг</li>
+      </ul>
 
-Скрипт мониторинга портов:
+      <h3 style="margin-top: 25px;">Фаза 3: Долгосрочные меры (1 месяц)</h3>
+      <ul>
+        <li>☐ Автоматизация обновлений</li>
+        <li>☐ Регулярные security аудиты</li>
+        <li>☐ Обучение персонала</li>
+        <li>☐ Документирование процедур</li>
+      </ul>
+    </div>
 
-#!/bin/bash
-# /usr/local/bin/port_monitor.sh
+    <div class="section">
+      <h2>Соответствие стандартам</h2>
+      <table>
+        <thead><tr><th>Стандарт</th><th>Текущий статус</th><th>Требуемые действия</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NIST CSF</strong></td><td><span class="badge badge-medium">Частично</span></td><td>Улучшить Protect, Detect функции</td></tr>
+          <tr class="critical-row"><td><strong>ISO 27001</strong></td><td><span class="badge badge-critical">Не соответствует</span></td><td>Внедрить ISMS процессы</td></tr>
+          <tr><td><strong>PCI DSS</strong></td><td><span class="badge badge-high">Требует проверки</span></td><td>Усилить защиту данных</td></tr>
+          <tr><td><strong>GDPR</strong></td><td><span class="badge badge-medium">Базовый уровень</span></td><td>Добавить privacy headers</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-PORTS="80 443 8080 8443"
-EMAIL="admin@example.com"
-LOGFILE="/var/log/port_monitor.log"
-for port in $PORTS; do
-  response=$(curl -s -o /dev/null -w "%{http_code}" https://example.com:$port/
-2&gt;/dev/null)
-  timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    <div class="section">
+      <h2>Заключение</h2>
+      <p>Технический аудит выявил <strong>серьезные проблемы конфигурации</strong>, требующие немедленного вмешательства. Основные риски связаны с неправильной настройкой портов и недостаточной защитой WordPress.</p>
+      
+      <h3 style="margin-top: 25px;">Приоритеты исправления:</h3>
+      <ol>
+        <li><strong>P0 (0-24ч):</strong> Закрыть порт 8443, ограничить 8080, защитить wp-admin</li>
+        <li><strong>P1 (1-7д):</strong> Добавить security headers, оптимизировать SSL/TLS</li>
+        <li><strong>P2 (7-30д):</strong> Внедрить мониторинг, автоматизацию, compliance</li>
+      </ol>
 
-  case $port in
-    80|443)
-      if [[ "$response" != "200" &amp;&amp; "$response" != "301" ]]; then
-         echo "$timestamp: ALERT - Port $port returned $response" | tee -a $LOGFILE
-         echo "Port $port issue detected" | mail -s "Security Alert" $EMAIL
-      fi
-      ;;
-    8080)
-      if [[ "$response" == "200" ]]; then
-         echo "$timestamp: WARNING - Port 8080 accessible" | tee -a $LOGFILE
-      fi
-      ;;
-    8443)
-      if [[ "$response" == "523" ]]; then
-         echo "$timestamp: ERROR - Port 8443 still returning 523" | tee -a $LOGFILE
-      fi
-      ;;
-  esac
-done
+      <p style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 5px solid #27ae60; color: #1b5e20; border-radius: 4px;">
+        <strong>✓ Ожидаемый результат:</strong> При правильном выполнении рекомендаций security posture может быть улучшен с <strong>6/10</strong> до <strong>9/10</strong> в течение 30 дней.
+      </p>
+    </div>
 
-Crontab настройка:
-
-# Добавить в crontab
-*/15 * * * * /usr/local/bin/port_monitor.sh
-
-8. SSL сертификат автоматизация
-
-Certbot для Let’s Encrypt:
-
-# Установка certbot
-apt-get install certbot python3-certbot-nginx
-
-# Получение сертификата
-certbot --nginx -d example.com -d *.example.com
-
-# Автоматическое обновление
-echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
-
-Проверка истечения сертификата:
-
-#!/bin/bash
-# /usr/local/bin/cert_check.sh
-
-DOMAIN="example.com"
-THRESHOLD=30 # дней до истечения
-expiry_date=$(echo | openssl s_client -servername $DOMAIN -connect $DOMAIN:443
-2&gt;/dev/null | openssl x509 -noout -dates | grep notAfter | cut -d= -f2)
-expiry_epoch=$(date -d "$expiry_date" +%s)
-current_epoch=$(date +%s)
-days_until_expiry=$(( (expiry_epoch - current_epoch) / 86400 ))
-
-if [ $days_until_expiry -lt $THRESHOLD ]; then
-   echo "SSL certificate for $DOMAIN expires in $days_until_expiry days" | mail -s "SSL
-Certificate Alert" admin@example.com
-fi
-
-
-Проверочные команды после исправлений
-Полная проверка безопасности
-#!/bin/bash
-# security_check.sh
-
-echo "=== PORT SCAN ==="
-nmap -sV -p 80,443,8080,8443 example.com
-
-echo -e "\n=== SSL/TLS CHECK ==="
-sslscan example.com:443 | grep -E "(TLS|SSL|Cipher)"
-
-echo -e "\n=== SECURITY HEADERS ==="
-curl -s -I https://example.com/ | grep -i -E "(strict-transport|x-frame|x-content|content-
-security)"
-
-echo -e "\n=== WORDPRESS CHECK ==="
-curl -s https://example.com/ | grep -i "wordpress\|wp-content" || echo "WordPress
-version hidden"
-
-echo -e "\n=== PORT 8080 CHECK ==="
-timeout 5 curl -s -I https://example.com:8080/ || echo "Port 8080 blocked/redirected"
-
-echo -e "\n=== PORT 8443 CHECK ==="
-timeout 5 curl -s -I https://example.com:8443/ || echo "Port 8443 fixed"
-
-Автоматизированная проверка соответствия
-#!/bin/bash
-# compliance_check.sh
-
-SCORE=0
-MAX_SCORE=10
-
-# Проверка 1: Порты 8080/8443 закрыты или ограничены
-if ! curl -s --max-time 5 https://example.com:8080/ &gt;/dev/null 2&gt;&amp;1; then
-   echo "✓ Port 8080 secured"
-   ((SCORE++))
-else
-   echo "✗ Port 8080 still accessible"
-fi
-
-if ! curl -s --max-time 5 https://example.com:8443/ &gt;/dev/null 2&gt;&amp;1; then
-   echo "✓ Port 8443 secured"
-   ((SCORE++))
-else
-   echo "✗ Port 8443 still accessible"
-fi
-
-# Проверка 2: Security headers
-HEADERS=("strict-transport-security" "x-frame-options" "x-content-type-options" "content-
-security-policy")
-for header in "${HEADERS[@]}"; do
-  if curl -s -I https://example.com/ | grep -qi "$header"; then
-     echo "✓ $header present"
-     ((SCORE++))
-  else
-     echo "✗ $header missing"
-  fi
-done
-
-# Проверка 3: WordPress version hidden
-if ! curl -s https://example.com/ | grep -qi "wordpress.*[0-9]"; then
-   echo "✓ WordPress version hidden"
-   ((SCORE++))
-else
-   echo "✗ WordPress version still visible"
-fi
-
-# Проверка 4: SSL configuration
-if sslscan example.com:443 | grep -q "TLSv1.3.*enabled"; then
-   echo "✓ TLS 1.3 enabled"
-   ((SCORE++))
-else
-   echo "✗ TLS 1.3 not enabled"
-fi
-
-echo -e "\n=== COMPLIANCE SCORE: $SCORE/$MAX_SCORE ==="
-if [ $SCORE -ge 8 ]; then
-   echo "✓ PASSED - Good security posture"
-   exit 0
-else
-   echo "✗ FAILED - Security improvements needed"
-   exit 1
-fi
-Соответствие Microsoft SDL
-Фазы SDL и соответствие
-Фаза SDL                Требование                   Статус   Действие
-Requirements            Security requirements        ❌        Определить
-                        defined                               security
-                                                              requirements
-Design                  Threat modeling              ❌        Провести threat
-                        completed                             modeling
-Implementation          Secure coding practices      ⚠️       Улучшить
-                                                              WordPress security
-Verification            Security testing                      Выполнено
-                                                              (данный аудит)
-Release                 Security review              ⚠️       Требуется после
-                                                              исправлений
-Response                Incident response plan       ❌        Создать IR план
-
-Microsoft Security Benchmarks
-# Проверка соответствия Microsoft Security Baseline
-# https://docs.microsoft.com/en-us/security/benchmark/
-
-# 1. Network Security
-echo "NS-1: Establish network segmentation boundaries"
-# Действие: Ограничить доступ к портам 8080/8443
-
-# 2. Identity Management
-echo "IM-1: Standardize authentication systems"
-# Действие: Внедрить MFA для WordPress admin
-
-# 3. Privileged Access
-echo "PA-1: Protect and monitor privileged access"
-# Действие: Ограничить доступ к /wp-admin/
-
-# 4. Data Protection
-echo "DP-1: Discovery, classify, and label sensitive data"
-# Действие: Классифицировать данные WordPress
-
-# 5. Asset Management
-echo "AM-1: Ensure security team has visibility into risks"
-# Действие: Внедрить мониторинг безопасности
-Заключение
-Технический аудит выявил серьезные проблемы конфигурации, требующие
-немедленного вмешательства. Основные риски связаны с неправильной
-настройкой портов и недостаточной защитой WordPress.
-
-Приоритеты исправления: 1. P0 (0-24ч): Закрыть порт 8443, ограничить 8080,
-защитить wp-admin 2. P1 (1-7д): Добавить security headers, оптимизировать
-SSL/TLS 3. P2 (7-30д): Внедрить мониторинг, автоматизацию, compliance
-
-Ожидаемый результат: При правильном выполнении рекомендаций security
-posture может быть улучшен с 6/10 до 9/10 в течение 30 дней.
-
-
-Отчет подготовлен в соответствии с Microsoft Security Development Lifecycle (SDL) и
-NIST Cybersecurity Framework.
-    </pre>
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Отчет подготовлен в соответствии с Microsoft Security Development Lifecycle (SDL) и NIST Cybersecurity Framework.<br>Дата: 17 декабря 2025</p>
+    </div>
   </main>
 </body>
 </html>

@@ -3,41 +3,269 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>تقرير الإدارة التشغيلية للأمن</title>
+  <title>تقرير تدقيق الأمان - تحليل البنية التحتية</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.6rem; margin: 0 0 16px; }
-    h2 { font-size: 1.1rem; margin: 20px 0 8px; }
-    p, li { line-height: 1.8; }
-    .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Adobe Arabic', 'Noto Sans Arabic', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; direction: rtl; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-right: 6px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #2980b9; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .alert-critical { background: #ffebee; border-right: 5px solid #c0392b; padding: 25px; margin: 20px 0; border-radius: 4px; font-size: 1.05em; text-align: right; }
+    .alert-critical strong { color: #c0392b; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: right; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: right; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; text-align: right; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    .badge-low { background: #c8e6c9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-right: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; text-align: left; direction: ltr; }
   </style>
 </head>
 <body>
   <main>
-    <h1>تقرير الإدارة التشغيلية للأمن - example.com</h1>
-    <div class="card">
-      <p><strong>التاريخ:</strong> 2025-12-17</p>
-      <h2>هدف التقرير</h2>
-      <p>يوفر هذا التقرير خطة تنفيذ عملية لفرق الإدارة الوسطى لضمان معالجة المخاطر المكتشفة ضمن أولويات واضحة ومواعيد محددة.</p>
-      <h2>الأولويات العاجلة (0-72 ساعة)</h2>
+    <div class="report-header">
+      <h1>تقرير تدقيق الأمان</h1>
+      <p class="subtitle">تحليل البنية التحتية لـ example.com</p>
+      <p class="domain">example.com</p>
+      <p style="color: #7f8c8d; font-size: 0.95em; margin-top: 15px;">متخصص أمان المعلومات</p>
+      <p class="report-meta" style="color: #7f8c8d; font-size: 0.9em; margin-top: 5px;">تاريخ التقرير: 17 ديسمبر 2025</p>
+    </div>
+
+    <div class="section">
+      <h2>الملخص التنفيذي</h2>
+      <p>تم إجراء تدقيق أمان شامل لمورد example.com على الويب باستخدام أدوات مسح حديثة (Nmap, SSLScan). تم تحديد ثغرات حرجة في التكوين تتطلب إصلاحًا فوريًا.</p>
+      <p style="margin-top: 15px;"><strong>تقييم الأمان الكلي: 6/10 - يتطلب تدخل عاجل.</strong></p>
+      
+      <div class="alert-critical">
+        <strong>⚠️ تحذير حرج:</strong> تم اكتشاف منافذ غير قياسية مفتوحة (8080، 8443) وناقلات هجوم محتملة على لوحة تحكم WordPress الإدارية.
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>معلومات الهدف</h2>
+      <table>
+        <thead><tr><th>المعامل</th><th>القيمة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>النطاق</strong></td><td>example.com</td></tr>
+          <tr><td><strong>عناوين IP</strong></td><td>192.0.2.1</td></tr>
+          <tr><td><strong>شبكة التوصيل/WAF</strong></td><td>Cloudflare</td></tr>
+          <tr><td><strong>نظام إدارة المحتوى</strong></td><td>WordPress 6.9</td></tr>
+          <tr><td><strong>تاريخ التدقيق</strong></td><td>17 ديسمبر 2025</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>منهجية الاختبار</h2>
+      <p>تم إجراء التدقيق وفقًا لمنهجية إطار عمل NIST للأمان السيبراني وشمل:</p>
       <ul>
-        <li>إغلاق المنافذ غير الضرورية وتقييد الوصول الإداري من مصادر موثوقة فقط.</li>
-        <li>تفعيل سجلات المراقبة والتنبيهات الفورية للحوادث عالية الخطورة.</li>
-        <li>مراجعة صلاحيات المستخدمين الإداريين وتطبيق مبدأ أقل صلاحية.</li>
+        <li>مسح المنافذ (Nmap 7.94SVN)</li>
+        <li>تحليل SSL/TLS (SSLScan 2.1.2)</li>
+        <li>مراجعة تكوين خادم الويب</li>
+        <li>تحليل رؤوس الأمان</li>
+        <li>تقييم أمان WordPress</li>
       </ul>
-      <h2>الأولويات القصيرة المدى (7-30 يوماً)</h2>
+    </div>
+
+    <div class="section">
+      <h2>نتائج مسح المنافذ</h2>
+      <table>
+        <thead><tr><th>المنفذ</th><th>الحالة</th><th>الخدمة</th><th>الحالة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>80</strong></td><td>مفتوح</td><td>HTTP</td><td><span class="badge badge-low">✓ إعادة توجيه إلى HTTPS</span></td></tr>
+          <tr><td><strong>443</strong></td><td>مفتوح</td><td>HTTPS</td><td><span class="badge badge-medium">◐ صحيح، مستخدم</span></td></tr>
+          <tr><td><strong>8080</strong></td><td>مفتوح</td><td>HTTP</td><td><span class="badge badge-critical">❌ غير مصرح</span></td></tr>
+          <tr><td><strong>8443</strong></td><td>مفتوح</td><td>HTTPS</td><td><span class="badge badge-critical">❌ خطأ HTTP 523</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>تكوين SSL/TLS</h2>
+      <h3>البروتوكولات المدعومة</h3>
+      <table>
+        <thead><tr><th>البروتوكول</th><th>الحالة</th><th>التقييم</th></tr></thead>
+        <tbody>
+          <tr><td>SSLv2, SSLv3</td><td><span class="badge badge-low">معطل</span></td><td>جيد</td></tr>
+          <tr><td>TLSv1.0, TLSv1.1</td><td><span class="badge badge-low">معطل</span></td><td>جيد</td></tr>
+          <tr><td>TLSv1.2</td><td><span class="badge badge-high">مفعل (مع CBC)</span></td><td>يحتاج مراجعة</td></tr>
+          <tr><td>TLSv1.3</td><td><span class="badge badge-low">مفعل</span></td><td>ممتاز</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 25px;">معلومات الشهادة</h3>
       <ul>
-        <li>تطبيق سياسة تحديثات دورية لأنظمة الخادم ومكونات الموقع.</li>
-        <li>توحيد إعدادات الأمن عبر البيئات الإنتاجية والتجريبية.</li>
-        <li>إجراء اختبار تحقق بعد الإصلاح للتأكد من إغلاق الثغرات نهائياً.</li>
+        <li><strong>الموضوع:</strong> example.com</li>
+        <li><strong>الجهة المُصدرة:</strong> Google Trust Services (WE1)</li>
+        <li><strong>فترة الصلاحية:</strong> 2025-11-02 إلى 2026-01-31</li>
+        <li><strong>خوارزمية المفتاح:</strong> ECDSA مع SHA256</li>
+        <li><strong>المنحنى:</strong> prime256v1 (256-bit)</li>
+        <li><strong>الحالة:</strong> <span class="badge badge-low">✓ صحيح وموثوق</span></li>
       </ul>
-      <h2>مؤشرات الأداء المقترحة</h2>
+    </div>
+
+    <div class="section">
+      <h2>تحليل WordPress</h2>
+      <table>
+        <thead><tr><th>المكون</th><th>الاكتشاف</th><th>الخطر</th></tr></thead>
+        <tbody>
+          <tr><td><strong>إصدار نظام إدارة المحتوى</strong></td><td>WordPress 6.9 (مكشوف)</td><td><span class="badge badge-high">مرتفع</span></td></tr>
+          <tr><td><strong>لوحة التحكم</strong></td><td>/wp-admin/ متاح للعامة</td><td><span class="badge badge-critical">حرج</span></td></tr>
+          <tr><td><strong>Robots.txt</strong></td><td>يكشف عن هيكل الدليل</td><td><span class="badge badge-medium">متوسط</span></td></tr>
+          <tr><td><strong>معلومات الموضوع</strong></td><td>إصدار الموضوع مرئي</td><td><span class="badge badge-low">منخفض</span></td></tr>
+          <tr><td><strong>XML-RPC</strong></td><td>مفعل (خطر القوة الغاشمة)</td><td><span class="badge badge-high">مرتفع</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>الثغرات المحددة</h2>
+      
+      <h3 style="color: #c0392b;">مشاكل حرجة</h3>
+
+      <div style="background: white; border-right: 5px solid #e74c3c; padding: 20px; margin: 15px 0; border-radius: 4px;">
+        <h4 style="color: #c0392b;">1. خطأ في تكوين المنفذ 8443</h4>
+        <span class="badge badge-critical">CVSS 7.5</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>المشكلة:</strong> Cloudflare يعيد توجيه المنفذ 8443، لكن Origin غير متاح</li>
+          <li><strong>الاستجابة:</strong> HTTP/2 523 (Origin Unreachable)</li>
+          <li><strong>الخطر:</strong> كشف المعلومات، تجاوز الأمان المحتمل</li>
+          <li><strong>الإجراء:</strong> إزالة المنفذ 8443 من سجلات Cloudflare DNS</li>
+        </ul>
+      </div>
+
+      <div style="background: white; border-right: 5px solid #e74c3c; padding: 20px; margin: 15px 0; border-radius: 4px;">
+        <h4 style="color: #c0392b;">2. منفذ غير قياسي مفتوح 8080</h4>
+        <span class="badge badge-high">CVSS 7.2</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>المشكلة:</strong> نقطة دخول بديلة قد تتجاوز قواعد WAF</li>
+          <li><strong>الوصول:</strong> متاح للعامة</li>
+          <li><strong>الخطر:</strong> تجاوز حد المعدل، منع WAF</li>
+          <li><strong>الإجراء:</strong> تقييد الوصول للشبكات الداخلية فقط</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #e65100; margin-top: 30px;">مشاكل ذات أولوية عالية</h3>
+
+      <div style="background: white; border-right: 5px solid #f39c12; padding: 20px; margin: 15px 0; border-radius: 4px;">
+        <h4 style="color: #e65100;">3. كشف إصدار WordPress</h4>
+        <span class="badge badge-high">CVSS 6.8</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>المشكلة:</strong> إصدار WordPress مرئي بوضوح في مصدر HTML</li>
+          <li><strong>الموجود:</strong> &lt;meta name="generator" content="WordPress 6.9" /&gt;</li>
+          <li><strong>الخطر:</strong> هجمات موجهة على ثغرات WordPress 6.9 المعروفة</li>
+          <li><strong>الإجراء:</strong> إخفاء إصدار WordPress في functions.php</li>
+        </ul>
+      </div>
+
+      <div style="background: white; border-right: 5px solid #f39c12; padding: 20px; margin: 15px 0; border-radius: 4px;">
+        <h4 style="color: #e65100;">4. رؤوس أمان مفقودة</h4>
+        <span class="badge badge-high">CVSS 5.5</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>المفقود:</strong> Strict-Transport-Security, X-Frame-Options, Content-Security-Policy, Referrer-Policy</li>
+          <li><strong>الخطر:</strong> Clickjacking، هجمات الحد من الإصدار، ثغرات XSS</li>
+          <li><strong>الإجراء:</strong> إضافة رؤوس أمان شاملة إلى خادم الويب</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>مصفوفة المخاطر</h2>
+      <table>
+        <thead><tr><th>المشكلة</th><th>الاحتمالية</th><th>التأثير</th><th>الأولوية</th></tr></thead>
+        <tbody>
+          <tr><td><strong>المنفذ 8443</strong></td><td><span class="badge badge-critical">مرتفعة</span></td><td><span class="badge badge-critical">مرتفعة</span></td><td><strong>P0</strong></td></tr>
+          <tr><td><strong>المنفذ 8080</strong></td><td><span class="badge badge-high">متوسطة</span></td><td><span class="badge badge-high">مرتفعة</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>WordPress</strong></td><td><span class="badge badge-high">مرتفعة</span></td><td><span class="badge badge-high">متوسطة</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>الرؤوس</strong></td><td><span class="badge badge-medium">متوسطة</span></td><td><span class="badge badge-medium">متوسطة</span></td><td><strong>P2</strong></td></tr>
+          <tr><td><strong>تكوين TLS</strong></td><td><span class="badge badge-low">منخفضة</span></td><td><span class="badge badge-low">منخفضة</span></td><td><strong>P3</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>خطة الإصلاح</h2>
+      
+      <h3>المرحلة 1: إصلاحات حرجة (1-2 يوم)</h3>
+      <ol style="padding-right: 20px;">
+        <li>إغلاق المنفذ 8443 في إعدادات Cloudflare DNS</li>
+        <li>تقييد الوصول إلى المنفذ 8080 (داخلي فقط)</li>
+        <li>حماية دليل /wp-admin/ بالمصادقة</li>
+        <li>إضافة رؤوس أمان أساسية</li>
+      </ol>
+
+      <h3 style="margin-top: 25px;">المرحلة 2: تقوية الأمان (أسبوع واحد)</h3>
+      <ol style="padding-right: 20px;">
+        <li>تحسين تكوين SSL/TLS</li>
+        <li>تكوين قواعد Cloudflare WAF</li>
+        <li>تثبيت مكونات أمان WordPress (Wordfence)</li>
+        <li>تفعيل التحديثات التلقائية</li>
+      </ol>
+
+      <h3 style="margin-top: 25px;">المرحلة 3: برنامج طويل الأجل (1-3 أشهر)</h3>
+      <ol style="padding-right: 20px;">
+        <li>تطبيق أتمتة مسح الثغرات</li>
+        <li>نشر مراقبة الأمان والتنبيهات</li>
+        <li>إجراء اختبار اختراق منتظم</li>
+        <li>تحقيق شهادة ISO 27001</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2>معايير الامتثال</h2>
+      <table>
+        <thead><tr><th>المعيار</th><th>الحالة الحالية</th><th>الإجراءات المطلوبة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NIST CSF</strong></td><td><span class="badge badge-medium">جزئي</span></td><td>تحسين وظائف Protect و Detect</td></tr>
+          <tr><td><strong>ISO 27001</strong></td><td><span class="badge badge-critical">غير متطابق</span></td><td>تطبيق نظام إدارة الأمان</td></tr>
+          <tr><td><strong>PCI DSS</strong></td><td><span class="badge badge-high">يحتاج مراجعة</span></td><td>تقوية حماية البيانات</td></tr>
+          <tr><td><strong>GDPR</strong></td><td><span class="badge badge-medium">أساسي</span></td><td>إضافة رؤوس الخصوصية والأمان</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>الخلاصة والخطوات التالية</h2>
+      <p>حدد تدقيق الأمان عدة ثغرات حرجة وعالية الأولوية تتطلب اهتمامًا فوريًا. المخاطر الأساسية ترتبط بسوء تكوين المنفذ وحماية WordPress غير كافية.</p>
+      
+      <p style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-right: 5px solid #27ae60; color: #1b5e20; border-radius: 4px;">
+        <strong>✓ التحسن المتوقع:</strong> مع التطبيق الصحيح للتوصيات، يمكن تحسين تقييم الأمان من <strong>6/10 إلى 9/10</strong> خلال 30 يوم وإلى <strong>9.5/10</strong> خلال 3 أشهر.
+      </p>
+
+      <h3 style="margin-top: 25px;">الإجراءات الفورية المطلوبة</h3>
       <ul>
-        <li>نسبة الثغرات الحرجة المغلقة خلال 72 ساعة.</li>
-        <li>متوسط زمن الاستجابة للحوادث.</li>
-        <li>نسبة الالتزام بسياسات التحديث والنسخ الاحتياطي.</li>
+        <li>جدولة اجتماع مع مسؤول النظام لمناقشة النتائج</li>
+        <li>أولويّة إصلاح المنافذ 8443 و8080</li>
+        <li>مراجعة واعتماد خطة الإصلاح</li>
+        <li>تخصيص الموارد للتطبيق</li>
       </ul>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>تم إعداد التقرير وفقًا لمعايير Microsoft Security Development Lifecycle (SDL) والممارسات الفضلى في الصناعة.<br>التاريخ: 17 ديسمبر 2025</p>
     </div>
   </main>
 </body>
