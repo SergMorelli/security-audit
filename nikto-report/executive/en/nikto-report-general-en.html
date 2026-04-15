@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Executive Nikto Security Report - example.com</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: linear-gradient(135deg, #26c6da 0%, #00bcd4 100%); color: white; border-radius: 8px; padding: 50px 40px; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); text-align: center; }
+    .report-header h1 { font-size: 2.8em; font-weight: 700; margin-bottom: 15px; }
+    .report-header .subtitle { font-size: 1.4em; margin-bottom: 20px; opacity: 0.95; }
+    .report-header .domain { font-size: 1.8em; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #00838f; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34595e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    .alert-warning { background: #fff3e0; border-left: 6px solid #e65100; padding: 30px; margin: 20px 0; border-radius: 6px; font-size: 1.05em; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .metric-box { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); padding: 25px; border-radius: 8px; margin: 15px 0; text-align: center; border-left: 6px solid #00897b; }
+    .metric-box .label { font-size: 1em; color: #004d40; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 10px 0; color: #34595e; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="report-header">
+      <h1>Strategic Web Security Report</h1>
+      <p class="subtitle">Leadership Assessment & Recommendations</p>
+      <p class="domain">example.com</p>
+      <p style="opacity: 0.9; font-size: 0.95em; margin-top: 15px;">Tool: Nikto 2.1.5 | Date: January 13, 2026</p>
+    </div>
+
+    <div class="section">
+      <h2>Executive Summary</h2>
+      <p style="font-size: 1.1em; margin-bottom: 20px;">Comprehensive web infrastructure scan of <strong>example.com</strong> using Nikto 2.1.5 identified 3 security configuration issues requiring management attention and decisions.</p>
+
+      <div class="alert-warning">
+        <strong>⚠️ Important for Leadership:</strong> Identified security configuration issues impact user data protection and company reputation. Immediate corrective measures recommended.
+      </div>
+
+      <h3>Key Metrics:</h3>
+      <table>
+        <thead><tr><th>Metric</th><th>Value</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Items Tested</strong></td><td>6,544</td><td>✓</td></tr>
+          <tr><td><strong>Issues Found</strong></td><td>3</td><td>⚠</td></tr>
+          <tr><td><strong>Critical Issues</strong></td><td>0</td><td>✓</td></tr>
+          <tr><td><strong>Medium Risk</strong></td><td>2</td><td>⚠</td></tr>
+          <tr><td><strong>Low Risk</strong></td><td>1</td><td>ℹ</td></tr>
+          <tr><td><strong>Overall Risk</strong></td><td>MEDIUM</td><td>⚠</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Issues & Business Impact</h2>
+
+      <h3>Issue 1: Missing Clickjacking Protection</h3>
+      <div class="metric-box">
+        <p class="label"><strong>Risk:</strong> Medium | <strong>Status:</strong> Requires Action</p>
+      </div>
+
+      <h4>Business Impact:</h4>
+      <ul style="font-size: 1.05em;">
+        <li><strong>User Security:</strong> Users may be deceived through invisible iframe embedding</li>
+        <li><strong>Legal Risk:</strong> Potential liability for user account compromises</li>
+        <li><strong>Company Reputation:</strong> Security incidents can damage brand reputation</li>
+        <li><strong>Consumer Trust:</strong> Loss of confidence among current and potential customers</li>
+      </ul>
+
+      <h3 style="margin-top: 30px;">Issue 2: SSL Certificate Mismatch</h3>
+      <div class="metric-box">
+        <p class="label"><strong>Risk:</strong> Medium | <strong>Status:</strong> Requires Action</p>
+      </div>
+
+      <h4>Business Impact:</h4>
+      <ul style="font-size: 1.05em;">
+        <li><strong>User Experience:</strong> Browsers display security warnings</li>
+        <li><strong>Conversion Rate:</strong> ~10% of users leave when seeing security warnings</li>
+        <li><strong>SEO Ranking:</strong> Sites with SSL issues receive penalties in Google search</li>
+        <li><strong>Compliance:</strong> Violation of HTTPS best practices</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">Financial Impact:</h4>
+      <p style="font-size: 1.1em;">
+        Loss of 10% traffic = <strong>10-15% monthly revenue decrease</strong>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Strategic Action Plan</h2>
+
+      <h3 style="color: #00897b;">Phase 1: Emergency Response (Week 1)</h3>
+      <ul style="font-size: 1.05em;">
+        <li>Issue directive for immediate X-Frame-Options configuration</li>
+        <li>Initiate correct SSL certificate acquisition process</li>
+        <li>Brief support team on status</li>
+      </ul>
+
+      <h3 style="color: #00897b; margin-top: 25px;">Phase 2: Stabilization (Weeks 2-3)</h3>
+      <ul style="font-size: 1.05em;">
+        <li>Implement all recommended security headers</li>
+        <li>Deploy correct SSL certificate</li>
+        <li>Re-scan to verify fixes</li>
+      </ul>
+
+      <h3 style="color: #00897b; margin-top: 25px;">Phase 3: Long-term Security Strategy (Months 2-3)</h3>
+      <ul style="font-size: 1.05em;">
+        <li>Establish monthly Nikto scanning</li>
+        <li>Automate security checks in CI/CD</li>
+        <li>Team training on web security</li>
+        <li>Budget for monitoring tools</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Financial Justification</h2>
+
+      <h3>Solution Costs:</h3>
+      <table>
+        <thead><tr><th>Element</th><th>Cost</th><th>Timeline</th></tr></thead>
+        <tbody>
+          <tr><td>Security header configuration</td><td>$2,000</td><td>1 day</td></tr>
+          <tr><td>SSL certificate acquisition & installation</td><td>$500</td><td>3-5 days</td></tr>
+          <tr><td>Testing & verification</td><td>$1,500</td><td>2 days</td></tr>
+          <tr><td><strong>TOTAL Phase 1-2</strong></td><td><strong>$4,000</strong></td><td><strong>1-2 weeks</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 25px;">ROI Analysis:</h3>
+      <p style="font-size: 1.1em;">
+        <strong>Without Action:</strong> Risk of 10-15% monthly revenue loss = $50,000-75,000/month<br>
+        <strong>With $4,000 Investment:</strong> Prevents $50,000+ potential loss<br>
+        <strong>Payback Period: Less than 1 week</strong>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>Leadership Decision Items</h2>
+
+      <h3 style="color: #c0392b;">Approval Required:</h3>
+      <ol style="font-size: 1.05em;">
+        <li><strong>Approve $4,000 emergency budget</strong> for issue remediation</li>
+        <li><strong>Assign IT Director</strong> accountability for Phase 1-2 implementation</li>
+        <li><strong>Approve long-term security strategy</strong> with $20,000/year budget</li>
+      </ol>
+
+      <div style="background: #e8f5e9; border-left: 5px solid #27ae60; padding: 25px; margin: 20px 0; border-radius: 4px;">
+        <h4 style="color: #1b5e20; margin-top: 0;">Leadership Recommendation:</h4>
+        <p style="color: #1b5e20; font-size: 1.05em;">
+          Web security investment protects user data, ensures regulatory compliance, and preserves company reputation. The risk of inaction significantly exceeds the cost of solution implementation.
+        </p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Conclusion</h2>
+      <p style="font-size: 1.05em;">The Nikto report identified issues requiring immediate leadership action. Swift implementation of recommendations minimizes operational risks and protects the organization from financial losses.</p>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Executive Report from Nikto Security Scanning.<br>Date: January 13, 2026</p>
+    </div>
+  </main>
+</body>
+</html>

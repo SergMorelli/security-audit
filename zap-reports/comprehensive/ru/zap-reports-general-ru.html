@@ -3,395 +3,361 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>zapreports comprehensive ru</title>
+  <title>Комплексный отчет сканирования OWASP ZAP - example.com</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 6px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #2980b9; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    .report-header .tool { font-size: 1.1em; color: #7f8c8d; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .alert-critical { background: #ffebee; border-left: 5px solid #c0392b; padding: 25px; margin: 20px 0; border-radius: 4px; font-size: 1.05em; }
+    .alert-critical strong { color: #c0392b; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    .badge-low { background: #c8e6c9; color: #2e7d32; }
+    .badge-info { background: #e3f2fd; color: #1565c0; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .vulnerability-card { background: white; border-left: 5px solid #e74c3c; padding: 20px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .vulnerability-card h4 { color: #c0392b; margin-bottom: 10px; }
+    
+    .risk-high { border-left-color: #e65100; }
+    .risk-medium { border-left-color: #6a1b9a; }
+    .risk-low { border-left-color: #2e7d32; }
+    
+    .tech-stack { background: #f0f7ff; border-left: 5px solid #2980b9; padding: 20px; margin: 20px 0; border-radius: 4px; }
+    .tech-stack h4 { color: #2980b9; }
+    
+    .summary-table { background: white; margin: 20px 0; }
+    .summary-table td:first-child { font-weight: 600; color: #2c3e50; padding: 12px 16px; width: 30%; }
+    .summary-table td:nth-child(2) { padding: 12px 16px; }
+    
+    .metric-box { background: linear-gradient(135deg, #f5f7fa 0%, #ecf0f1 100%); padding: 20px; border-radius: 8px; margin: 15px 0; text-align: center; }
+    .metric-box .amount { font-size: 2em; font-weight: 700; color: #2980b9; }
+    .metric-box .label { font-size: 0.95em; color: #7f8c8d; margin-top: 8px; }
+    
+    .checklist { background: #f0f7ff; padding: 20px; border-radius: 6px; margin: 15px 0; }
+    .checklist li { list-style: none; padding-left: 25px; position: relative; }
+    .checklist li:before { content: "☐"; position: absolute; left: 0; color: #2980b9; font-weight: bold; }
   </style>
 </head>
 <body>
   <main>
-    <h1>zapreports comprehensive ru</h1>
-    <pre>
-  Отчет о соответствии стандартам безопасности: Анализ
-                  веб-сайта example.com
-                      Специалист по информационной безопасности
-                                       2025-12-31
+    <div class="report-header">
+      <h1>Комплексный отчет сканирования</h1>
+      <p class="subtitle">Анализ безопасности веб-приложения</p>
+      <p class="domain">example.com</p>
+      <p class="tool">Инструмент: <strong>OWASP ZAP 2.17.0</strong> | Дата: <strong>30 декабря 2025</strong></p>
+    </div>
 
+    <div class="section">
+      <h2>Краткое резюме</h2>
+      <p>Данный отчет представляет комплексный анализ соответствия веб-сайта https://example.com международным стандартам безопасности <strong>OWASP Top 10 2021</strong>, <strong>NIST Cybersecurity Framework 2.0</strong> и рекомендациям <strong>Microsoft Security Baseline</strong>.</p>
+      
+      <div class="alert-critical">
+        <strong>🔴 КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ:</strong> Обнаружена утечка персональных данных (PII) - требуется немедленное вмешательство!
+      </div>
 
-Краткое резюме
-Данный отчет представляет комплексный анализ соответствия веб-сайта
-https://example.com международным стандартам безопасности OWASP Top 10 2021,
-NIST Cybersecurity Framework 2.0 и рекомендациям Microsoft Security Baseline. Анализ
-основан на результатах автоматизированного сканирования безопасности, выполненного
-30 декабря 2025 года с помощью OWASP ZAP (Zed Attack Proxy) версии 2.17.0 от
-Checkmarx.
-       КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ: Обнаружена утечка персональных
-       данных (PII) - требуется немедленное вмешательство!
-Ключевые выводы:
-  •     Обнаружено 29 предупреждений безопасности различного уровня критичности
-  •     Выявлена критическая уязвимость раскрытия персональных данных (PII)
-  •     Отсутствуют базовые механизмы защиты веб-приложения
-  •     Сайт не соответствует основным требованиям международных стандартов
-        безопасности
+      <h3>Ключевые выводы:</h3>
+      <ul style="font-size: 1.05em;">
+        <li>Обнаружено <strong>29 предупреждений безопасности</strong> различного уровня критичности</li>
+        <li>Выявлена <strong>критическая уязвимость</strong> раскрытия персональных данных (PII)</li>
+        <li>Отсутствуют <strong>базовые механизмы защиты</strong> веб-приложения</li>
+        <li>Сайт <strong>не соответствует</strong> основным требованиям международных стандартов</li>
+      </ul>
 
+      <h3 style="margin-top: 30px;">Статистика результатов сканирования</h3>
+      <table>
+        <thead><tr><th>Уровень риска</th><th>Количество</th><th>Процент</th><th>Статус</th></tr></thead>
+        <tbody>
+          <tr><td><strong>🔴 Высокий (Критический)</strong></td><td>1</td><td>3.4%</td><td><span class="badge badge-critical">Требует немедленного действия</span></td></tr>
+          <tr><td><strong>🟠 Средний</strong></td><td>3</td><td>10.3%</td><td><span class="badge badge-high">Высокий приоритет</span></td></tr>
+          <tr><td><strong>🟡 Низкий</strong></td><td>4</td><td>13.8%</td><td><span class="badge badge-medium">Средний приоритет</span></td></tr>
+          <tr><td><strong>ℹ️ Информационный</strong></td><td>21</td><td>72.4%</td><td><span class="badge badge-info">Уведомление</span></td></tr>
+          <tr style="background: #f0f0f0;"><td><strong>ИТОГО</strong></td><td><strong>29</strong></td><td><strong>100%</strong></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-Содержание
-  1.    Методология анализа
-  2.    Детальный анализ уязвимостей
-  3.    Анализ соответствия OWASP Top 10 2021
-  4.    Соответствие NIST Cybersecurity Framework 2.0
-  5.    Соответствие Microsoft Security Baseline
-  6.    План устранения уязвимостей
-  7.    Заключение
+    <div class="section">
+      <h2>Параметры и методология сканирования</h2>
+      
+      <h3>Конфигурация сканирования</h3>
+      <ul>
+        <li><strong>Инструмент:</strong> OWASP ZAP (Zed Attack Proxy) 2.17.0 от Checkmarx</li>
+        <li><strong>Дата и время:</strong> 30 декабря 2025 года, 19:00:53</li>
+        <li><strong>Целевой ресурс:</strong> https://example.com</li>
+        <li><strong>Общее количество endpoints:</strong> 290</li>
+        <li><strong>Контексты:</strong> Все контексты включены по умолчанию</li>
+        <li><strong>Уровни риска:</strong> Высокий, Средний, Низкий, Информационный</li>
+        <li><strong>Уровни достоверности:</strong> Пользователь подтвержден, Высокий, Средний, Низкий</li>
+      </ul>
 
+      <h3 style="margin-top: 25px;">Обнаруженные технологии</h3>
+      <div class="tech-stack">
+        <h4>Технологический стек</h4>
+        <ul>
+          <li><strong>CMS:</strong> WordPress с Block Editor</li>
+          <li><strong>Веб-сервер:</strong> LiteSpeed с LiteSpeed Cache</li>
+          <li><strong>CDN:</strong> Cloudflare с Browser Insights</li>
+          <li><strong>Язык программирования:</strong> PHP</li>
+          <li><strong>Плагины:</strong> Blocksy (тема), Stackable, LiteSpeed Cache</li>
+          <li><strong>Сервисы:</strong> Gravatar, Google Font API</li>
+          <li><strong>Протоколы:</strong> HTTP/3, HSTS, RSS, Priority Hints</li>
+        </ul>
+      </div>
+    </div>
 
-Методология анализа
-Параметры сканирования
-  •     Инструмент: OWASP ZAP 2.17.0 от Checkmarx [1]
-  •     Дата и время сканирования: 30 декабря 2025 года, 19:00:53
-  •     Целевой ресурс: https://example.com
-  •     Общее количество endpoints: 290
-  •     Контексты: Все контексты включены по умолчанию
-  •    Уровни риска: Высокий, Средний, Низкий, Информационный
-  •    Уровни достоверности: Пользователь подтвержден, Высокий, Средний, Низкий
+    <div class="section">
+      <h2>Детальный анализ уязвимостей</h2>
 
-Статистика результатов сканирования
-Уровень риска        Количество Процент Достоверность
-Высокий              1          3.4%    Высокая
-🟡 Средний            3            10.3%     Высокая/Средняя
+      <h3 style="color: #c0392b;">🔴 Критические уязвимости (Высокий риск)</h3>
 
-Низкий               4            13.8%     Высокая/Средняя/Низкая
-ℹ️Информационный 21               72.4%     Средняя/Низкая
-Всего            29               100%      -
+      <div class="vulnerability-card">
+        <h4>1. Раскрытие персональных данных (PII)</h4>
+        <p><span class="badge badge-critical">CVSS 9.1</span> <span class="badge badge-critical">CWE-359</span> <span class="badge badge-critical">WASC-13</span></p>
+        
+        <h5 style="margin-top: 15px; color: #c0392b;">Техническое описание:</h5>
+        <ul>
+          <li>Персональная информация пользователей доступна без авторизации</li>
+          <li>Нарушение принципов конфиденциальности данных</li>
+          <li>Прямое нарушение требований GDPR</li>
+        </ul>
 
-Технологический стек
-Обнаруженные технологии на сайте:
-  •    CMS: WordPress с Block Editor
-  •    Веб-сервер: LiteSpeed с LiteSpeed Cache
-  •    CDN: Cloudflare с Browser Insights
-  •    Язык программирования: PHP
-  •    Дополнительные компоненты:
-         –   Blocksy (тема WordPress)
-         –   Stackable (плагин WordPress)
-         –   Gravatar (сервис аватаров)
-         –   Google Font API
-  •    Протоколы: HTTP/3, HSTS, RSS, Priority Hints
+        <h5 style="margin-top: 15px; color: #e65100;">Воздействие на бизнес:</h5>
+        <ul>
+          <li><strong>Регуляторные риски:</strong> Штрафы по GDPR до 4% от годового оборота компании</li>
+          <li><strong>Репутационные потери:</strong> Серьезный ущерб доверию клиентов</li>
+          <li><strong>Юридические последствия:</strong> Возможные судебные иски от пострадавших</li>
+          <li><strong>Операционные риски:</strong> Необходимость уведомления регуляторов в течение 72 часов</li>
+        </ul>
+      </div>
 
+      <h3 style="color: #e65100; margin-top: 30px;">🟠 Уязвимости среднего риска</h3>
 
-Детальный анализ уязвимостей
- Критические уязвимости (Высокий риск)
-1. Раскрытие персональных данных (PII)
+      <div class="vulnerability-card risk-high">
+        <h4>2. Отсутствие Subresource Integrity (SRI)</h4>
+        <p><span class="badge badge-high">CVSS 6.2</span> <span class="badge badge-high">CWE-345</span> | <strong>5 экземпляров</strong></p>
+        <p><strong>Описание:</strong> Внешние ресурсы загружаются без проверки целостности, что создает риск атак на цепочку поставок.</p>
+        <p><strong>Затронутые ресурсы:</strong></p>
+        <ul>
+          <li>Google Font API</li>
+          <li>Cloudflare CDN ресурсы</li>
+          <li>Внешние JavaScript библиотеки</li>
+        </ul>
+      </div>
 
-CWE-359 | WASC-13 | Достоверность: Высокая
-      КРИТИЧЕСКОЕ НАРУШЕНИЕ: Обнаружена утечка персональных данных
-      пользователей
-Техническое описание:
-  •    Персональная информация пользователей доступна без авторизации
-  •    Нарушение принципов конфиденциальности данных
-  •    Прямое нарушение требований GDPR
-Воздействие на бизнес:
-  •    Регуляторные риски: Штрафы по GDPR до 4% от годового оборота компании
-  •    Репутационные потери: Серьезный ущерб доверию клиентов
-  •    Юридические последствия: Возможные судебные иски от пострадавших
-  •    Операционные риски: Необходимость уведомления регуляторов в течение 72 часов
-🟡 Уязвимости среднего риска
+      <div class="vulnerability-card risk-high">
+        <h4>3. Отсутствие Content Security Policy (CSP)</h4>
+        <p><span class="badge badge-high">CVSS 5.8</span> <span class="badge badge-high">CWE-693</span> | <strong>5 экземпляров</strong></p>
+        <p><strong>Описание:</strong> Отсутствует политика безопасности контента, что делает сайт уязвимым для XSS-атак и других инъекций.</p>
+      </div>
 
-2. Отсутствие Subresource Integrity (SRI)
+      <div class="vulnerability-card risk-high">
+        <h4>4. Отсутствие защиты от кликджекинга</h4>
+        <p><span class="badge badge-high">CVSS 5.5</span> <span class="badge badge-high">CWE-1021</span> | <strong>5 экземпляров</strong></p>
+        <p><strong>Описание:</strong> Отсутствуют заголовки X-Frame-Options или CSP frame-ancestors, что позволяет встраивать сайт в iframe для проведения атак кликджекинга.</p>
+      </div>
 
-CWE-345 | WASC-15 | Количество: 5 экземпляров | Достоверность: Высокая
-Описание: Внешние ресурсы загружаются без проверки целостности, что создает риск атак
-на цепочку поставок.
-Затронутые ресурсы:
-  •    Google Font API
-  •    Cloudflare CDN ресурсы
-  •    Внешние JavaScript библиотеки
+      <h3 style="color: #6a1b9a; margin-top: 30px;">🟡 Уязвимости низкого риска</h3>
 
-3. Отсутствие Content Security Policy (CSP)
+      <div class="vulnerability-card risk-medium">
+        <h4>5. Проблемы с транспортной безопасностью</h4>
+        <p><span class="badge badge-medium">CVSS 3.7</span> | <strong>6 экземпляров</strong></p>
+        <ul>
+          <li>Заголовок Strict-Transport-Security не установлен (CWE-319)</li>
+          <li>Строгая безопасность транспорта отключена (CWE-319)</li>
+        </ul>
+      </div>
 
-CWE-693 | WASC-15 | Количество: 5 экземпляров | Достоверность: Высокая
-Описание: Отсутствует политика безопасности контента, что делает сайт уязвимым для
-XSS-атак и других инъекций.
+      <div class="vulnerability-card risk-medium">
+        <h4>6. Отсутствие X-Content-Type-Options</h4>
+        <p><span class="badge badge-medium">CVSS 3.2</span> | <strong>CWE-693</strong></p>
+        <p>Отсутствует защита от MIME-sniffing атак.</p>
+      </div>
 
-4. Отсутствие защиты от кликджекинга
+      <div class="vulnerability-card risk-medium">
+        <h4>7. Раскрытие Unix timestamp</h4>
+        <p><span class="badge badge-medium">CVSS 2.1</span> | <strong>4 экземпляра</strong></p>
+        <p>Обнаружено раскрытие временных меток, что может предоставить информацию о времени создания контента.</p>
+      </div>
+    </div>
 
-CWE-1021 | WASC-15 | Количество: 5 экземпляров | Достоверность: Средняя
-Описание: Отсутствуют заголовки X-Frame-Options или CSP frame-ancestors, что
-позволяет встраивать сайт в iframe для проведения атак кликджекинга.
+    <div class="section">
+      <h2>Соответствие OWASP Top 10 2021</h2>
 
-  Уязвимости низкого риска
-5. Проблемы с транспортной безопасностью
-   •   Заголовок Strict-Transport-Security не установлен (CWE-319, 1 экземпляр)
-   •   Строгая безопасность транспорта отключена (CWE-319, 5 экземпляров)
+      <h3 style="color: #c0392b;">❌ A01:2021 – Нарушение контроля доступа</h3>
+      <div style="background: #ffebee; padding: 20px; border-radius: 6px; margin: 15px 0;">
+        <p><strong>Статус: КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ</strong></p>
+        <p style="margin-top: 10px;">Обнаруженные проблемы:</p>
+        <ul>
+          <li>Раскрытие PII - прямое нарушение принципов контроля доступа</li>
+          <li>Отсутствие механизмов защиты чувствительной информации</li>
+          <li>Нарушение принципа "запрет по умолчанию"</li>
+        </ul>
+      </div>
 
-6. Отсутствие X-Content-Type-Options
+      <h3 style="color: #e65100;">⚠️ A03:2021 – Инъекции</h3>
+      <div style="background: #fff3e0; padding: 20px; border-radius: 6px; margin: 15px 0;">
+        <p><strong>Статус: СООТВЕТСТВУЕТ</strong></p>
+        <p style="margin-top: 10px;">Не обнаружено уязвимостей типа SQL, NoSQL или OS command injection.</p>
+      </div>
 
-CWE-693 | WASC-15 | Достоверность: Средняя
-Описание: Отсутствует защита от MIME-sniffing атак.
+      <h3 style="color: #c0392b;">❌ A05:2021 – Неправильная конфигурация безопасности</h3>
+      <div style="background: #ffebee; padding: 20px; border-radius: 6px; margin: 15px 0;">
+        <p><strong>Статус: КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ</strong></p>
+        <p style="margin-top: 10px;">Обнаруженные проблемы:</p>
+        <ul>
+          <li>Отсутствие CSP (5 экземпляров)</li>
+          <li>Отсутствие защиты от кликджекинга (5 экземпляров)</li>
+          <li>Неправильная настройка заголовков безопасности</li>
+          <li>Отсутствие X-Content-Type-Options</li>
+          <li>Проблемы с HSTS конфигурацией</li>
+        </ul>
+      </div>
 
-7. Раскрытие Unix timestamp
+      <h3 style="color: #e65100;">⚠️ A06:2021 – Уязвимые и устаревшие компоненты</h3>
+      <div style="background: #fff3e0; padding: 20px; border-radius: 6px; margin: 15px 0;">
+        <p><strong>Статус: ТРЕБУЕТ ПРОВЕРКИ</strong></p>
+        <p style="margin-top: 10px;">Обнаруженные компоненты требуют детального аудита версий и обновлений.</p>
+      </div>
+    </div>
 
-CWE-497 | WASC-13 | Количество: 4 экземпляра | Достоверность: Низкая
-Описание: Обнаружено раскрытие временных меток, что может предоставить
-информацию о времени создания контента.
+    <div class="section">
+      <h2>План устранения уязвимостей</h2>
 
-ℹ️Информационные предупреждения
-Обнаружено 21 информационное предупреждение, включая:
-  •    Детекция технологий (WordPress, PHP, Cloudflare и др.)
-  •    Проблемы с кэшированием (5 экземпляров)
-  •    Несоответствие кодировки
-  •    Подозрительные комментарии в коде (58 экземпляров)
-Анализ соответствия OWASP Top 10 2021
-A01:2021 – Нарушение контроля доступа
-      Статус: ❌ КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ
+      <h3 style="color: #c0392b;">Фаза 1: Критические исправления (0-7 дней)</h3>
 
-Обнаруженные проблемы:
-  •    Раскрытие PII - прямое нарушение принципов контроля доступа
-  •    Отсутствие механизмов защиты чувствительной информации
-  •    Нарушение принципа "запрет по умолчанию"
-Рекомендации OWASP:
-  •    Реализация строгого контроля доступа
-  •    Логирование неудачных попыток доступа
-  •    Ограничение скорости API-запросов
-  •    Регулярный аудит прав доступа
+      <h4 style="margin-top: 20px;">🔴 ПРИОРИТЕТ 1: Устранение утечки PII (0-3 дня)</h4>
+      <div class="checklist">
+        <ul>
+          <li>День 1: Немедленная идентификация и блокировка источников утечки PII</li>
+          <li>День 2: Реализация маскирования/шифрования чувствительных данных</li>
+          <li>День 3: Внедрение строгого контроля доступа к персональным данным</li>
+          <li>День 3: Уведомление регуляторов в соответствии с GDPR (72 часа)</li>
+        </ul>
+      </div>
 
-A03:2021 – Инъекции
-      Статус: СООТВЕТСТВУЕТ (по результатам сканирования)
-Результат: Не обнаружено уязвимостей типа SQL, NoSQL или OS command injection.
+      <h4 style="margin-top: 20px;">🟠 ПРИОРИТЕТ 2: Базовые заголовки безопасности (4-7 дней)</h4>
+      <div class="checklist">
+        <ul>
+          <li>День 4-5: Внедрение Content Security Policy</li>
+          <li>День 6: Настройка защиты от кликджекинга</li>
+          <li>День 6: Настройка HSTS</li>
+          <li>День 7: Тестирование и валидация изменений</li>
+        </ul>
+      </div>
 
-A05:2021 – Неправильная конфигурация безопасности
-      Статус: ❌ КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ
-
-Обнаруженные проблемы:
-  •    Отсутствие CSP (5 экземпляров)
-  •    Отсутствие защиты от кликджекинга (5 экземпляров)
-  •    Неправильная настройка заголовков безопасности
-  •    Отсутствие X-Content-Type-Options
-  •    Проблемы с HSTS конфигурацией
-
-A06:2021 – Уязвимые и устаревшие компоненты
-      Статус: ⚠️ТРЕБУЕТ ПРОВЕРКИ
-Обнаруженные компоненты:
-  •    WordPress (версия не определена)
-  •    PHP (версия не определена)
-  •    LiteSpeed веб-сервер
-  •    Множественные плагины: Blocksy, Stackable, LiteSpeed Cache
-Рекомендации: Необходим детальный аудит версий всех компонентов.
-
-A08:2021 – Недостатки целостности программного обеспечения и данных
-      Статус: ❌ НЕСООТВЕТСТВИЕ
-
-Проблемы:
-  •    Отсутствие Subresource Integrity для внешних ресурсов (5 экземпляров)
-  •    Риск компрометации через CDN и внешние библиотеки
-  •    Отсутствие проверки целостности обновлений
-
-A09:2021 – Недостаточное логирование и мониторинг
-      Статус: ❌ НЕСООТВЕТСТВИЕ
-
-Проблемы:
-  •    Отсутствие информации о системах логирования
-  •    Неизвестно состояние мониторинга безопасности
-  •    Отсутствие системы обнаружения аномалий
-
-
-Соответствие NIST Cybersecurity Framework 2.0
-GOVERN (Управление) - 20% соответствие
-GV.OC-01: Организационная кибербезопасность
-  •    ❌ Отсутствуют доказательства формализованной политики безопасности
-
-GV.RM-01: Управление рисками
-  •    ❌ Не реализованы процедуры управления рисками кибербезопасности
-
-GV.SC-01: Управление цепочкой поставок
-  •    ❌ Отсутствует контроль целостности внешних ресурсов
-
-IDENTIFY (Идентификация) - 60% соответствие
-ID.AM-02: Инвентаризация программного обеспечения
-  •     Частично выполнено - идентифицированы основные компоненты
-ID.RA-01: Оценка уязвимостей
-  •     Выполнено - проведено сканирование безопасности
-ID.RA-02: Анализ угроз
-  •    ❌ Отсутствует систематический анализ угроз
-
-PROTECT (Защита) - 15% соответствие
-PR.AC-01: Управление идентификацией и аутентификацией
-  •    ❌ Недостаточно данных для оценки
-
-PR.DS-01: Защита данных в покое
-  •    ❌ Обнаружено раскрытие PII
-
-PR.DS-02: Защита данных при передаче
-  •    ⚠️Частично реализовано (HTTPS, но проблемы с HSTS)
-PR.PT-01: Аудит/логирование
-  •   ❌ Недостаточно информации о системах аудита
-
-DETECT (Обнаружение) - 0% соответствие
-DE.CM-01: Мониторинг сети
-  •   ❌ Отсутствуют доказательства мониторинга
-
-DE.AE-01: Обнаружение аномалий
-  •   ❌ Отсутствуют системы обнаружения аномалий
-
-RESPOND (Реагирование) - 0% соответствие
-RS.RP-01: План реагирования
-  •   ❌ Отсутствуют доказательства плана реагирования
-
-RS.CO-01: Коммуникации
-  •   ❌ Отсутствуют процедуры уведомления о инцидентах
-
-RECOVER (Восстановление) - 0% соответствие
-RC.RP-01: План восстановления
-  •   ❌ Отсутствуют доказательства плана восстановления
-
-RC.CO-01: Коммуникации восстановления
-  •   ❌ Отсутствуют процедуры коммуникации при восстановлении
-
-
-Соответствие Microsoft Security Baseline
-Транспортная безопасность
-❌ КРИТИЧЕСКИЕ НЕДОСТАТКИ:
-
-  •   Заголовок Strict-Transport-Security не установлен (1 экземпляр)
-  •   Строгая безопасность транспорта отключена (5 экземпляров)
-  •   Отсутствует принудительное использование HTTPS для всех ресурсов
-
-Защита контента
-❌ КРИТИЧЕСКИЕ НЕДОСТАТКИ:
-
-  •   Заголовок X-Content-Type-Options отсутствует
-  •   Отсутствует Content Security Policy (5 экземпляров)
-  •   Нет защиты от MIME-sniffing атак
-  •   Отсутствует защита от кликджекинга
-Целостность ресурсов
-❌ СРЕДНИЙ РИСК:
-
-  •    Отсутствует атрибут Subresource Integrity для внешних ресурсов (5 экземпляров)
-  •    Риск компрометации внешних библиотек от Google Font API, Cloudflare и других
-       CDN
-  •    Отсутствует проверка целостности при загрузке ресурсов
-
-Управление данными
-❌ КРИТИЧЕСКИЙ РИСК:
-
-  •    Обнаружена утечка персональных данных
-  •    Отсутствует классификация данных
-  •    Нет контроля доступа к чувствительной информации
-
-
-План устранения уязвимостей
-Фаза 1: Критические исправления (0-7 дней)
- ПРИОРИТЕТ 1: Устранение утечки PII (0-3 дня)
-  •    ☐ День 1: Немедленная идентификация и блокировка источников утечки PII
-  •    ☐ День 2: Реализация маскирования/шифрования чувствительных данных
-  •    ☐ День 3: Внедрение строгого контроля доступа к персональным данным
-  •    ☐ День 3: Уведомление регуляторов в соответствии с GDPR (72 часа)
- ПРИОРИТЕТ 2: Базовые заголовки безопасности (4-7 дней)
-  •    ☐ День 4-5: Внедрение Content Security Policy
-Content-Security-Policy: default-src 'self';
+      <p style="margin-top: 20px;"><strong>Пример конфигурации Content Security Policy:</strong></p>
+      <pre>Content-Security-Policy: default-src 'self';
 script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;
 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
 img-src 'self' data: https: https://secure.gravatar.com;
 frame-ancestors 'none';
-base-uri 'self';
+base-uri 'self';</pre>
 
-  •    ☐ День 6: Настройка защиты от кликджекинга
-X-Frame-Options: DENY
+      <h3 style="color: #e65100; margin-top: 30px;">Фаза 2: Средние исправления (8-30 дней)</h3>
 
-  •    ☐ День 6: Настройка HSTS
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+      <h4>Неделя 2: Subresource Integrity (SRI)</h4>
+      <p>Внедрение SRI для всех внешних ресурсов с примером:</p>
+      <pre>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+     integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+     crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
 
-  •    ☐ День 7: Тестирование и валидация изменений
+      <h4 style="margin-top: 20px;">Неделя 3-4: Дополнительные меры</h4>
+      <ul>
+        <li>Внедрение X-Content-Type-Options</li>
+        <li>Настройка дополнительных заголовков безопасности</li>
+        <li>Проверка версий WordPress и всех плагинов</li>
+        <li>Обновление устаревших компонентов</li>
+      </ul>
 
-Фаза 2: Средние исправления (8-30 дней)
-Неделя 2: Subresource Integrity
-  •    ☐ Внедрение SRI для всех внешних ресурсов
-&lt;link
-href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap"
-    rel="stylesheet"
-    integrity="sha384-hash"
-    crossorigin="anonymous"&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-     integrity="sha384-
-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
-     crossorigin="anonymous"&gt;&lt;/script&gt;
+      <h3 style="color: #2980b9; margin-top: 30px;">Фаза 3: Долгосрочные улучшения (31-90 дней)</h3>
 
-Неделя 3: Дополнительные заголовки безопасности
-  •   ☐ Внедрение X-Content-Type-Options
-X-Content-Type-Options: nosniff
+      <h4>Месяц 2: Мониторинг и логирование</h4>
+      <ul>
+        <li>Внедрение системы мониторинга безопасности (SIEM)</li>
+        <li>Настройка централизованного логирования</li>
+        <li>Создание дашбордов безопасности</li>
+        <li>Настройка алертов на подозрительную активность</li>
+      </ul>
 
-  •   ☐ Настройка дополнительных заголовков
-X-XSS-Protection: 1; mode=block
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: geolocation=(), microphone=(), camera=()
+      <h4 style="margin-top: 15px;">Месяц 3: Процедуры и политики</h4>
+      <ul>
+        <li>Разработка политики информационной безопасности</li>
+        <li>Создание процедур реагирования на инциденты</li>
+        <li>Разработка плана восстановления после инцидентов</li>
+        <li>Обучение персонала основам кибербезопасности</li>
+        <li>Регулярные тесты на проникновение</li>
+      </ul>
+    </div>
 
-Неделя 4: Аудит компонентов
-  •   ☐ Проверка версий WordPress, PHP и всех плагинов
-  •   ☐ Обновление устаревших компонентов
-  •   ☐ Удаление неиспользуемых плагинов и тем
-  •   ☐ Настройка автоматических обновлений безопасности
+    <div class="section">
+      <h2>Соответствие стандартам</h2>
 
-Фаза 3: Долгосрочные улучшения (31-90 дней)
-Месяц 2: Мониторинг и логирование
-  •   ☐ Внедрение системы мониторинга безопасности (SIEM)
-  •   ☐ Настройка централизованного логирования
-  •   ☐ Создание дашбордов безопасности
-  •   ☐ Настройка алертов на подозрительную активность
-Месяц 3: Процедуры и политики
-  •   ☐ Разработка политики информационной безопасности
-  •   ☐ Создание процедур реагирования на инциденты
-  •   ☐ Разработка плана восстановления после инцидентов
-  •   ☐ Обучение персонала основам кибербезопасности
-  •   ☐ Регулярные тесты на проникновение
+      <table>
+        <thead><tr><th>Стандарт</th><th>Уровень соответствия</th><th>Критические проблемы</th></tr></thead>
+        <tbody>
+          <tr><td><strong>OWASP Top 10 2021</strong></td><td><span class="badge badge-critical">20%</span></td><td>A01, A05, A08, A09</td></tr>
+          <tr><td><strong>NIST CSF 2.0</strong></td><td><span class="badge badge-critical">19%</span></td><td>Все функции кроме частичной идентификации</td></tr>
+          <tr><td><strong>Microsoft Security Baseline</strong></td><td><span class="badge badge-high">15%</span></td><td>Транспорт, контент, данные</td></tr>
+        </tbody>
+      </table>
+    </div>
 
+    <div class="section">
+      <h2>Заключение</h2>
+      <p style="font-size: 1.1em; margin-bottom: 20px;">Анализ безопасности веб-сайта https://example.com выявил <strong>критические недостатки</strong> в области защиты информации. Сайт не соответствует основным требованиям международных стандартов безопасности.</p>
 
-Заключение
-Анализ безопасности веб-сайта https://example.com выявил критические недостатки в
-области защиты информации. Сайт не соответствует основным требованиям
-международных стандартов безопасности OWASP Top 10 2021, NIST CSF 2.0 и Microsoft
-Security Baseline.
-Критическая оценка рисков:
-  •    Текущий уровень риска: КРИТИЧЕСКИЙ
-  •    Основная угроза: Утечка персональных данных пользователей
-  •    Регуляторные риски: Высокие штрафы по GDPR (до 4% от годового оборота)
-  •    Репутационные риски: Серьезная потеря доверия клиентов
-  •    Операционные риски: Возможная приостановка деятельности
+      <div style="background: #e8f5e9; border-left: 5px solid #27ae60; padding: 25px; margin: 20px 0; border-radius: 4px;">
+        <h3 style="color: #1b5e20; margin-top: 0;">✓ Ожидаемые результаты после реализации плана</h3>
+        <ul style="color: #1b5e20;">
+          <li><strong>После Фазы 1:</strong> Снижение риска до 🟡 СРЕДНЕГО (устранение критических уязвимостей)</li>
+          <li><strong>После Фазы 2:</strong> Снижение риска до 🟢 НИЗКОГО (базовая защита)</li>
+          <li><strong>После Фазы 3:</strong> Достижение 🟢 ПРИЕМЛЕМОГО уровня безопасности (соответствие стандартам)</li>
+        </ul>
+      </div>
 
-Соответствие стандартам:
-                          Уровень
-Стандарт                  соответствия         Критические проблемы
-OWASP Top 10 2021         20%                  A01, A05, A08, A09
-NIST CSF 2.0              19%                  Все функции кроме частичной
-                                               идентификации
-Microsoft Security        15%                  Транспорт, контент, данные
-Baseline
+      <h3>Рекомендуемые действия:</h3>
+      <ol style="font-size: 1.05em;">
+        <li><strong>Немедленное устранение утечки персональных данных (0-3 дня)</strong></li>
+        <li><strong>Внедрение базовых механизмов защиты веб-приложения (4-7 дней)</strong></li>
+        <li><strong>Регулярное обновление всех компонентов системы</strong></li>
+        <li><strong>Создание процедур мониторинга и реагирования на инциденты</strong></li>
+        <li><strong>Обучение персонала основам информационной безопасности</strong></li>
+      </ol>
+    </div>
 
-Ключевые рекомендации:
-  1.   Немедленное устранение утечки персональных данных (0-3 дня)
-  2.   Внедрение базовых механизмов защиты веб-приложения (4-7 дней)
-  3.   Регулярное обновление всех компонентов системы
-  4.   Создание процедур мониторинга и реагирования на инциденты
-  5.   Обучение персонала основам информационной безопасности
-
-Прогноз улучшения:
-  •    После Фазы 1: Снижение риска до 🟡 СРЕДНЕГО (устранение критических
-       уязвимостей)
-  •    После Фазы 2: Снижение риска до НИЗКОГО (базовая защита)
-  •    После Фазы 3: Достижение 🟢 ПРИЕМЛЕМОГО уровня безопасности
-       (соответствие стандартам)
-Следующие шаги: Рекомендуется немедленно приступить к реализации Фазы 1 плана
-устранения уязвимостей, уделив особое внимание устранению утечки персональных
-данных и уведомлению регуляторов в соответствии с требованиями GDPR.
-
-
-Ссылки
-[1] OWASP Foundation. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
-[2] OWASP Foundation. (2021). OWASP Top 10:2021. https://owasp.org/Top10/2021/
-[3] NIST. (2024). The NIST Cybersecurity Framework (CSF) 2.0.
-https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
-    </pre>
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Отчет подготовлен на основе комплексного аудита безопасности с использованием OWASP ZAP.<br>Информацию о результатах и рекомендациях обсудите с командой безопасности.<br>Дата отчета: 30 декабря 2025 года</p>
+    </div>
   </main>
 </body>
 </html>

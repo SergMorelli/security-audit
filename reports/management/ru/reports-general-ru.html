@@ -3,253 +3,758 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>management report ru</title>
+  <title>Аудит инфраструктуры - Security Report</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+    
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .report-header {
+      background: white;
+      border-left: 6px solid #2c3e50;
+      padding: 40px;
+      margin-bottom: 40px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    
+    .report-header h1 {
+      font-size: 2.5em;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    
+    .report-header .subtitle {
+      font-size: 1.3em;
+      color: #34495e;
+      margin-bottom: 20px;
+    }
+    
+    .report-header .domain {
+      font-size: 1.8em;
+      color: #2980b9;
+      font-weight: 600;
+      margin-bottom: 15px;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .report-meta {
+      font-size: 0.95em;
+      color: #7f8c8d;
+      margin-top: 15px;
+    }
+    
+    h2 {
+      font-size: 1.8em;
+      color: #2c3e50;
+      margin-top: 40px;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #2980b9;
+      font-weight: 700;
+    }
+    
+    h3 {
+      font-size: 1.3em;
+      color: #34495e;
+      margin-top: 25px;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+    
+    .alert {
+      background: #fff3cd;
+      border-left: 5px solid #ffc107;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+      font-size: 1.05em;
+      color: #856404;
+    }
+    
+    .alert strong {
+      color: #d39e00;
+    }
+    
+    .section {
+      background: white;
+      padding: 30px;
+      margin-bottom: 30px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    
+    thead {
+      background: #2c3e50;
+      color: white;
+    }
+    
+    th {
+      padding: 16px;
+      text-align: left;
+      font-weight: 600;
+      border: none;
+    }
+    
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #ecf0f1;
+    }
+    
+    tbody tr {
+      transition: background-color 0.2s ease;
+    }
+    
+    tbody tr:hover {
+      background-color: #f8f9fa;
+    }
+    
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .critical {
+      background: #ffebee;
+      color: #c62828;
+    }
+    
+    .critical:hover {
+      background: #ffcdd2 !important;
+    }
+    
+    .high {
+      background: #fff3e0;
+      color: #e65100;
+    }
+    
+    .high:hover {
+      background: #ffe0b2 !important;
+    }
+    
+    .medium {
+      background: #f3e5f5;
+      color: #6a1b9a;
+    }
+    
+    .medium:hover {
+      background: #e1bee7 !important;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.85em;
+      font-weight: 600;
+    }
+    
+    .badge-critical {
+      background: #ffcdd2;
+      color: #c62828;
+    }
+    
+    .badge-high {
+      background: #ffe0b2;
+      color: #e65100;
+    }
+    
+    .badge-medium {
+      background: #e1bee7;
+      color: #6a1b9a;
+    }
+    
+    .badge-low {
+      background: #c8e6c9;
+      color: #2e7d32;
+    }
+    
+    ul, ol {
+      margin: 15px 0;
+      padding-left: 25px;
+    }
+    
+    li {
+      margin: 8px 0;
+      color: #34495e;
+    }
+    
+    code {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'Courier New', monospace;
+      color: #d63384;
+      font-size: 0.95em;
+    }
+    
+    pre {
+      background: #282c34;
+      color: #abb2bf;
+      padding: 20px;
+      border-radius: 6px;
+      overflow-x: auto;
+      margin: 15px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+    
+    .component-box {
+      background: #ecf0f1;
+      border-left: 4px solid #2980b9;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 4px;
+    }
+    
+    .component-box strong {
+      color: #2c3e50;
+    }
+    
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+    
+    .metric-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    .metric-card .value {
+      font-size: 2em;
+      font-weight: 700;
+      margin: 10px 0;
+    }
+    
+    .metric-card .label {
+      font-size: 0.95em;
+      opacity: 0.95;
+    }
+    
+    .vulnerability-item {
+      background: white;
+      border-left: 5px solid #e74c3c;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    
+    .vulnerability-item h4 {
+      color: #c0392b;
+      margin-bottom: 10px;
+      font-size: 1.1em;
+    }
+    
+    .risk-level {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+    }
+    
+    .risk-critical { background: #ffcdd2; color: #c62828; }
+    .risk-high { background: #ffe0b2; color: #e65100; }
+    .risk-medium { background: #e1bee7; color: #6a1b9a; }
+    .risk-low { background: #c8e6c9; color: #2e7d32; }
   </style>
 </head>
 <body>
   <main>
-    <h1>management report ru</h1>
-    <pre>
-  Отчет по аудиту безопасности: Анализ инфраструктуры
-                      example.com
-                 Специалист по информационной безопасности
+    <div class="report-header">
+      <h1>Отчет по аудиту безопасности</h1>
+      <p class="subtitle">Анализ инфраструктуры</p>
+      <p class="domain">example.com</p>
+      <p style="color: #7f8c8d; font-size: 0.95em; margin-top: 15px;">Специалист по информационной безопасности</p>
+      <p class="report-meta">Дата отчета: 17 декабря 2025</p>
+    </div>
 
-                                    2025-12-17
+    <div class="section">
+      <h2>Краткое резюме</h2>
+      <p>Проведен комплексный аудит безопасности веб-ресурса <strong>example.com</strong> с использованием современных инструментов сканирования (Nmap, SSLScan). Выявлены критические уязвимости конфигурации, требующие немедленного устранения.</p>
+      
+      <div style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-left: 5px solid #2980b9; border-radius: 4px;">
+        <div style="font-size: 1.3em; margin-bottom: 15px;">
+          <strong>Общая оценка безопасности:</strong>
+          <span style="color: #c0392b; font-size: 1.4em; font-weight: 700;"> 6/10</span>
+        </div>
+        <p style="color: #34495e; margin-top: 10px;"><strong>Статус:</strong> <span style="color: #c0392b; font-weight: 600;">Требуется срочное вмешательство</span></p>
+      </div>
+      
+      <div class="alert">
+        <strong>⚠️ Критическое предупреждение</strong><br>
+        Обнаружены открытые нестандартные порты (8080, 8443) и потенциальные векторы атак на WordPress административную панель.
+      </div>
+    </div>
 
+    <div class="section">
+      <h2>Объект тестирования</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Параметр</th>
+            <th>Значение</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Домен</strong></td>
+            <td><code>example.com</code></td>
+          </tr>
+          <tr>
+            <td><strong>IP-адреса</strong></td>
+            <td><code>192.0.2.1</code></td>
+          </tr>
+          <tr>
+            <td><strong>CDN/WAF</strong></td>
+            <td>Cloudflare</td>
+          </tr>
+          <tr>
+            <td><strong>CMS</strong></td>
+            <td>WordPress 6.9</td>
+          </tr>
+          <tr>
+            <td><strong>Дата аудита</strong></td>
+            <td>17 декабря 2025</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-Краткое резюме
-Проведен комплексный аудит безопасности веб-ресурса example.com с
-использованием современных инструментов сканирования (Nmap, SSLScan).
-Выявлены критические уязвимости конфигурации, требующие немедленного
-устранения. Общая оценка безопасности: 6/10 - требуется срочное
-вмешательство.
-
-      ⚠️Критическое предупреждение: Обнаружены открытые
-      нестандартные порты (8080, 8443) и потенциальные векторы атак на
-      WordPress административную панель.
-
-
-Объект тестирования
-Параметр        Значение
-Домен           example.com
-IP-адреса       192.0.2.1
-CDN/WAF         Cloudflare
-CMS             WordPress 6.9
-Дата аудита 17 декабря 2025
-
-
-Методология тестирования
-Аудит проводился в соответствии с методологией NIST Cybersecurity Framework и
-включал:
-
-  •    Сканирование портов (Nmap 7.94SVN)
-  •    Анализ SSL/TLS (SSLScan 2.1.2)
-  •    Проверка конфигурации веб-сервера
-  •    Анализ security headers
-  •    Оценка WordPress безопасности
-
-
-Архитектура системы
-Пользователь → Cloudflare CDN → Origin Server
-         ↓
-       Порты: 80, 443, 8080, 8443
-          ↓
-        WordPress 6.9
-
-Ключевые компоненты: - Cloudflare как reverse proxy на всех портах - SSL-
-сертификат от Google Trust Services (WE1) - Wildcard сертификат (*.example.com) -
-HTTP/2 и HTTP/3 поддержка
-
-
-Результаты сканирования
-Открытые порты и сервисы
-Порт Протокол Статус                Сервис          Примечания
-80      HTTP         Открыт         Cloudflare proxy Редирект на HTTPS
-443     HTTPS        Открыт         Cloudflare proxy Основной сайт
-8080    HTTP        ⚠️Открыт        Cloudflare proxy Нестандартный порт
-8443    HTTPS       ❌ Ошибка 523 Cloudflare proxy Origin недоступен
-
-SSL/TLS конфигурация
-Положительные аспекты: - TLS 1.3 поддерживается (современный протокол)
-- TLS 1.2 с безопасными шифрами - Отключены устаревшие протоколы (SSL
-2.0/3.0, TLS 1.0/1.1) - Perfect Forward Secrecy (ECDHE) - Современные
-эллиптические кривые (x25519, secp256r1)
-
-Проблемные области: - ⚠️Поддержка CBC-шифров (уязвимы к BEAST, Lucky13) -
-⚠️Короткий срок действия сертификата (90 дней) - ⚠️Идентичная
-конфигурация на всех портах
-
-WordPress анализ
-Компонент         Статус                 Риск
-Версия            WordPress 6.9           Высокий
-Админ-панель /wp-admin/ доступна          Критический
-Robots.txt        Раскрывает структуру 🟡 Средний
-Генератор         Версия раскрыта        🟡 Средний
+    <div class="section">
+      <h2>Методология тестирования</h2>
+      <p>Аудит проводился в соответствии с методологией <strong>NIST Cybersecurity Framework</strong> и включал:</p>
+      <ul>
+        <li>Сканирование портов (Nmap 7.94SVN)</li>
+        <li>Анализ SSL/TLS (SSLScan 2.1.2)</li>
+        <li>Проверка конфигурации веб-сервера</li>
+        <li>Анализ security headers</li>
+        <li>Оценка WordPress безопасности</li>
+      </ul>
+    </div>
 
 
+<div class="section">
+      <h2>Архитектура системы</h2>
+      <div class="component-box">
+        <p style="text-align: center; margin-bottom: 15px; font-family: 'Courier New', monospace; color: #2c3e50;">
+          Пользователь → Cloudflare CDN → Origin Server<br>
+          ↓<br>
+          Порты: 80, 443, 8080, 8443<br>
+          ↓<br>
+          WordPress 6.9
+        </p>
+      </div>
+      <h3>Ключевые компоненты:</h3>
+      <ul>
+        <li>Cloudflare как reverse proxy на всех портах</li>
+        <li>SSL-сертификат от Google Trust Services (WE1)</li>
+        <li>Wildcard сертификат (*.example.com)</li>
+        <li>HTTP/2 и HTTP/3 поддержка</li>
+      </ul>
+    </div>
 
-Выявленные уязвимости
- Критический уровень (CVSS 7.0-10.0)
-1. Ошибка конфигурации порта 8443
-   •  Описание: Порт 8443 сконфигурирован в Cloudflare, но origin сервер
-      недоступен (HTTP 523)
-  •    Риск: Обход защиты Cloudflare, информационная утечка
-  •    CVSS Score: 7.5
-  •    Рекомендация: Немедленно закрыть порт или исправить
-       конфигурацию
+    <div class="section">
+      <h2>Результаты сканирования</h2>
+      <h3>Открытые порты и сервисы</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Порт</th>
+            <th>Протокол</th>
+            <th>Статус</th>
+            <th>Сервис</th>
+            <th>Примечания</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>80</td>
+            <td>HTTP</td>
+            <td><span class="badge badge-low">Открыт</span></td>
+            <td>Cloudflare proxy</td>
+            <td>Редирект на HTTPS</td>
+          </tr>
+          <tr>
+            <td>443</td>
+            <td>HTTPS</td>
+            <td><span class="badge badge-low">Открыт</span></td>
+            <td>Cloudflare proxy</td>
+            <td>Основной сайт</td>
+          </tr>
+          <tr class="high">
+            <td>8080</td>
+            <td>HTTP</td>
+            <td><span class="badge badge-high">⚠️ Открыт</span></td>
+            <td>Cloudflare proxy</td>
+            <td>Нестандартный порт</td>
+          </tr>
+          <tr class="critical">
+            <td>8443</td>
+            <td>HTTPS</td>
+            <td><span class="badge badge-critical">❌ Ошибка 523</span></td>
+            <td>Cloudflare proxy</td>
+            <td>Origin недоступен</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="section">
+      <h3>SSL/TLS конфигурация</h3>
+      
+      <h4 style="color: #27ae60; font-size: 1.1em; margin-top: 15px;">✓ Положительные аспекты:</h4>
+      <ul>
+        <li>TLS 1.3 поддерживается (современный протокол)</li>
+        <li>TLS 1.2 с безопасными шифрами</li>
+        <li>Отключены устаревшие протоколы (SSL 2.0/3.0, TLS 1.0/1.1)</li>
+        <li>Perfect Forward Secrecy (ECDHE)</li>
+        <li>Современные эллиптические кривые (x25519, secp256r1)</li>
+      </ul>
 
-2. Открытый нестандартный порт 8080
-   •   Описание: Альтернативная точка входа может использоваться для
-       обхода WAF
-  •    Риск: Обход security policies, brute-force атаки
-  •    CVSS Score: 7.2
-  •    Рекомендация: Закрыть порт или ограничить доступ
-
-🟠 Высокий уровень (CVSS 4.0-6.9)
-
-3. WordPress административная панель
-   •  Описание: /wp-admin/ упоминается в robots.txt, версия раскрыта
-  •    Риск: Brute-force атаки, эксплуатация уязвимостей
-  •    CVSS Score: 6.8
-  •    Рекомендация: Скрыть версию, защитить админ-панель
-
-4. Отсутствие критических security headers
-   •   Описание: Отсутствуют HSTS, X-Frame-Options, CSP
-  •    Риск: Clickjacking, downgrade атаки, XSS
-  •    CVSS Score: 5.5
-  •    Рекомендация: Добавить недостающие заголовки
-
-🟡 Средний уровень (CVSS 2.0-3.9)
-
-5. CBC-шифры в TLS 1.2
-   •   Описание: Поддержка устаревших CBC-шифров
-  •    Риск: Атаки типа BEAST, Lucky13
-  •    CVSS Score: 3.7
-  •    Рекомендация: Отключить CBC-шифры
-
-
-Рекомендации по устранению
-Немедленные действия (24 часа)
-  1.   Закрыть порт 8443
-
-       # Отключить в Cloudflare Dashboard
-       # Или закрыть на origin сервере
-       server {
-         listen 8443;
-         return 444; # Закрыть соединение
-       }
-
-  2.   Ограничить доступ к порту 8080
-      server {
-        listen 8080;
-        # Только внутренняя сеть
-        allow 192.168.0.0/16;
-        deny all;
-      }
-
- 3.   Защитить WordPress админ-панель
-
-      # .htaccess в /wp-admin/
-      AuthType Basic
-      AuthName "Admin Area"
-      AuthUserFile /path/to/.htpasswd
-      Require valid-user
-
-Краткосрочные улучшения (7 дней)
- 4.   Добавить security headers
-
-      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains;
-      preload";
-      add_header X-Frame-Options "DENY";
-      add_header Content-Security-Policy "default-src 'self'";
-      add_header X-Content-Type-Options "nosniff";
-
- 5.   Оптимизировать SSL/TLS
-
-      # Отключить CBC-шифры
-      ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-
-      SHA384";
-      ssl_protocols TLSv1.2 TLSv1.3;
-
- 6.   Настроить Cloudflare WAF
-
-        –   Блокировать доступ к /wp-admin/ для неавторизованных IP
-        –   Настроить rate limiting для /wp-login.php
-        –   Включить Bot Fight Mode
-
-Долгосрочные меры (30 дней)
- 7.   Мониторинг и автоматизация
-        –   Автоматическое обновление SSL-сертификатов
-        –   Мониторинг попыток доступа к защищенным ресурсам
-       –   Регулярное сканирование на уязвимости
- 8.   WordPress hardening
-       –   Установка security плагинов (Wordfence, iThemes Security)
-        –   Двухфакторная аутентификация
-        –   Скрытие версии WordPress
-        –   Регулярные обновления
-Матрица рисков
-Уязвимость          Вероятность Воздействие Общий риск             Приоритет
-Порт 8443 ошибка Высокая           Высокое        Критический P0
-Порт 8080 открыт    Средняя        Высокое       🟠 Высокий         P1
-
-WordPress админ     Высокая        Среднее       🟠 Высокий         P1
-Security headers    Средняя        Среднее       🟡 Средний         P2
-
-CBC-шифры           Низкая         Низкое        🟢 Низкий          P3
-
-
-
-План устранения
-Фаза 1: Критические исправления (1-2 дня)
-  •    ☐ Закрыть порт 8443 в Cloudflare
-  •    ☐ Ограничить доступ к порту 8080
-  •    ☐ Защитить WordPress админ-панель
-  •    ☐ Добавить базовые security headers
-
-Фаза 2: Улучшения безопасности (1 неделя)
-  •    ☐ Оптимизировать SSL/TLS конфигурацию
-  •    ☐ Настроить Cloudflare WAF правила
-  •    ☐ Установить WordPress security плагины
-  •    ☐ Настроить мониторинг
-
-Фаза 3: Долгосрочные меры (1 месяц)
-  •    ☐ Автоматизация обновлений
-  •    ☐ Регулярные security аудиты
-  •    ☐ Обучение персонала
-  •    ☐ Документирование процедур
+      <h4 style="color: #e74c3c; font-size: 1.1em; margin-top: 15px;">⚠️ Проблемные области:</h4>
+      <ul>
+        <li>Поддержка CBC-шифров (уязвимы к BEAST, Lucky13)</li>
+        <li>Короткий срок действия сертификата (90 дней)</li>
+        <li>Идентичная конфигурация на всех портах</li>
+      </ul>
+    </div>
+    <div class="section">
+      <h3>WordPress анализ</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Компонент</th>
+            <th>Статус</th>
+            <th>Риск</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Версия</strong></td>
+            <td>WordPress 6.9</td>
+            <td><span class="badge badge-high">Высокий</span></td>
+          </tr>
+          <tr class="critical">
+            <td><strong>Админ-панель</strong></td>
+            <td>/wp-admin/ доступна</td>
+            <td><span class="badge badge-critical">Критический</span></td>
+          </tr>
+          <tr>
+            <td><strong>Robots.txt</strong></td>
+            <td>Раскрывает структуру</td>
+            <td><span class="badge badge-medium">Средний</span></td>
+          </tr>
+          <tr>
+            <td><strong>Генератор</strong></td>
+            <td>Версия раскрыта</td>
+            <td><span class="badge badge-medium">Средний</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
 
-Соответствие стандартам
-Стандарт    Текущий статус      Требуемые действия
-NIST CSF    Частично            Улучшить Protect, Detect функции
-ISO 27001 Не соответствует      Внедрить ISMS процессы
-PCI DSS     Требует проверки Усилить защиту данных
-GDPR        Базовый уровень     Добавить privacy headers
-Заключение
-Аудит выявил серьезные проблемы безопасности, требующие немедленного
-внимания. Основные риски связаны с неправильной конфигурацией портов и
-недостаточной защитой WordPress административной панели.
 
-Ключевые выводы: - Критические уязвимости: 2 (требуют немедленного
-устранения) - 🟠 Высокие риски: 2 (устранить в течение недели) - 🟡 Средние
-риски: 1 (планировать устранение)
+<div class="section">
+      <h2>Выявленные уязвимости</h2>
 
-Рекомендуемые следующие шаги: 1. Немедленно закрыть проблемные
-порты 2. Усилить защиту WordPress 3. Добавить недостающие security headers 4.
-Внедрить регулярный мониторинг безопасности
+      <h3 style="color: #c0392b;">🔴 Критический уровень (CVSS 7.0-10.0)</h3>
+      
+      <div class="vulnerability-item">
+        <h4>1. Ошибка конфигурации порта 8443</h4>
+        <span class="risk-level risk-critical">CRITICAL</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> Порт 8443 сконфигурирован в Cloudflare, но origin сервер недоступен (HTTP 523)</li>
+          <li><strong>Риск:</strong> Обход защиты Cloudflare, информационная утечка</li>
+          <li><strong>CVSS Score:</strong> <span style="color: #c0392b; font-weight: 700;">7.5</span></li>
+          <li><strong>Рекомендация:</strong> Немедленно закрыть порт или исправить конфигурацию</li>
+        </ul>
+      </div>
 
-При правильном выполнении рекомендаций общая оценка безопасности
-может быть повышена до 8-9/10 в течение 30 дней.
+      <div class="vulnerability-item">
+        <h4>2. Открытый нестандартный порт 8080</h4>
+        <span class="risk-level risk-critical">CRITICAL</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> Альтернативная точка входа может использоваться для обхода WAF</li>
+          <li><strong>Риск:</strong> Обход security policies, brute-force атаки</li>
+          <li><strong>CVSS Score:</strong> <span style="color: #c0392b; font-weight: 700;">7.2</span></li>
+          <li><strong>Рекомендация:</strong> Закрыть порт или ограничить доступ</li>
+        </ul>
+      </div>
 
+      <h3 style="color: #e65100; margin-top: 30px;">🟠 Высокий уровень (CVSS 4.0-6.9)</h3>
 
-Отчет подготовлен в соответствии с лучшими практиками индустрии и
-стандартами Microsoft Security Development Lifecycle (SDL).
-    </pre>
-  </main>
-</body>
-</html>
+      <div class="vulnerability-item" style="border-left-color: #f39c12;">
+        <h4>3. WordPress административная панель</h4>
+        <span class="risk-level risk-high">HIGH</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> /wp-admin/ упоминается в robots.txt, версия раскрыта</li>
+          <li><strong>Риск:</strong> Brute-force атаки, эксплуатация уязвимостей</li>
+          <li><strong>CVSS Score:</strong> <span style="color: #e65100; font-weight: 700;">6.8</span></li>
+          <li><strong>Рекомендация:</strong> Скрыть версию, защитить админ-панель</li>
+        </ul>
+      </div>
+
+      <div class="vulnerability-item" style="border-left-color: #f39c12;">
+        <h4>4. Отсутствие критических security headers</h4>
+        <span class="risk-level risk-high">HIGH</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> Отсутствуют HSTS, X-Frame-Options, CSP</li>
+          <li><strong>Риск:</strong> Clickjacking, downgrade атаки, XSS</li>
+          <li><strong>CVSS Score:</strong> <span style="color: #e65100; font-weight: 700;">5.5</span></li>
+          <li><strong>Рекомендация:</strong> Добавить недостающие заголовки</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #6a1b9a; margin-top: 30px;">🟡 Средний уровень (CVSS 2.0-3.9)</h3>
+
+      <div class="vulnerability-item" style="border-left-color: #8e44ad;">
+        <h4>5. CBC-шифры в TLS 1.2</h4>
+        <span class="risk-level risk-medium">MEDIUM</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Описание:</strong> Поддержка устаревших CBC-шифров</li>
+          <li><strong>Риск:</strong> Атаки типа BEAST, Lucky13</li>
+          <li><strong>CVSS Score:</strong> <span style="color: #6a1b9a; font-weight: 700;">3.7</span></li>
+          <li><strong>Рекомендация:</strong> Отключить CBC-шифры</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Рекомендации по устранению</h2>
+
+      <h3>Немедленные действия (24 часа)</h3>
+      
+      <h4 style="margin-top: 20px;">1. Закрыть порт 8443</h4>
+      <p>Отключить в Cloudflare Dashboard или закрыть на origin сервере:</p>
+      <pre>server {
+  listen 8443;
+  return 444; # Закрыть соединение
+}</pre>
+
+      <h4 style="margin-top: 20px;">2. Ограничить доступ к порту 8080</h4>
+      <pre>server {
+  listen 8080;
+  # Только внутренняя сеть
+  allow 192.168.0.0/16;
+  deny all;
+}</pre>
+
+      <h4 style="margin-top: 20px;">3. Защитить WordPress админ-панель</h4>
+      <p>Добавить в .htaccess в /wp-admin/:</p>
+      <pre>AuthType Basic
+AuthName "Admin Area"
+AuthUserFile /path/to/.htpasswd
+Require valid-user</pre>
+
+      <h3 style="margin-top: 30px;">Краткосрочные улучшения (7 дней)</h3>
+
+      <h4 style="margin-top: 20px;">4. Добавить security headers</h4>
+      <pre>add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+add_header X-Frame-Options "DENY";
+add_header Content-Security-Policy "default-src 'self'";
+add_header X-Content-Type-Options "nosniff";</pre>
+
+      <h4 style="margin-top: 20px;">5. Оптимизировать SSL/TLS</h4>
+      <pre>ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384";
+ssl_protocols TLSv1.2 TLSv1.3;</pre>
+
+      <h4 style="margin-top: 20px;">6. Настроить Cloudflare WAF</h4>
+      <ul>
+        <li>Блокировать доступ к /wp-admin/ для неавторизованных IP</li>
+        <li>Настроить rate limiting для /wp-login.php</li>
+        <li>Включить Bot Fight Mode</li>
+      </ul>
+
+      <h3 style="margin-top: 30px;">Долгосрочные меры (30 дней)</h3>
+
+      <h4 style="margin-top: 20px;">7. Мониторинг и автоматизация</h4>
+      <ul>
+        <li>Автоматическое обновление SSL-сертификатов</li>
+        <li>Мониторинг попыток доступа к защищенным ресурсам</li>
+        <li>Регулярное сканирование на уязвимости</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">8. WordPress hardening</h4>
+      <ul>
+        <li>Установка security плагинов (Wordfence, iThemes Security)</li>
+        <li>Двухфакторная аутентификация</li>
+        <li>Скрытие версии WordPress</li>
+        <li>Регулярные обновления</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Матрица рисков</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Уязвимость</th>
+            <th>Вероятность</th>
+            <th>Воздействие</th>
+            <th>Общий риск</th>
+            <th>Приоритет</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="critical">
+            <td><strong>Порт 8443 ошибка</strong></td>
+            <td><span class="badge badge-critical">Высокая</span></td>
+            <td><span class="badge badge-critical">Высокое</span></td>
+            <td><span class="badge badge-critical">CRITICAL</span></td>
+            <td><strong>P0</strong></td>
+          </tr>
+          <tr class="high">
+            <td><strong>Порт 8080 открыт</strong></td>
+            <td><span class="badge badge-high">Средняя</span></td>
+            <td><span class="badge badge-high">Высокое</span></td>
+            <td><span class="badge badge-high">HIGH</span></td>
+            <td><strong>P1</strong></td>
+          </tr>
+          <tr class="high">
+            <td><strong>WordPress админ</strong></td>
+            <td><span class="badge badge-high">Высокая</span></td>
+            <td><span class="badge badge-high">Среднее</span></td>
+            <td><span class="badge badge-high">HIGH</span></td>
+            <td><strong>P1</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Security headers</strong></td>
+            <td><span class="badge badge-medium">Средняя</span></td>
+            <td><span class="badge badge-medium">Среднее</span></td>
+            <td><span class="badge badge-medium">MEDIUM</span></td>
+            <td><strong>P2</strong></td>
+          </tr>
+          <tr>
+            <td><strong>CBC-шифры</strong></td>
+            <td><span class="badge badge-low">Низкая</span></td>
+            <td><span class="badge badge-low">Низкое</span></td>
+            <td><span class="badge badge-low">LOW</span></td>
+            <td><strong>P3</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>План устранения</h2>
+      
+      <h3>Фаза 1: Критические исправления (1-2 дня)</h3>
+      <ul>
+        <li>☐ Закрыть порт 8443 в Cloudflare</li>
+        <li>☐ Ограничить доступ к порту 8080</li>
+        <li>☐ Защитить WordPress админ-панель</li>
+        <li>☐ Добавить базовые security headers</li>
+      </ul>
+
+      <h3 style="margin-top: 25px;">Фаза 2: Улучшения безопасности (1 неделя)</h3>
+      <ul>
+        <li>☐ Оптимизировать SSL/TLS конфигурацию</li>
+        <li>☐ Настроить Cloudflare WAF правила</li>
+        <li>☐ Установить WordPress security плагины</li>
+        <li>☐ Настроить мониторинг</li>
+      </ul>
+
+      <h3 style="margin-top: 25px;">Фаза 3: Долгосрочные меры (1 месяц)</h3>
+      <ul>
+        <li>☐ Автоматизация обновлений</li>
+        <li>☐ Регулярные security аудиты</li>
+        <li>☐ Обучение персонала</li>
+        <li>☐ Документирование процедур</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Соответствие стандартам</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Стандарт</th>
+            <th>Текущий статус</th>
+            <th>Требуемые действия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>NIST CSF</strong></td>
+            <td><span class="badge badge-medium">Частично</span></td>
+            <td>Улучшить Protect, Detect функции</td>
+          </tr>
+          <tr class="critical">
+            <td><strong>ISO 27001</strong></td>
+            <td><span class="badge badge-critical">Не соответствует</span></td>
+            <td>Внедрить ISMS процессы</td>
+          </tr>
+          <tr>
+            <td><strong>PCI DSS</strong></td>
+            <td><span class="badge badge-high">Требует проверки</span></td>
+            <td>Усилить защиту данных</td>
+          </tr>
+          <tr>
+            <td><strong>GDPR</strong></td>
+            <td><span class="badge badge-medium">Базовый уровень</span></td>
+            <td>Добавить privacy headers</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Заключение</h2>
+      <p>Аудит выявил <strong>серьезные проблемы безопасности</strong>, требующие немедленного внимания. Основные риски связаны с неправильной конфигурацией портов и недостаточной защитой WordPress административной панели.</p>
+      
+      <h3 style="margin-top: 25px;">Ключевые выводы:</h3>
+      <ul>
+        <li><span class="badge badge-critical">Критические уязвимости: 2</span> – требуют немедленного устранения</li>
+        <li><span class="badge badge-high">Высокие риски: 2</span> – устранить в течение недели</li>
+        <li><span class="badge badge-medium">Средние риски: 1</span> – планировать устранение</li>
+      </ul>
+
+      <h3 style="margin-top: 25px;">Рекомендуемые следующие шаги:</h3>
+      <ol>
+        <li>Немедленно закрыть проблемные порты</li>
+        <li>Усилить защиту WordPress</li>
+        <li>Добавить недостающие security headers</li>
+        <li>Внедрить регулярный мониторинг безопасности</li>
+      </ol>
+
+      <div class="alert" style="margin-top: 25px; background: #c8e6c9; border-left-color: #2e7d32; color: #1b5e20;">
+        <strong style="color: #1b5e20;">✓ Прогноз улучшения:</strong> При правильном выполнении рекомендаций общая оценка безопасности может быть повышена до <strong>8-9/10</strong> в течение 30 дней.
+      </div>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Отчет подготовлен в соответствии с лучшими практиками индустрии и стандартами<br>Microsoft Security Development Lifecycle (SDL)</p>
+    </div>

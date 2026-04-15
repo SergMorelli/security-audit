@@ -3,37 +3,399 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>التقرير التقني للتدقيق الأمني</title>
+  <title>التقرير التقني لتدقيق الأمان - مثال</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.6rem; margin: 0 0 16px; }
-    h2 { font-size: 1.1rem; margin: 20px 0 8px; }
-    p, li, code { line-height: 1.8; }
-    .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Adobe Arabic', 'Noto Sans Arabic', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; direction: rtl; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-right: 6px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #2980b9; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: right; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: right; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; text-align: right; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .critical-row { background: #ffebee; color: #c62828; }
+    .critical-row:hover { background: #ffcdd2 !important; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    .badge-low { background: #c8e6c9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-right: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; text-align: left; direction: ltr; }
+    
+    .vulnerability-cve { background: white; border-right: 5px solid #e74c3c; padding: 20px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .vulnerability-cve h4 { color: #c0392b; margin-bottom: 10px; }
+    
+    .fix-section { background: #e8f5e9; border-right: 5px solid #27ae60; padding: 20px; margin: 15px 0; border-radius: 4px; }
+    .fix-section h4 { color: #1b5e20; margin-bottom: 10px; }
+    .fix-section li { color: #1b5e20; }
   </style>
 </head>
 <body>
   <main>
-    <h1>التقرير التقني للتدقيق الأمني - example.com</h1>
-    <div class="card">
-      <p><strong>التاريخ:</strong> 2025-12-17</p>
-      <h2>نطاق الفحص</h2>
-      <p>شمل الفحص خدمات الويب العامة، تكوين المنافذ، رؤوس الأمان، إعدادات TLS، وسلوك التطبيق أمام سيناريوهات هجوم شائعة.</p>
-      <h2>النتائج التقنية الرئيسية</h2>
+    <div class="report-header">
+      <h1>التقرير التقني</h1>
+      <p class="subtitle">تدقيق أمان البنية التحتية</p>
+      <p class="domain">example.com</p>
+      <p style="color: #7f8c8d; font-size: 0.95em; margin-top: 15px;">متخصص أمان المعلومات الأول</p>
+      <p class="report-meta" style="color: #7f8c8d; font-size: 0.9em; margin-top: 5px;">تاريخ التقرير: 17 ديسمبر 2025</p>
+    </div>
+
+    <div class="section">
+      <h2>الملخص التنفيذي</h2>
+      <p>تم إجراء تدقيق تقني شامل لبنية الويب <strong>example.com</strong> باستخدام أدوات المسح القياسية. تم تحديد ثغرات حرجة في الإعدادات تتطلب إصلاحًا فوريًا وفقًا لمعايير Microsoft Security Development Lifecycle (SDL).</p>
+      
+      <h3 style="color: #c0392b;">النتائج الحرجة:</h3>
       <ul>
-        <li>ظهور خدمات على منافذ غير قياسية تحتاج إلى تبرير تشغيلي أو إغلاق.</li>
-        <li>نقص في بعض رؤوس الأمان الدفاعية على مستوى HTTP.</li>
-        <li>حاجة إلى تقوية إعدادات الخادم لتقليل مساحة الهجوم.</li>
+        <li>خطأ في تكوين المنفذ 8443 (HTTP 523)</li>
+        <li>منفذ غير قياسي مفتوح 8080</li>
+        <li>إصدار WordPress مكشوف 6.9</li>
+        <li>رؤوس أمان حرجة مفقودة</li>
       </ul>
-      <h2>إجراءات المعالجة</h2>
+    </div>
+
+    <div class="section">
+      <h2>معلومات الاختبار التقنية</h2>
+      <h3>الأدوات والإصدارات</h3>
+      <table>
+        <thead><tr><th>الأداة</th><th>الإصدار</th><th>الغرض</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Nmap</strong></td><td>7.94SVN</td><td>مسح المنافذ والخدمات</td></tr>
+          <tr><td><strong>SSLScan</strong></td><td>2.1.2</td><td>تحليل تكوين SSL/TLS</td></tr>
+          <tr><td><strong>OpenSSL</strong></td><td>3.0.13</td><td>التحليل التشفيري</td></tr>
+          <tr><td><strong>cURL</strong></td><td>8.5.0</td><td>اختبار HTTP/HTTPS</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 25px;">أوامر إعادة الإنتاج</h3>
+      <pre># مسح المنافذ الأساسي
+nmap -Pn -sV example.com
+
+# مسح مفصل مع نصوص NSE
+nmap -sV -sC -p 80,443,8080,8443 example.com
+
+# تحليل SSL/TLS
+sslscan example.com:443
+sslscan example.com:8443
+
+# رؤوس HTTP والإعادات
+curl -I http://example.com/
+curl -I http://example.com:8080/
+curl -I https://example.com/wp-admin/
+curl -v https://example.com:8443/</pre>
+    </div>
+
+    <div class="section">
+      <h2>نتائج المسح التفصيلية</h2>
+      
+      <h3>1. مسح المنافذ (Nmap)</h3>
+      <p><strong>أمر التنفيذ:</strong></p>
+      <pre>nmap -sV -sC -p 80,443,8080,8443 example.com</pre>
+      
+      <p style="margin-top: 20px;"><strong>النتائج:</strong></p>
+      <table>
+        <thead><tr><th>المنفذ</th><th>الحالة</th><th>الخدمة</th><th>الإصدار</th></tr></thead>
+        <tbody>
+          <tr><td>80</td><td>مفتوح</td><td>HTTP</td><td>Cloudflare proxy</td></tr>
+          <tr><td>443</td><td>مفتوح</td><td>HTTPS</td><td>Cloudflare proxy</td></tr>
+          <tr><td>8080</td><td>مفتوح</td><td>HTTP</td><td>Cloudflare proxy</td></tr>
+          <tr><td>8443</td><td>مفتوح</td><td>HTTPS</td><td>Cloudflare proxy</td></tr>
+        </tbody>
+      </table>
+
+      <p style="margin-top: 15px;"><strong>التحليل التقني:</strong></p>
       <ul>
-        <li>تعطيل الخدمات غير المستخدمة وفرض قواعد جدار حماية أكثر صرامة.</li>
-        <li>إضافة رؤوس أمان مثل: <code>Content-Security-Policy</code> و<code>X-Frame-Options</code> و<code>Referrer-Policy</code>.</li>
-        <li>تطبيق فحص دوري آلي مع مراجعة يدوية للنتائج عالية الخطورة.</li>
+        <li>جميع المنافذ عبارة عن وكيل عبر شبكة Cloudflare Edge</li>
+        <li>IPv4: 192.0.2.1 (ASN Cloudflare 13335)</li>
+        <li>IPv6: 2a06:98c1:3120::c, 2a06:98c1:3121::c</li>
+        <li>زمن الاستجابة: 2.3ms (الأداء الأمثل)</li>
       </ul>
-      <h2>التحقق بعد الإصلاح</h2>
-      <p>يجب إعادة المسح بالأدوات نفسها بعد التنفيذ، مع مقارنة النتائج قبل/بعد، وتوثيق أي مخاطر متبقية مع خطة إغلاق زمنية.</p>
+
+      <h3 style="margin-top: 30px;">2. تكوين SSL/TLS (SSLScan)</h3>
+      <h4>البروتوكولات المدعومة</h4>
+      <table>
+        <thead><tr><th>البروتوكول</th><th>الحالة</th></tr></thead>
+        <tbody>
+          <tr><td>SSLv2</td><td><span class="badge badge-low">✓ معطل</span></td></tr>
+          <tr><td>SSLv3</td><td><span class="badge badge-low">✓ معطل</span></td></tr>
+          <tr><td>TLSv1.0</td><td><span class="badge badge-low">✓ معطل</span></td></tr>
+          <tr><td>TLSv1.1</td><td><span class="badge badge-low">✓ معطل</span></td></tr>
+          <tr><td>TLSv1.2</td><td><span class="badge badge-high">⚠️ مفعل (مع CBC)</span></td></tr>
+          <tr><td>TLSv1.3</td><td><span class="badge badge-low">✓ مفعل</span></td></tr>
+        </tbody>
+      </table>
+
+      <h4 style="margin-top: 20px;">أجنحة التشفير (TLS 1.3)</h4>
+      <ul>
+        <li>المفضل: TLS_AES_128_GCM_SHA256 (Curve 25519 DHE 253)</li>
+        <li>المقبول: TLS_AES_256_GCM_SHA384 (Curve 25519 DHE 253)</li>
+        <li>المقبول: TLS_CHACHA20_POLY1305_SHA256 (Curve 25519 DHE 253)</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">أجنحة التشفير (TLS 1.2) - مشكلة</h4>
+      <ul>
+        <li><code>ECDHE-ECDSA-AES128-SHA</code> <span class="badge badge-critical">❌ CBC + SHA-1</span></li>
+        <li><code>ECDHE-ECDSA-AES256-SHA</code> <span class="badge badge-critical">❌ CBC + SHA-1</span></li>
+        <li><code>ECDHE-ECDSA-AES128-SHA256</code> <span class="badge badge-high">⚠️ وضع CBC</span></li>
+        <li><code>ECDHE-ECDSA-AES256-SHA384</code> <span class="badge badge-high">⚠️ وضع CBC</span></li>
+      </ul>
+
+      <h3 style="margin-top: 30px;">3. رؤوس HTTP والتكوين</h3>
+      <h4>المنفذ 80 (HTTP → HTTPS)</h4>
+      <pre>HTTP/1.1 301 Moved Permanently
+Location: https://example.com/
+X-Content-Type-Options: nosniff
+Server: cloudflare</pre>
+
+      <h4 style="margin-top: 20px;">المنفذ 8080 (تكوين مشكلة)</h4>
+      <pre>HTTP/1.1 301 Moved Permanently
+Location: https://example.com:8080/
+X-Content-Type-Options: nosniff
+Server: cloudflare</pre>
+
+      <h4 style="margin-top: 20px;">المنفذ 8443 (خطأ حرج)</h4>
+      <pre>HTTP/2 523
+content-type: text/plain; charset=UTF-8
+server: cloudflare
+
+error code: 523</pre>
+
+      <h4 style="margin-top: 20px;">تحليل WordPress</h4>
+      <table>
+        <thead><tr><th>المكون</th><th>الحالة</th><th>الخطر</th></tr></thead>
+        <tbody>
+          <tr><td><strong>نظام إدارة المحتوى</strong></td><td>WordPress 6.9</td><td><span class="badge badge-high">مرتفع</span></td></tr>
+          <tr class="critical-row"><td><strong>لوحة التحكم</strong></td><td>/wp-admin/ متاح</td><td><span class="badge badge-critical">حرج</span></td></tr>
+          <tr><td><strong>Robots.txt</strong></td><td>يكشف الهيكل</td><td><span class="badge badge-medium">متوسط</span></td></tr>
+          <tr><td><strong>المولد</strong></td><td>الإصدار مكشوف</td><td><span class="badge badge-medium">متوسط</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>الثغرات المحددة</h2>
+      
+      <h3 style="color: #c0392b;">🔴 مستوى حرج (CVSS 7.0-10.0)</h3>
+
+      <div class="vulnerability-cve">
+        <h4>CVE-2025-001: خطأ في تكوين المنفذ 8443</h4>
+        <span class="badge badge-critical">CVSS 7.5</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>الوصف:</strong> Cloudflare يعيد توجيه المنفذ 8443 لكن Origin غير متاح</li>
+          <li><strong>السبب التقني:</strong> Cloudflare Edge → Origin غير متاح → HTTP 523</li>
+          <li><strong>الاستغلال:</strong> كشف المعلومات، تجاوز الأمان المحتمل</li>
+          <li><strong>التحقق:</strong> <code>curl -v https://example.com:8443/</code></li>
+        </ul>
+      </div>
+
+      <div class="vulnerability-cve">
+        <h4>CVE-2025-002: منفذ غير قياسي مفتوح 8080</h4>
+        <span class="badge badge-critical">CVSS 7.2</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>الوصف:</strong> نقطة دخول بديلة قد تتجاوز قواعد WAF</li>
+          <li><strong>السبب التقني:</strong> سياسات أمان مختلفة لمنافذ مختلفة</li>
+          <li><strong>الاستغلال:</strong> تجاوز حد المعدل، منع WAF</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #e65100; margin-top: 30px;">🟠 مستوى مرتفع (CVSS 4.0-6.9)</h3>
+
+      <div class="vulnerability-cve" style="border-right-color: #f39c12;">
+        <h4 style="color: #e65100;">CVE-2025-003: كشف معلومات WordPress</h4>
+        <span class="badge badge-high">CVSS 6.8</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>الوصف:</strong> إصدار WordPress وهيكل لوحة التحكم مكشوفان</li>
+          <li><strong>وسم HTML Meta:</strong> <code>&lt;meta name="generator" content="WordPress 6.9" /&gt;</code></li>
+          <li><strong>محتوى Robots.txt:</strong> يكشف عن هيكل /wp-admin/</li>
+          <li><strong>الاستغلال:</strong> هجمات موجهة على ثغرات WordPress 6.9 المعروفة</li>
+        </ul>
+      </div>
+
+      <div class="vulnerability-cve" style="border-right-color: #f39c12;">
+        <h4 style="color: #e65100;">CVE-2025-004: رؤوس أمان حرجة مفقودة</h4>
+        <span class="badge badge-high">CVSS 5.5</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>الرؤوس المفقودة:</strong></li>
+          <li style="margin-right: 20px;"><code>Strict-Transport-Security</code> - مفقود</li>
+          <li style="margin-right: 20px;"><code>X-Frame-Options</code> - مفقود</li>
+          <li style="margin-right: 20px;"><code>Content-Security-Policy</code> - مفقود</li>
+          <li style="margin-right: 20px;"><code>Referrer-Policy</code> - مفقود</li>
+          <li><strong>الاستغلال:</strong> Clickjacking، هجمات الحد من الإصدار، XSS</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #6a1b9a; margin-top: 30px;">🟡 مستوى متوسط (CVSS 2.0-3.9)</h3>
+
+      <div class="vulnerability-cve" style="border-right-color: #8e44ad;">
+        <h4 style="color: #6a1b9a;">CVE-2025-005: أجنحة تشفير CBC عفا عليها الزمن</h4>
+        <span class="badge badge-medium">CVSS 3.7</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>أجنحة ضعيفة:</strong></li>
+          <li style="margin-right: 20px;"><code>ECDHE-ECDSA-AES128-SHA</code> (CBC + SHA-1)</li>
+          <li style="margin-right: 20px;"><code>ECDHE-ECDSA-AES256-SHA</code> (CBC + SHA-1)</li>
+          <li style="margin-right: 20px;"><code>ECDHE-ECDSA-AES128-SHA256</code> (وضع CBC)</li>
+          <li style="margin-right: 20px;"><code>ECDHE-ECDSA-AES256-SHA384</code> (وضع CBC)</li>
+          <li><strong>الثغرات:</strong> BEAST، Lucky13، POODLE</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>توصيات إصلاح تقنية</h2>
+
+      <h3>إجراءات فورية (0-24 ساعة)</h3>
+
+      <div class="fix-section">
+        <h4>1. إصلاح المنفذ 8443</h4>
+        <p><strong>لوحة تحكم Cloudflare:</strong></p>
+        <ol style="padding-right: 20px;">
+          <li>تسجيل الدخول إلى dash.cloudflare.com</li>
+          <li>اختيار نطاق example.com</li>
+          <li>DNS → البحث عن سجلات المنفذ 8443</li>
+          <li>تعطيل الوكيل أو حذف السجل</li>
+        </ol>
+
+        <p style="margin-top: 15px;"><strong>خادم Origin (Nginx) - البديل 2: إعادة توجيه</strong></p>
+        <pre>server {
+  listen 8443 ssl http2;
+  server_name example.com;
+  ssl_certificate /path/to/cert.pem;
+  ssl_certificate_key /path/to/key.pem;
+  return 301 https://example.com$request_uri;
+}</pre>
+      </div>
+
+      <div class="fix-section">
+        <h4>2. تقييد المنفذ 8080</h4>
+        <pre>server {
+  listen 8080;
+  server_name example.com;
+
+  # الشبكة الداخلية فقط
+  allow 192.168.0.0/16;
+  allow 10.0.0.0/8;
+  allow 172.16.0.0/12;
+  deny all;
+}</pre>
+      </div>
+
+      <div class="fix-section">
+        <h4>3. تقوية WordPress - اخفاء الإصدار</h4>
+        <pre>// functions.php
+function remove_wp_version() {
+   return '';
+}
+add_filter('the_generator', 'remove_wp_version');</pre>
+      </div>
+
+      <h3 style="margin-top: 30px;">تحسينات قصيرة الأجل (1-7 أيام)</h3>
+
+      <div class="fix-section">
+        <h4>4. إضافة رؤوس الأمان (Nginx)</h4>
+        <pre>server {
+  listen 443 ssl http2;
+  server_name example.com;
+
+  # HSTS
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+  
+  # Framing & Content
+  add_header X-Frame-Options "DENY" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+}</pre>
+      </div>
+
+      <div class="fix-section">
+        <h4>5. تحسين SSL/TLS</h4>
+        <pre>ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384';
+ssl_prefer_server_ciphers off;
+ssl_session_cache shared:SSL:10m;
+ssl_session_timeout 10m;</pre>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>مصفوفة المخاطر</h2>
+      <table>
+        <thead><tr><th>الثغرة</th><th>الاحتمالية</th><th>التأثير</th><th>المخاطر الكلية</th><th>الأولوية</th></tr></thead>
+        <tbody>
+          <tr class="critical-row"><td><strong>المنفذ 8443</strong></td><td><span class="badge badge-critical">مرتفعة</span></td><td><span class="badge badge-critical">مرتفعة</span></td><td><span class="badge badge-critical">حرجة</span></td><td><strong>P0</strong></td></tr>
+          <tr><td><strong>المنفذ 8080</strong></td><td><span class="badge badge-high">متوسطة</span></td><td><span class="badge badge-high">مرتفعة</span></td><td><span class="badge badge-high">مرتفعة</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>WordPress</strong></td><td><span class="badge badge-high">مرتفعة</span></td><td><span class="badge badge-high">متوسطة</span></td><td><span class="badge badge-high">مرتفعة</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>رؤوس الأمان</strong></td><td><span class="badge badge-medium">متوسطة</span></td><td><span class="badge badge-medium">متوسطة</span></td><td><span class="badge badge-medium">متوسطة</span></td><td><strong>P2</strong></td></tr>
+          <tr><td><strong>أجنحة CBC</strong></td><td><span class="badge badge-low">منخفضة</span></td><td><span class="badge badge-low">منخفضة</span></td><td><span class="badge badge-low">منخفضة</span></td><td><strong>P3</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>خطة الإصلاح</h2>
+      
+      <h3>المرحلة 1: إصلاح حرج (1-2 يوم)</h3>
+      <ul>
+        <li>☐ إغلاق المنفذ 8443 في Cloudflare</li>
+        <li>☐ تقييد الوصول إلى المنفذ 8080</li>
+        <li>☐ حماية لوحة تحكم WordPress</li>
+        <li>☐ إضافة رؤوس أمان أساسية</li>
+      </ul>
+
+      <h3 style="margin-top: 25px;">المرحلة 2: تحسينات الأمان (أسبوع واحد)</h3>
+      <ul>
+        <li>☐ تحسين تكوين SSL/TLS</li>
+        <li>☐ تكوين قواعد Cloudflare WAF</li>
+        <li>☐ تثبيت مكونات أمان WordPress</li>
+        <li>☐ إعداد المراقبة والتنبيهات</li>
+      </ul>
+
+      <h3 style="margin-top: 25px;">المرحلة 3: تدابير طويلة الأجل (شهر واحد)</h3>
+      <ul>
+        <li>☐ أتمتة التحديثات</li>
+        <li>☐ تدقيق الأمان العادي</li>
+        <li>☐ تدريب الموظفين</li>
+        <li>☐ توثيق الإجراءات</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>الخلاصة</h2>
+      <p>حدد التدقيق التقني <strong>مشاكل تكوينية خطيرة</strong> تتطلب تدخلاً فوريًا. المخاطر الأساسية مرتبطة بسوء تكوين المنافذ وحماية WordPress غير كافية.</p>
+      
+      <h3 style="margin-top: 25px;">أولويات الإصلاح:</h3>
+      <ol>
+        <li><strong>P0 (0-24 ساعة):</strong> إغلاق المنفذ 8443، تقييد 8080، حماية wp-admin</li>
+        <li><strong>P1 (1-7 أيام):</strong> إضافة رؤوس أمان، تحسين SSL/TLS</li>
+        <li><strong>P2 (7-30 يوم):</strong> تطبيق المراقبة، الأتمتة، الامتثال</li>
+      </ol>
+
+      <p style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-right: 5px solid #27ae60; color: #1b5e20; border-radius: 4px;">
+        <strong>✓ النتيجة المتوقعة:</strong> مع التطبيق الصحيح للتوصيات، يمكن تحسين وضع الأمان من <strong>6/10</strong> إلى <strong>9/10</strong> في غضون 30 يوم.
+      </p>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>تم إعداد التقرير وفقًا لمعايير Microsoft Security Development Lifecycle (SDL) وأطر عمل NIST للأمان السيبراني.<br>التاريخ: 17 ديسمبر 2025</p>
     </div>
   </main>
 </body>

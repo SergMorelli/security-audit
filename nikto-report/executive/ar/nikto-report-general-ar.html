@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>تقرير الإدارة - أمان الويب</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; direction: rtl; text-align: right; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: linear-gradient(135deg, #26c6da 0%, #00bcd4 100%); color: white; border-radius: 8px; padding: 50px 40px; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); text-align: center; }
+    .report-header h1 { font-size: 2.8em; font-weight: 700; margin-bottom: 15px; }
+    .report-header .subtitle { font-size: 1.4em; margin-bottom: 20px; opacity: 0.95; }
+    .report-header .domain { font-size: 1.8em; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #00838f; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34595e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: right; }
+    
+    .alert-warning { background: #fff3e0; border-right: 6px solid #e65100; padding: 30px; margin: 20px 0; border-radius: 6px; font-size: 1.05em; text-align: right; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: right; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; text-align: right; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    ul, ol { margin: 15px 0; padding-right: 25px; }
+    li { margin: 10px 0; color: #34595e; }
+    
+    .metric-box { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); padding: 25px; border-radius: 8px; margin: 15px 0; text-align: center; border-right: 6px solid #00897b; }
+    .metric-box .label { font-size: 1em; color: #004d40; text-align: center; }
+    
+    code { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; direction: ltr; font-family: 'Courier New', monospace; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="report-header">
+      <h1>تقرير إستراتيجي لأمان الويب</h1>
+      <p class="subtitle">تقييم الإدارة والتوصيات</p>
+      <p class="domain">example.com</p>
+      <p style="opacity: 0.9; font-size: 0.95em; margin-top: 15px;">الأداة: Nikto 2.1.5 | التاريخ: 13 يناير 2026</p>
+    </div>
+
+    <div class="section">
+      <h2>الملخص التنفيذي</h2>
+      <p style="font-size: 1.1em; margin-bottom: 20px;">فحص الأمان الشامل للموقع <strong>example.com</strong> باستخدام أداة Nikto 2.1.5 حدد <strong>3 مشاكل في إعدادات الأمان</strong> تتطلب قرارات إدارية وموارد مالية.</p>
+
+      <div class="alert-warning">
+        <strong>⚠️ تنبيه للإدارة:</strong> المشاكل المكتشفة تؤثر على حماية بيانات المستخدمين وسمعة الشركة. يوصى بإجراءات تصحيحية فورية.
+      </div>
+
+      <h3>المقاييس الرئيسية:</h3>
+      <table>
+        <thead><tr><th>المقياس</th><th>القيمة</th><th>الحالة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>عدد العناصر المختبرة</strong></td><td>6,544</td><td>✓</td></tr>
+          <tr><td><strong>المشاكل المكتشفة</strong></td><td>3</td><td>⚠</td></tr>
+          <tr><td><strong>مشاكل حرجة</strong></td><td>0</td><td>✓</td></tr>
+          <tr><td><strong>متوسطة المخاطرة</strong></td><td>2</td><td>⚠</td></tr>
+          <tr><td><strong>منخفضة المخاطرة</strong></td><td>1</td><td>ℹ</td></tr>
+          <tr><td><strong>مستوى المخاطرة الإجمالي</strong></td><td>متوسط</td><td>⚠</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>المشاكل والتأثير التجاري</h2>
+
+      <h3>المشكلة 1: حماية ناقصة ضد هجمات Clickjacking</h3>
+      <div class="metric-box">
+        <p class="label"><strong>المخاطرة:</strong> متوسطة | <strong>الحالة:</strong> تتطلب إجراء</p>
+      </div>
+
+      <h4>التأثير التجاري:</h4>
+      <ul style="font-size: 1.05em;">
+        <li><strong>أمان المستخدمين:</strong> احتمالية خداع المستخدمين من خلال الإطارات المخفية</li>
+        <li><strong>المسؤولية القانونية:</strong> احتمال مسؤولية الشركة عن الأضرار</li>
+        <li><strong>سمعة الشركة:</strong> حوادث أمان قد تضر بسمعة العلامة التجارية</li>
+        <li><strong>ثقة المستهلك:</strong> فقدان الثقة بين المستخدمين والعملاء الحاليين والمحتملين</li>
+      </ul>
+
+      <h3 style="margin-top: 30px;">المشكلة 2: عدم تطابق شهادة SSL</h3>
+      <div class="metric-box">
+        <p class="label"><strong>المخاطرة:</strong> متوسطة | <strong>الحالة:</strong> تتطلب إجراء</p>
+      </div>
+
+      <h4>التأثير التجاري:</h4>
+      <ul style="font-size: 1.05em;">
+        <li><strong>تجربة المستخدم:</strong> تظهر المتصفحات تحذيرات أمان للمستخدمين</li>
+        <li><strong>معدل التحويل:</strong> ~10% من المستخدمين يغادرون عند رؤية تحذيرات الأمان</li>
+        <li><strong>تصنيف SEO:</strong> محركات البحث تطبق عقوبات على المواقع بمشاكل SSL</li>
+        <li><strong>الامتثال:</strong> مخالفة لأفضل الممارسات المتعلقة بـ HTTPS</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">التأثير المالي المقدر:</h4>
+      <p style="font-size: 1.1em;">
+        فقدان 10% من الزيارات = <strong>انخفاض إيرادات شهري 10-15%</strong>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>خطة العمل الإستراتيجية</h2>
+
+      <h3 style="color: #00897b;">المرحلة 1: الاستجابة الطارئة (الأسبوع الأول)</h3>
+      <ul style="font-size: 1.05em;">
+        <li>إصدار توجيه فوري لتكوين X-Frame-Options</li>
+        <li>بدء عملية الحصول على شهادة SSL صحيحة</li>
+        <li>إبلاغ فريق الدعم بالحالة</li>
+      </ul>
+
+      <h3 style="color: #00897b; margin-top: 25px;">المرحلة 2: الاستقرار (أسبوعان إلى ثلاثة)</h3>
+      <ul style="font-size: 1.05em;">
+        <li>تطبيق رؤوس الأمان الموصى بها</li>
+        <li>نشر شهادة SSL الصحيحة</li>
+        <li>إعادة الفحص للتحقق من الإصلاحات</li>
+      </ul>
+
+      <h3 style="color: #00897b; margin-top: 25px;">المرحلة 3: استراتيجية أمان طويلة الأجل (شهران إلى ثلاثة)</h3>
+      <ul style="font-size: 1.05em;">
+        <li>فحص Nikto شهري</li>
+        <li>أتمتة فحوصات الأمان في CI/CD</li>
+        <li>تدريب الفريق على أمان الويب</li>
+        <li>ميزانية أدوات المراقبة</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>التبرير المالي</h2>
+
+      <h3>تكاليف الحل:</h3>
+      <table>
+        <thead><tr><th>العنصر</th><th>التكلفة</th><th>الجدول الزمني</th></tr></thead>
+        <tbody>
+          <tr><td>تكوين رؤوس الأمان</td><td>2,000 دولار</td><td>يوم واحد</td></tr>
+          <tr><td>الحصول على شهادة SSL وتثبيتها</td><td>500 دولار</td><td>3-5 أيام</td></tr>
+          <tr><td>الاختبار والتحقق</td><td>1,500 دولار</td><td>يومان</td></tr>
+          <tr><td><strong>إجمالي المراحل 1-2</strong></td><td><strong>4,000 دولار</strong></td><td><strong>1-2 أسبوع</strong></td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 25px;">تحليل العائد على الاستثمار:</h3>
+      <p style="font-size: 1.1em;">
+        <strong>بدون إجراء:</strong> خطر فقدان 10-15% من الإيرادات الشهرية = 50,000-75,000 دولار/شهر<br>
+        <strong>مع استثمار 4,000 دولار:</strong> الوقاية من خسارة محتملة بأكثر من 50,000 دولار<br>
+        <strong>فترة الاسترجاع: أقل من أسبوع واحد</strong>
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>نقاط قرار الإدارة</h2>
+
+      <h3 style="color: #c0392b;">يتطلب موافقة:</h3>
+      <ol style="font-size: 1.05em;">
+        <li><strong>الموافقة على ميزانية طارئة بقيمة 4,000 دولار</strong> لمعالجة المشاكل</li>
+        <li><strong>تعيين مدير تكنولوجيا</strong> مسؤولاً عن تنفيذ المراحل 1-2</li>
+        <li><strong>الموافقة على استراتيجية أمان طويلة الأجل</strong> بميزانية سنوية 20,000 دولار</li>
+      </ol>
+
+      <div style="background: #e8f5e9; border-right: 5px solid #27ae60; padding: 25px; margin: 20px 0; border-radius: 4px;">
+        <h4 style="color: #1b5e20; margin-top: 0;">توصية الإدارة:</h4>
+        <p style="color: #1b5e20; font-size: 1.05em;">
+          استثمار أمان الويب يحمي بيانات المستخدمين، ويضمن الامتثال القانوني، ويحافظ على سمعة الشركة. خطر عدم اتخاذ إجراء يفوق بكثير تكلفة الحل.
+        </p>
+      </div>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>تقرير إداري من فحص أمان Nikto.<br>التاريخ: 13 يناير 2026</p>
+    </div>
+  </main>
+</body>
+</html>

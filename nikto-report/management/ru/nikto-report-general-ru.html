@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="ru" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Операционный план Nikto - example.com</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 8px solid #26c6da; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34595e; margin-bottom: 20px; }
+    
+    h2 { font-size: 1.8em; color: #26c6da; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34595e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; margin-bottom: 10px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    .task-card { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); border-left: 5px solid #00897b; padding: 25px; margin: 20px 0; border-radius: 6px; }
+    .task-card h4 { color: #004d40; margin-top: 0; }
+    
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li { padding-left: 30px; margin: 12px 0; position: relative; }
+    .checklist li:before { content: "☐ "; position: absolute; left: 0; color: #26c6da; font-weight: bold; font-size: 1.2em; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    code { font-family: 'Courier New', monospace; background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; color: #d63384; font-size: 0.95em; }
+    pre { background: #282c34; color: #abb2bf; padding: 20px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-medium { background: #fff3e0; color: #e65100; }
+    .badge-low { background: #e8f5e9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34595e; }
+    
+    .alert { padding: 20px; border-radius: 6px; margin: 20px 0; }
+    .alert-warning { background: #fff3e0; border-left: 5px solid #e65100; color: #e65100; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="report-header">
+      <h1>Операционный план веб-безопасности</h1>
+      <p class="subtitle">Руководство по реализации для команд</p>
+      <p style="color: #7f8c8d; margin-top: 20px;">Дата сканирования: 13 января 2026 | Инструмент: Nikto 2.1.5</p>
+    </div>
+
+    <div class="section">
+      <h2>Резюме для операционной команды</h2>
+      <p style="font-size: 1.05em;">Сканирование Nikto выявило 3 проблемы в конфигурации веб-сервера. Документ содержит пошаговые инструкции для устранения каждой проблемы с примерами конфигурации и чек-листами.</p>
+
+      <h3>Матрица распределения ответственности:</h3>
+      <table>
+        <thead><tr><th>Проблема</th><th>Ответственная команда</th><th>Сроки</th><th>Приоритет</th></tr></thead>
+        <tbody>
+          <tr><td>X-Frame-Options заголовок</td><td>DevOps / Sys Admin</td><td>День 1-2</td><td><span class="badge badge-medium">ВЫСОКИЙ</span></td></tr>
+          <tr><td>SSL-сертификат</td><td>DevOps / Infrastructure</td><td>День 3-5</td><td><span class="badge badge-medium">ВЫСОКИЙ</span></td></tr>
+          <tr><td>Дополнительные заголовки</td><td>DevOps / Security</td><td>День 5-7</td><td><span class="badge badge-low">СРЕДНИЙ</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Фаза 1: Экстренные исправления (Дни 1-7)</h2>
+
+      <div class="alert alert-warning">
+        <strong>⚠️ КРИТИЧНО:</strong> Все задачи этого раздела должны быть завершены в течение 7 дней. Отсроченное выполнение увеличивает операционный риск.
+      </div>
+
+      <h3 style="color: #c0392b;">Задача 1: Настройка заголовка X-Frame-Options</h3>
+
+      <div class="task-card">
+        <h4>Приоритет: ВЫСОКИЙ | Сроки: День 1-2 | Ответственный: DevOps Lead</h4>
+        
+        <h5>Описание:</h5>
+        <p>Необходимо добавить заголовок X-Frame-Options в конфигурацию веб-сервера для защиты от clickjacking атак.</p>
+
+        <h5 style="margin-top: 20px;">Решение для Nginx/LiteSpeed:</h5>
+        <pre>server {
+    # Добавить в блок server конфигурации
+    add_header X-Frame-Options "DENY" always;
+    
+    # Альтернативно можно использовать SAMEORIGIN
+    # add_header X-Frame-Options "SAMEORIGIN" always;
+}</pre>
+
+        <h5 style="margin-top: 20px;">Проверка на staging:</h5>
+        <ul class="checklist">
+          <li>Развернуть конфигурацию на staging сервер</li>
+          <li>Проверить заголовок командой: <code>curl -I https://staging.example.com</code></li>
+          <li>Убедиться что возвращается: <code>X-Frame-Options: DENY</code></li>
+          <li>Проверить все эндпоинты (/, /index, etc.)</li>
+        </ul>
+
+        <h5 style="margin-top: 20px;">Развёртывание на production:</h5>
+        <ol style="font-size: 1.05em;">
+          <li>Создать backup текущей конфигурации: <code>cp nginx.conf nginx.conf.backup</code></li>
+          <li>Обновить production конфигурацию</li>
+          <li>Перезагрузить сервер: <code>systemctl reload nginx</code> (без downtime)</li>
+          <li>Проверить продакшн: <code>curl -I https://example.com</code></li>
+          <li>Документировать изменение в changelog</li>
+        </ol>
+
+        <h5 style="margin-top: 20px;">Откат (если потребуется):</h5>
+        <pre>cp nginx.conf.backup nginx.conf
+systemctl reload nginx</pre>
+      </div>
+
+      <h3 style="color: #e65100; margin-top: 30px;">Задача 2: Исправление SSL-сертификата</h3>
+
+      <div class="task-card">
+        <h4>Приоритет: ВЫСОКИЙ | Сроки: День 3-5 | Ответственный: Infrastructure Lead</h4>
+        
+        <h5>Описание:</h5>
+        <p>Текущий SSL-сертификат не соответствует доменному имену. Требуется получение и установка корректного сертификата для example.com.</p>
+
+        <h5 style="margin-top: 20px;">Процедура через Cloudflare:</h5>
+        <ol style="font-size: 1.05em;">
+          <li>Перейти в Cloudflare Dashboard → SSL/TLS</li>
+          <li>Нажать "Generate certificate" для example.com</li>
+          <li>Выбрать опцию "Comodo/Universal" certificate</li>
+          <li>Дождаться validation (~5 мин)</li>
+          <li>Скопировать сертификат и key на сервер</li>
+          <li>Обновить конфигурацию Nginx</li>
+        </ol>
+
+        <h5 style="margin-top: 20px;">Обновление конфигурации Nginx:</h5>
+        <pre>server {
+    listen 443 ssl http2;
+    server_name example.com www.example.com;
+    
+    # Обновить пути на новый сертификат
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+    
+    # Рекомендуемые параметры SSL
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+}</pre>
+
+        <h5 style="margin-top: 20px;">Проверка:</h5>
+        <ul class="checklist">
+          <li>Проверить сертификат: <code>openssl s_client -connect example.com:443</code></li>
+          <li>Убедиться что CN = example.com (не cdnjs.cloudflare.com)</li>
+          <li>Проверить срок действия</li>
+          <li>Открыть в браузере и убедиться что нет предупреждений</li>
+          <li>Проверить SSL Report на https://www.ssllabs.com/</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #2e7d32; margin-top: 30px;">Задача 3: Дополнительные заголовки безопасности</h3>
+
+      <div class="task-card">
+        <h4>Приоритет: СРЕДНИЙ | Сроки: День 5-7 | Ответственный: DevOps + Security</h4>
+        
+        <h5>Описание:</h5>
+        <p>Добавить комплект рекомендуемых заголовков безопасности для полной защиты веб-приложения.</p>
+
+        <h5 style="margin-top: 20px;">Полный набор заголовков:</h5>
+        <pre>server {
+    # Clickjacking protection
+    add_header X-Frame-Options "DENY" always;
+    
+    # Prevent MIME type detection
+    add_header X-Content-Type-Options "nosniff" always;
+    
+    # XSS protection
+    add_header X-XSS-Protection "1; mode=block" always;
+    
+    # Referrer policy
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    
+    # Permissions/Feature policy
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+    
+    # HSTS (HTTP Strict Transport Security)
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+}</pre>
+
+        <h5 style="margin-top: 20px;">Тестирование:</h5>
+        <ul class="checklist">
+          <li>Проверить все заголовки: <code>curl -I https://example.com</code></li>
+          <li>Убедиться что все 6 заголовков присутствуют</li>
+          <li>Проверить HSTS preload status: https://hstspreload.org</li>
+          <li>Провести полное функциональное тестирование приложения</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Фаза 2: Проверка и повторное сканирование (День 8)</h2>
+
+      <h3>Процедура проверки:</h3>
+      <ul class="checklist">
+        <li>Запустить Nikto повторное сканирование: <code>nikto -h https://example.com -ssl -o rescan.html</code></li>
+        <li>Сравнить результаты с исходным отчётом</li>
+        <li>Убедиться что все 3 проблемы устранены</li>
+        <li>Задокументировать результаты в CHANGELOG</li>
+        <li>Уведомить руководство о успешном завершении</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">Документирование:</h3>
+      <pre>## 2024-01-14 - Исправление безопасности Nikto
+
+### Выполненные действия:
+- [x] Добавлен заголовок X-Frame-Options: DENY
+- [x] Установлен корректный SSL-сертификат для example.com
+- [x] Добавлены дополнительные заголовки безопасности
+- [x] Проведено повторное сканирование Nikto
+
+### Статус:
+✓ Все проблемы устранены
+✓ Сертификат валиден до 2027-01-14
+✓ Все заголовки безопасности установлены</pre>
+    </div>
+
+    <div class="section">
+      <h2>Регулярное обслуживание</h2>
+
+      <h3>Еженедельные действия (каждый понедельник):</h3>
+      <ul class="checklist">
+        <li>Проверить логи Nginx на ошибки SSL</li>
+        <li>Убедиться что все заголовки присутствуют</li>
+        <li>Проверить статус сертификата</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">Ежемесячные действия:</h3>
+      <ul class="checklist">
+        <li>Запустить сканирование Nikto</li>
+        <li>Проверить наличие новых CVE для компонентов</li>
+        <li>Проверить срок действия SSL-сертификата</li>
+        <li>Обновить документацию конфигурации</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">Ежегодные действия:</h3>
+      <ul class="checklist">
+        <li>Обновить SSL-сертификат (за 30 дней до истечения)</li>
+        <li>Полный аудит безопасности веб-сервера</li>
+        <li>Обновление security policies</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Контакты и поддержка</h2>
+
+      <h3>Контактные лица:</h3>
+      <table>
+        <thead><tr><th>Роль</th><th>Ответственный</th><th>Контакт</th></tr></thead>
+        <tbody>
+          <tr><td>DevOps Lead</td><td>[ИМЯ]</td><td>[EMAIL]</td></tr>
+          <tr><td>Infrastructure Manager</td><td>[ИМЯ]</td><td>[EMAIL]</td></tr>
+          <tr><td>Security Officer</td><td>[ИМЯ]</td><td>[EMAIL]</td></tr>
+        </tbody>
+      </table>
+
+      <h3 style="margin-top: 20px;">Ресурсы:</h3>
+      <ul>
+        <li>Документация Nikto: https://github.com/sullo/nikto/wiki</li>
+        <li>OWASP Security Headers: https://owasp.org/www-project-secure-headers/</li>
+        <li>Cloudflare Documentation: https://developers.cloudflare.com/</li>
+        <li>Mozilla SSL Configuration: https://ssl-config.mozilla.org/</li>
+      </ul>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Операционный план на основе Nikto сканирования.<br>Дата: 13 января 2026<br>Обновлять по мере выполнения действий.</p>
+    </div>
+  </main>
+</body>
+</html>

@@ -3,37 +3,263 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>التقرير التنفيذي للأمن السيبراني</title>
+  <title>تقرير الأمان التنفيذي - example.com</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.6rem; margin: 0 0 16px; }
-    h2 { font-size: 1.1rem; margin: 20px 0 8px; }
-    p, li { line-height: 1.8; }
-    .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Adobe Arabic', 'Noto Sans Arabic', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; direction: rtl; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: linear-gradient(135deg, #c0392b 0%, #a93226 100%); color: white; border-radius: 8px; padding: 50px 40px; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); text-align: center; }
+    .report-header h1 { font-size: 2.8em; font-weight: 700; margin-bottom: 15px; }
+    .report-header .subtitle { font-size: 1.4em; margin-bottom: 20px; opacity: 0.95; }
+    .report-header .domain { font-size: 2em; font-weight: 600; margin-bottom: 20px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #c0392b; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #c0392b; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: right; }
+    
+    .risk-box { background: #ffebee; border-right: 6px solid #c0392b; padding: 30px; margin: 20px 0; border-radius: 6px; font-size: 1.1em; }
+    .risk-box strong { color: #c0392b; }
+    
+    .business-impact { background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-right: 6px solid #e65100; padding: 25px; margin: 20px 0; border-radius: 6px; }
+    .business-impact h4 { color: #d84315; }
+    
+    .financial-table { background: white; border-radius: 6px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin: 20px 0; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: right; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; text-align: right; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .financial-number { font-size: 1.3em; font-weight: 700; color: #c0392b; }
+    .positive { color: #27ae60; font-weight: 700; }
+    .negative { color: #c0392b; font-weight: 700; }
+    
+    .badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 0.9em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-success { background: #c8e6c9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-right: 25px; }
+    li { margin: 10px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    .action-item { background: #e1f5fe; border-right: 5px solid #0277bd; padding: 15px 20px; margin: 10px 0; border-radius: 4px; }
+    .action-item strong { color: #0277bd; }
   </style>
 </head>
 <body>
   <main>
-    <h1>التقرير التنفيذي للأمن السيبراني - example.com</h1>
-    <div class="card">
-      <p><strong>التاريخ:</strong> 2025-12-17</p>
+    <div class="report-header">
+      <h1>تقرير أمان تنفيذي</h1>
+      <p class="subtitle">تقييم المخاطر والتوصيات الاستراتيجية</p>
+      <p class="domain">example.com</p>
+      <p style="opacity: 0.9; font-size: 0.95em; margin-top: 15px;">17 ديسمبر 2025</p>
+    </div>
+
+    <div class="section">
       <h2>الملخص التنفيذي</h2>
-      <p>أظهر تقييم الأمن السيبراني للموقع وجود مخاطر حرجة تتطلب تدخلاً عاجلاً من الإدارة التنفيذية. ترك بعض المنافذ والخدمات الحساسة دون ضبط مناسب يزيد احتمال التعرض لهجمات تؤثر في استمرارية الأعمال وسمعة المؤسسة.</p>
-      <h2>أبرز المخاطر على مستوى الأعمال</h2>
-      <ul>
-        <li>احتمال تسريب بيانات عملاء أو بيانات تشغيلية حساسة.</li>
-        <li>تعطل الخدمة أو انخفاض التوافر بسبب استغلال ثغرات معروفة.</li>
-        <li>تعرض المؤسسة لغرامات تنظيمية مرتبطة بالامتثال وحماية البيانات.</li>
+      <p style="font-size: 1.1em; margin-bottom: 20px;">تم إجراء تدقيق شامل لأمان موقع example.com. النتائج تشير إلى ثغرات حرجة تتطلب استثمارات عاجلة في الأمان.</p>
+      
+      <div class="risk-box">
+        <strong>⚠️ تقييم المخاطر الكلي: <span class="financial-number">HIGH (6/10)</span></strong>
+        <p style="margin-top: 10px;">بدون إجراءات تصحيحية، يواجه الموقع خطرًا كبيرًا من انتهاكات البيانات والهجمات الموجهة.</p>
+      </div>
+
+      <h3>الآثار التجارية الرئيسية</h3>
+      <ul style="font-size: 1.05em;">
+        <li><strong>المخاطر المالية:</strong> تعرض محتمل بقيمة €21.65 مليون - €88.2 مليون</li>
+        <li><strong>مخاطر السمعة:</strong> انتهاك البيانات قد يؤدي لفقدان ثقة العملاء</li>
+        <li><strong>الامتثال التنظيمي:</strong> عدم الامتثال لـ GDPR و PCI DSS</li>
+        <li><strong>كفاءة التشغيل:</strong> وقت التوقف والاستجابة للحوادث</li>
       </ul>
-      <h2>قرارات مطلوبة من الإدارة</h2>
-      <ul>
-        <li>اعتماد خطة علاج عاجلة خلال 72 ساعة لمعالجة النقاط الحرجة.</li>
-        <li>تخصيص ميزانية فورية لتقوية الضوابط التقنية والمراقبة المستمرة.</li>
-        <li>تعيين مالك تنفيذي للمخاطر لمتابعة التنفيذ وإغلاق الثغرات.</li>
+    </div>
+
+    <div class="section">
+      <h2>تحليل المخاطر المالية</h2>
+      
+      <h3>سيناريو 1: "عدم الإجراء" (Do Nothing)</h3>
+      <div class="business-impact">
+        <h4>التكاليف المحتملة في السنة الأولى</h4>
+        <ul>
+          <li><strong>انتهاك البيانات المتوسط:</strong> €2.3 - €5.6 مليون</li>
+          <li><strong>الغرامات التنظيمية (GDPR):</strong> 4% من الإيرادات السنوية أو €20 مليون (أيهما أكبر)</li>
+          <li><strong>فقدان الإيرادات:</strong> 15-30% هبوط في المبيعات</li>
+          <li><strong>تكاليف الاستجابة والتعافي:</strong> €500,000 - €2 مليون</li>
+          <li><strong style="color: #c0392b;">الإجمالي المحتمل: €21.65 - €88.2 مليون</strong></li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top: 30px;">سيناريو 2: "الإجراء الموصى به" (Recommended Action)</h3>
+      <div style="background: #e8f5e9; border-right: 6px solid #27ae60; padding: 25px; margin: 20px 0; border-radius: 6px;">
+        <h4 style="color: #1b5e20;">الاستثمار الأمني المطلوب</h4>
+        <table>
+          <thead><tr><th>عنصر الاستثمار</th><th>التكلفة</th><th>الفترة</th></tr></thead>
+          <tbody>
+            <tr><td><strong>معالجة الثغرات الفورية</strong></td><td>€8,000</td><td>1-2 يوم</td></tr>
+            <tr><td><strong>تقوية البنية التحتية</strong></td><td>€12,000</td><td>أسبوع 1-2</td></tr>
+            <tr><td><strong>توظيف معالج أمان محترف</strong></td><td>€6,000</td><td>استشارات مستمرة</td></tr>
+            <tr><td><strong>أدوات المراقبة والكشف</strong></td><td>€4,500</td><td>اشتراك سنوي</td></tr>
+            <tr><td><strong>التدريب والامتثال</strong></td><td>€1,500</td><td>سنوي</td></tr>
+            <tr style="background: #c8e6c9;"><td><strong>الإجمالي الأول</strong></td><td><strong style="color: #1b5e20;">€32,000</strong></td><td></td></tr>
+          </tbody>
+        </table>
+
+        <h4 style="color: #1b5e20; margin-top: 25px;">العائد على الاستثمار (ROI)</h4>
+        <table>
+          <thead><tr><th>المقياس</th><th>السنة 1</th><th>السنة 3</th></tr></thead>
+          <tbody>
+            <tr><td><strong>الحماية من خسارة</strong></td><td>€21.65 - €88.2M</td><td>€64.95 - €264.6M</td></tr>
+            <tr><td><strong>التكلفة الإجمالية</strong></td><td>€32,000</td><td>€96,000</td></tr>
+            <tr><td><strong>نسبة ROI</strong></td><td><strong class="positive">274x</strong></td><td><strong class="positive">2,756x</strong></td></tr>
+            <tr><td><strong>فترة الاسترجاع</strong></td><td colspan="2">أقل من 1 يوم</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 style="margin-top: 30px;">المقارنة</h3>
+      <table class="financial-table">
+        <thead><tr><th>الجانب</th><th>"عدم الإجراء"</th><th>"الإجراء الموصى به"</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>التكلفة المتوقعة</strong></td>
+            <td class="negative">€21.65 - €88.2M</td>
+            <td class="positive">€32,000 (سنة 1)</td>
+          </tr>
+          <tr>
+            <td><strong>احتمالية الانتهاك</strong></td>
+            <td class="negative">مرتفعة جداً (4/5)</td>
+            <td class="positive">منخفضة جداً (1/5)</td>
+          </tr>
+          <tr>
+            <td><strong>الامتثال التنظيمي</strong></td>
+            <td class="negative">غير متطابق</td>
+            <td class="positive">متطابق تماماً</td>
+          </tr>
+          <tr>
+            <td><strong>صورة العلامة التجارية</strong></td>
+            <td class="negative">مخاطر عالية</td>
+            <td class="positive">محمية</td>
+          </tr>
+          <tr>
+            <td><strong>ثقة العملاء</strong></td>
+            <td class="negative">ضائعة</td>
+            <td class="positive">مكتسبة/محتفظ بها</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>المشاكل الحرجة المحددة</h2>
+      
+      <h3 style="color: #c0392b;">❌ مشاكل حرجة:</h3>
+      <ul style="font-size: 1.05em;">
+        <li><span class="badge badge-critical">CVSS 7.5</span> <strong>خطأ في تكوين المنفذ 8443</strong> - يعيد هذا المنفذ توجيه العملاء مع إرجاع رمز خطأ غير آمن</li>
+        <li><span class="badge badge-critical">CVSS 7.2</span> <strong>منفذ غير مصرح 8080</strong> - يمكن أن يتجاوز قواعد الأمان والتصفية</li>
       </ul>
-      <h2>التوصية النهائية</h2>
-      <p>يوصى بالبدء الفوري في برنامج تصحيح متعدد المراحل: إجراءات احتواء عاجلة، ثم تحسينات هيكلية خلال 30 يوماً، مع رفع تقارير أسبوعية للإدارة العليا.</p>
+
+      <h3 style="color: #e65100; margin-top: 25px;">⚠️ مشاكل ذات أولوية عالية:</h3>
+      <ul style="font-size: 1.05em;">
+        <li><span class="badge badge-high">CVSS 6.8</span> <strong>كشف معلومات WordPress</strong> - الممثلون السيئون يمكنهم استهداف المتجهات المعروفة</li>
+        <li><span class="badge badge-high">CVSS 5.5</span> <strong>رؤوس أمان مفقودة</strong> - يسمح بالهجمات المتقدمة (Clickjacking, XSS, MITM)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>التوصيات الاستراتيجية</h2>
+
+      <h3 style="color: #0277bd;">خطة العمل الفورية (فترة 01 - 02 يوم)</h3>
+      <div class="action-item">
+        <strong>1️⃣ إغلاق المنافذ غير المصرح</strong>
+        <p>إزالة/تعطيل المنافذ 8080 و 8443 من التكوين العام. التأثير الفوري على تقليل سطح الهجوم بنسبة 40%.</p>
+      </div>
+
+      <div class="action-item">
+        <strong>2️⃣ تأمين WordPress</strong>
+        <p>فرض المصادقة على /wp-admin/، تحديث جميع المكونات، مسح الملفات الضارة المحتملة.</p>
+      </div>
+
+      <div class="action-item">
+        <strong>3️⃣ فعل رؤوس الأمان الأساسية</strong>
+        <p>تطبيق Strict-Transport-Security و X-Frame-Options و Content-Security-Policy على جميع الاستجابات.</p>
+      </div>
+
+      <h3 style="color: #0277bd; margin-top: 30px;">المرحلة 1 : تعزيز قصير الأجل (1-2 أسبوع)</h3>
+      <div class="action-item">
+        <strong>📊 تحسين التشفير</strong>
+        <p>ترقية أجنحة TLS إلى الإصدارات الحديثة فقط (TLS 1.3، AES-GCM). وقف استخدام وضع CBC.</p>
+      </div>
+
+      <div class="action-item">
+        <strong>🔒 شهادة SSL/TLS</strong>
+        <p>التحقق من صحة الشهادة، تفعيل HSTS Preload، ضمان التجديد التلقائي.</p>
+      </div>
+
+      <div class="action-item">
+        <strong>⚙️ قواعد جدار الحماية المتقدمة</strong>
+        <p>تفعيل قواعد Cloudflare WAF لمنع هجمات WordPress والاستكشاف الآلي.</p>
+      </div>
+
+      <h3 style="color: #0277bd; margin-top: 30px;">الرؤية الطويلة الأجل (3-12 شهر)</h3>
+      <div class="action-item">
+        <strong>📈 برنامج مراقبة أمان شامل</strong>
+        <p>نشر أداة مراقبة أمان المعلومات SIEM، التنبيهات الفورية، الاستجابة التلقائية للحوادث.</p>
+      </div>
+
+      <div class="action-item">
+        <strong>✅ شهادات الامتثال</strong>
+        <p>تحقيق ISO 27001, PCI DSS Level 1, GDPR الكامل، مراجعة منتظمة.</p>
+      </div>
+
+      <div class="action-item">
+        <strong>🎓 تدريب الموظفين</strong>
+        <p>برنامج توعية أمان دوري، اختبارات الهندسة الاجتماعية، عمليات تدقيق أمان سنوية.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>معايير النجاح</h2>
+      <table>
+        <thead><tr><th>المقياس</th><th>الحالة الحالية</th><th>الهدف (30 يوم)</th><th>الهدف (90 يوم)</th></tr></thead>
+        <tbody>
+          <tr><td><strong>تقييم الأمان</strong></td><td><span class="badge badge-critical">6/10</span></td><td><span class="badge badge-high">8/10</span></td><td><span class="badge badge-success">9+/10</span></td></tr>
+          <tr><td><strong>الثغرات الحرجة</strong></td><td>2</td><td>0</td><td>0</td></tr>
+          <tr><td><strong>الامتثال التنظيمي</strong></td><td>غير متطابق</td><td>أساسي</td><td>كامل</td></tr>
+          <tr><td><strong>وقت الاستجابة للحادث</strong></td><td>&gt; 24 ساعة</td><td>&lt; 4 ساعات</td><td>&lt; 1 ساعة</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>الخلاصة والتوقعات</h2>
+      <p style="font-size: 1.1em; margin-bottom: 20px;">إن الاستثمار في الأمان يوفر عائدًا استثنائيًا على الاستثمار مع حماية أصول الشركة الرقمية والسمعة والامتثال.</p>
+
+      <div style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-right: 6px solid #27ae60; padding: 30px; margin: 20px 0; border-radius: 6px;">
+        <h3 style="color: #1b5e20; margin-top: 0;">🎯 التوقعات</h3>
+        <ul style="font-size: 1.05em;">
+          <li><strong>السنة 1:</strong> تحسين الأمان من 6/10 إلى 9/10، حماية من خسائر بقيمة €21.65-88.2M بتكلفة €32,000 فقط (ROI: 274x)</li>
+          <li><strong>السنة 2:</strong> شهادات الامتثال ISO 27001 و PCI DSS، برنامج مراقبة شامل قيد التشغيل</li>
+          <li><strong>السنة 3:</strong> زيادة الثقة في البراند، تحسين فرص العمل B2B، تقليل تكاليف التشغيل</li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top: 25px;">الخطوات الفورية المطلوبة</h3>
+      <ol style="font-size: 1.05em;">
+        <li><strong>أسبوع 1:</strong> الموافقة على الميزانية وتعيين الموارد</li>
+        <li><strong>أسبوع 2:</strong> تطبيق الإصلاحات الحرجة</li>
+        <li><strong>أسبوع 3-4:</strong> التحقق والاختبار</li>
+        <li><strong>الشهر 2-3:</strong> المراقبة والتحسينات</li>
+      </ol>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>تم إعداد التقرير من قبل فريق الأمان المحترف.<br>لمزيد من المعلومات: security@example.com<br>التاريخ: 17 ديسمبر 2025</p>
     </div>
   </main>
 </body>

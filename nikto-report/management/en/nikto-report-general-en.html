@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Management Nikto Operational Plan - example.com</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 8px solid #26c6da; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34595e; margin-bottom: 20px; }
+    
+    h2 { font-size: 1.8em; color: #26c6da; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #26c6da; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34595e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; margin-bottom: 10px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    .task-card { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%); border-left: 5px solid #00897b; padding: 25px; margin: 20px 0; border-radius: 6px; }
+    .task-card h4 { color: #004d40; margin-top: 0; }
+    
+    .checklist { list-style: none; padding-left: 0; }
+    .checklist li { padding-left: 30px; margin: 12px 0; position: relative; }
+    .checklist li:before { content: "☐ "; position: absolute; left: 0; color: #26c6da; font-weight: bold; font-size: 1.2em; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    code { font-family: 'Courier New', monospace; background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; color: #d63384; font-size: 0.95em; }
+    pre { background: #282c34; color: #abb2bf; padding: 20px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-medium { background: #fff3e0; color: #e65100; }
+    .badge-low { background: #e8f5e9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34595e; }
+    
+    .alert { padding: 20px; border-radius: 6px; margin: 20px 0; }
+    .alert-warning { background: #fff3e0; border-left: 5px solid #e65100; color: #e65100; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="report-header">
+      <h1>Operational Web Security Plan</h1>
+      <p class="subtitle">Implementation Guidance for Teams</p>
+      <p style="color: #7f8c8d; margin-top: 20px;">Scan Date: January 13, 2026 | Tool: Nikto 2.1.5</p>
+    </div>
+
+    <div class="section">
+      <h2>Team Summary</h2>
+      <p style="font-size: 1.05em;">Nikto scan identified 3 web server configuration issues. Document contains step-by-step remediation instructions with configuration examples and checklists.</p>
+
+      <h3>Responsibility Matrix:</h3>
+      <table>
+        <thead><tr><th>Issue</th><th>Responsible Team</th><th>Timeline</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>X-Frame-Options Header</td><td>DevOps / Sys Admin</td><td>Day 1-2</td><td><span class="badge badge-medium">HIGH</span></td></tr>
+          <tr><td>SSL Certificate</td><td>DevOps / Infrastructure</td><td>Day 3-5</td><td><span class="badge badge-medium">HIGH</span></td></tr>
+          <tr><td>Additional Headers</td><td>DevOps / Security</td><td>Day 5-7</td><td><span class="badge badge-low">MEDIUM</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Phase 1: Emergency Fixes (Days 1-7)</h2>
+
+      <div class="alert alert-warning">
+        <strong>⚠️ CRITICAL:</strong> All Phase 1 tasks must be completed within 7 days. Delayed implementation increases operational risk.
+      </div>
+
+      <h3 style="color: #c0392b;">Task 1: Configure X-Frame-Options Header</h3>
+
+      <div class="task-card">
+        <h4>Priority: HIGH | Timeline: Day 1-2 | Owner: DevOps Lead</h4>
+        
+        <h5>Description:</h5>
+        <p>Add X-Frame-Options header to web server configuration to protect against clickjacking attacks.</p>
+
+        <h5 style="margin-top: 20px;">Nginx/LiteSpeed Solution:</h5>
+        <pre>server {
+    # Add to server configuration
+    add_header X-Frame-Options "DENY" always;
+    
+    # Alternative SAMEORIGIN option
+    # add_header X-Frame-Options "SAMEORIGIN" always;
+}</pre>
+
+        <h5 style="margin-top: 20px;">Staging Verification:</h5>
+        <ul class="checklist">
+          <li>Deploy configuration to staging server</li>
+          <li>Verify header: <code>curl -I https://staging.example.com</code></li>
+          <li>Confirm: <code>X-Frame-Options: DENY</code> returned</li>
+          <li>Test all endpoints</li>
+        </ul>
+
+        <h5 style="margin-top: 20px;">Production Deployment:</h5>
+        <ol style="font-size: 1.05em;">
+          <li>Backup current config: <code>cp nginx.conf nginx.conf.backup</code></li>
+          <li>Update production configuration</li>
+          <li>Reload server: <code>systemctl reload nginx</code> (zero downtime)</li>
+          <li>Verify production: <code>curl -I https://example.com</code></li>
+          <li>Document change in changelog</li>
+        </ol>
+
+        <h5 style="margin-top: 20px;">Rollback (if needed):</h5>
+        <pre>cp nginx.conf.backup nginx.conf
+systemctl reload nginx</pre>
+      </div>
+
+      <h3 style="color: #e65100; margin-top: 30px;">Task 2: Fix SSL Certificate</h3>
+
+      <div class="task-card">
+        <h4>Priority: HIGH | Timeline: Day 3-5 | Owner: Infrastructure Lead</h4>
+        
+        <h5>Description:</h5>
+        <p>Current SSL certificate does not match domain name. Obtain and install correct certificate for example.com.</p>
+
+        <h5 style="margin-top: 20px;">Cloudflare Process:</h5>
+        <ol style="font-size: 1.05em;">
+          <li>Navigate to Cloudflare Dashboard → SSL/TLS</li>
+          <li>Click "Generate certificate" for example.com</li>
+          <li>Select "Comodo/Universal" certificate type</li>
+          <li>Wait for validation (~5 minutes)</li>
+          <li>Copy certificate and key to server</li>
+          <li>Update Nginx configuration</li>
+        </ol>
+
+        <h5 style="margin-top: 20px;">Nginx Configuration Update:</h5>
+        <pre>server {
+    listen 443 ssl http2;
+    server_name example.com www.example.com;
+    
+    # Update certificate paths
+    ssl_certificate /etc/ssl/certs/example.com.crt;
+    ssl_certificate_key /etc/ssl/private/example.com.key;
+    
+    # Recommended SSL parameters
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+}</pre>
+
+        <h5 style="margin-top: 20px;">Verification:</h5>
+        <ul class="checklist">
+          <li>Check certificate: <code>openssl s_client -connect example.com:443</code></li>
+          <li>Verify CN = example.com (not cdnjs.cloudflare.com)</li>
+          <li>Check expiration date</li>
+          <li>Open in browser - verify no warnings</li>
+          <li>Check SSL Report: https://www.ssllabs.com/</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #2e7d32; margin-top: 30px;">Task 3: Additional Security Headers</h3>
+
+      <div class="task-card">
+        <h4>Priority: MEDIUM | Timeline: Day 5-7 | Owner: DevOps + Security</h4>
+        
+        <h5>Complete Security Header Set:</h5>
+        <pre>server {
+    # Clickjacking protection
+    add_header X-Frame-Options "DENY" always;
+    
+    # MIME type detection prevention
+    add_header X-Content-Type-Options "nosniff" always;
+    
+    # XSS protection
+    add_header X-XSS-Protection "1; mode=block" always;
+    
+    # Referrer policy
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    
+    # Feature/Permissions policy
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+    
+    # HSTS
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+}</pre>
+
+        <h5 style="margin-top: 20px;">Testing:</h5>
+        <ul class="checklist">
+          <li>Verify all headers: <code>curl -I https://example.com</code></li>
+          <li>Confirm all 6 headers present</li>
+          <li>Check HSTS preload: https://hstspreload.org</li>
+          <li>Full application functional testing</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Phase 2: Verification & Re-scan (Day 8)</h2>
+
+      <h3>Verification Process:</h3>
+      <ul class="checklist">
+        <li>Re-run Nikto: <code>nikto -h https://example.com -ssl -o rescan.html</code></li>
+        <li>Compare with original report</li>
+        <li>Verify all 3 issues resolved</li>
+        <li>Document results in CHANGELOG</li>
+        <li>Brief management on completion</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">Documentation:</h3>
+      <pre>## 2024-01-14 - Nikto Security Fixes
+
+### Actions Completed:
+- [x] X-Frame-Options header added: DENY
+- [x] SSL certificate installed for example.com  
+- [x] Additional security headers deployed
+- [x] Nikto re-scan completed
+
+### Status:
+✓ All issues resolved
+✓ Certificate valid until 2027-01-14
+✓ All security headers active</pre>
+    </div>
+
+    <div class="section">
+      <h2>Regular Maintenance</h2>
+
+      <h3>Weekly (Every Monday):</h3>
+      <ul class="checklist">
+        <li>Check Nginx error logs for SSL issues</li>
+        <li>Verify all headers present</li>
+        <li>Check certificate status</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">Monthly:</h3>
+      <ul class="checklist">
+        <li>Run Nikto scan</li>
+        <li>Check for new CVEs</li>
+        <li>Verify certificate expiration</li>
+        <li>Update configuration documentation</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">Annually:</h3>
+      <ul class="checklist">
+        <li>Renew SSL certificate (30 days before expiry)</li>
+        <li>Full web server security audit</li>
+        <li>Update security policies</li>
+      </ul>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Operational Plan from Nikto Security Scanning.<br>Date: January 13, 2026<br>Update as actions are completed.</p>
+    </div>
+  </main>
+</body>
+</html>

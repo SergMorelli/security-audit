@@ -3,820 +3,397 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>zapreports management ru</title>
+  <title>Операционный план OWASP ZAP - example.com</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 6px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #2980b9; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    h5 { font-size: 1.05em; color: #34495e; margin-top: 12px; font-weight: 600; }
+    
+    .alert-critical { background: #ffebee; border-left: 5px solid #c0392b; padding: 25px; margin: 20px 0; border-radius: 4px; font-size: 1.05em; }
+    .alert-critical strong { color: #c0392b; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin: 2px; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    .badge-low { background: #c8e6c9; color: #2e7d32; }
+    
+    .priority-table { background: white; }
+    .priority-table td:first-child { font-weight: 600; }
+    
+    .task-card { background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%); border-left: 5px solid #0277bd; padding: 20px; margin: 15px 0; border-radius: 4px; }
+    .task-card h4 { color: #0277bd; margin-top: 0; }
+    
+    .checklist { background: #f0f7ff; padding: 20px; border-radius: 6px; margin: 15px 0; }
+    .checklist li { list-style: none; padding-left: 25px; position: relative; }
+    .checklist li:before { content: "☐"; position: absolute; left: 0; color: #0277bd; font-weight: bold; font-size: 1.2em; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.9em; line-height: 1.5; }
+    
+    .responsibility-matrix { background: white; }
+    .responsibility-matrix th { background: #34495e; }
   </style>
 </head>
 <body>
   <main>
-    <h1>zapreports management ru</h1>
-    <pre>
-Операционный план кибербезопасности: Руководство для
-              менеджеров и тимлидов
-                 Руководитель службы информационной безопасности
-                                      2026-01-02
+    <div class="report-header">
+      <h1>Операционный план кибербезопасности</h1>
+      <p class="subtitle">Руководство для менеджеров и тимлидов</p>
+      <p class="domain">example.com</p>
+      <p style="color: #7f8c8d; font-size: 0.95em; margin-top: 15px;">Инструмент: OWASP ZAP 2.17.0 | Дата: 30 декабря 2025</p>
+    </div>
 
+    <div class="section">
+      <h2>Краткое резюме для менеджеров</h2>
+      <p style="font-size: 1.05em; margin-bottom: 20px;">Данный документ представляет практическое руководство по реализации мер кибербезопасности на уровне команд и отделов. Выявлены критические уязвимости, требующие немедленных операционных действий.</p>
 
-Краткое резюме для менеджеров
-Данный документ представляет практическое руководство по реализации мер
-кибербезопасности на уровне команд и отделов. На основе аудита безопасности от 30
-декабря 2025 года выявлены критические уязвимости, требующие немедленных
-операционных действий от руководителей среднего звена.
-      ⚠️ВНИМАНИЕ: Обнаружена критическая утечка данных. Ваши команды
-      должны выполнить защитные меры в течение 72 часов.
+      <div class="alert-critical">
+        <strong>⚠️ ВНИМАНИЕ:</strong> Обнаружена критическая утечка данных. Ваши команды должны выполнить защитные меры в течение 72 часов.
+      </div>
 
-Ключевые задачи для менеджеров
-                                                                       Срок
-Приоритет      Задача                         Ответственный            выполнения
-               Блокировка уязвимых API        DevOps/Backend           24 часа
-Критический                                   команды
-🟡 Высокий      Внедрение заголовков           Frontend команды         48 часов
-               безопасности
-Средний        Настройка мониторинга          SRE/Ops команды          1 неделя
-ℹ️Низкий       Обучение сотрудников           Все команды              2 недели
+      <h3>Распределение ответственности по командам</h3>
+      <table class="responsibility-matrix">
+        <thead><tr><th>Приоритет</th><th>Задача</th><th>Ответственный</th><th>Срок</th></tr></thead>
+        <tbody>
+          <tr><td><span class="badge badge-critical">🔴 Критический</span></td><td>Блокировка уязвимых API</td><td>Backend/DevOps</td><td><strong>24 часа</strong></td></tr>
+          <tr><td><span class="badge badge-high">🟠 Высокий</span></td><td>Внедрение заголовков безопасности</td><td>Frontend/DevOps</td><td><strong>48 часов</strong></td></tr>
+          <tr><td><span class="badge badge-medium">🟡 Средний</span></td><td>Настройка мониторинга</td><td>SRE/Ops</td><td><strong>1 неделя</strong></td></tr>
+          <tr><td><span class="badge badge-low">ℹ️ Низкий</span></td><td>Обучение сотрудников</td><td>Все команды</td><td><strong>2 недели</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-Распределение ответственности
-Немедленные действия (0-72 часа):
-  •    Backend команды: Закрытие REST API уязвимостей
-  •    DevOps команды: Настройка безопасных конфигураций
-  •    QA команды: Валидация исправлений
-Краткосрочные задачи (1-4 недели):
-  •    Frontend команды: Внедрение CSP и SRI
-  •    Infrastructure команды: Настройка мониторинга
-  •    Security команды: Процедуры реагирования на инциденты
-Техническая ситуация и приоритеты
-Критические уязвимости по командам
-Backend/API команды - КРИТИЧЕСКИЙ ПРИОРИТЕТ
+    <div class="section">
+      <h2>Техническая ситуация и приоритеты</h2>
 
-Проблема: Утечка персональных данных через REST API
-  •    Уязвимость: /wp-json/wp/v2/users доступен без аутентификации
-  •    Риск: Все пользовательские данные доступны публично
-  •    CVSS Score: 9.1 (Критический)
-Немедленные действия:
-// СРОЧНО: Добавить в functions.php
+      <h3 style="color: #c0392b;">Backend/API команды - КРИТИЧЕСКИЙ ПРИОРИТЕТ</h3>
+      
+      <div class="task-card">
+        <h4 style="color: #c0392b; margin-top: 0;">Проблема: Утечка персональных данных через REST API</h4>
+        <ul>
+          <li><strong>Уязвимость:</strong> <code>/wp-json/wp/v2/users</code> доступен без аутентификации</li>
+          <li><strong>Риск:</strong> Все пользовательские данные доступны публично</li>
+          <li><strong>CVSS Score:</strong> <span class="badge badge-critical">9.1 (Критический)</span></li>
+        </ul>
+
+        <h5 style="color: #c0392b;">Немедленное решение:</h5>
+        <pre>// СРОЧНО: Добавить в functions.php WordPress
 add_filter('rest_endpoints', function($endpoints) {
     if (isset($endpoints['/wp/v2/users'])) {
-       unset($endpoints['/wp/v2/users']);
+        unset($endpoints['/wp/v2/users']);
     }
     return $endpoints;
-});
+});</pre>
 
-Чек-лист для Backend тимлида:
-  •    ☐ Немедленно заблокировать доступ к /wp-json/wp/v2/users
-  •    ☐ Провести аудит всех REST API endpoints
-  •    ☐ Внедрить аутентификацию для чувствительных endpoints
-  •    ☐ Настроить логирование API запросов
-  •    ☐ Протестировать изменения на staging
+        <h5>Чек-лист для Backend тимлида:</h5>
+        <div class="checklist">
+          <ul>
+            <li>Немедленно заблокировать доступ к /wp-json/wp/v2/users</li>
+            <li>Провести аудит всех REST API endpoints</li>
+            <li>Внедрить аутентификацию для чувствительных endpoints</li>
+            <li>Настроить логирование API запросов</li>
+            <li>Протестировать изменения на staging</li>
+          </ul>
+        </div>
+      </div>
 
-Frontend команды - ВЫСОКИЙ ПРИОРИТЕТ
+      <h3 style="color: #e65100; margin-top: 30px;">Frontend команды - ВЫСОКИЙ ПРИОРИТЕТ</h3>
+      
+      <div class="task-card" style="border-left-color: #e65100; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); ">
+        <h4 style="color: #e65100; margin-top: 0;">Проблема: Отсутствие базовых заголовков безопасности</h4>
+        <ul>
+          <li><strong>Уязвимости:</strong> Нет CSP, X-Frame-Options, SRI</li>
+          <li><strong>Риск:</strong> XSS атаки, clickjacking, supply chain атаки</li>
+        </ul>
 
-Проблема: Отсутствие базовых заголовков безопасности
-  •    Уязвимости: Нет CSP, X-Frame-Options, SRI
-  •    Риск: XSS атаки, clickjacking, supply chain атаки
-Практические решения:
-  1.   Content Security Policy (CSP)
-&lt;!-- Добавить в &lt;head&gt; --&gt;
+        <h5 style="color: #e65100;">1. Content Security Policy (CSP)</h5>
+        <pre>&lt;!-- Добавить в &lt;head&gt; --&gt;
 &lt;meta http-equiv="Content-Security-Policy"
     content="default-src 'self';
          script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
-         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"&gt;
+         style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"&gt;</pre>
 
-  2.   Subresource Integrity (SRI)
-&lt;!-- Для всех внешних ресурсов --&gt;
+        <h5 style="color: #e65100; margin-top: 15px;">2. Subresource Integrity (SRI)</h5>
+        <pre>&lt;!-- Для всех внешних ресурсов --&gt;
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-     integrity="sha384-
-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
-     crossorigin="anonymous"&gt;&lt;/script&gt;
-Чек-лист для Frontend тимлида:
-    •    ☐ Внедрить CSP заголовки
-    •    ☐ Добавить SRI для всех внешних ресурсов
-    •    ☐ Настроить X-Frame-Options: DENY
-    •    ☐ Протестировать совместимость с браузерами
-    •    ☐ Обновить CI/CD pipeline для проверки заголовков
+     integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+     crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
 
-DevOps/Infrastructure команды - ВЫСОКИЙ ПРИОРИТЕТ
+        <h5>Чек-лист для Frontend тимлида:</h5>
+        <div class="checklist">
+          <ul>
+            <li>Внедрить CSP заголовки</li>
+            <li>Добавить SRI для всех внешних ресурсов</li>
+            <li>Настроить X-Frame-Options: DENY</li>
+            <li>Протестировать совместимость с браузерами</li>
+            <li>Обновить CI/CD pipeline для проверки заголовков</li>
+          </ul>
+        </div>
+      </div>
 
-Проблема: Небезопасная конфигурация веб-сервера
-    •    Уязвимости: Отсутствие HSTS, раскрытие версий ПО
-    •    Риск: Man-in-the-middle атаки, информационная разведка
-Конфигурации по серверам:
-Apache (.htaccess):
-&lt;IfModule mod_headers.c&gt;
-   # Базовые заголовки безопасности
-   Header always set X-Content-Type-Options "nosniff"
-   Header always set X-Frame-Options "DENY"
-   Header always set X-XSS-Protection "1; mode=block"
-   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+      <h3 style="color: #e65100; margin-top: 30px;">DevOps/Infrastructure - ВЫСОКИЙ ПРИОРИТЕТ</h3>
+      
+      <div class="task-card" style="border-left-color: #e65100; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); ">
+        <h4 style="color: #e65100; margin-top: 0;">Проблема: Небезопасная конфигурация веб-сервера</h4>
+        <ul>
+          <li><strong>Уязвимости:</strong> Отсутствие HSTS, раскрытие версий ПО</li>
+          <li><strong>Риск:</strong> Man-in-the-middle атаки, информационная разведка</li>
+        </ul>
 
-  # Скрытие информации о сервере
-  Header always unset Server
-  Header always unset X-Powered-By
-&lt;/IfModule&gt;
-
-# Отключение сигнатуры сервера
-ServerTokens Prod
-ServerSignature Off
-
-Nginx:
-server {
+        <h5 style="color: #e65100;">Конфигурация Nginx:</h5>
+        <pre>server {
   # Заголовки безопасности
   add_header X-Content-Type-Options "nosniff" always;
   add_header X-Frame-Options "DENY" always;
   add_header X-XSS-Protection "1; mode=block" always;
   add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 
-    # Скрытие версии
-    server_tokens off;
-    more_clear_headers Server;
-}
-
-Чек-лист для DevOps тимлида:
-    •    ☐ Применить конфигурации безопасности
-  •     ☐ Настроить принудительное HTTPS
-  •     ☐ Скрыть версии серверного ПО
-  •     ☐ Настроить логирование безопасности
-  •     ☐ Протестировать конфигурации
-
-
-Инструменты и технологии
-Обязательные инструменты для команд
-Мониторинг и алертинг
-
-1. Система логирования безопасности
-# Настройка rsyslog для событий безопасности
-echo "local0.* /var/log/security.log" &gt;&gt; /etc/rsyslog.conf
-systemctl restart rsyslog
-
-2. Мониторинг файлов конфигурации
-#!/bin/bash
-# security_monitor.sh - Скрипт для мониторинга изменений
-inotifywait -m /etc/apache2/ /etc/nginx/ -e modify,create,delete \
-  --format '%w%f %e %T' --timefmt '%Y-%m-%d %H:%M:%S' \
-  &gt;&gt; /var/log/config_changes.log
-
-3. Автоматическая проверка заголовков
-#!/usr/bin/env python3
-# header_check.py - Проверка заголовков безопасности
-import requests
-import sys
-
-def check_security_headers(url):
-  required_headers = {
-    'X-Content-Type-Options': 'nosniff',
-    'X-Frame-Options': ['DENY', 'SAMEORIGIN'],
-    'Strict-Transport-Security': 'max-age=',
-    'Content-Security-Policy': 'default-src'
-  }
-
-  try:
-    response = requests.get(url, timeout=10)
-    headers = response.headers
-
-      print(f"Проверка заголовков для {url}:")
-      for header, expected in required_headers.items():
-        if header in headers:
-           print(f" {header}: {headers[header]}")
-        else:
-           print(f"❌ {header}: ОТСУТСТВУЕТ")
-  except Exception as e:
-    print(f"Ошибка: {e}")
-
-if __name__ == "__main__":
-   if len(sys.argv) != 2:
-      print("Использование: python3 header_check.py &lt;url&gt;")
-      sys.exit(1)
-
-  check_security_headers(sys.argv[1])
-
-Инструменты разработки
-
-1. Pre-commit хуки для безопасности
-# .pre-commit-config.yaml
-repos:
- - repo: https://github.com/PyCQA/bandit
-   rev: 1.7.4
-   hooks:
-    - id: bandit
-      args: ['-r', '.']
-
- - repo: https://github.com/Yelp/detect-secrets
-   rev: v1.4.0
-   hooks:
-    - id: detect-secrets
-      args: ['--baseline', '.secrets.baseline']
-
-2. Автоматизация SRI генерации
-// sri-generator.js - Автоматическая генерация SRI
-const crypto = require('crypto');
-const fs = require('fs');
-const https = require('https');
-
-function generateSRI(url) {
-  return new Promise((resolve, reject) =&gt; {
-      https.get(url, (response) =&gt; {
-         let data = '';
-         response.on('data', chunk =&gt; data += chunk);
-         response.on('end', () =&gt; {
-             const hash = crypto.createHash('sha384').update(data).digest('base64');
-             resolve(`sha384-${hash}`);
-         });
-      }).on('error', reject);
-  });
-}
-
-// Использование в build процессе
-async function updateSRI() {
-  const externalResources = [
-     'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-     'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700'
-  ];
-
-    for (const url of externalResources) {
-      try {
-         const sri = await generateSRI(url);
-         console.log(`${url}: integrity="${sri}"`);
-      } catch (error) {
-         console.error(`Ошибка для ${url}:`, error.message);
-      }
-    }
-}
-
-updateSRI();
-
-CI/CD интеграция
-GitLab CI конфигурация:
-# .gitlab-ci.yml - Безопасность в CI/CD
-stages:
- - security-check
- - build
- - test
- - deploy
-
-security_headers_check:
- stage: security-check
- script:
-  - python3 scripts/header_check.py $CI_ENVIRONMENT_URL
- only:
-  - main
-  - develop
-
-dependency_check:
- stage: security-check
- script:
-  - npm audit --audit-level moderate
-  - composer audit
- allow_failure: false
-
-sri_validation:
- stage: security-check
- script:
-   - node scripts/sri-generator.js
-   - git diff --exit-code # Проверка, что SRI актуальны
- only:
-  - main
-
-
-Процессы и процедуры
-Процедуры реагирования на инциденты
-Уровень 1: Обнаружение (Команды разработки)
-
-Индикаторы инцидента:
-  •    Необычная активность в логах
-  •    Алерты от систем мониторинга
-  •    Сообщения пользователей о подозрительном поведении
-  •    Срабатывание автоматических проверок безопасности
-Немедленные действия (первые 15 минут):
-  1.   Не паниковать - документировать все действия
-  2.   Изолировать - отключить подозрительные сервисы
-  3.   Уведомить - сообщить тимлиду и security команде
-  4.   Сохранить - сделать снапшоты логов и состояния системы
-Шаблон уведомления:
-ИНЦИДЕНТ БЕЗОПАСНОСТИ
-Время: [YYYY-MM-DD HH:MM]
-Обнаружил: [Имя]
-Система: [Название системы/сервиса]
-Описание: [Краткое описание проблемы]
-Предпринятые действия: [Что уже сделано]
-Статус: [Активный/Локализован/Устранен]
-
-Уровень 2: Анализ (Тимлиды)
-
-Процедура анализа (30-60 минут):
-  1.   Сбор информации
-# Скрипт для сбора данных об инциденте
-#!/bin/bash
-INCIDENT_ID=$(date +%Y%m%d_%H%M%S)
-INCIDENT_DIR="/var/log/incidents/$INCIDENT_ID"
-
-mkdir -p $INCIDENT_DIR
-
-# Сбор логов
-cp /var/log/apache2/access.log $INCIDENT_DIR/
-cp /var/log/apache2/error.log $INCIDENT_DIR/
-cp /var/log/security.log $INCIDENT_DIR/
-
-# Состояние системы
-ps aux &gt; $INCIDENT_DIR/processes.txt
-netstat -tulpn &gt; $INCIDENT_DIR/network.txt
-df -h &gt; $INCIDENT_DIR/disk_usage.txt
-
-# Последние изменения
-find /var/www -type f -mtime -1 &gt; $INCIDENT_DIR/recent_changes.txt
-
-echo "Данные инцидента собраны в $INCIDENT_DIR"
-
-  2.   Классификация инцидента
-  •    Уровень 1: Информационный (логирование, мониторинг)
-  •    Уровень 2: Предупреждение (потенциальная угроза)
-  •    Уровень 3: Критический (активная атака, утечка данных)
-  3.   Эскалация решений
-Уровень 1 → Тимлид → Документирование
-Уровень 2 → Тимлид + Security → Усиленный мониторинг
-Уровень 3 → Немедленная эскалация → Руководство + внешние эксперты
-
-Процедуры обновления безопасности
-Еженедельные проверки (каждый понедельник)
-
-Чек-лист для тимлидов:
-## Еженедельная проверка безопасности
-
-### Системные обновления
-- [ ] Проверить доступные обновления безопасности
-- [ ] Запланировать установку критических патчей
-- [ ] Обновить зависимости проекта (npm, composer, pip)
-
-### Мониторинг
-- [ ] Проверить логи безопасности за неделю
-- [ ] Проанализировать алерты мониторинга
-- [ ] Проверить работоспособность backup'ов
-
-### Конфигурации
-- [ ] Валидировать заголовки безопасности
-- [ ] Проверить SSL сертификаты (срок действия)
-- [ ] Аудит пользовательских доступов
-
-### Команда
-- [ ] Обсудить инциденты безопасности на ретро
-- [ ] Запланировать обучение по безопасности
-- [ ] Обновить документацию процедур
-
-Ежемесячные аудиты
-
-Процедура для руководителей отделов:
-  1.   Технический аудит
-#!/bin/bash
-# monthly_security_audit.sh
-echo "=== Ежемесячный аудит безопасности ==="
-echo "Дата: $(date)"
-
-# Проверка пользователей с sudo
-echo "Пользователи с sudo правами:"
-grep -Po '^sudo.+:\K.*$' /etc/group
-
-# Проверка открытых портов
-echo "Открытые порты:"
-nmap -sT -O localhost
-
-# Проверка неудачных попыток входа
-echo "Неудачные попытки входа за месяц:"
-grep "Failed password" /var/log/auth.log | wc -l
-
-# Проверка размера логов
-echo "Размер логов безопасности:"
-du -sh /var/log/security.log
-
-  2.   Аудит процессов команды
-  •    Соблюдение процедур безопасности
-  •    Эффективность реагирования на инциденты
-  •    Качество документирования
-  •    Уровень знаний команды
-
-
-Мониторинг и контроль
-Системы мониторинга для команд
-Базовый мониторинг (обязательно для всех)
-
-1. Мониторинг доступности и производительности
-#!/bin/bash
-# basic_monitoring.sh - Базовый мониторинг
-WEBSITE="https://example.com"
-LOG_FILE="/var/log/monitoring.log"
-
-# Проверка доступности
-if curl -s --head $WEBSITE | head -n 1 | grep -q "200 OK"; then
-   echo "$(date): $WEBSITE - OK" &gt;&gt; $LOG_FILE
-else
-   echo "$(date): $WEBSITE - НЕДОСТУПЕН" &gt;&gt; $LOG_FILE
-   # Отправка алерта
-   echo "Сайт недоступен!" | mail -s "АЛЕРТ: Недоступность сайта"
-admin@company.com
-fi
-# Проверка заголовков безопасности
-HEADERS=$(curl -s -I $WEBSITE)
-if echo "$HEADERS" | grep -q "X-Content-Type-Options"; then
-   echo "$(date): Заголовки безопасности - OK" &gt;&gt; $LOG_FILE
-else
-   echo "$(date): Заголовки безопасности - ОТСУТСТВУЮТ" &gt;&gt; $LOG_FILE
-fi
-
-2. Мониторинг логов безопасности
-#!/bin/bash
-# log_monitor.sh - Мониторинг подозрительной активности
-SECURITY_LOG="/var/log/security.log"
-ALERT_EMAIL="security@company.com"
-
-# Поиск подозрительных паттернов
-SUSPICIOUS_PATTERNS=(
-  "union.*select"
-  "&lt;script"
-  "\.\./"
-  "eval\("
-  "base64_decode"
-)
-
-for pattern in "${SUSPICIOUS_PATTERNS[@]}"; do
-  if grep -i "$pattern" $SECURITY_LOG | tail -100 | grep -q "$(date +%Y-%m-%d)"; then
-     echo "Обнаружена подозрительная активность: $pattern" | \
-     mail -s "АЛЕРТ: Подозрительная активность" $ALERT_EMAIL
-  fi
-done
-
-Продвинутый мониторинг (для DevOps команд)
-
-1. Prometheus + Grafana конфигурация
-# prometheus.yml
-global:
- scrape_interval: 15s
-
-scrape_configs:
- - job_name: 'security-metrics'
-   static_configs:
-    - targets: ['localhost:9090']
-   metrics_path: /metrics
-   scrape_interval: 30s
-
- - job_name: 'web-security'
-   static_configs:
-    - targets: ['example.com:443']
-  metrics_path: /security-check
-  scheme: https
-
-2. Custom метрики безопасности
-#!/usr/bin/env python3
-# security_metrics.py - Кастомные метрики для Prometheus
-from prometheus_client import start_http_server, Counter, Gauge
-import time
-import requests
-import re
-
-# Метрики
-failed_logins = Counter('failed_logins_total', 'Количество неудачных попыток входа')
-security_headers = Gauge('security_headers_present', 'Наличие заголовков
-безопасности', ['header'])
-response_time = Gauge('security_check_response_time', 'Время ответа проверки
-безопасности')
-
-def check_security_headers(url):
-  """Проверка заголовков безопасности"""
-  try:
-     response = requests.get(url, timeout=10)
-     headers = response.headers
-
-    # Проверяем наличие важных заголовков
-    security_headers.labels(header='x-content-type-options').set(
-      1 if 'X-Content-Type-Options' in headers else 0
-    )
-    security_headers.labels(header='x-frame-options').set(
-      1 if 'X-Frame-Options' in headers else 0
-    )
-    security_headers.labels(header='strict-transport-security').set(
-      1 if 'Strict-Transport-Security' in headers else 0
-    )
-
-    return response.elapsed.total_seconds()
-  except Exception as e:
-    print(f"Ошибка проверки: {e}")
-    return 0
-
-def count_failed_logins():
-  """Подсчет неудачных попыток входа"""
-  try:
-     with open('/var/log/auth.log', 'r') as f:
-       content = f.read()
-       failed_count = len(re.findall(r'Failed password', content))
-       failed_logins._value._value = failed_count
-  except Exception as e:
-    print(f"Ошибка чтения логов: {e}")
-
-if __name__ == '__main__':
-   # Запуск HTTP сервера для метрик
-   start_http_server(8000)
-
-  while True:
-   # Обновление метрик каждые 60 секунд
-   response_time_val = check_security_headers('https://example.com')
-   response_time.set(response_time_val)
-
-    count_failed_logins()
-
-    time.sleep(60)
-
-Дашборды и отчетность
-Еженедельные отчеты для тимлидов
-
-Автоматический генератор отчетов:
-#!/usr/bin/env python3
-# weekly_security_report.py
-import datetime
-import json
-from collections import defaultdict
-
-def generate_weekly_report():
-  """Генерация еженедельного отчета по безопасности"""
-
-  # Период отчета
-  end_date = datetime.datetime.now()
-  start_date = end_date - datetime.timedelta(days=7)
-
-  report = {
-    'period': f"{start_date.strftime('%Y-%m-%d')} - {end_date.strftime('%Y-%m-%d')}",
-    'summary': {},
-    'incidents': [],
-    'metrics': {},
-    'recommendations': []
-  }
-
-  # Анализ логов безопасности
-  security_events = analyze_security_logs(start_date, end_date)
-  report['summary']['security_events'] = len(security_events)
-
-  # Проверка заголовков безопасности
-  headers_status = check_headers_compliance()
-  report['metrics']['headers_compliance'] = headers_status
-  # Рекомендации
-  if security_events:
-     report['recommendations'].append("Обнаружены события безопасности -
-требуется анализ")
-
- if not headers_status['all_present']:
-    report['recommendations'].append("Не все заголовки безопасности настроены")
-
- return report
-
-def analyze_security_logs(start_date, end_date):
-  """Анализ логов безопасности за период"""
-  events = []
-  try:
-     with open('/var/log/security.log', 'r') as f:
-       for line in f:
-         # Простой парсинг - в реальности нужен более сложный
-         if 'SECURITY' in line:
-            events.append(line.strip())
-  except FileNotFoundError:
-     pass
-
- return events
-
-def check_headers_compliance():
-  """Проверка соответствия заголовков безопасности"""
-  import requests
-
- try:
-   response = requests.get('https://example.com', timeout=10)
-   headers = response.headers
-
-   required_headers = [
-     'X-Content-Type-Options',
-     'X-Frame-Options',
-     'Strict-Transport-Security',
-     'Content-Security-Policy'
-   ]
-
-   present = [h for h in required_headers if h in headers]
-
-   return {
-     'total_required': len(required_headers),
-     'present': len(present),
-     'missing': [h for h in required_headers if h not in present],
-     'all_present': len(present) == len(required_headers)
-   }
- except Exception as e:
-   return {'error': str(e)}
-if __name__ == '__main__':
-   report = generate_weekly_report()
-
-  # Сохранение отчета
-  filename = f"security_report_{datetime.datetime.now().strftime('%Y%m%d')}.json"
-  with open(filename, 'w', encoding='utf-8') as f:
-     json.dump(report, f, indent=2, ensure_ascii=False)
-
-  print(f"Отчет сохранен: {filename}")
-
-  # Отправка по email (опционально)
-  # send_report_email(report)
-
-
-Командная работа и делегирование
-Матрица ответственности (RACI)
-Задача                           Backend Frontend DevOps QA Security
-Блокировка API уязвимостей       R        I          C        A    C
-Внедрение CSP/SRI                I        R          C        A    C
-Настройка заголовков сервера I            I          R        A    C
-Мониторинг безопасности      I            I          R        I    A
-Обучение команды                 C        C          C        C    R
-Реагирование на инциденты        C        C          C        C    R
-
-Легенда:
-  •      R (Responsible) - Ответственный за выполнение
-  •      A (Accountable) - Подотчетный за результат
-  •      C (Consulted) - Консультируемый
-  •      I (Informed) - Информируемый
-
-Планы действий по командам
-Backend команда (Приоритет 1)
-
-Тимлид Backend: [Имя] Срок выполнения: 24-48 часов
-Задачи:
-  1.     Немедленно (0-4 часа)
-
-           –   Заблокировать доступ к /wp-json/wp/v2/users
-           –   Провести аудит всех REST API endpoints
-           –   Создать список всех публичных API
-  2.     Краткосрочно (1-2 дня)
-
-           –   Внедрить аутентификацию для чувствительных endpoints
-           –   Настроить rate limiting
-         –   Добавить логирование API запросов
-  3.   Среднесрочно (1 неделя)
-
-           –   Провести полный security review API
-           –   Внедрить input validation
-           –   Настроить автоматические тесты безопасности
-Ресурсы:
-  •    2 senior разработчика
-  •    1 junior для тестирования
-  •    Консультации с Security командой
-Критерии готовности:
-  •    ☐ Все уязвимые endpoints заблокированы
-  •    ☐ Аутентификация работает корректно
-  •    ☐ Логирование настроено
-  •    ☐ Тесты проходят успешно
-
-Frontend команда (Приоритет 2)
-
-Тимлид Frontend: [Имя] Срок выполнения: 48-72 часа
-Задачи:
-  1.   Немедленно (0-8 часов)
-
-         –   Внедрить базовые заголовки безопасности
-         –   Добавить CSP в режиме report-only
-         –   Протестировать на staging
-  2.   Краткосрочно (1-3 дня)
-
-         –   Добавить SRI для всех внешних ресурсов
-         –   Перевести CSP в enforcement режим
-         –   Обновить build процесс
-  3.   Среднесрочно (1 неделя)
-
-           –   Автоматизировать генерацию SRI
-           –   Настроить мониторинг CSP нарушений
-           –   Обучить команду best practices
-Ресурсы:
-  •    2 frontend разработчика
-  •    1 DevOps для настройки CI/CD
-  •    Поддержка QA команды
-Критерии готовности:
-  •    ☐ CSP настроен и работает
-  •    ☐ SRI добавлен для всех ресурсов
-  •    ☐ Нет нарушений в браузерах
-  •    ☐ CI/CD проверяет заголовки
-
-DevOps команда (Приоритет 2)
-
-Тимлид DevOps: [Имя] Срок выполнения: 72 часа
-Задачи:
-  1.   Немедленно (0-4 часа)
-
-         –   Применить конфигурации безопасности к веб-серверам
-         –   Скрыть версии серверного ПО
-         –   Настроить принудительное HTTPS
-  2.   Краткосрочно (1-3 дня)
-
-         –   Настроить централизованное логирование
-         –   Внедрить мониторинг безопасности
-         –   Автоматизировать проверки конфигураций
-  3.   Среднесрочно (1 неделя)
-
-           –   Настроить алертинг по событиям безопасности
-           –   Внедрить Infrastructure as Code
-           –   Провести аудит всех серверов
-Ресурсы:
-  •    2 DevOps инженера
-  •    1 SRE для мониторинга
-  •    Доступ к production серверам
-Критерии готовности:
-  •    ☐ Заголовки безопасности настроены
-  •    ☐ HTTPS принудительно включен
-  •    ☐ Мониторинг работает
-  •    ☐ Алерты настроены
-
-Коммуникационный план
-Ежедневные стендапы (во время кризиса)
-
-Время: 9:00 каждый день Участники: Все тимлиды + Security lead Формат: 15 минут
-максимум
-Структура:
-  1.   Статус выполнения критических задач (5 мин)
-  2.   Новые проблемы и блокеры (5 мин)
-  3.   Планы на день (3 мин)
-  4.   Вопросы и координация (2 мин)
-
-Еженедельные ретроспективы
-
-Время: Пятница, 16:00 Участники: Расширенная команда Длительность: 1 час
-Повестка:
-  1.   Что прошло хорошо (15 мин)
-  2.   Что можно улучшить (20 мин)
-  3.   Уроки безопасности (15 мин)
-  4.   Планы на следующую неделю (10 мин)
-
-Каналы коммуникации
-
-Slack каналы:
-  •    #security-incident - Экстренные уведомления
-  •    #security-general - Общие вопросы безопасности
-  •    #security-updates - Обновления и патчи
-
-Email списки:
-  •    security-team@company.com - Команда безопасности
-  •    team-leads@company.com - Все тимлиды
-  •    security-alerts@company.com - Критические алерты
-
-
-Заключение и следующие шаги
-Критические действия на ближайшие 72 часа
-День 1 (0-24 часа):
-  •    Backend: Блокировка уязвимых API endpoints
-  •    DevOps: Применение базовых заголовков безопасности
-  •    Все команды: Настройка экстренной коммуникации
-День 2 (24-48 часов):
-  •    Frontend: Внедрение CSP и базовых заголовков
-  •    Backend: Полный аудит API безопасности
-  •    QA: Валидация всех изменений
-День 3 (48-72 часа):
-  •    DevOps: Настройка мониторинга и алертинга
-  •    Frontend: Добавление SRI для внешних ресурсов
-  •    Все команды: Документирование изменений
-
-Среднесрочные цели (1-4 недели)
-Неделя 1:
-  •    Полное внедрение всех базовых мер безопасности
-  •    Настройка автоматизированного мониторинга
-  •    Обучение команд процедурам безопасности
-Неделя 2-3:
-  •   Внедрение продвинутых инструментов мониторинга
-  •   Автоматизация проверок безопасности в CI/CD
-  •   Проведение внутреннего пентеста
-Неделя 4:
-  •   Полный аудит реализованных мер
-  •   Документирование всех процедур
-  •   Планирование долгосрочной стратегии
-
-Метрики успеха
-Технические метрики:
-  •   Время обнаружения угроз: &lt; 1 час
-  •   Время реагирования на инциденты: &lt; 4 часа
-  •   Покрытие заголовками безопасности: 100%
-  •   Количество уязвимостей: снижение на 90%
-Процессные метрики:
-  •   Соблюдение процедур безопасности: &gt; 95%
-  •   Время выполнения security задач: в рамках SLA
-  •   Качество документирования: полное покрытие
-  •   Уровень знаний команды: регулярное тестирование
-
-Ресурсы и поддержка
-Внутренние ресурсы:
-  •   Security команда: консультации и поддержка
-  •   DevOps команда: инфраструктурная поддержка
-  •   QA команда: тестирование и валидация
-Внешние ресурсы:
-  •   Консультанты по безопасности (при необходимости)
-  •   Специализированные инструменты мониторинга
-  •   Обучающие материалы и курсы
-Контакты для экстренных ситуаций:
-  •   Security Lead: [контакт]
-  •   DevOps Lead: [контакт]
-  •   Дежурный администратор: [контакт]
-
-
-Этот документ является живым руководством и должен обновляться по мере изменения
-угроз и развития наших процессов безопасности. Все тимлиды несут ответственность за
-его актуализацию в своих областях.
-    </pre>
+  # Скрытие версии
+  server_tokens off;
+}</pre>
+
+        <h5 style="color: #e65100; margin-top: 15px;">Конфигурация Apache (.htaccess):</h5>
+        <pre>&lt;IfModule mod_headers.c&gt;
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set Strict-Transport-Security "max-age=31536000"
+  Header always unset Server
+&lt;/IfModule&gt;
+
+ServerTokens Prod
+ServerSignature Off</pre>
+
+        <h5>Чек-лист для DevOps тимлида:</h5>
+        <div class="checklist">
+          <ul>
+            <li>Применить конфигурации безопасности</li>
+            <li>Настроить принудительное HTTPS</li>
+            <li>Скрыть версии серверного ПО</li>
+            <li>Настроить логирование безопасности</li>
+            <li>Протестировать конфигурации</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Процедуры и инструменты</h2>
+
+      <h3>Процедуры реагирования на инциденты</h3>
+
+      <h4 style="color: #0277bd;">Уровень 1: Обнаружение (Команды разработки)</h4>
+      <p><strong>Временной интервал:</strong> Первые 15 минут</p>
+
+      <p><strong>Индикаторы инцидента:</strong></p>
+      <ul>
+        <li>Необычная активность в логах</li>
+        <li>Алерты от систем мониторинга</li>
+        <li>Сообщения пользователей о подозрительном поведении</li>
+        <li>Срабатывание автоматических проверок безопасности</li>
+      </ul>
+
+      <p><strong>Немедленные действия:</strong></p>
+      <div class="checklist">
+        <ul>
+          <li>Не паниковать - документировать все действия</li>
+          <li>Изолировать - отключить подозрительные сервисы</li>
+          <li>Уведомить - сообщить тимлиду и security команде</li>
+          <li>Сохранить - сделать снапшоты логов и состояния системы</li>
+        </ul>
+      </div>
+
+      <h4 style="color: #0277bd; margin-top: 25px;">Уровень 2: Анализ (Тимлиды)</h4>
+      <p><strong>Временной интервал:</strong> 30-60 минут</p>
+
+      <p><strong>Процедура анализа:</strong></p>
+      <ol>
+        <li><strong>Сбор информации</strong> - Собратьログи, состояние системы</li>
+        <li><strong>Классификация</strong> - Определить уровень инцидента (1-3)</li>
+        <li><strong>Эскалация</strong> - Передать решение согласно уровню</li>
+      </ol>
+
+      <p><strong>Уровни инцидентов:</strong></p>
+      <ul>
+        <li><strong>Уровень 1:</strong> Информационный → Тимлид → Документирование</li>
+        <li><strong>Уровень 2:</strong> Предупреждение → Тимлид + Security → Усиленный мониторинг</li>
+        <li><strong>Уровень 3:</strong> Критический → Немедленная эскалация → Руководство + внешние эксперты</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Еженедельные и ежемесячные проверки</h2>
+
+      <h3>Еженедельная проверка безопасности (каждый понедельник)</h3>
+      
+      <h4>Системные обновления</h4>
+      <div class="checklist">
+        <ul>
+          <li>Проверить доступные обновления безопасности</li>
+          <li>Запланировать установку критических патчей</li>
+          <li>Обновить зависимости проекта (npm, composer, pip)</li>
+        </ul>
+      </div>
+
+      <h4 style="margin-top: 20px;">Мониторинг</h4>
+      <div class="checklist">
+        <ul>
+          <li>Проверить логи безопасности за неделю</li>
+          <li>Проанализировать алерты мониторинга</li>
+          <li>Проверить работоспособность backup'ов</li>
+        </ul>
+      </div>
+
+      <h4 style="margin-top: 20px;">Конфигурации</h4>
+      <div class="checklist">
+        <ul>
+          <li>Валидировать заголовки безопасности</li>
+          <li>Проверить SSL сертификаты (срок действия)</li>
+          <li>Аудит пользовательских доступов</li>
+        </ul>
+      </div>
+
+      <h4 style="margin-top: 20px;">Команда</h4>
+      <div class="checklist">
+        <ul>
+          <li>Обсудить инциденты безопасности на ретро</li>
+          <li>Запланировать обучение по безопасности</li>
+          <li>Обновить документацию процедур</li>
+        </ul>
+      </div>
+
+      <h3 style="margin-top: 30px;">Ежемесячный аудит безопасности</h3>
+      
+      <h4>Технический аудит</h4>
+      <ul>
+        <li>Проверка пользователей с sudo привилегиями</li>
+        <li>Проверка открытых портов</li>
+        <li>Анализ неудачных попыток входа</li>
+        <li>Проверка размера и ротации логов</li>
+      </ul>
+
+      <h4 style="margin-top: 15px;">Аудит процессов команды</h4>
+      <ul>
+        <li>Соблюдение процедур безопасности</li>
+        <li>Эффективность реагирования на инциденты</li>
+        <li>Качество документирования</li>
+        <li>Уровень знаний команды</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Системы мониторинга и контроля</h2>
+
+      <h3>Базовый мониторинг (обязательно для всех)</h3>
+
+      <h4>1. Проверка доступности сайта</h4>
+      <p><strong>Частота:</strong> Каждые 5 минут</p>
+      <p><strong>Действие при отсутствии ответа:</strong> Отправка алерта администратору</p>
+
+      <h4 style="margin-top: 15px;">2. Проверка заголовков безопасности</h4>
+      <p><strong>Частота:</strong> Ежедневно</p>
+      <p><strong>Критические заголовки для проверки:</strong></p>
+      <ul>
+        <li><code>X-Content-Type-Options: nosniff</code></li>
+        <li><code>X-Frame-Options: DENY</code></li>
+        <li><code>Strict-Transport-Security</code></li>
+        <li><code>Content-Security-Policy</code></li>
+      </ul>
+
+      <h4 style="margin-top: 15px;">3. Мониторинг логов безопасности</h4>
+      <p><strong>Поиск подозрительных паттернов:</strong></p>
+      <ul>
+        <li>SQL Injection: <code>union.*select</code>, <code>OR 1=1</code></li>
+        <li>XSS атаки: <code>&lt;script</code>, <code>javascript:</code></li>
+        <li>Path Traversal: <code>../</code>, <code>..\</code></li>
+        <li>Code Execution: <code>eval(</code>, <code>exec(</code></li>
+      </ul>
+
+      <h3 style="margin-top: 30px;">Продвинутый мониторинг (для DevOps/SRE команд)</h3>
+
+      <h4>Инструменты и платформы</h4>
+      <ul>
+        <li><strong>SIEM:</strong> ELK Stack, Splunk, или Datadog</li>
+        <li><strong>Мониторинг:</strong> Prometheus + Grafana</li>
+        <li><strong>Логирование:</strong> Central logging с ELK или CloudWatch</li>
+        <li><strong>Alerting:</strong> PagerDuty, OpsGenie</li>
+      </ul>
+
+      <h4 style="margin-top: 15px;">Ключевые метрики для отслеживания</h4>
+      <ul>
+        <li>Fail2Ban блокировок в час</li>
+        <li>HTTP 4xx и 5xx ошибки</li>
+        <li>Время отклика API endpoints</li>
+        <li>Размер баз данных и логов</li>
+        <li>Использование ресурсов сервера (CPU, RAM, Disk)</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>Заключение и план действий</h2>
+
+      <h3 style="color: #c0392b;">Немедленные действия (сегодня)</h3>
+      <div class="checklist">
+        <ul>
+          <li>Созвать экстренное совещание команды</li>
+          <li>Распределить задачи согласно приоритетам</li>
+          <li>Начать работу над Backend уязвимостью (утечка PII)</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #e65100; margin-top: 25px;">Первая неделя</h3>
+      <div class="checklist">
+        <ul>
+          <li>Завершить все задачи Backend команды</li>
+          <li>Внедрить заголовки безопасности (Frontend)</li>
+          <li>Настроить базовое логирование (DevOps)</li>
+          <li>Начать обучение команд по безопасности</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #2980b9; margin-top: 25px;">Первый месяц</h3>
+      <div class="checklist">
+        <ul>
+          <li>Завершить все операционные исправления</li>
+          <li>Внедрить полнофункциональный мониторинг</li>
+          <li>Провести обучение всей команды</li>
+          <li>Установить еженедельные проверки безопасности</li>
+        </ul>
+      </div>
+
+      <div style="background: #e8f5e9; border-left: 5px solid #27ae60; padding: 25px; margin: 20px 0; border-radius: 4px; margin-top: 30px;">
+        <h4 style="color: #1b5e20; margin-top: 0;">✓ Успех измеряется двумя критериями</h4>
+        <p style="color: #1b5e20; margin: 10px 0;"><strong>1. Технический:</strong> Все уязвимости OWASP ZAP устранены, мониторинг работает 24/7</p>
+        <p style="color: #1b5e20; margin: 10px 0;"><strong>2. Организационный:</strong> Команда обучена, процедуры установлены, культура безопасности внедрена</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Операционный план подготовлен на основе анализа OWASP ZAP.<br>Вопросы и уточнения адресуйте тимлидам соответствующих команд.<br>Дата отчета: 30 декабря 2025</p>
+    </div>
   </main>
 </body>
 </html>

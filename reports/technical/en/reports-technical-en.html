@@ -3,43 +3,92 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>technical report en</title>
+  <title>Technical Security Audit Report - example.com</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.6; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 6px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #2980b9; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .critical-row { background: #ffebee; color: #c62828; }
+    .critical-row:hover { background: #ffcdd2 !important; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    .badge-low { background: #c8e6c9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .vulnerability-cve { background: white; border-left: 5px solid #e74c3c; padding: 20px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .vulnerability-cve h4 { color: #c0392b; margin-bottom: 10px; }
+    
+    .fix-section { background: #e8f5e9; border-left: 5px solid #27ae60; padding: 20px; margin: 15px 0; border-radius: 4px; }
+    .fix-section h4 { color: #1b5e20; margin-bottom: 10px; }
+    .fix-section li { color: #1b5e20; }
   </style>
 </head>
 <body>
   <main>
-    <h1>technical report en</h1>
-    <pre>
-            Technical Security Audit Report: example.com
-                           Senior Information Security Specialist
+    <div class="report-header">
+      <h1>Technical Security Audit Report</h1>
+      <p class="subtitle">Security Infrastructure Assessment</p>
+      <p class="domain">example.com</p>
+      <p style="color: #7f8c8d; font-size: 0.95em; margin-top: 15px;">Senior Information Security Specialist</p>
+      <p class="report-meta" style="color: #7f8c8d; font-size: 0.9em; margin-top: 5px;">Report Date: December 17, 2025</p>
+    </div>
 
-                                        2025-12-17
+    <div class="section">
+      <h2>Executive Summary</h2>
+      <p>A comprehensive technical audit of the <strong>example.com</strong> web infrastructure was conducted using standard scanning tools. Critical configuration vulnerabilities were identified that require immediate remediation in accordance with Microsoft Security Development Lifecycle (SDL).</p>
+      
+      <h3 style="color: #c0392b;">Critical Findings:</h3>
+      <ul>
+        <li>Port 8443 configuration error (HTTP 523)</li>
+        <li>Open non-standard port 8080</li>
+        <li>Exposed WordPress version 6.9</li>
+        <li>Missing critical security headers</li>
+      </ul>
+    </div>
 
+    <div class="section">
+      <h2>Technical Testing Information</h2>
+      <h3>Tools and Versions</h3>
+      <table>
+        <thead><tr><th>Tool</th><th>Version</th><th>Purpose</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Nmap</strong></td><td>7.94SVN</td><td>Port and service scanning</td></tr>
+          <tr><td><strong>SSLScan</strong></td><td>2.1.2</td><td>SSL/TLS configuration analysis</td></tr>
+          <tr><td><strong>OpenSSL</strong></td><td>3.0.13</td><td>Cryptographic analysis</td></tr>
+          <tr><td><strong>cURL</strong></td><td>8.5.0</td><td>HTTP/HTTPS testing</td></tr>
+        </tbody>
+      </table>
 
-Executive Summary
-A comprehensive technical audit of the example.com web infrastructure was conducted
-using standard scanning tools. Critical configuration vulnerabilities were identified that
-require immediate remediation in accordance with Microsoft Security Development
-Lifecycle (SDL).
-Critical Findings: - Port 8443 configuration error (HTTP 523) - Open non-standard port
-8080 - Exposed WordPress version 6.9 - Missing critical security headers
-
-
-Technical Testing Information
-Tools and Versions
-Tool       Version    Purpose
-Nmap       7.94SVN    Port and service scanning
-SSLScan    2.1.2      SSL/TLS configuration analysis
-OpenSSL    3.0.13     Cryptographic analysis
-cURL       8.5.0      HTTP/HTTPS testing
-
-Reproduction Commands
-# Basic port scanning
+      <h3 style="margin-top: 25px;">Reproduction Commands</h3>
+      <pre># Basic port scanning
 nmap -Pn -sV example.com
 
 # Detailed scanning with NSE scripts
@@ -53,274 +102,230 @@ sslscan example.com:8443
 curl -I http://example.com/
 curl -I http://example.com:8080/
 curl -I https://example.com/wp-admin/
-curl -v https://example.com:8443/
-Detailed Scanning Results
-1. Port Scanning (Nmap)
-Execution Command:
-nmap -sV -sC -p 80,443,8080,8443 example.com
+curl -v https://example.com:8443/</pre>
+    </div>
 
-Results:
-Starting Nmap 7.94SVN at 2025-12-17 13:09 CET
+    <div class="section">
+      <h2>Detailed Scan Results</h2>
+      
+      <h3>1. Port Scanning (Nmap)</h3>
+      <p><strong>Execution Command:</strong></p>
+      <pre>nmap -sV -sC -p 80,443,8080,8443 example.com</pre>
+      
+      <p style="margin-top: 20px;"><strong>Results:</strong></p>
+      <pre>Starting Nmap 7.94SVN at 2025-12-17 13:09 CET
 Nmap scan report for example.com (192.0.2.1)
 Host is up (0.0023s latency).
-Other addresses: 192.0.2.1 2a06:98c1:3120::c 2a06:98c1:3121::c
+Other addresses for example.com: 192.0.2.1, 2a06:98c1:3120::c
 
 PORT STATE SERVICE VERSION
 80/tcp open http Cloudflare http proxy
 443/tcp open ssl/http Cloudflare http proxy
 8080/tcp open http Cloudflare http proxy
-8443/tcp open ssl/http Cloudflare http proxy
+8443/tcp open ssl/http Cloudflare http proxy</pre>
 
-Technical Analysis: - All ports are proxied through Cloudflare Edge Network - IPv4:
-192.0.2.1 (Cloudflare ASN 13335) - IPv6: 2a06:98c1:3120::c, 2a06:98c1:3121::c - Latency:
-2.3ms (optimal performance)
+      <p style="margin-top: 15px;"><strong>Technical Analysis:</strong></p>
+      <ul>
+        <li>All ports are proxied through Cloudflare Edge Network</li>
+        <li>IPv4: 192.0.2.1 (Cloudflare ASN 13335)</li>
+        <li>IPv6: 2a06:98c1:3120::c, 2a06:98c1:3121::c</li>
+        <li>Latency: 2.3ms (optimal performance)</li>
+      </ul>
 
-2. SSL/TLS Configuration (SSLScan)
-Execution Commands:
-sslscan example.com:443
-sslscan example.com:8443
+      <h3 style="margin-top: 30px;">2. SSL/TLS Configuration (SSLScan)</h3>
+      <h4>Supported Protocols</h4>
+      <table>
+        <thead><tr><th>Protocol</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>SSLv2</td><td><span class="badge badge-low">✓ Disabled</span></td></tr>
+          <tr><td>SSLv3</td><td><span class="badge badge-low">✓ Disabled</span></td></tr>
+          <tr><td>TLSv1.0</td><td><span class="badge badge-low">✓ Disabled</span></td></tr>
+          <tr><td>TLSv1.1</td><td><span class="badge badge-low">✓ Disabled</span></td></tr>
+          <tr><td>TLSv1.2</td><td><span class="badge badge-high">⚠️ Enabled (with CBC)</span></td></tr>
+          <tr><td>TLSv1.3</td><td><span class="badge badge-low">✓ Enabled</span></td></tr>
+        </tbody>
+      </table>
 
-Supported Protocols
-SSLv2 disabled ✓
-SSLv3 disabled ✓
-TLSv1.0 disabled ✓
-TLSv1.1 disabled ✓
-TLSv1.2 enabled ⚠️
-TLSv1.3 enabled ✓
+      <h4 style="margin-top: 20px;">Cipher Suites (TLS 1.3)</h4>
+      <ul>
+        <li>Preferred: TLS_AES_128_GCM_SHA256 (Curve 25519 DHE 253)</li>
+        <li>Accepted: TLS_AES_256_GCM_SHA384 (Curve 25519 DHE 253)</li>
+        <li>Accepted: TLS_CHACHA20_POLY1305_SHA256 (Curve 25519 DHE 253)</li>
+      </ul>
 
-Cipher Suites (TLS 1.3)
-Preferred TLS_AES_128_GCM_SHA256  Curve 25519 DHE 253
-Accepted TLS_AES_256_GCM_SHA384   Curve 25519 DHE 253
-Accepted TLS_CHACHA20_POLY1305_SHA256 Curve 25519 DHE 253
+      <h4 style="margin-top: 20px;">Cipher Suites (TLS 1.2) - Problematic</h4>
+      <ul>
+        <li><code>ECDHE-ECDSA-AES128-SHA</code> <span class="badge badge-critical">❌ CBC + SHA-1</span></li>
+        <li><code>ECDHE-ECDSA-AES256-SHA</code> <span class="badge badge-critical">❌ CBC + SHA-1</span></li>
+        <li><code>ECDHE-ECDSA-AES128-SHA256</code> <span class="badge badge-high">⚠️ CBC mode</span></li>
+        <li><code>ECDHE-ECDSA-AES256-SHA384</code> <span class="badge badge-high">⚠️ CBC mode</span></li>
+      </ul>
 
-Cipher Suites (TLS 1.2) - Problematic
-ECDHE-ECDSA-AES128-SHA   ❌ CBC + SHA-1
-ECDHE-ECDSA-AES256-SHA   ❌ CBC + SHA-1
-ECDHE-ECDSA-AES128-SHA256 ⚠️CBC mode
-ECDHE-ECDSA-AES256-SHA384 ⚠️CBC mode
-Certificate
-Subject: example.com
-Altnames: DNS:example.com, DNS:*.example.com
-Issuer: WE1 (Google Trust Services)
-Valid: 2025-11-02 10:29:18 GMT - 2026-01-31 11:27:59 GMT
-Algorithm: ecdsa-with-SHA256
-Curve: prime256v1 (256/128 bits)
+      <h4 style="margin-top: 20px;">Certificate</h4>
+      <ul>
+        <li><strong>Subject:</strong> example.com</li>
+        <li><strong>Alt names:</strong> DNS:example.com, DNS:*.example.com</li>
+        <li><strong>Issuer:</strong> WE1 (Google Trust Services)</li>
+        <li><strong>Valid:</strong> 2025-11-02 10:29:18 GMT - 2026-01-31 11:27:59 GMT</li>
+        <li><strong>Algorithm:</strong> ecdsa-with-SHA256</li>
+        <li><strong>Curve:</strong> prime256v1 (256/128 bits)</li>
+      </ul>
 
-3. HTTP Headers and Configuration
-Port 80 (HTTP → HTTPS redirect)
-Command:
-curl -I http://example.com/
-
-Result:
-HTTP/1.1 301 Moved Permanently
+      <h3 style="margin-top: 30px;">3. HTTP Headers and Configuration</h3>
+      <h4>Port 80 (HTTP → HTTPS Redirect)</h4>
+      <pre>HTTP/1.1 301 Moved Permanently
 Date: Wed, 17 Dec 2025 12:13:25 GMT
 Location: https://example.com/
 X-Content-Type-Options: nosniff
-Server: cloudflare
-CF-RAY: 9af6559a7f1fb159-ZRH
-alt-svc: h3=":443"; ma=86400
+Server: cloudflare</pre>
 
-Port 8080 (Problematic Configuration)
-Command:
-curl -I http://example.com:8080/
-
-Result:
-HTTP/1.1 301 Moved Permanently
-Location: https://example.com:8080/ ⚠️Redirect to non-standard port
+      <h4 style="margin-top: 20px;">Port 8080 (Problematic Configuration)</h4>
+      <pre>HTTP/1.1 301 Moved Permanently
+Location: https://example.com:8080/ ⚠️ Redirect to non-standard port
 X-Content-Type-Options: nosniff
-Server: cloudflare
+Server: cloudflare</pre>
 
-Port 8443 (Critical Error)
-Command:
-curl -v https://example.com:8443/
-
-Result:
-HTTP/2 523
+      <h4 style="margin-top: 20px;">Port 8443 (Critical Error)</h4>
+      <pre>HTTP/2 523
 content-type: text/plain; charset=UTF-8
 content-length: 15
 server: cloudflare
 
-error code: 523
-Technical Diagnosis: - TLS handshake successful (TLSv1.3 / TLS_AES_256_GCM_SHA384)
-- HTTP/2 connection established - Cloudflare cannot connect to origin server - Origin
-server not listening on port 8443
+error code: 523</pre>
 
-4. WordPress Analysis
-Discovered Information:
-CMS: WordPress 6.9
-Generator: WordPress 6.9 (exposed in meta tags)
-Admin panel: /wp-admin/ (mentioned in robots.txt)
-Robots.txt entries: /, /wp-admin/
+      <h4 style="margin-top: 20px;">WordPress Analysis</h4>
+      <table>
+        <thead><tr><th>Component</th><th>Status</th><th>Risk</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CMS</strong></td><td>WordPress 6.9</td><td><span class="badge badge-high">High</span></td></tr>
+          <tr class="critical-row"><td><strong>Admin panel</strong></td><td>/wp-admin/ accessible</td><td><span class="badge badge-critical">CRITICAL</span></td></tr>
+          <tr><td><strong>Robots.txt</strong></td><td>Exposes structure</td><td><span class="badge badge-medium">Medium</span></td></tr>
+          <tr><td><strong>Generator</strong></td><td>Version exposed</td><td><span class="badge badge-medium">Medium</span></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-Additional Verification Commands:
-# Check admin panel accessibility
-curl -I https://example.com/wp-admin/
+    <div class="section">
+      <h2>Identified Vulnerabilities</h2>
+      
+      <h3 style="color: #c0392b;">🔴 Critical Level (CVSS 7.0-10.0)</h3>
 
-# Check XML-RPC
-curl -X POST https://example.com/xmlrpc.php \
- -d '&lt;methodCall&gt;&lt;methodName&gt;system.listMethods&lt;/methodName&gt;&lt;/methodCall&gt;'
+      <div class="vulnerability-cve">
+        <h4>CVE-2025-001: Port 8443 Configuration Error</h4>
+        <span class="badge badge-critical">CVSS 7.5 (High)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Description:</strong> Cloudflare proxies port 8443, but origin is unreachable</li>
+          <li><strong>Technical Cause:</strong> Cloudflare Edge → Origin unreachable → HTTP 523</li>
+          <li><strong>Exploitation:</strong> Information disclosure, potential security bypass</li>
+          <li><strong>Verification:</strong> <code>curl -v https://example.com:8443/</code></li>
+        </ul>
+      </div>
 
-# Check standard WordPress files
-for file in readme.html license.txt wp-config.php; do
- echo -n "$file: "
- curl -s -o /dev/null -w "%{http_code}" https://example.com/$file
- echo
-done
+      <div class="vulnerability-cve">
+        <h4>CVE-2025-002: Open Non-Standard Port 8080</h4>
+        <span class="badge badge-critical">CVSS 7.2 (High)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Description:</strong> Alternative entry point may bypass WAF rules</li>
+          <li><strong>Technical Cause:</strong> Different security policies for different ports</li>
+          <li><strong>Exploitation:</strong> Rate limit bypass, WAF evasion</li>
+        </ul>
+      </div>
 
+      <h3 style="color: #e65100; margin-top: 30px;">🟠 High Level (CVSS 4.0-6.9)</h3>
 
-Identified Vulnerabilities
-  Critical Level (CVSS 7.0-10.0)
-CVE-2025-001: Port 8443 Configuration Error
-  •   CVSS Score: 7.5 (High)
+      <div class="vulnerability-cve" style="border-left-color: #f39c12;">
+        <h4 style="color: #e65100;">CVE-2025-003: WordPress Information Disclosure</h4>
+        <span class="badge badge-high">CVSS 6.8 (Medium)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Description:</strong> WordPress version and admin structure exposed</li>
+          <li><strong>HTML Meta Tag:</strong> <code>&lt;meta name="generator" content="WordPress 6.9" /&gt;</code></li>
+          <li><strong>Robots.txt Content:</strong> Reveals /wp-admin/ structure</li>
+          <li><strong>Exploitation:</strong> Targeted attacks on known WordPress 6.9 vulnerabilities</li>
+        </ul>
+      </div>
 
-  •    Description: Cloudflare proxies port 8443, but origin is unreachable
+      <div class="vulnerability-cve" style="border-left-color: #f39c12;">
+        <h4 style="color: #e65100;">CVE-2025-004: Missing Critical Security Headers</h4>
+        <span class="badge badge-high">CVSS 5.5 (Medium)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Missing Headers:</strong></li>
+          <li style="margin-left: 20px;"><code>Strict-Transport-Security</code> - MISSING</li>
+          <li style="margin-left: 20px;"><code>X-Frame-Options</code> - MISSING</li>
+          <li style="margin-left: 20px;"><code>Content-Security-Policy</code> - MISSING</li>
+          <li style="margin-left: 20px;"><code>Referrer-Policy</code> - MISSING</li>
+          <li><strong>Exploitation:</strong> Clickjacking, downgrade attacks, XSS</li>
+        </ul>
+      </div>
 
-  •    Technical Cause:
+      <h3 style="color: #6a1b9a; margin-top: 30px;">🟡 Medium Level (CVSS 2.0-3.9)</h3>
 
-       Cloudflare Edge → Origin Server:8443
-                    ↓
-                 Connection Failed
-                    ↓
-                 HTTP 523 Error
+      <div class="vulnerability-cve" style="border-left-color: #8e44ad;">
+        <h4 style="color: #6a1b9a;">CVE-2025-005: Deprecated CBC Ciphers</h4>
+        <span class="badge badge-medium">CVSS 3.7 (Low)</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Vulnerable Ciphers:</strong></li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES128-SHA</code> (CBC + SHA-1)</li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES256-SHA</code> (CBC + SHA-1)</li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES128-SHA256</code> (CBC mode)</li>
+          <li style="margin-left: 20px;"><code>ECDHE-ECDSA-AES256-SHA384</code> (CBC mode)</li>
+          <li><strong>Vulnerabilities:</strong> BEAST, Lucky13, POODLE</li>
+        </ul>
+      </div>
+    </div>
 
-  •    Exploitation: Information disclosure, potential security bypass
+    <div class="section">
+      <h2>Technical Remediation Recommendations</h2>
 
-  •    Reproduction:
+      <h3>Immediate Actions (0-24 hours)</h3>
 
-       curl -v https://example.com:8443/
-       # Expected result: HTTP/2 523
-CVE-2025-002: Open Non-Standard Port 8080
-  •   CVSS Score: 7.2 (High)
+      <div class="fix-section">
+        <h4>1. Fix Port 8443</h4>
+        <p><strong>Cloudflare Dashboard:</strong></p>
+        <ol>
+          <li>Log in to dash.cloudflare.com</li>
+          <li>Select example.com domain</li>
+          <li>DNS → Find records for port 8443</li>
+          <li>Disable proxy or remove the record</li>
+        </ol>
 
-  •    Description: Alternative entry point may bypass WAF rules
-
-  •    Technical Cause: Different security policies for different ports
-
-  •    Exploitation: Rate limiting bypass, WAF bypass
-
-  •    Reproduction:
-
-       # Compare security headers
-       curl -s -I https://example.com/ | grep -i "strict-transport\|x-frame"
-       curl -s -I https://example.com:8080/ | grep -i "strict-transport\|x-frame"
-
-🟠 High Level (CVSS 4.0-6.9)
-
-CVE-2025-003: WordPress Information Disclosure
-  •   CVSS Score: 6.8 (Medium)
-
-  •    Description: WordPress version and admin panel structure exposed
-
-  •    Technical Cause:
-
-       &lt;meta name="generator" content="WordPress 6.9" /&gt;
-
-  •    Robots.txt Content:
-
-       User-agent: *
-       Disallow: /
-       Disallow: /wp-admin/
-
-  •    Exploitation: Targeted attacks on known WordPress 6.9 vulnerabilities
-
-CVE-2025-004: Missing Critical Security Headers
-  •   CVSS Score: 5.5 (Medium)
-
-  •    Missing Headers:
-
-       Strict-Transport-Security: MISSING
-       X-Frame-Options: MISSING
-       Content-Security-Policy: MISSING
-       Referrer-Policy: MISSING
-
-  •    Exploitation: Clickjacking, downgrade attacks, XSS
-
-🟡 Medium Level (CVSS 2.0-3.9)
-
-CVE-2025-005: Outdated CBC Ciphers
-  •   CVSS Score: 3.7 (Low)
-
-  •    Vulnerable Ciphers:
-
-       ECDHE-ECDSA-AES128-SHA         (CBC + SHA-1)
-       ECDHE-ECDSA-AES256-SHA         (CBC + SHA-1)
-       ECDHE-ECDSA-AES128-SHA256 (CBC mode)
-       ECDHE-ECDSA-AES256-SHA384 (CBC mode)
-
-  •    Vulnerabilities: BEAST, Lucky13, POODLE
-
-  •    Verification:
-
-       sslscan example.com:443 | grep -E "(CBC|SHA\s)"
-
-
-Technical Remediation Recommendations
-Immediate Actions (0-24 hours)
-1. Fix Port 8443
-Cloudflare Dashboard:
-1. Login to dash.cloudflare.com
-2. Select domain example.com
-3. DNS → Find records for port 8443
-4. Disable proxy (gray cloud) or delete record
-
-Origin Server (Nginx):
-# Option 1: Complete disable
-# Comment out or remove:
-# server {
-# listen 8443 ssl http2;
-# server_name example.com;
-# ...
-#}
-
-# Option 2: Redirect to main port
-server {
+        <p style="margin-top: 15px;"><strong>Origin Server (Nginx) - Option 2: Redirect</strong></p>
+        <pre>server {
   listen 8443 ssl http2;
   server_name example.com;
   ssl_certificate /path/to/cert.pem;
   ssl_certificate_key /path/to/key.pem;
   return 301 https://example.com$request_uri;
-}
+}</pre>
+      </div>
 
-Verification:
-curl -v https://example.com:8443/
-# Expected result: Connection refused or 301 redirect
-
-2. Restrict Port 8080
-Nginx Configuration:
-server {
+      <div class="fix-section">
+        <h4>2. Restrict Port 8080</h4>
+        <pre>server {
   listen 8080;
   server_name example.com;
-    # Internal network only
-    allow 192.168.0.0/16;
-    allow 10.0.0.0/8;
-    allow 172.16.0.0/12;
-    deny all;
 
-    # Or complete closure
-    # return 444;
-}
+  # Internal network only
+  allow 192.168.0.0/16;
+  allow 10.0.0.0/8;
+  allow 172.16.0.0/12;
+  deny all;
 
-Iptables Rule:
-# Block external access to port 8080
-iptables -A INPUT -p tcp --dport 8080 -s 192.168.0.0/16 -j ACCEPT
-iptables -A INPUT -p tcp --dport 8080 -j DROP
+  # Or complete blocking: return 444;
+}</pre>
+      </div>
 
-3. WordPress Hardening
-Hide Version:
-// functions.php
+      <div class="fix-section">
+        <h4>3. WordPress Hardening - Hide Version</h4>
+        <pre>// functions.php
 function remove_wp_version() {
    return '';
 }
-add_filter('the_generator', 'remove_wp_version');
+add_filter('the_generator', 'remove_wp_version');</pre>
+      </div>
 
-// Remove from RSS
-function remove_wp_version_rss() {
-   return '';
-}
-add_filter('the_generator', 'remove_wp_version_rss');
-
-Protect wp-admin (.htaccess):
-# /wp-admin/.htaccess
+      <div class="fix-section">
+        <h4>4. Protect wp-admin (.htaccess)</h4>
+        <pre># /wp-admin/.htaccess
 AuthType Basic
 AuthName "Admin Area"
 AuthUserFile /var/www/.htpasswd
@@ -330,292 +335,159 @@ Require valid-user
 &lt;RequireAll&gt;
   Require ip 192.168.1.0/24
   Require ip 10.0.0.0/8
-&lt;/RequireAll&gt;
+&lt;/RequireAll&gt;</pre>
+      </div>
 
-Create .htpasswd:
-htpasswd -c /var/www/.htpasswd admin
-# Enter password when prompted
-Short-term Improvements (1-7 days)
-4. Add Security Headers
-Nginx Configuration:
-server {
+      <h3 style="margin-top: 30px;">Short-term Improvements (1-7 days)</h3>
+
+      <div class="fix-section">
+        <h4>5. Adding Security Headers (Nginx)</h4>
+        <pre>server {
   listen 443 ssl http2;
   server_name example.com;
 
-  # Security Headers
-  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-always;
+  # HSTS
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+  
+  # Framing & Content
   add_header X-Frame-Options "DENY" always;
   add_header X-Content-Type-Options "nosniff" always;
   add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-  add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
+  
+  # CSP
+  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline'" always;
+  
+  # Additional
+  add_header X-XSS-Protection "1; mode=block" always;
+  add_header Expect-CT "max-age=86400, enforce" always;
+}</pre>
+      </div>
 
-  # Content Security Policy (basic)
-  add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https:; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;" always;
-
-    # Additional headers
-    add_header X-XSS-Protection "1; mode=block" always;
-    add_header Expect-CT "max-age=86400, enforce" always;
-}
-
-Cloudflare Transform Rules:
-// Cloudflare Dashboard → Rules → Transform Rules → Modify Response Header
-// Rule 1: Add HSTS
-if (http.host eq "example.com") {
-  set_response_header("Strict-Transport-Security", "max-age=31536000;
-includeSubDomains; preload");
-}
-
-// Rule 2: Add X-Frame-Options
-if (http.host eq "example.com") {
-  set_response_header("X-Frame-Options", "DENY");
-}
-
-5. SSL/TLS Optimization
-Disable CBC Ciphers:
-ssl_protocols TLSv1.2 TLSv1.3;
-ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-
-SHA384:ECDHE-ECDSA-CHACHA20-
-POLY1305:TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY13
-05_SHA256';
+      <div class="fix-section">
+        <h4>6. SSL/TLS Optimization</h4>
+        <pre>ssl_protocols TLSv1.2 TLSv1.3;
+ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256';
 ssl_prefer_server_ciphers off;
-# Additional settings
+
+# Session config
 ssl_session_cache shared:SSL:10m;
 ssl_session_timeout 10m;
 ssl_stapling on;
-ssl_stapling_verify on;
+ssl_stapling_verify on;</pre>
+      </div>
 
-Verify Changes:
-# Check CBC disabled
-sslscan example.com:443 | grep -v "CBC\|SHA\s"
+      <div class="fix-section">
+        <h4>7. Cloudflare WAF Configuration</h4>
+        <p><strong>Rule 1: Block wp-admin access</strong></p>
+        <pre>Expression: (http.request.uri.path contains "/wp-admin/") and (ip.src ne 192.168.1.1)
+Action: Block</pre>
 
-# Check OCSP Stapling
-echo | openssl s_client -connect example.com:443 -status 2&gt;/dev/null | grep -A 17 "OCSP
-response"
+        <p style="margin-top: 15px;"><strong>Rule 2: Rate limit wp-login</strong></p>
+        <pre>Expression: (http.request.uri.path contains "/wp-login.php")
+Action: Rate limit (5 requests per 5 minutes)</pre>
 
-6. Cloudflare WAF Configuration
-WAF Rules:
-Rule 1: Block wp-admin access
-- Expression: (http.request.uri.path contains "/wp-admin/") and (ip.src ne 192.168.1.1)
-- Action: Block
+        <p style="margin-top: 15px;"><strong>Rule 3: Block XML-RPC</strong></p>
+        <pre>Expression: (http.request.uri.path eq "/xmlrpc.php")
+Action: Block</pre>
+      </div>
 
-Rule 2: Rate limit wp-login
-- Expression: (http.request.uri.path contains "/wp-login.php")
-- Action: Rate limit (5 requests per 5 minutes)
+      <h3 style="margin-top: 30px;">Long-term Measures (7-30 days)</h3>
 
-Rule 3: Block XML-RPC
-- Expression: (http.request.uri.path eq "/xmlrpc.php")
-- Action: Block
+      <div class="fix-section">
+        <h4>8. Monitoring and Automation</h4>
+        <ul>
+          <li>Automate SSL certificate updates (Certbot)</li>
+          <li>Monitor access attempts to protected resources</li>
+          <li>Regular vulnerability scanning</li>
+          <li>Logging and alerting setup</li>
+        </ul>
+      </div>
 
-Long-term Measures (7-30 days)
-7. Monitoring and Automation
-Port Monitoring Script:
-#!/bin/bash
-# /usr/local/bin/port_monitor.sh
+      <div class="fix-section">
+        <h4>9. WordPress Security Plugins</h4>
+        <ul>
+          <li>Wordfence or iThemes Security for protection</li>
+          <li>Two-factor authentication (2FA/MFA)</li>
+          <li>Hide WordPress version</li>
+          <li>Automatic core and plugin updates</li>
+        </ul>
+      </div>
+    </div>
 
-PORTS="80 443 8080 8443"
-EMAIL="admin@example.com"
-LOGFILE="/var/log/port_monitor.log"
+    <div class="section">
+      <h2>Risk Matrix</h2>
+      <table>
+        <thead><tr><th>Vulnerability</th><th>Probability</th><th>Impact</th><th>Overall Risk</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr class="critical-row"><td><strong>Port 8443</strong></td><td><span class="badge badge-critical">High</span></td><td><span class="badge badge-critical">High</span></td><td><span class="badge badge-critical">CRITICAL</span></td><td><strong>P0</strong></td></tr>
+          <tr><td><strong>Port 8080</strong></td><td><span class="badge badge-high">Medium</span></td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-high">HIGH</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>WordPress Admin</strong></td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-high">Medium</span></td><td><span class="badge badge-high">HIGH</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>Security Headers</strong></td><td><span class="badge badge-medium">Medium</span></td><td><span class="badge badge-medium">Medium</span></td><td><span class="badge badge-medium">MEDIUM</span></td><td><strong>P2</strong></td></tr>
+          <tr><td><strong>CBC Ciphers</strong></td><td><span class="badge badge-low">Low</span></td><td><span class="badge badge-low">Low</span></td><td><span class="badge badge-low">LOW</span></td><td><strong>P3</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-for port in $PORTS; do
-  response=$(curl -s -o /dev/null -w "%{http_code}" https://example.com:$port/
-2&gt;/dev/null)
-  timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    <div class="section">
+      <h2>Remediation Plan</h2>
+      
+      <h3>Phase 1: Critical Fixes (1-2 days)</h3>
+      <ul>
+        <li>☐ Close port 8443 in Cloudflare</li>
+        <li>☐ Restrict access to port 8080</li>
+        <li>☐ Protect WordPress admin panel</li>
+        <li>☐ Add basic security headers</li>
+      </ul>
 
-  case $port in
-    80|443)
-      if [[ "$response" != "200" &amp;&amp; "$response" != "301" ]]; then
-         echo "$timestamp: ALERT - Port $port returned $response" | tee -a $LOGFILE
-         echo "Port $port issue detected" | mail -s "Security Alert" $EMAIL
-      fi
-      ;;
-    8080)
-      if [[ "$response" == "200" ]]; then
-         echo "$timestamp: WARNING - Port 8080 accessible" | tee -a $LOGFILE
-      fi
-      ;;
-    8443)
-      if [[ "$response" == "523" ]]; then
-         echo "$timestamp: ERROR - Port 8443 still returning 523" | tee -a $LOGFILE
-      fi
-      ;;
-  esac
-done
+      <h3 style="margin-top: 25px;">Phase 2: Security Improvements (1 week)</h3>
+      <ul>
+        <li>☐ Optimize SSL/TLS configuration</li>
+        <li>☐ Configure Cloudflare WAF rules</li>
+        <li>☐ Install WordPress security plugins</li>
+        <li>☐ Set up monitoring and alerting</li>
+      </ul>
 
-Crontab Setup:
-# Add to crontab
-*/15 * * * * /usr/local/bin/port_monitor.sh
+      <h3 style="margin-top: 25px;">Phase 3: Long-term Measures (1 month)</h3>
+      <ul>
+        <li>☐ Automate updates</li>
+        <li>☐ Regular security audits</li>
+        <li>☐ Staff training</li>
+        <li>☐ Document procedures</li>
+      </ul>
+    </div>
 
-8. SSL Certificate Automation
-Certbot for Let’s Encrypt:
-# Install certbot
-apt-get install certbot python3-certbot-nginx
+    <div class="section">
+      <h2>Standards Compliance</h2>
+      <table>
+        <thead><tr><th>Standard</th><th>Current Status</th><th>Required Actions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NIST CSF</strong></td><td><span class="badge badge-medium">Partial</span></td><td>Improve Protect, Detect functions</td></tr>
+          <tr class="critical-row"><td><strong>ISO 27001</strong></td><td><span class="badge badge-critical">Non-compliant</span></td><td>Implement ISMS processes</td></tr>
+          <tr><td><strong>PCI DSS</strong></td><td><span class="badge badge-high">Requires Review</span></td><td>Strengthen data protection</td></tr>
+          <tr><td><strong>GDPR</strong></td><td><span class="badge badge-medium">Basic Level</span></td><td>Add privacy headers</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-# Obtain certificate
-certbot --nginx -d example.com -d *.example.com
+    <div class="section">
+      <h2>Conclusion</h2>
+      <p>The technical audit identified <strong>serious configuration issues</strong> requiring immediate intervention. The primary risks are related to improper port configuration and insufficient WordPress protection.</p>
+      
+      <h3 style="margin-top: 25px;">Remediation Priorities:</h3>
+      <ol>
+        <li><strong>P0 (0-24h):</strong> Close port 8443, restrict 8080, protect wp-admin</li>
+        <li><strong>P1 (1-7d):</strong> Add security headers, optimize SSL/TLS</li>
+        <li><strong>P2 (7-30d):</strong> Implement monitoring, automation, compliance</li>
+      </ol>
 
-# Automatic renewal
-echo "0 12 * * * /usr/bin/certbot renew --quiet" | crontab -
+      <p style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 5px solid #27ae60; color: #1b5e20; border-radius: 4px;">
+        <strong>✓ Expected Result:</strong> With proper implementation of recommendations, security posture can be improved from <strong>6/10</strong> to <strong>9/10</strong> within 30 days.
+      </p>
+    </div>
 
-Certificate Expiration Check:
-#!/bin/bash
-# /usr/local/bin/cert_check.sh
-
-DOMAIN="example.com"
-THRESHOLD=30 # days until expiration
-
-expiry_date=$(echo | openssl s_client -servername $DOMAIN -connect $DOMAIN:443
-2&gt;/dev/null | openssl x509 -noout -dates | grep notAfter | cut -d= -f2)
-expiry_epoch=$(date -d "$expiry_date" +%s)
-current_epoch=$(date +%s)
-days_until_expiry=$(( (expiry_epoch - current_epoch) / 86400 ))
-
-if [ $days_until_expiry -lt $THRESHOLD ]; then
-   echo "SSL certificate for $DOMAIN expires in $days_until_expiry days" | mail -s "SSL
-Certificate Alert" admin@example.com
-fi
-
-
-Verification Commands After Fixes
-Complete Security Check
-#!/bin/bash
-# security_check.sh
-
-echo "=== PORT SCAN ==="
-nmap -sV -p 80,443,8080,8443 example.com
-
-echo -e "\n=== SSL/TLS CHECK ==="
-sslscan example.com:443 | grep -E "(TLS|SSL|Cipher)"
-
-echo -e "\n=== SECURITY HEADERS ==="
-curl -s -I https://example.com/ | grep -i -E "(strict-transport|x-frame|x-content|content-
-security)"
-
-echo -e "\n=== WORDPRESS CHECK ==="
-curl -s https://example.com/ | grep -i "wordpress\|wp-content" || echo "WordPress
-version hidden"
-
-echo -e "\n=== PORT 8080 CHECK ==="
-timeout 5 curl -s -I https://example.com:8080/ || echo "Port 8080 blocked/redirected"
-
-echo -e "\n=== PORT 8443 CHECK ==="
-timeout 5 curl -s -I https://example.com:8443/ || echo "Port 8443 fixed"
-
-Automated Compliance Check
-#!/bin/bash
-# compliance_check.sh
-
-SCORE=0
-MAX_SCORE=10
-
-# Check 1: Ports 8080/8443 closed or restricted
-if ! curl -s --max-time 5 https://example.com:8080/ &gt;/dev/null 2&gt;&amp;1; then
-   echo "✓ Port 8080 secured"
-   ((SCORE++))
-else
-   echo "✗ Port 8080 still accessible"
-fi
-
-if ! curl -s --max-time 5 https://example.com:8443/ &gt;/dev/null 2&gt;&amp;1; then
-   echo "✓ Port 8443 secured"
-   ((SCORE++))
-else
-     echo "✗ Port 8443 still accessible"
-fi
-
-# Check 2: Security headers
-HEADERS=("strict-transport-security" "x-frame-options" "x-content-type-options" "content-
-security-policy")
-for header in "${HEADERS[@]}"; do
-  if curl -s -I https://example.com/ | grep -qi "$header"; then
-     echo "✓ $header present"
-     ((SCORE++))
-  else
-     echo "✗ $header missing"
-  fi
-done
-
-# Check 3: WordPress version hidden
-if ! curl -s https://example.com/ | grep -qi "wordpress.*[0-9]"; then
-   echo "✓ WordPress version hidden"
-   ((SCORE++))
-else
-   echo "✗ WordPress version still visible"
-fi
-
-# Check 4: SSL configuration
-if sslscan example.com:443 | grep -q "TLSv1.3.*enabled"; then
-   echo "✓ TLS 1.3 enabled"
-   ((SCORE++))
-else
-   echo "✗ TLS 1.3 not enabled"
-fi
-
-echo -e "\n=== COMPLIANCE SCORE: $SCORE/$MAX_SCORE ==="
-if [ $SCORE -ge 8 ]; then
-   echo "✓ PASSED - Good security posture"
-   exit 0
-else
-   echo "✗ FAILED - Security improvements needed"
-   exit 1
-fi
-
-
-Microsoft SDL Compliance
-SDL Phases and Compliance
-SDL Phase                    Requirement                 Status           Action
-Requirements                 Security requirements       ❌                Define security
-                             defined                                      requirements
-Design                       Threat modeling completed   ❌                Conduct threat
-SDL Phase                 Requirement                        Status        Action
-                                                                           modeling
-Implementation            Secure coding practices            ⚠️            Improve
-                                                                           WordPress
-                                                                           security
-Verification              Security testing                                 Completed (this
-                                                                           audit)
-Release                   Security review                    ⚠️            Required after
-                                                                           fixes
-Response                  Incident response plan             ❌             Create IR plan
-
-Microsoft Security Benchmarks
-# Microsoft Security Baseline compliance check
-# https://docs.microsoft.com/en-us/security/benchmark/
-
-# 1. Network Security
-echo "NS-1: Establish network segmentation boundaries"
-# Action: Restrict access to ports 8080/8443
-
-# 2. Identity Management
-echo "IM-1: Standardize authentication systems"
-# Action: Implement MFA for WordPress admin
-
-# 3. Privileged Access
-echo "PA-1: Protect and monitor privileged access"
-# Action: Restrict access to /wp-admin/
-
-# 4. Data Protection
-echo "DP-1: Discovery, classify, and label sensitive data"
-# Action: Classify WordPress data
-
-# 5. Asset Management
-echo "AM-1: Ensure security team has visibility into risks"
-# Action: Implement security monitoring
-
-
-Conclusion
-The technical audit revealed serious configuration issues requiring immediate
-intervention. Primary risks are related to improper port configuration and insufficient
-WordPress protection.
-Remediation Priorities: 1. P0 (0-24h): Close port 8443, restrict 8080, protect wp-admin
-2. P1 (1-7d): Add security headers, optimize SSL/TLS 3. P2 (7-30d): Implement
-monitoring, automation, compliance
-Expected Outcome: With proper implementation of recommendations, security posture
-can be improved from 6/10 to 9/10 within 30 days.
-Report prepared in accordance with Microsoft Security Development Lifecycle (SDL) and NIST
-Cybersecurity Framework.
-    </pre>
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Report prepared in accordance with Microsoft Security Development Lifecycle (SDL) and NIST Cybersecurity Framework.<br>Date: December 17, 2025</p>
+    </div>
   </main>
 </body>
 </html>

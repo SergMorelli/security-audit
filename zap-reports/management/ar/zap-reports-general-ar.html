@@ -3,35 +3,346 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>الخطة التشغيلية بناءً على ZAP</title>
+  <title>تقرير الأمان التشغيلي OWASP ZAP - example.com</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.6rem; margin: 0 0 16px; }
-    h2 { font-size: 1.1rem; margin: 20px 0 8px; }
-    p, li { line-height: 1.8; }
-    .card { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 16px; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; direction: rtl; text-align: right; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-right: 8px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: right; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    
+    h2 { font-size: 1.8em; color: #2980b9; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; margin-bottom: 10px; font-weight: 600; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: right; }
+    
+    .task-card { background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%); border-right: 5px solid #2196F3; padding: 25px; margin: 20px 0; border-radius: 6px; }
+    .task-card h4 { color: #1565c0; margin-top: 0; }
+    
+    .checklist { list-style: none; padding-right: 0; }
+    .checklist li { padding-right: 30px; margin: 12px 0; position: relative; }
+    .checklist li:before { content: "☐ "; position: absolute; right: 0; color: #2980b9; font-weight: bold; font-size: 1.2em; }
+    .checklist li.done:before { content: "☑ "; color: #27ae60; }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: right; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; text-align: right; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    code { font-family: 'Courier New', monospace; background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; color: #d63384; font-size: 0.95em; direction: ltr; }
+    pre { background: #282c34; color: #abb2bf; padding: 20px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; direction: ltr; text-align: left; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    
+    ul, ol { margin: 15px 0; padding-right: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    .alert { padding: 20px; border-radius: 6px; margin: 20px 0; text-align: right; }
+    .alert-warning { background: #fff3e0; border-right: 5px solid #e65100; color: #e65100; }
   </style>
 </head>
 <body>
   <main>
-    <h1>الخطة التشغيلية بناءً على ZAP - example.com</h1>
-    <div class="card">
-      <p><strong>التاريخ:</strong> 2026-01-02</p>
-      <h2>هدف الوثيقة</h2>
-      <p>تحديد مهام واضحة للفرق الفنية والتشغيلية لمعالجة نتائج ZAP ضمن جداول زمنية قابلة للقياس.</p>
-      <h2>خطة التنفيذ المرحلية</h2>
-      <ul>
-        <li><strong>خلال 24 ساعة:</strong> احتواء الثغرات الحرجة وعزل نقاط التعرض المباشر.</li>
-        <li><strong>خلال 72 ساعة:</strong> تطبيق إصلاحات التطبيق والخادم وإعادة التحقق.</li>
-        <li><strong>خلال أسبوعين:</strong> توحيد معايير الأمان وإدخالها في دورة التطوير.</li>
+    <div class="report-header">
+      <h1>خطة الأمان التشغيلية</h1>
+      <p class="subtitle">دليل التنفيذ الشامل للفرق</p>
+      <p style="color: #7f8c8d; margin-top: 20px;">تاريخ المسح: 30 ديسمبر 2025 | الأداة: OWASP ZAP 2.17.0</p>
+    </div>
+
+    <div class="section">
+      <h2>ملخص الإدارة</h2>
+      <p style="font-size: 1.05em;">يقدم هذا المستند إرشادات تشغيلية لقادة فريق التنفيذ، يغطي معالجة الأمان، وحلول الأكواد، وبروتوكولات الاستجابة للحوادث، وإجراءات المراقبة المستمرة. يتلقى كل فريق (Backend، Frontend، DevOps) تعليمات تقنية محددة وقوائم تحقق.</p>
+
+      <h3>مصفوفة مسؤولية الفريق</h3>
+      <table>
+        <thead><tr><th>الفريق</th><th>المهام الحرجة (الأيام 1-7)</th><th>الأولوية (الأسابيع 2-4)</th><th>الإشراف</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Backend</strong></td><td>حجب نقطة نهاية PII</td><td>تقوية أمان API</td><td>قائد الفريق + الأمان</td></tr>
+          <tr><td><strong>Frontend</strong></td><td>نشر رؤوس CSP</td><td>تنفيذ SRI</td><td>قائد الفريق + الأمان</td></tr>
+          <tr><td><strong>DevOps</strong></td><td>تكوين رؤوس الأمان</td><td>إعداد المراقبة</td><td>مدير DevOps + الأمان</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>المرحلة 1: الإجراءات الطارئة (الأيام 1-7)</h2>
+
+      <div class="alert alert-warning">
+        <strong>⚠️ حرج:</strong> يجب إكمال جميع المهام في هذا القسم خلال 7 أيام. عدم إكمال المعالجة يطيل نافذة انتهاك التنظيم.
+      </div>
+
+      <h3 style="color: #c0392b;">فريق Backend: حجب كشف البيانات الشخصية</h3>
+
+      <div class="task-card">
+        <h4>المهمة 1: تقييد نقطة نهاية API REST للمستخدمين</h4>
+        <p><strong>الأولوية:</strong> <span class="badge badge-critical">حرجة</span> | <strong>الجدول الزمني:</strong> الأيام 1-3</p>
+        
+        <h5>الوصف التقني:</h5>
+        <p>نقطة النهاية <code>/wp-json/wp/v2/users</code> تكشف عن معلومات المستخدم علناً. تنفيذ قيود الوصول علياً.</p>
+
+        <h5 style="margin-top: 20px;">الحل: تنفيذ PHP</h5>
+        <pre>// أضف إلى functions.php أو plugin مخصص
+add_filter('rest_endpoints', function($endpoints) {
+    if (isset($endpoints['/wp/v2/users'])) {
+        unset($endpoints['/wp/v2/users']);
+    }
+    return $endpoints;
+});
+
+// بديل: تقييد حسب التفويض
+add_filter('rest_prepare_user', function($response, $user) {
+    if (!current_user_can('list_users')) {
+        return new WP_Error(
+            'rest_forbidden',
+            'Unauthorized access',
+            ['status' => 403]
+        );
+    }
+    return $response;
+}, 10, 2);</pre>
+
+        <h5 style="margin-top: 20px;">قائمة التحقق من التحقق:</h5>
+        <ul class="checklist">
+          <li>اختبار نقطة النهاية تعود 403 Forbidden للمستخدمين المجهولين</li>
+          <li>التحقق من أن المستخدمين المصرحين بالدور الصحيح يمكنهم الوصول</li>
+          <li>تأكيد عدم وجود تفاصيل المستخدم في استجابات JSON</li>
+          <li>فحص السجلات لعمليات الوصول</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #e65100; margin-top: 30px;">فريق Frontend: نشر سياسة أمان المحتوى</h3>
+
+      <div class="task-card">
+        <h4>المهمة 2: تنفيذ رؤوس CSP</h4>
+        <p><strong>الأولوية:</strong> <span class="badge badge-high">عالية</span> | <strong>الجدول الزمني:</strong> الأيام 4-7</p>
+
+        <h5>الوصف التقني:</h5>
+        <p>تمنع سياسة أمان المحتوى هجمات XSS بتقييد تحميل الموارد. نشر إعدادات CSP صارمة.</p>
+
+        <h5 style="margin-top: 20px;">الحل: علامات HTML Meta</h5>
+        <pre>&lt;meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com;
+  style-src 'self' 'unsafe-inline' fonts.googleapis.com;
+  img-src 'self' data: https:;
+  font-src 'self' fonts.gstatic.com;
+  connect-src 'self';
+  frame-ancestors 'none';
+  upgrade-insecure-requests;
+"&gt;</pre>
+
+        <h5 style="margin-top: 20px;">قائمة التحقق من التحقق:</h5>
+        <ul class="checklist">
+          <li>فحص وحدة تحكم المتصفح لتقارير انتهاك CSP</li>
+          <li>اختبار تنفيذ الأنماط من مصادر خارجية (يجب أن تفشل)</li>
+          <li>التحقق من عمل الأنماط المضمنة بدون 'unsafe-inline'</li>
+          <li>مراقبة CSP report-uri للانتهاكات</li>
+        </ul>
+      </div>
+
+      <h3 style="color: #2980b9; margin-top: 30px;">فريق DevOps: تكوين رؤوس أمان HTTP</h3>
+
+      <div class="task-card">
+        <h4>المهمة 3: نشر رؤوس أمان HTTP</h4>
+        <p><strong>الأولوية:</strong> <span class="badge badge-high">عالية</span> | <strong>الجدول الزمني:</strong> الأيام 5-7</p>
+
+        <h5>تكوين LiteSpeed (متوافق مع nginx):</h5>
+        <pre>server {
+    add_header X-Frame-Options DENY;
+    add_header X-Content-Type-Options nosniff;
+    add_header Referrer-Policy strict-origin-when-cross-origin;
+    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()";
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+}</pre>
+
+        <h5 style="margin-top: 20px;">تكوين Apache:</h5>
+        <pre>&lt;IfModule mod_headers.c&gt;
+    Header always set X-Frame-Options DENY
+    Header always set X-Content-Type-Options nosniff
+    Header always set Referrer-Policy strict-origin-when-cross-origin
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+&lt;/IfModule&gt;</pre>
+
+        <h5 style="margin-top: 20px;">قائمة التحقق من التحقق:</h5>
+        <ul class="checklist">
+          <li>استخدام curl للتحقق من الرؤوس: <code>curl -I https://example.com</code></li>
+          <li>فحص علامة أدوات المتصفح Network للاطلاع على وجود الرأس</li>
+          <li>اختبار أهلية HSTS preload على https://hstspreload.org</li>
+          <li>مراقبة سجلات الأخطاء لمشاكل التكوين</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>المرحلة 2: التنفيذ ذو الأولوية (الأسابيع 2-4)</h2>
+
+      <h3>تنفيذ Subresource Integrity (SRI)</h3>
+      <p>حماية من موارد CDN المساومة بالتحقق من سلامة المحتوى.</p>
+
+      <h5>مثال: Cloudflare CDN مع SRI</h5>
+      <pre>&lt;link 
+  rel="stylesheet" 
+  href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.0/tailwind.min.css"
+  integrity="sha384-..." 
+  crossorigin="anonymous"
+&gt;
+&lt;script 
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+  integrity="sha384-..." 
+  crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+
+      <h3 style="margin-top: 30px;">تحديثات مكونات WordPress</h3>
+      <ul class="checklist">
+        <li>تحديث نواة WordPress إلى أحدث إصدار</li>
+        <li>تحديث جميع الإضافات النشطة (Blocksy، Stackable، LiteSpeed Cache)</li>
+        <li>تحديث PHP إلى 8.1+ (الحد الأدنى 8.0)</li>
+        <li>اختبار التحديثات في بيئة التطوير أولاً</li>
       </ul>
-      <h2>توزيع المسؤوليات</h2>
-      <ul>
-        <li>فريق الواجهة الخلفية: معالجة منطق التحقق وحماية نقاط API.</li>
-        <li>فريق الواجهة الأمامية: ضبط السياسات المتقدمة للمتصفح والموارد.</li>
-        <li>فريق العمليات: تقوية إعدادات الخوادم والمراقبة والتنبيه.</li>
+    </div>
+
+    <div class="section">
+      <h2>إجراءات الاستجابة للحوادث</h2>
+
+      <h3>المستوى 1: الكشف والاستجابة الأولية (أول 15 دقيقة)</h3>
+      <ol>
+        <li><strong>إخطار التنبيه:</strong> يتلقى فريق الأمان تنبيهاً آلياً</li>
+        <li><strong>التحقق الأولي:</strong> تأكيد نوع الحادث وشدته</li>
+        <li><strong>إخطار الفريق:</strong> تنبيه الفرق التقنية ذات الصلة</li>
+        <li><strong>التسجيل:</strong> بدء تسجيل مفصل للحادث</li>
+      </ol>
+
+      <h3 style="margin-top: 20px;">المستوى 2: التحليل والاحتواء (15 دقيقة - ساعتان)</h3>
+      <ol>
+        <li><strong>تحليل السبب الجذري:</strong> تحديد متجه الهجوم والأنظمة المتأثرة</li>
+        <li><strong>إجراءات الاحتواء:</strong> عزل المكونات المتأثرة</li>
+        <li><strong>تقييم تأثير الأعمال:</strong> تقييم تأثير العملاء والتشغيل</li>
+        <li><strong>خطة الاتصال:</strong> إعداد إخطارات أصحاب المصلحة</li>
+      </ol>
+
+      <h3 style="margin-top: 20px;">المستوى 3: الاستعادة وما بعد الحادث (ساعتان +)</h3>
+      <ol>
+        <li><strong>استعادة النظام:</strong> استعادة الخدمات من نسخ احتياطية نظيفة</li>
+        <li><strong>الحفاظ على الأدلة:</strong> أرشفة السجلات للتحليل الشرعي</li>
+        <li><strong>إخطار الجهات التنظيمية:</strong> إخطار السلطات إذا لزم الأمر (GDPR: نافذة 72 ساعة)</li>
+        <li><strong>مراجعة ما بعد الحادث:</strong> جدولة جلسة درس التعلم</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <h2>إجراءات الأمان الأسبوعية</h2>
+
+      <h4>الاثنين: التحديثات والرقع</h4>
+      <ul class="checklist">
+        <li>فحص قائمة البريد الأميني في WordPress للثغرات الجديدة</li>
+        <li>مراجعة إخطارات تحديث الإضافة</li>
+        <li>اختبار التحديثات في بيئة التطوير</li>
+        <li>نشر الرقع على staging إذا كانت متاحة</li>
       </ul>
+
+      <h4 style="margin-top: 20px;">الأربعاء: تدقيق التكوين</h4>
+      <ul class="checklist">
+        <li>التحقق من تكوين رؤوس الأمان بشكل صحيح</li>
+        <li>فحص قواعد الجدار الناري للتغييرات غير المصرح بها</li>
+        <li>مراجعة سجلات الوصول للأنشطة المريبة</li>
+        <li>اختبار إجراءات استعادة النسخ الاحتياطية</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">الجمعة: إحاطة الفريق</h4>
+      <ul class="checklist">
+        <li>يجتمع فريق الأمان مع جميع الفرق التقنية</li>
+        <li>مراجعة الحوادث من الأسبوع الماضي</li>
+        <li>مناقشة أي تنبيهات أمان أو مخاوف</li>
+        <li>التخطيط لأنشطة أمان الأسبوع القادم</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>إجراءات التدقيق الشهري</h2>
+
+      <h4>الأسبوع 1: مراجعة التحكم في الوصول</h4>
+      <ul class="checklist">
+        <li>تدقيق أذونات الوصول للمستخدمين عبر الأنظمة</li>
+        <li>إزالة حسابات المستخدمين غير النشطين (30+ يوم غير نشط)</li>
+        <li>التحقق من تفعيل MFA لجميع حسابات administrator</li>
+        <li>مراجعة أحداث تصعيد الامتيازات الأخيرة</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">الأسبوع 2: تقييم الثغرات</h4>
+      <ul class="checklist">
+        <li>تشغيل أداة فحص أمان آلية (OWASP ZAP)</li>
+        <li>مقارنة النتائج مع نتائج الشهر السابق</li>
+        <li>توثيق حالة معالجة المشاكل المعروفة</li>
+        <li>تصعيد النتائج الحرجة الجديدة على الفور</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">الأسبوع 3: التحقق من الامتثال</h4>
+      <ul class="checklist">
+        <li>التحقق من اتباع جميع سياسات الأمان</li>
+        <li>فحص التشفير للبيانات أثناء النقل وفي الراحة</li>
+        <li>مراجعة سجلات الاستجابة للحوادث</li>
+        <li>التحقق من سلامة النسخة الاحتياطية والاستعادة</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">الأسبوع 4: التخطيط والتدريب</h4>
+      <ul class="checklist">
+        <li>يجري فريق الأمان جلسة تدريب الموظفين</li>
+        <li>مراجعة الدروس المستفادة من الحادث</li>
+        <li>التخطيط لمبادرات الأمان لشهر قادم</li>
+        <li>إنشاء تقرير الامتثال للإدارة</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>إعداد المراقبة والكشف</h2>
+
+      <h3>المراقبة الأساسية المطلوبة:</h3>
+      <ul>
+        <li><strong>جدار الحماية لتطبيقات الويب (WAF):</strong> مراقبة سجلات Cloudflare للطلبات المحجوبة</li>
+        <li><strong>سجلات الوصول:</strong> تتبع أنماط الوصول غير العادية لنقاط النهاية الحساسة</li>
+        <li><strong>سجلات الأخطاء:</strong> مراقبة معدلات أخطاء PHP/خادم الويب</li>
+        <li><strong>موارد النظام:</strong> تنبيهات استخدام CPU والذاكرة والقرص</li>
+      </ul>
+
+      <h3 style="margin-top: 20px;">المراقبة المتقدمة (موصى بها):</h3>
+      <ul>
+        <li><strong>منصة SIEM:</strong> تحليل السجل المركزي والتنبيهات</li>
+        <li><strong>كشف الاختراق (IDS):</strong> كشف التهديدات على مستوى الشبكة</li>
+        <li><strong>مراقبة سلامة الملفات (FIM):</strong> الكشف عن التغييرات غير المصرح بها في الملفات</li>
+        <li><strong>مراقبة نشاط قاعدة البيانات:</strong> تتبع استعلامات قاعدة البيانات المريبة</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>ملخص الإجراء السريع</h2>
+      
+      <h3>اكتمل قبل نهاية الأسبوع الأول:</h3>
+      <ol style="font-size: 1.05em;">
+        <li>حجب نقطة نهاية API REST للمستخدم (فريق Backend)</li>
+        <li>نشر رؤوس CSP (فريق Frontend)</li>
+        <li>تكوين رؤوس الأمان (فريق DevOps)</li>
+        <li>إجراء اختبار التحقق من الفريق</li>
+      </ol>
+
+      <h3 style="margin-top: 25px;">أكمل خلال الأسابيع 2-4:</h3>
+      <ol style="font-size: 1.05em;">
+        <li>تنفيذ Subresource Integrity لجميع موارد CDN</li>
+        <li>تحديث جميع مكونات WordPress</li>
+        <li>إنشاء إجراءات مراجعة الأمان الأسبوعية</li>
+        <li>نشر حل المراقبة المستمرة</li>
+      </ol>
+    </div>
+
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>الإجراءات التشغيلية مشتقة من تقييم OWASP ZAP.<br>التاريخ: 30 ديسمبر 2025<br>راجع هذا المستند شهرياً وحدّث الإجراءات حسب الحاجة.</p>
     </div>
   </main>
 </body>

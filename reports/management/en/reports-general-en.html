@@ -3,239 +3,313 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>management report en</title>
+  <title>Security Audit Report - Infrastructure Analysis</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.6; }
+    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+    
+    .report-header { background: white; border-left: 6px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
+    .report-header .domain { font-size: 1.8em; color: #2980b9; font-weight: 600; margin-bottom: 15px; font-family: 'Courier New', monospace; }
+    
+    h2 { font-size: 1.8em; color: #2c3e50; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
+    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
+    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; font-weight: 600; }
+    
+    .alert-critical { background: #ffebee; border-left: 5px solid #c0392b; padding: 25px; margin: 20px 0; border-radius: 4px; font-size: 1.05em; color: #a00; }
+    .alert-critical strong { color: #c0392b; }
+    
+    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 6px; overflow: hidden; }
+    thead { background: #2c3e50; color: white; }
+    th { padding: 16px; text-align: left; font-weight: 600; }
+    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; }
+    tbody tr { transition: background-color 0.2s ease; }
+    tbody tr:hover { background-color: #f8f9fa; }
+    
+    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+    .badge-critical { background: #ffcdd2; color: #c62828; }
+    .badge-high { background: #ffe0b2; color: #e65100; }
+    .badge-medium { background: #e1bee7; color: #6a1b9a; }
+    .badge-low { background: #c8e6c9; color: #2e7d32; }
+    
+    ul, ol { margin: 15px 0; padding-left: 25px; }
+    li { margin: 8px 0; color: #34495e; }
+    
+    code { background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; font-family: 'Courier New', monospace; color: #d63384; font-size: 0.95em; }
+    
+    pre { background: #282c34; color: #abb2bf; padding: 20px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; }
+    
+    .vulnerability-item { background: white; border-left: 5px solid #e74c3c; padding: 20px; margin: 15px 0; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+    .vulnerability-item h4 { color: #c0392b; margin-bottom: 10px; }
+    
+    .alert-box { background: #fff3cd; border-left: 5px solid #ff9800; padding: 20px; margin: 15px 0; border-radius: 4px; color: #665d31; }
+    .alert-box strong { color: #ff6f00; }
   </style>
 </head>
 <body>
   <main>
-    <h1>management report en</h1>
-    <pre>
-Security Audit Report: Infrastructure Analysis of example.com
-                              Information Security Specialist
+    <div class="report-header">
+      <h1>Security Audit Report</h1>
+      <p class="subtitle">Infrastructure Analysis of example.com</p>
+      <p class="domain">example.com</p>
+      <p style="color: #7f8c8d; font-size: 0.95em; margin-top: 15px;">Information Security Specialist</p>
+      <p class="report-meta" style="color: #7f8c8d; font-size: 0.9em; margin-top: 5px;">Report Date: December 17, 2025</p>
+    </div>
 
-                                        2025-12-17
+    <div class="section">
+      <h2>Executive Summary</h2>
+      <p>A comprehensive security audit of the example.com web resource was conducted using modern scanning tools (Nmap, SSLScan). Critical configuration vulnerabilities requiring immediate remediation have been identified.</p>
+      <p style="margin-top: 15px;"><strong>Overall security rating: 6/10 - Urgent intervention required.</strong></p>
+      
+      <div class="alert-box">
+        <strong>⚠️ Critical Warning:</strong> Open non-standard ports (8080, 8443) and potential attack vectors on WordPress administrative panel have been discovered.
+      </div>
+    </div>
 
+    <div class="section">
+      <h2>Test Target Information</h2>
+      <table>
+        <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Domain</strong></td><td>example.com</td></tr>
+          <tr><td><strong>IP Addresses</strong></td><td>192.0.2.1</td></tr>
+          <tr><td><strong>CDN/WAF</strong></td><td>Cloudflare</td></tr>
+          <tr><td><strong>CMS</strong></td><td>WordPress 6.9</td></tr>
+          <tr><td><strong>Audit Date</strong></td><td>December 17, 2025</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-Executive Summary
-A comprehensive security audit of the example.com web resource was conducted using
-modern scanning tools (Nmap, SSLScan). Critical configuration vulnerabilities requiring
-immediate remediation have been identified. Overall security rating: 6/10 - urgent
-intervention required.
-      ⚠️Critical Warning: Open non-standard ports (8080, 8443) and potential attack
-      vectors on WordPress administrative panel have been discovered.
+    <div class="section">
+      <h2>Testing Methodology</h2>
+      <p>The audit was conducted in accordance with NIST Cybersecurity Framework methodology and included:</p>
+      <ul>
+        <li>Port Scanning (Nmap 7.94SVN)</li>
+        <li>SSL/TLS Analysis (SSLScan 2.1.2)</li>
+        <li>Web Server Configuration Review</li>
+        <li>Security Headers Analysis</li>
+        <li>WordPress Security Assessment</li>
+      </ul>
+    </div>
 
+    <div class="section">
+      <h2>System Architecture</h2>
+      <pre>┌─────────────────────────────────────────────┐
+│           Client Browser / User            │
+└────────────────┬────────────────────────────┘
+                 │
+        ┌────────▼────────┐
+        │  Cloudflare CDN │
+        │    (WAF/DDoS)   │
+        └────────┬────────┘
+                 │
+    ┌────────────┬────────────┐
+    │            │            │
+ Port│ 80    Port│ 443   Port │ 8080/8443
+    │ (HTTP) │(HTTPS) │ (ALT)
+    ▼            ▼            ▼
+┌──────────────────────────────┐
+│    Origin Web Server         │
+│   • Nginx/Apache            │
+│   • WordPress 6.9           │
+│   • MySQL Database          │
+└──────────────────────────────┘</pre>
+    </div>
 
-Test Target
-Parameter       Value
-Domain          example.com
-IP Addresses    192.0.2.1
-CDN/WAF         Cloudflare
-CMS             WordPress 6.9
-Audit Date      December 17, 2025
+    <div class="section">
+      <h2>Port Scanning Results</h2>
+      <table>
+        <thead><tr><th>Port</th><th>State</th><th>Service</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><strong>80</strong></td><td>open</td><td>HTTP</td><td><span class="badge badge-low">✓ Redirects to HTTPS</span></td></tr>
+          <tr><td><strong>443</strong></td><td>open</td><td>HTTPS</td><td><span class="badge badge-medium">◐ Valid, used</span></td></tr>
+          <tr><td><strong>8080</strong></td><td>open</td><td>HTTP</td><td><span class="badge badge-critical">❌ Unauthorized</span></td></tr>
+          <tr><td><strong>8443</strong></td><td>open</td><td>HTTPS</td><td><span class="badge badge-critical">❌ HTTP 523 Error</span></td></tr>
+        </tbody>
+      </table>
+    </div>
 
+    <div class="section">
+      <h2>SSL/TLS Configuration</h2>
+      <h3>Supported Protocols</h3>
+      <table>
+        <thead><tr><th>Protocol</th><th>Status</th><th>Assessment</th></tr></thead>
+        <tbody>
+          <tr><td>SSLv2, SSLv3</td><td><span class="badge badge-low">Disabled</span></td><td>Good</td></tr>
+          <tr><td>TLSv1.0, TLSv1.1</td><td><span class="badge badge-low">Disabled</span></td><td>Good</td></tr>
+          <tr><td>TLSv1.2</td><td><span class="badge badge-high">Enabled (with CBC)</span></td><td>Needs review</td></tr>
+          <tr><td>TLSv1.3</td><td><span class="badge badge-low">Enabled</span></td><td>Excellent</td></tr>
+        </tbody>
+      </table>
 
-Testing Methodology
-The audit was conducted in accordance with NIST Cybersecurity Framework methodology
-and included:
-  •     Port Scanning (Nmap 7.94SVN)
-  •     SSL/TLS Analysis (SSLScan 2.1.2)
-  •     Web Server Configuration Review
-  •     Security Headers Analysis
-  •     WordPress Security Assessment
+      <h3 style="margin-top: 25px;">Certificate Information</h3>
+      <ul>
+        <li><strong>Subject:</strong> example.com</li>
+        <li><strong>Issuer:</strong> Google Trust Services (WE1)</li>
+        <li><strong>Valid Period:</strong> 2025-11-02 to 2026-01-31</li>
+        <li><strong>Key Algorithm:</strong> ECDSA with SHA256</li>
+        <li><strong>Curve:</strong> prime256v1 (256-bit)</li>
+        <li><strong>Status:</strong> <span class="badge badge-low">✓ Valid and trusted</span></li>
+      </ul>
+    </div>
 
+    <div class="section">
+      <h2>WordPress Analysis</h2>
+      <table>
+        <thead><tr><th>Component</th><th>Finding</th><th>Severity</th></tr></thead>
+        <tbody>
+          <tr><td><strong>CMS Version</strong></td><td>WordPress 6.9 (Exposed)</td><td><span class="badge badge-high">High</span></td></tr>
+          <tr><td><strong>Admin Panel</strong></td><td>/wp-admin/ publicly accessible</td><td><span class="badge badge-critical">Critical</span></td></tr>
+          <tr><td><strong>Robots.txt</strong></td><td>Discloses directory structure</td><td><span class="badge badge-medium">Medium</span></td></tr>
+          <tr><td><strong>Theme Info</strong></td><td>Theme version visible</td><td><span class="badge badge-low">Low</span></td></tr>
+          <tr><td><strong>XML-RPC</strong></td><td>Enabled (brute force risk)</td><td><span class="badge badge-high">High</span></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-System Architecture
-User → Cloudflare CDN → Origin Server
-        ↓
-    Ports: 80, 443, 8080, 8443
-        ↓
-     WordPress 6.9
+    <div class="section">
+      <h2>Identified Vulnerabilities</h2>
+      
+      <h3 style="color: #c0392b;">Critical Issues</h3>
 
-Key Components: - Cloudflare as reverse proxy on all ports - SSL certificate from Google
-Trust Services (WE1) - Wildcard certificate (*.example.com) - HTTP/2 and HTTP/3 support
-Scanning Results
-Open Ports and Services
-Port   Protocol Status         Service            Notes
-80     HTTP       Open         Cloudflare proxy   Redirect to HTTPS
-443    HTTPS      Open         Cloudflare proxy   Main site
-8080   HTTP      ⚠️Open        Cloudflare proxy   Non-standard port
-8443   HTTPS     ❌ Error 523   Cloudflare proxy   Origin unavailable
+      <div class="vulnerability-item">
+        <h4>1. Port 8443 Configuration Error</h4>
+        <span class="badge badge-critical">CVSS 7.5</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Issue:</strong> Cloudflare proxies port 8443, but origin is unreachable</li>
+          <li><strong>Response:</strong> HTTP/2 523 (Origin Unreachable)</li>
+          <li><strong>Risk:</strong> Information disclosure, potential security bypass</li>
+          <li><strong>Action:</strong> Remove port 8443 from Cloudflare DNS records</li>
+        </ul>
+      </div>
 
-SSL/TLS Configuration
-Positive Aspects: - TLS 1.3 supported (modern protocol) - TLS 1.2 with secure ciphers -
-Legacy protocols disabled (SSL 2.0/3.0, TLS 1.0/1.1) - Perfect Forward Secrecy (ECDHE) -
- Modern elliptic curves (x25519, secp256r1)
-Problem Areas: - ⚠️CBC cipher support (vulnerable to BEAST, Lucky13) - ⚠️Short
-certificate validity period (90 days) - ⚠️Identical configuration on all ports
+      <div class="vulnerability-item">
+        <h4>2. Open Non-Standard Port 8080</h4>
+        <span class="badge badge-high">CVSS 7.2</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Issue:</strong> Alternative entry point may bypass WAF rules</li>
+          <li><strong>Access:</strong> Publicly accessible</li>
+          <li><strong>Risk:</strong> Rate limit bypass, WAF evasion</li>
+          <li><strong>Action:</strong> Restrict to internal networks only</li>
+        </ul>
+      </div>
 
-WordPress Analysis
-Component      Status                    Risk
-Version     WordPress 6.9         High
-Admin Panel /wp-admin/ accessible Critical
-Robots.txt  Reveals structure     🟡 Medium
-Generator      Version disclosed         🟡 Medium
+      <h3 style="color: #e65100; margin-top: 30px;">High Priority Issues</h3>
 
+      <div class="vulnerability-item" style="border-left-color: #f39c12;">
+        <h4 style="color: #e65100;">3. WordPress Version Disclosure</h4>
+        <span class="badge badge-high">CVSS 6.8</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Issue:</strong> WordPress version publicly visible in HTML source</li>
+          <li><strong>Found:</strong> &lt;meta name="generator" content="WordPress 6.9" /&gt;</li>
+          <li><strong>Risk:</strong> Targeted attacks on known 6.9 vulnerabilities</li>
+          <li><strong>Action:</strong> Hide WordPress version in functions.php</li>
+        </ul>
+      </div>
 
+      <div class="vulnerability-item" style="border-left-color: #f39c12;">
+        <h4 style="color: #e65100;">4. Missing Security Headers</h4>
+        <span class="badge badge-high">CVSS 5.5</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Missing:</strong> Strict-Transport-Security, X-Frame-Options, Content-Security-Policy, Referrer-Policy</li>
+          <li><strong>Risk:</strong> Clickjacking, downgrade attacks, XSS vulnerabilities</li>
+          <li><strong>Action:</strong> Add comprehensive security headers to web server</li>
+        </ul>
+      </div>
 
-Identified Vulnerabilities
-  Critical Level (CVSS 7.0-10.0)
-1. Port 8443 Configuration Error
-   •    Description: Port 8443 configured in Cloudflare but origin server unavailable
-        (HTTP 523)
-   •    Risk: Cloudflare protection bypass, information disclosure
-   •    CVSS Score: 7.5
-   •    Recommendation: Immediately close port or fix configuration
+      <h3 style="color: #6a1b9a; margin-top: 30px;">Medium Priority Issues</h3>
 
-2. Open Non-Standard Port 8080
-   •   Description: Alternative entry point can be used to bypass WAF
-   •   Risk: Security policy bypass, brute-force attacks
-   •   CVSS Score: 7.2
-   •   Recommendation: Close port or restrict access
+      <div class="vulnerability-item" style="border-left-color: #8e44ad;">
+        <h4 style="color: #6a1b9a;">5. Weak TLS 1.2 Cipher Suites</h4>
+        <span class="badge badge-medium">CVSS 3.7</span>
+        <ul style="margin-top: 15px;">
+          <li><strong>Issue:</strong> CBC-mode ciphers with SHA-1 still enabled</li>
+          <li><strong>Vulnerable:</strong> ECDHE-ECDSA-AES128-SHA, ECDHE-ECDSA-AES256-SHA</li>
+          <li><strong>Risk:</strong> BEAST, Lucky13, POODLE attacks</li>
+          <li><strong>Action:</strong> Disable CBC ciphers, use only GCM mode</li>
+        </ul>
+      </div>
+    </div>
 
-🟠 High Level (CVSS 4.0-6.9)
+    <div class="section">
+      <h2>Risk Matrix</h2>
+      <table>
+        <thead><tr><th>Issue</th><th>Probability</th><th>Impact</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Port 8443</strong></td><td><span class="badge badge-critical">High</span></td><td><span class="badge badge-critical">High</span></td><td><strong>P0</strong></td></tr>
+          <tr><td><strong>Port 8080</strong></td><td><span class="badge badge-high">Medium</span></td><td><span class="badge badge-high">High</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>WP Admin</strong></td><td><span class="badge badge-high">High</span></td><td><span class="badge badge-high">Medium</span></td><td><strong>P1</strong></td></tr>
+          <tr><td><strong>Headers</strong></td><td><span class="badge badge-medium">Medium</span></td><td><span class="badge badge-medium">Medium</span></td><td><strong>P2</strong></td></tr>
+          <tr><td><strong>TLS Config</strong></td><td><span class="badge badge-low">Low</span></td><td><span class="badge badge-low">Low</span></td><td><strong>P3</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-3. WordPress Administrative Panel
-   •  Description: /wp-admin/ mentioned in robots.txt, version disclosed
-  •    Risk: Brute-force attacks, vulnerability exploitation
-  •    CVSS Score: 6.8
-  •    Recommendation: Hide version, protect admin panel
+    <div class="section">
+      <h2>Remediation Plan</h2>
+      
+      <h3>Phase 1: Critical Fixes (1-2 days)</h3>
+      <ol>
+        <li>Close port 8443 in Cloudflare DNS settings</li>
+        <li>Restrict access to port 8080 (internal only)</li>
+        <li>Protect /wp-admin/ directory with authentication</li>
+        <li>Add basic security headers</li>
+      </ol>
 
-4. Missing Critical Security Headers
-   •   Description: Missing HSTS, X-Frame-Options, CSP
-   •   Risk: Clickjacking, downgrade attacks, XSS
-   •   CVSS Score: 5.5
-   •   Recommendation: Add missing headers
+      <h3 style="margin-top: 25px;">Phase 2: Security Hardening (1 week)</h3>
+      <ol>
+        <li>Optimize SSL/TLS configuration</li>
+        <li>Configure Cloudflare WAF rules</li>
+        <li>Install WordPress security plugins (Wordfence)</li>
+        <li>Enable automatic updates</li>
+      </ol>
 
-🟡 Medium Level (CVSS 2.0-3.9)
+      <h3 style="margin-top: 25px;">Phase 3: Long-term Program (1-3 months)</h3>
+      <ol>
+        <li>Implement vulnerability scanning automation</li>
+        <li>Deploy security monitoring and alerting</li>
+        <li>Conduct regular penetration testing</li>
+        <li>Achieve ISO 27001 compliance</li>
+      </ol>
+    </div>
 
-5. CBC Ciphers in TLS 1.2
-   •   Description: Support for legacy CBC ciphers
-   •   Risk: BEAST, Lucky13 attacks
-   •   CVSS Score: 3.7
-   •   Recommendation: Disable CBC ciphers
+    <div class="section">
+      <h2>Standards Compliance</h2>
+      <table>
+        <thead><tr><th>Standard</th><th>Current Status</th><th>Required Actions</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NIST CSF</strong></td><td><span class="badge badge-medium">Partial</span></td><td>Improve Protect & Detect functions</td></tr>
+          <tr><td><strong>ISO 27001</strong></td><td><span class="badge badge-critical">Non-compliant</span></td><td>Implement ISMS and controls</td></tr>
+          <tr><td><strong>PCI DSS</strong></td><td><span class="badge badge-high">Requires Review</span></td><td>Strengthen data protection</td></tr>
+          <tr><td><strong>GDPR</strong></td><td><span class="badge badge-medium">Basic</span></td><td>Add privacy & security headers</td></tr>
+        </tbody>
+      </table>
+    </div>
 
+    <div class="section">
+      <h2>Conclusion and Next Steps</h2>
+      <p>The security audit identified several critical and high-priority vulnerabilities that require immediate attention. The primary risks are associated with improper port configuration and insufficient WordPress protection.</p>
+      
+      <p style="margin-top: 20px; padding: 20px; background: #e8f5e9; border-left: 5px solid #27ae60; color: #1b5e20; border-radius: 4px;">
+        <strong>✓ Expected Improvement:</strong> With proper implementation of recommendations, the security rating can improve from <strong>6/10 to 9/10</strong> within 30 days and to <strong>9.5/10</strong> within 3 months.
+      </p>
 
-Remediation Recommendations
-Immediate Actions (24 hours)
-  1.   Close Port 8443
+      <h3 style="margin-top: 25px;">Immediate Actions Required</h3>
+      <ul>
+        <li>Schedule meeting with system administrator to discuss findings</li>
+        <li>Prioritize port 8443 and 8080 remediation</li>
+        <li>Review and approve remediation plan timeline</li>
+        <li>Allocate resources for implementation</li>
+      </ul>
+    </div>
 
-       # Disable in Cloudflare Dashboard
-       # Or close on origin server
-       server {
-         listen 8443;
-         return 444; # Close connection
-       }
-
-  2.   Restrict Access to Port 8080
-
-       server {
-         listen 8080;
-         # Internal network only
-         allow 192.168.0.0/16;
-         deny all;
-       }
-
-  3.   Protect WordPress Admin Panel
-
-       # .htaccess in /wp-admin/
-       AuthType Basic
-       AuthName "Admin Area"
-       AuthUserFile /path/to/.htpasswd
-       Require valid-user
-
-Short-term Improvements (7 days)
-  4.   Add Security Headers
-       add_header Strict-Transport-Security "max-age=31536000; includeSubDomains;
-       preload";
-       add_header X-Frame-Options "DENY";
-       add_header Content-Security-Policy "default-src 'self'";
-       add_header X-Content-Type-Options "nosniff";
-
-  5.   Optimize SSL/TLS
-
-       # Disable CBC ciphers
-       ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-
-       SHA384";
-       ssl_protocols TLSv1.2 TLSv1.3;
-
-  6.   Configure Cloudflare WAF
-
-         –      Block access to /wp-admin/ for unauthorized IPs
-         –      Set up rate limiting for /wp-login.php
-         –      Enable Bot Fight Mode
-
-Long-term Measures (30 days)
-  7.   Monitoring and Automation
-        –    Automatic SSL certificate renewal
-        –    Monitor access attempts to protected resources
-        –    Regular vulnerability scanning
-  8.   WordPress Hardening
-        –    Install security plugins (Wordfence, iThemes Security)
-        –    Two-factor authentication
-        –    Hide WordPress version
-        –    Regular updates
-
-
-Risk Matrix
-Vulnerability        Probability Impact     Overall Risk Priority
-Port 8443 error      High         High       Critical    P0
-Port 8080 open       Medium       High      🟠 High       P1
-WordPress admin High              Medium 🟠 High          P1
-Security headers     Medium       Medium 🟡 Medium        P2
-CBC ciphers          Low          Low       🟢 Low        P3
-
-
-
-Remediation Plan
-Phase 1: Critical Fixes (1-2 days)
-  •    ☐ Close port 8443 in Cloudflare
-  •    ☐ Restrict access to port 8080
-  •    ☐ Protect WordPress admin panel
-  •    ☐ Add basic security headers
-Phase 2: Security Improvements (1 week)
-  •    ☐ Optimize SSL/TLS configuration
-  •    ☐ Configure Cloudflare WAF rules
-  •    ☐ Install WordPress security plugins
-  •    ☐ Set up monitoring
-
-Phase 3: Long-term Measures (1 month)
-  •    ☐ Automation of updates
-  •    ☐ Regular security audits
-  •    ☐ Staff training
-  •    ☐ Document procedures
-
-
-Standards Compliance
-Standard     Current Status         Required Actions
-NIST CSF     Partial                Improve Protect, Detect functions
-ISO 27001    Non-compliant          Implement ISMS processes
-PCI DSS      Requires assessment    Strengthen data protection
-GDPR         Basic level            Add privacy headers
-
-
-Conclusion
-The audit revealed serious security issues requiring immediate attention. Main risks are
-related to improper port configuration and insufficient protection of WordPress
-administrative panel.
-
-Key Findings: - Critical vulnerabilities: 2 (require immediate remediation) - 🟠 High
-risks: 2 (remediate within a week) - 🟡 Medium risks: 1 (plan remediation)
-
-Recommended Next Steps: 1. Immediately close problematic ports 2. Strengthen
-WordPress protection 3. Add missing security headers 4. Implement regular security
-monitoring
-With proper implementation of recommendations, the overall security rating can be
-improved to 8-9/10 within 30 days.
-
-
-Report prepared in accordance with industry best practices and Microsoft Security
-Development Lifecycle (SDL) standards.
-    </pre>
+    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
+      <p>Report prepared in accordance with Microsoft Security Development Lifecycle (SDL) and industry best practices.<br>Date: December 17, 2025</p>
+    </div>
   </main>
 </body>
 </html>

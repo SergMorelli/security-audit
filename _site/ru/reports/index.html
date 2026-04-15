@@ -122,9 +122,9 @@
 <section class="max-w-6xl mx-auto px-4 pb-8" data-reports-filter="">
   <div class="overflow-x-auto">
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="all">🌐 All</button>
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="technical">🛠 Technical</button>
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="management">📋 Management</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="all">🌐 Все</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="technical">🛠 Технические</button>
+      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="management">📋 Управленческие</button>
       <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="executive">🏛 Executive</button>
       <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="comprehensive">📚 Comprehensive</button>
     </div>
@@ -136,151 +136,91 @@
   </div>
 </section>
 
-<h1 id="-примеры-отчетов-по-аудиту-безопасности">🔐 Примеры отчетов по аудиту безопасности</h1>
-<h3 id="multilingual-ru--en--ar">Multilingual RU / EN / AR</h3>
-<hr />
+<style>
+  .soc-card {
+    border: 1px solid rgba(71, 85, 105, 0.65);
+    background: linear-gradient(165deg, rgba(8, 14, 28, 0.96), rgba(2, 8, 23, 0.86));
+    padding-top: 2.4rem;
+    padding-left: 2rem;
+    padding-right: 1.25rem;
+    padding-bottom: 1.25rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
 
-<h1 id="nmap">Nmap</h1>
-<h1 id="sslscan">SSLScan</h1>
-<h1 id="openssl">OpenSSL</h1>
-<h1 id="owasp-zap">OWASP ZAP</h1>
-<h1 id="nikto">Nikto</h1>
-<hr />
+  .soc-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(34, 211, 238, 0.85);
+    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+  }
 
-<h1 id="-отчеты--reports--التقارير">🛠 Отчеты / Reports / التقارير</h1>
+  .soc-title {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
 
-<div class="report-filter-item" data-report-category="technical">
+  .soc-card:hover .soc-title {
+    color: rgb(34, 211, 238);
+    text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+  }
 
-  <h2 id="section">🛠️ Технический отчет</h2>
+  .report-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.42rem 0.9rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(71, 85, 105, 0.85);
+    background: rgba(15, 23, 42, 0.75);
+    border-radius: 0.45rem;
+  }
 
-  <p>Для инженеров, системных администраторов и SOC-аналитиков.
-Фокус: подробные находки, ссылки CVE, команды, конфигурации и скрипты.</p>
+  .report-link:hover {
+    border-color: rgba(34, 211, 238, 0.75);
+    color: rgb(165, 243, 252);
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  }
+</style>
 
-  <h3 id="section-1">🔗 Документы</h3>
-  <ul>
-    <li><a href="/reports/technical/en/">English</a></li>
-    <li><a href="/reports/technical/ru/">Русская версия</a></li>
-    <li><a href="/reports/technical/ar/">النسخة العربية</a></li>
-  </ul>
+<section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
+  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">Аудит инфраструктуры</h3>
+      <p class="text-xs text-slate-400">Инструменты: Nmap, SSLScan, OpenSSL</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/reports/technical/ru/technical-report-ru.pdf" class="report-link transition">PDF</a>
+          <a href="/reports/technical/ru/reports-technical-ru.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
 
-</div>
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан уязвимостей веб-приложения</h3>
+      <p class="text-xs text-slate-400">Инструменты: OWASP ZAP, Passive/Active Scan Rules</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/zap-reports/technical/ru/zapreports-technical-ru.pdf" class="report-link transition">PDF</a>
+          <a href="/zap-reports/technical/ru/zap-reports-technical-ru.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
 
-<hr />
-
-<div class="report-filter-item" data-report-category="management">
-
-  <h2 id="section-2">📋 Управленческий отчет</h2>
-
-  <p>Для IT- и security-менеджеров, руководителей проектов.
-Фокус: матрица рисков, приоритезация (P0–P3), комплаенс и сроки устранения.</p>
-
-  <h3 id="section-3">🔗 Документы</h3>
-  <ul>
-    <li><a href="/reports/management/en/">English</a></li>
-    <li><a href="/reports/management/ru/">Русская версия</a></li>
-    <li><a href="/reports/management/ar/">النسخة العربية</a></li>
-  </ul>
-
-</div>
-
-<hr />
-
-<div class="report-filter-item" data-report-category="executive">
-
-  <h2 id="executive-report">🏛️ Executive Report</h2>
-
-  <p>Для CEOs, CTOs, CISOs и руководства.
-Фокус: бизнес-риски, финансовое влияние, ROI инвестиций в безопасность и KPI.</p>
-
-  <h3 id="section-4">🔗 Документы</h3>
-  <ul>
-    <li><a href="/reports/executive/en/">English</a></li>
-    <li><a href="/reports/executive/ru/">Русская версия</a></li>
-    <li><a href="/reports/executive/ar/">النسخة العربية</a></li>
-  </ul>
-
-</div>
-
-<hr />
-
-<h1 id="️-отчеты-сканирования-уязвимостей-веб-приложений--web-application-vulnerability-scan-reports--تقارير-فحص-ثغرات-تطبيقات-الويب">🕷️ Отчеты сканирования уязвимостей веб-приложений / Web Application Vulnerability Scan Reports / تقارير فحص ثغرات تطبيقات الويب</h1>
-
-<div class="report-filter-item" data-report-category="comprehensive">
-
-  <h2 id="comprehensive-reports">📚 Comprehensive Reports</h2>
-
-  <ul>
-    <li>
-      <table>
-        <tbody>
-          <tr>
-            <td>🇷🇺 <a href="/zap-reports/comprehensive/ru/">RU</a></td>
-            <td>🇬🇧 <a href="/zap-reports/comprehensive/en/">EN</a></td>
-            <td>🇸🇦 <a href="/zap-reports/comprehensive/ar/">AR</a></td>
-          </tr>
-        </tbody>
-      </table>
-    </li>
-  </ul>
-
-</div>
-
-<div class="report-filter-item" data-report-category="technical">
-
-  <h2 id="technical-reports">🛠 Technical Reports</h2>
-  <ul>
-    <li>🇷🇺 <a href="/zap-reports/technical/ru/">RU</a></li>
-    <li>🇬🇧 <a href="/zap-reports/technical/en/">EN</a></li>
-    <li>🇸🇦 <a href="/zap-reports/technical/ar/">AR</a></li>
-  </ul>
-
-</div>
-
-<div class="report-filter-item" data-report-category="management">
-
-  <h2 id="management-reports">📋 Management Reports</h2>
-
-  <ul>
-    <li>🇷🇺 <a href="/zap-reports/management/ru/">RU</a></li>
-    <li>🇬🇧 <a href="/zap-reports/management/en/">EN</a></li>
-    <li>🇸🇦 <a href="/zap-reports/management/ar/">AR</a></li>
-  </ul>
-
-</div>
-
-<div class="report-filter-item" data-report-category="executive">
-
-  <h2 id="executive-reports">🏛 Executive Reports</h2>
-
-  <ul>
-    <li>🇷🇺 <a href="/zap-reports/executive/ru/">RU</a></li>
-    <li>🇬🇧 <a href="/zap-reports/executive/en/">EN</a></li>
-    <li>🇸🇦 <a href="/zap-reports/executive/ar/">AR</a></li>
-  </ul>
-
-</div>
-
-<h1 id="️-отчет-сканирования-nikto--nikto-scan-report--تقرير-مسح-نيكتو">🕷️ Отчет сканирования Nikto / Nikto Scan Report / تقرير مسح نيكتو</h1>
-
-<div class="report-filter-item" data-report-category="comprehensive">
-
-  <h2 id="comprehensive-reports-1">📚 Comprehensive Reports</h2>
-
-  <table>
-    <tbody>
-      <tr>
-        <td>🇷🇺 <a href="/nikto-report/comprehensive/ru/">RU</a></td>
-        <td>🇬🇧 <a href="/nikto-report/comprehensive/en/">EN</a></td>
-        <td>🇸🇦 <a href="/nikto-report/comprehensive/ar/">AR</a></td>
-      </tr>
-    </tbody>
-  </table>
-
-</div>
-
-<hr />
-
-<p>Если у вас есть вопросы по структуре отчетов, откройте issue в репозитории.</p>
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан безопасности веб-сервера</h3>
+      <p class="text-xs text-slate-400">Инструменты: Nikto, HTTP Header Checks</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/nikto-report/comprehensive/ru/niktoreport-comprehensive-ru.pdf" class="report-link transition">PDF</a>
+          <a href="/nikto-report/comprehensive/ru/nikto-report-general-ru.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
@@ -298,28 +238,28 @@
     var descriptions = {
       all: {
         title: 'Все отчеты',
-        audience: 'Обзор всех категорий отчетов в одном месте.',
-        focus: 'Фокус: технические, управленческие, executive и comprehensive отчеты вместе.'
-      },
-      technical: {
-        title: 'Технический отчет',
-        audience: 'Предназначен для инженеров, системных администраторов и SOC-аналитиков.',
-        focus: 'Фокус: детальные находки, ссылки CVE, команды, конфигурации и скрипты.'
-      },
-      management: {
-        title: 'Управленческий отчет',
-        audience: 'Предназначен для IT- и security-менеджеров, руководителей проектов.',
-        focus: 'Фокус: матрица рисков, приоритизация (P0-P3), комплаенс и сроки устранения.'
-      },
-      executive: {
-        title: 'Executive отчет',
-        audience: 'Предназначен для CEOs, CTOs, CISOs и членов совета директоров.',
-        focus: 'Фокус: бизнес-риски, финансовое влияние, ROI инвестиций в безопасность и стратегические KPI.'
+        audience: 'Обзор всех карточек отчетов в одном месте.',
+        focus: 'Фокус: каждая карточка содержит ссылки на PDF и HTML-версию отчета для текущего языка.'
       },
       comprehensive: {
-        title: 'Comprehensive отчет',
-        audience: 'Предназначен для комплексного анализа уязвимостей в системах и веб-приложениях.',
-        focus: 'Фокус: агрегированные результаты сканирований, ключевые артефакты и полный охват проверки.'
+        title: 'Comprehensive / Комплексный / شامل',
+        audience: 'Широкий обзор отчетов для EN / RU / AR.',
+        focus: 'Фокус: полный охват и сводный уровень результатов.'
+      },
+      technical: {
+        title: 'Technical / Технический / تقني',
+        audience: 'Для инженеров, администраторов и SOC-аналитиков.',
+        focus: 'Фокус: прямые ссылки на технические PDF и HTML.'
+      },
+      management: {
+        title: 'Management / Менеджмент / إداري',
+        audience: 'Для менеджеров и руководителей команд.',
+        focus: 'Фокус: управленческий контекст, риски и приоритеты.'
+      },
+      executive: {
+        title: 'Executive / Исполнительный / تنفيذي',
+        audience: 'Для руководства и стейкхолдеров.',
+        focus: 'Фокус: стратегический и бизнес-уровень представления.'
       }
     };
 
