@@ -90,7 +90,7 @@ translation_key: documents
   <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
 
     <!-- Whitepaper EN -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="whitepaper">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="whitepaper" data-doc-lang="en">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Whitepaper — English</h3>
       <p class="text-xs text-slate-400">Scope, ownership, rules of engagement for security assessments</p>
       <div class="border-t border-slate-700/60 pt-3">
@@ -102,7 +102,7 @@ translation_key: documents
     </article>
 
     <!-- Whitepaper RU -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="whitepaper">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="whitepaper" data-doc-lang="ru">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Whitepaper — Русский</h3>
       <p class="text-xs text-slate-400">Область аудита, ответственность и правила проведения тестирования</p>
       <div class="border-t border-slate-700/60 pt-3">
@@ -114,7 +114,7 @@ translation_key: documents
     </article>
 
     <!-- Whitepaper AR -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="whitepaper">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="whitepaper" data-doc-lang="ar">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Whitepaper — العربية</h3>
       <p class="text-xs text-slate-400 font-[Noto_Sans_Arabic,sans-serif]">النطاق، الملكية، وقواعد إجراء تدقيق الأمن السيبراني</p>
       <div class="border-t border-slate-700/60 pt-3">
@@ -250,6 +250,15 @@ translation_key: documents
     var descriptionAudience = document.getElementById('docsFilterDescriptionAudience');
     var descriptionFocus    = document.getElementById('docsFilterDescriptionFocus');
 
+    function resolvePageLang() {
+      var langFromFrontMatter = ('{{ page.lang | default: "" }}' || '').trim().toLowerCase();
+      if (langFromFrontMatter) return langFromFrontMatter;
+
+      var match = window.location.pathname.match(/^\/(ru|ar)(?:\/|$)/i);
+      return match ? match[1].toLowerCase() : 'en';
+    }
+
+    var pageLang = resolvePageLang();
     var descriptions = {
       all: {
         title:    'All Documents',
@@ -258,9 +267,10 @@ translation_key: documents
       },
       whitepaper: {
         title:    'Whitepaper',
-        audience: 'For auditors, clients, and security teams preparing for an engagement.',
-        focus:    'Focus: defines system scope, ownership, rules of engagement, and testing boundaries.'
+        audience: 'Introductory white papers that define the environment, ownership, scope, and rules of engagement for security assessments and penetration testing. Intended for auditors, clients, and security teams preparing for an engagement.',
+        focus:    'Focus: define system ownership and responsibilities · establish scope and testing boundaries · describe allowed and prohibited activities · provide emergency contacts and escalation rules · ensure legal and operational safety · align expectations between the organization and the testing team.'
       },
+
       policy: {
         title:    'Policy',
         audience: 'For stakeholders, data subjects, and compliance teams.',
@@ -296,8 +306,14 @@ translation_key: documents
       });
 
       items.forEach(function (item) {
-        var matches = category === 'all' || item.getAttribute('data-doc-category') === category;
+        var itemLang = (item.getAttribute('data-doc-lang') || '').trim().toLowerCase();
+        var matches = category === 'all'
+          ? true
+          : category === 'whitepaper'
+            ? item.getAttribute('data-doc-category') === 'whitepaper' && itemLang === pageLang
+            : item.getAttribute('data-doc-category') === category;
         item.hidden = !matches;
+        item.style.display = matches ? '' : 'none';
       });
 
       if (descriptions[category]) {
