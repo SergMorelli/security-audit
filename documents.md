@@ -6,7 +6,7 @@ lang: en
 translation_key: documents
 ---
 
-<section class="pt-32 pb-20 text-center">
+<section class="pt-14 pb-10 md:pt-32 md:pb-20 text-center">
   <h1 class="text-4xl text-cyan-400 mb-6">Documents</h1>
   <p class="text-gray-400">Whitepapers, policies, licenses, and legal documentation.</p>
 </section>
@@ -20,6 +20,7 @@ translation_key: documents
       <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="policy">🔒 Policy</button>
       <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="licenses">⚖️ Licenses</button>
       <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="legal">🏷️ Legal</button>
+      <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="certificates">🏆 Certificates</button>
     </div>
   </div>
   <div id="docsFilterDescription" class="mt-4 rounded-lg bg-slate-900/40 ring-1 ring-cyan-400/20 px-4 py-3">
@@ -42,27 +43,17 @@ translation_key: documents
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .doc-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(34, 211, 238, 0.85);
-    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
-  }
-
   .doc-title {
     margin-top: 0.5rem;
     padding-left: 0.5rem;
     transition: color 0.2s ease, text-shadow 0.2s ease;
   }
 
-  .doc-card:hover .doc-title {
-    color: rgb(34, 211, 238);
-    text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
-  }
-
   .doc-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 2.75rem;
     padding: 0.42rem 0.9rem;
     font-size: 0.82rem;
     font-weight: 600;
@@ -73,17 +64,30 @@ translation_key: documents
     border-radius: 0.45rem;
   }
 
-  .doc-link:hover {
-    border-color: rgba(34, 211, 238, 0.75);
-    color: rgb(165, 243, 252);
-    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  @media (hover: hover) {
+    .doc-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.85);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+    }
+
+    .doc-card:hover .doc-title {
+      color: rgb(34, 211, 238);
+      text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+    }
+
+    .doc-link:hover {
+      border-color: rgba(34, 211, 238, 0.75);
+      color: rgb(165, 243, 252);
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+    }
   }
 </style>
 
 <!-- ── Document Cards ─────────────────────────────────────────────── -->
 <section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
 
-  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
 
     <!-- Whitepaper EN -->
     <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="whitepaper">
@@ -199,6 +203,39 @@ translation_key: documents
       </div>
     </article>
 
+    <!-- Certificate 1 -->
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
+      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Certificate — English</h3>
+      <p class="text-xs text-slate-400">Professional cybersecurity certification</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="#" class="doc-link transition">PDF</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Certificate 2 -->
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
+      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Сертификат — Русский</h3>
+      <p class="text-xs text-slate-400">Профессиональный сертификат в области кибербезопасности</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="#" class="doc-link transition">PDF</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Certificate 3 -->
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
+      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">الشهادة — العربية</h3>
+      <p class="text-xs text-slate-400 font-[Noto_Sans_Arabic,sans-serif]">شهادة احترافية في الأمن السيبراني</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="#" class="doc-link transition">PDF</a>
+        </div>
+      </div>
+    </article>
+
   </div>
 </section>
 
@@ -217,27 +254,32 @@ translation_key: documents
       all: {
         title:    'All Documents',
         audience: 'Overview of all available documents in one place.',
-        focus:    'Focus: whitepapers, privacy policies, license texts, and trademark notices.'
+        focus:    'Focus: whitepapers, privacy policies, license texts, trademark notices, and certificates.'
       },
       whitepaper: {
-        title:    'Whitepaper / Вводные документы / الورقة البيضاء',
+        title:    'Whitepaper',
         audience: 'For auditors, clients, and security teams preparing for an engagement.',
         focus:    'Focus: defines system scope, ownership, rules of engagement, and testing boundaries.'
       },
       policy: {
-        title:    'Policy / Политика / السياسة',
+        title:    'Policy',
         audience: 'For stakeholders, data subjects, and compliance teams.',
         focus:    'Focus: privacy policy covering data handling, retention, and user rights.'
       },
       licenses: {
-        title:    'Licenses / Лицензии / التراخيص',
+        title:    'Licenses',
         audience: 'For anyone using or redistributing project materials.',
         focus:    'Focus: CC BY‑NC 4.0 terms for reports, templates, and documentation.'
       },
       legal: {
-        title:    'Legal / Правовые / قانوني',
+        title:    'Legal',
         audience: 'For partners, media, and third parties referencing the brand.',
         focus:    'Focus: trademark notices and brand usage guidelines for DataDef Information Security.'
+      },
+      certificates: {
+        title:    'Certificates',
+        audience: 'Verified professional credentials and certifications.',
+        focus:    'Focus: industry-recognized certifications in cybersecurity and information security.'
       }
     };
 

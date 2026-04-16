@@ -6,7 +6,7 @@ lang: ru
 translation_key: reports
 ---
 
-<section class="pt-32 pb-20 text-center">
+<section class="pt-14 pb-10 md:pt-32 md:pb-20 text-center">
   <h1 class="text-4xl text-cyan-400 mb-6">Отчеты по безопасности</h1>
   <p class="text-gray-400">Коллекция результатов сканирования и тестирования на проникновение.</p>
 </section>
@@ -41,27 +41,17 @@ translation_key: reports
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .soc-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(34, 211, 238, 0.85);
-    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
-  }
-
   .soc-title {
     margin-top: 0.5rem;
     padding-left: 0.5rem;
     transition: color 0.2s ease, text-shadow 0.2s ease;
   }
 
-  .soc-card:hover .soc-title {
-    color: rgb(34, 211, 238);
-    text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
-  }
-
   .report-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 2.75rem;
     padding: 0.42rem 0.9rem;
     font-size: 0.82rem;
     font-weight: 600;
@@ -72,15 +62,29 @@ translation_key: reports
     border-radius: 0.45rem;
   }
 
-  .report-link:hover {
-    border-color: rgba(34, 211, 238, 0.75);
-    color: rgb(165, 243, 252);
-    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  @media (hover: hover) {
+    .soc-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.85);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+    }
+
+    .soc-card:hover .soc-title {
+      color: rgb(34, 211, 238);
+      text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+    }
+
+    .report-link:hover {
+      border-color: rgba(34, 211, 238, 0.75);
+      color: rgb(165, 243, 252);
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+    }
   }
 </style>
 
 <section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
-  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+    <!-- Technical: Infrastructure -->
     <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
       <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">Аудит инфраструктуры</h3>
       <p class="text-xs text-slate-400">Инструменты: Nmap, SSLScan, OpenSSL</p>
@@ -92,6 +96,7 @@ translation_key: reports
       </div>
     </article>
 
+    <!-- Technical: ZAP -->
     <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
       <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан уязвимостей веб-приложения</h3>
       <p class="text-xs text-slate-400">Инструменты: OWASP ZAP, Passive/Active Scan Rules</p>
@@ -103,6 +108,19 @@ translation_key: reports
       </div>
     </article>
 
+    <!-- Technical: SSLScan -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Анализ безопасности TLS/SSL</h3>
+      <p class="text-xs text-slate-400">Инструменты: SSLScan — аудит шифров и сертификатов</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/sslscan-report/ru/TLS-reports-ru.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/sslscan-report/ru/sslscan-report-general-ru.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Comprehensive: Nikto -->
     <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
       <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан безопасности веб-сервера</h3>
       <p class="text-xs text-slate-400">Инструменты: Nikto, HTTP Header Checks</p>
@@ -110,6 +128,88 @@ translation_key: reports
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
           <a href="{{ site.baseurl }}/nikto-report/comprehensive/{{ reportLang }}/niktoreport-comprehensive-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
           <a href="{{ site.baseurl }}/nikto-report/comprehensive/{{ reportLang }}/nikto-report-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Comprehensive: ZAP -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Комплексный скан веб-приложения</h3>
+      <p class="text-xs text-slate-400">Инструменты: OWASP ZAP, полное покрытие</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/zap-reports/comprehensive/{{ reportLang }}/zapreports-comprehensive-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/zap-reports/comprehensive/{{ reportLang }}/zap-reports-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Management: Infrastructure -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="management">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">Аудит инфраструктуры</h3>
+      <p class="text-xs text-slate-400">Приоритизация рисков и план устранения уязвимостей</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/reports/management/{{ reportLang }}/management-report-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/reports/management/{{ reportLang }}/reports-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Management: ZAP -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="management">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан уязвимостей веб-приложения</h3>
+      <p class="text-xs text-slate-400">Приоритизация рисков и план устранения уязвимостей</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/zap-reports/management/{{ reportLang }}/zapreports-management-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/zap-reports/management/{{ reportLang }}/zap-reports-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Management: Nikto -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="management">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан безопасности веб-сервера</h3>
+      <p class="text-xs text-slate-400">Инструменты: Nikto — обзор рисков и рекомендации</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/nikto-report/management/{{ reportLang }}/nikto-report-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Executive: Infrastructure -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="executive">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">Аудит инфраструктуры</h3>
+      <p class="text-xs text-slate-400">Стратегический обзор рисков для руководства</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/reports/executive/{{ reportLang }}/executive-report-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/reports/executive/{{ reportLang }}/reports-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Executive: ZAP -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="executive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан уязвимостей веб-приложения</h3>
+      <p class="text-xs text-slate-400">Стратегический обзор рисков для руководства</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/zap-reports/executive/{{ reportLang }}/zapreports-executive-{{ reportLang }}.pdf" class="report-link transition">PDF</a>
+          <a href="{{ site.baseurl }}/zap-reports/executive/{{ reportLang }}/zap-reports-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Executive: Nikto -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="executive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">Скан безопасности веб-сервера</h3>
+      <p class="text-xs text-slate-400">Инструменты: Nikto — ключевые выводы и влияние на бизнес</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="{{ site.baseurl }}/nikto-report/executive/{{ reportLang }}/nikto-report-general-{{ reportLang }}.html" class="report-link transition">HTML</a>
         </div>
       </div>
     </article>
@@ -136,22 +236,22 @@ translation_key: reports
         focus: 'Фокус: каждая карточка содержит ссылки на PDF и HTML-версию отчета для текущего языка.'
       },
       comprehensive: {
-        title: 'Comprehensive / Комплексный / شامل',
+        title: 'Комплексный',
         audience: 'Широкий обзор отчетов для EN / RU / AR.',
         focus: 'Фокус: полный охват и сводный уровень результатов.'
       },
       technical: {
-        title: 'Technical / Технический / تقني',
+        title: 'Технический',
         audience: 'Для инженеров, администраторов и SOC-аналитиков.',
         focus: 'Фокус: прямые ссылки на технические PDF и HTML.'
       },
       management: {
-        title: 'Management / Менеджмент / إداري',
+        title: 'Менеджмент',
         audience: 'Для менеджеров и руководителей команд.',
         focus: 'Фокус: управленческий контекст, риски и приоритеты.'
       },
       executive: {
-        title: 'Executive / Исполнительный / تنفيذي',
+        title: 'Исполнительский',
         audience: 'Для руководства и стейкхолдеров.',
         focus: 'Фокус: стратегический и бизнес-уровень представления.'
       }
@@ -171,7 +271,7 @@ translation_key: reports
 
       sections.forEach(function (section) {
         var matches = category === 'all' || section.getAttribute('data-report-category') === category;
-        section.hidden = !matches;
+        section.style.display = matches ? '' : 'none';
       });
 
       if (descriptionTitle && descriptionAudience && descriptionFocus && descriptions[category]) {

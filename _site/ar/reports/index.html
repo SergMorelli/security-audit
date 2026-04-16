@@ -61,7 +61,7 @@
 <header class="fixed w-full z-50 bg-black/70 backdrop-blur border-b border-red-500/20">
   <div class="max-w-7xl mx-auto p-3 md:px-4 md:pb-4 md:pt-5">
     <div class="flex items-center justify-between">
-      <div class="text-xl text-cyan-400 font-bold tracking-widest">
+      <div class="text-xs sm:text-sm md:text-xl text-cyan-400 font-bold tracking-widest min-w-0 truncate">
         Vulnerability Management Specialist
       </div>
 
@@ -97,11 +97,11 @@
 
     <div id="mobileMenu" class="site-mobile-menu md:hidden mt-3 rounded-lg border border-gray-800 bg-black/90 p-3" hidden>
       <nav class="flex flex-col gap-2 text-sm" aria-label="Mobile navigation">
-        <a href="/ar/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">الرئيسية</a>
-        <a href="/ar/reports/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 text-cyan-400">التقارير</a>
-        <a href="/ar/lab/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">المختبر</a>
-        <a href="/ar/documents/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">المستندات</a>
-        <a href="/ar/about/" class="px-2 py-1 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">حول</a>
+        <a href="/ar/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">الرئيسية</a>
+        <a href="/ar/reports/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 text-cyan-400">التقارير</a>
+        <a href="/ar/lab/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">المختبر</a>
+        <a href="/ar/documents/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">المستندات</a>
+        <a href="/ar/about/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">حول</a>
       </nav>
 
       <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-center gap-7" aria-label="تبديل اللغة">
@@ -114,7 +114,7 @@
 </header>
 
 <main class="pt-24 md:pt-28">
-  <section class="pt-32 pb-20 text-center">
+  <section class="pt-14 pb-10 md:pt-32 md:pb-20 text-center">
   <h1 class="text-4xl text-cyan-400 mb-6">تقارير الأمن</h1>
   <p class="text-gray-400">مجموعة من نتائج فحص الثغرات واختبارات الاختراق.</p>
 </section>
@@ -147,27 +147,17 @@
     transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
 
-  .soc-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(34, 211, 238, 0.85);
-    box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
-  }
-
   .soc-title {
     margin-top: 0.5rem;
     padding-left: 0.5rem;
     transition: color 0.2s ease, text-shadow 0.2s ease;
   }
 
-  .soc-card:hover .soc-title {
-    color: rgb(34, 211, 238);
-    text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
-  }
-
   .report-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-height: 2.75rem;
     padding: 0.42rem 0.9rem;
     font-size: 0.82rem;
     font-weight: 600;
@@ -178,15 +168,29 @@
     border-radius: 0.45rem;
   }
 
-  .report-link:hover {
-    border-color: rgba(34, 211, 238, 0.75);
-    color: rgb(165, 243, 252);
-    box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+  @media (hover: hover) {
+    .soc-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.85);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+    }
+
+    .soc-card:hover .soc-title {
+      color: rgb(34, 211, 238);
+      text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+    }
+
+    .report-link:hover {
+      border-color: rgba(34, 211, 238, 0.75);
+      color: rgb(165, 243, 252);
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
+    }
   }
 </style>
 
 <section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
-  <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+    <!-- Technical: Infrastructure -->
     <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
       <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">تدقيق أمن البنية التحتية</h3>
       <p class="text-xs text-slate-400">الأدوات: Nmap, SSLScan, OpenSSL</p>
@@ -198,6 +202,7 @@
       </div>
     </article>
 
+    <!-- Technical: ZAP -->
     <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
       <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص ثغرات تطبيق الويب</h3>
       <p class="text-xs text-slate-400">الأدوات: OWASP ZAP, Passive/Active Scan Rules</p>
@@ -209,6 +214,7 @@
       </div>
     </article>
 
+    <!-- Comprehensive: Nikto -->
     <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
       <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص أمن خادم الويب</h3>
       <p class="text-xs text-slate-400">الأدوات: Nikto, HTTP Header Checks</p>
@@ -216,6 +222,88 @@
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
           <a href="/nikto-report/comprehensive/ar/niktoreport-comprehensive-ar.pdf" class="report-link transition">PDF</a>
           <a href="/nikto-report/comprehensive/ar/nikto-report-general-ar.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Comprehensive: ZAP -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="comprehensive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص شامل لتطبيق الويب</h3>
+      <p class="text-xs text-slate-400">الأدوات: OWASP ZAP، تغطية كاملة</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/zap-reports/comprehensive/ar/zapreports-comprehensive-ar.pdf" class="report-link transition">PDF</a>
+          <a href="/zap-reports/comprehensive/ar/zap-reports-general-ar.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Management: Infrastructure -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="management">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">تدقيق أمن البنية التحتية</h3>
+      <p class="text-xs text-slate-400">تحديد أولويات المخاطر وخطة المعالجة</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/reports/management/ar/management-report-ar.pdf" class="report-link transition">PDF</a>
+          <a href="/reports/management/ar/reports-general-ar.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Management: ZAP -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="management">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص ثغرات تطبيق الويب</h3>
+      <p class="text-xs text-slate-400">تحديد أولويات المخاطر وخطة المعالجة</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/zap-reports/management/ar/zapreports-management-ar.pdf" class="report-link transition">PDF</a>
+          <a href="/zap-reports/management/ar/zap-reports-general-ar.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Management: Nikto -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="management">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص أمن خادم الويب</h3>
+      <p class="text-xs text-slate-400">الأدوات: Nikto — نظرة عامة على المخاطر والتوصيات</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/nikto-report/management/ar/nikto-report-general-ar.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Executive: Infrastructure -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="executive">
+      <h3 class="soc-title text-xl font-semibold text-slate-100 leading-tight">تدقيق أمن البنية التحتية</h3>
+      <p class="text-xs text-slate-400">نظرة استراتيجية على المخاطر للقيادة</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/reports/executive/ar/executive-report-ar.pdf" class="report-link transition">PDF</a>
+          <a href="/reports/executive/ar/reports-general-ar.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Executive: ZAP -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="executive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص ثغرات تطبيق الويب</h3>
+      <p class="text-xs text-slate-400">نظرة استراتيجية على المخاطر للقيادة</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/zap-reports/executive/ar/zapreports-executive-ar.pdf" class="report-link transition">PDF</a>
+          <a href="/zap-reports/executive/ar/zap-reports-general-ar.html" class="report-link transition">HTML</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Executive: Nikto -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="executive">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">فحص أمن خادم الويب</h3>
+      <p class="text-xs text-slate-400">الأدوات: Nikto — النتائج الرئيسية وأثر المخاطر</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/nikto-report/executive/ar/nikto-report-general-ar.html" class="report-link transition">HTML</a>
         </div>
       </div>
     </article>
@@ -242,22 +330,22 @@
         focus: 'التركيز: كل بطاقة تحتوي على رابط PDF ورابط HTML حسب اللغة الحالية.'
       },
       comprehensive: {
-        title: 'Comprehensive / Комплексный / شامل',
+        title: 'شامل',
         audience: 'تغطية واسعة للتقارير بلغات EN / RU / AR.',
         focus: 'التركيز: نظرة شاملة وملخص كامل للنتائج.'
       },
       technical: {
-        title: 'Technical / Технический / تقني',
+        title: 'تقني',
         audience: 'للمهندسين ومديري الأنظمة ومحللي SOC.',
         focus: 'التركيز: روابط مباشرة لنسخ PDF وHTML التقنية.'
       },
       management: {
-        title: 'Management / Менеджмент / إداري',
+        title: 'إداري',
         audience: 'للمديرين وقادة الفرق.',
         focus: 'التركيز: سياق إداري، مخاطر، وأولويات المعالجة.'
       },
       executive: {
-        title: 'Executive / Исполнительный / تنفيذي',
+        title: 'تنفيذي',
         audience: 'لأصحاب القرار والإدارة العليا.',
         focus: 'التركيز: العرض الاستراتيجي وتأثير الأعمال.'
       }
@@ -277,7 +365,7 @@
 
       sections.forEach(function (section) {
         var matches = category === 'all' || section.getAttribute('data-report-category') === category;
-        section.hidden = !matches;
+        section.style.display = matches ? '' : 'none';
       });
 
       if (descriptionTitle && descriptionAudience && descriptionFocus && descriptions[category]) {
