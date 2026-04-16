@@ -52,6 +52,20 @@
         display: none !important;
       }
     }
+
+    /* Prevent nav from wrapping on medium screens (Russian labels are wider) */
+    @media (min-width: 768px) and (max-width: 1279px) {
+      .site-desktop-nav nav {
+        flex-wrap: nowrap;
+      }
+      .site-desktop-nav nav a {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      main {
+        padding-top: 9rem;
+      }
+    }
   </style>
 </head>
 
@@ -67,7 +81,7 @@
 
       <div class="flex items-center gap-3 md:gap-4">
         <div class="site-desktop-nav md:flex md:items-center md:justify-end md:gap-6 text-lg">
-          <nav class="flex flex-wrap items-center justify-end gap-x-3 gap-y-2" aria-label="Main navigation">
+          <nav class="flex items-center justify-end gap-x-3" aria-label="Main navigation">
             <a href="/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Home</a>
             <a href="/reports/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]">Reports</a>
             <a href="/lab/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Lab</a>
@@ -214,6 +228,19 @@
           <a href="/zap-reports/technical/en/zapreports-technical-en.pdf" class="report-link transition">PDF</a>
           <a href="/zap-reports/technical/en/zap-reports-technical-en.html" class="report-link transition">HTML</a>
         </div>
+      </div>
+    </article>
+
+    <!-- Technical: SSLScan -->
+    <article class="report-filter-item soc-card rounded-xl flex flex-col gap-4" data-report-category="technical">
+      <h3 class="soc-title text-lg font-semibold text-slate-100 leading-tight">TLS/SSL Security Analysis</h3>
+      <p class="text-xs text-slate-400">Tools: SSLScan — cipher suite and certificate audit</p>
+      <div class="border-t border-slate-700/60 pt-3">
+        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
+          <a href="/sslscan-report/ru/TLS-reports-ru.pdf" class="report-link transition">PDF</a>
+          <a href="/sslscan-report/ru/sslscan-report-general-ru.html" class="report-link transition">HTML</a>
+        </div>
+        <p class="mt-2 text-xs text-slate-500">Available in Russian only</p>
       </div>
     </article>
 
