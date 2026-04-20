@@ -89,7 +89,7 @@
             <a href="{{ lang_prefix }}/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'home' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.home }}</a>
             <a href="{{ lang_prefix }}/reports/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'reports' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.reports }}</a>
             <a href="{{ lang_prefix }}/lab/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'lab' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.lab }}</a>
-            <a href="{{ lang_prefix }}/documents/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'documents' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.documents }}</a>
+            <a href="{{ lang_prefix }}/documents/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'documents' or page.translation_key == 'certificates' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.documents }}</a>
             <a href="{{ lang_prefix }}/about/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition {% if page.translation_key == 'about' %}text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]{% endif %}">{{ t.nav.about }}</a>
           </nav>
 
@@ -118,7 +118,7 @@
         <a href="{{ lang_prefix }}/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'home' %}text-cyan-400{% endif %}">{{ t.nav.home }}</a>
         <a href="{{ lang_prefix }}/reports/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'reports' %}text-cyan-400{% endif %}">{{ t.nav.reports }}</a>
         <a href="{{ lang_prefix }}/lab/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'lab' %}text-cyan-400{% endif %}">{{ t.nav.lab }}</a>
-        <a href="{{ lang_prefix }}/documents/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'documents' %}text-cyan-400{% endif %}">{{ t.nav.documents }}</a>
+        <a href="{{ lang_prefix }}/documents/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'documents' or page.translation_key == 'certificates' %}text-cyan-400{% endif %}">{{ t.nav.documents }}</a>
         <a href="{{ lang_prefix }}/about/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 {% if page.translation_key == 'about' %}text-cyan-400{% endif %}">{{ t.nav.about }}</a>
       </nav>
 

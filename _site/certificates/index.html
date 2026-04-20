@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Certificates</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Tailwind -->
+  <link rel="stylesheet" href="/assets/css/output.css">
+
+  <!-- AOS -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    .site-desktop-nav {
+      display: none;
+    }
+
+    .site-mobile-toggle {
+      display: inline-flex;
+    }
+
+    .site-mobile-menu {
+      display: none;
+    }
+
+    .site-mobile-menu:not([hidden]) {
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .site-desktop-nav {
+        display: flex;
+      }
+
+      .site-mobile-toggle {
+        display: none;
+      }
+
+      .site-mobile-menu {
+        display: none !important;
+      }
+    }
+
+    /* Prevent nav from wrapping on medium screens (Russian labels are wider) */
+    @media (min-width: 768px) and (max-width: 1279px) {
+      .site-desktop-nav nav {
+        flex-wrap: nowrap;
+      }
+      .site-desktop-nav nav a {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      main {
+        padding-top: 9rem;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-black text-gray-200 font-mono">
+
+<!-- 🔴 NAVBAR -->
+<header class="fixed w-full z-50 bg-black/70 backdrop-blur border-b border-red-500/20">
+  <div class="max-w-7xl mx-auto p-3 md:px-4 md:pb-4 md:pt-5">
+    <div class="flex items-center justify-between">
+      <div class="text-xs sm:text-sm md:text-xl text-cyan-400 font-bold tracking-widest min-w-0 truncate">
+        Vulnerability Management Specialist
+      </div>
+
+      <div class="flex items-center gap-3 md:gap-4">
+        <div class="site-desktop-nav md:flex md:items-center md:justify-end md:gap-6 text-lg">
+          <nav class="flex items-center justify-end gap-x-3" aria-label="Main navigation">
+            <a href="/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Home</a>
+            <a href="/reports/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Reports</a>
+            <a href="/lab/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Lab</a>
+            <a href="/documents/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]">Documents</a>
+            <a href="/about/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">About</a>
+          </nav>
+
+          <div class="flex items-center justify-center gap-10 px-4 py-2 rounded-lg bg-black/40 ml-6 pl-6" aria-label="Language switcher">
+            <a href="/certificates/" class="text-2xl leading-none hover:scale-110 transition opacity-100" title="English" aria-label="English">&#x1F1EC;&#x1F1E7;</a>
+            <a href="/ru/certificates/" class="text-2xl leading-none hover:scale-110 transition opacity-60" title="Русский" aria-label="Русский">&#x1F1F7;&#x1F1FA;</a>
+            <a href="/ar/certificates/" class="text-2xl leading-none hover:scale-110 transition opacity-60" title="العربية" aria-label="العربية">&#x1F1F8;&#x1F1E6;</a>
+          </div>
+        </div>
+
+        <button
+          id="menuToggle"
+          type="button"
+          class="site-mobile-toggle md:hidden inline-flex items-center justify-center w-10 h-10 rounded border border-gray-700 text-gray-200 hover:text-cyan-400 hover:border-cyan-400 transition"
+          aria-expanded="false"
+          aria-controls="mobileMenu"
+          aria-label="Toggle menu"
+        >
+          <span class="text-xl leading-none">☰</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileMenu" class="site-mobile-menu md:hidden mt-3 rounded-lg border border-gray-800 bg-black/90 p-3" hidden>
+      <nav class="flex flex-col gap-2 text-sm" aria-label="Mobile navigation">
+        <a href="/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">Home</a>
+        <a href="/reports/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">Reports</a>
+        <a href="/lab/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">Lab</a>
+        <a href="/documents/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 text-cyan-400">Documents</a>
+        <a href="/about/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">About</a>
+      </nav>
+
+      <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-center gap-7" aria-label="Language switcher">
+        <a href="/certificates/" class="text-2xl leading-none hover:scale-110 transition opacity-100" title="English" aria-label="English">&#x1F1EC;&#x1F1E7;</a>
+        <a href="/ru/certificates/" class="text-2xl leading-none hover:scale-110 transition opacity-60" title="Русский" aria-label="Русский">&#x1F1F7;&#x1F1FA;</a>
+        <a href="/ar/certificates/" class="text-2xl leading-none hover:scale-110 transition opacity-60" title="العربية" aria-label="العربية">&#x1F1F8;&#x1F1E6;</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="pt-24 md:pt-28">
+  <section class="pt-14 pb-10 md:pt-32 md:pb-20 text-center">
+  <h1 class="text-4xl text-cyan-400 mb-6">Certificates</h1>
+  <p class="text-gray-400 max-w-xl mx-auto">Professional training certificates from leading cybersecurity and technology platforms.</p>
+</section>
+
+<style>
+  .cert-card {
+    border: 1px solid rgba(71, 85, 105, 0.65);
+    background: linear-gradient(165deg, rgba(8, 14, 28, 0.96), rgba(2, 8, 23, 0.86));
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  @media (hover: hover) {
+    .cert-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(34, 211, 238, 0.75);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.25), 0 0 28px rgba(34, 211, 238, 0.25);
+    }
+  }
+
+  .cert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    border: 1px solid rgba(34, 211, 238, 0.4);
+    color: rgb(103, 232, 249);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .cert-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(71, 85, 105, 0.7);
+    background: rgba(15, 23, 42, 0.75);
+    color: rgb(148, 163, 184);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .cert-action-btn:hover {
+    border-color: rgba(34, 211, 238, 0.7);
+    color: rgb(165, 243, 252);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .cert-action-btn.primary {
+    border-color: rgba(34, 211, 238, 0.55);
+    color: rgb(103, 232, 249);
+    background: rgba(34, 211, 238, 0.1);
+  }
+
+  .cert-action-btn.primary:hover {
+    background: rgba(34, 211, 238, 0.18);
+  }
+
+  .cert-pdf-preview {
+    display: none;
+    margin-top: 1.25rem;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: rgba(2, 8, 23, 0.8);
+  }
+
+  .cert-pdf-preview.open {
+    display: block;
+  }
+</style>
+
+<section class="max-w-5xl mx-auto px-4 pb-20">
+  <div class="grid grid-cols-1 gap-6">
+
+    <!-- ── SAMPLE CERTIFICATE CARD ─────────────────────────────── -->
+    <!-- Replace the placeholder values below with your actual data -->
+    <div class="cert-card rounded-xl p-6" data-aos="fade-up">
+
+      <!-- Top row: corporation badge + date -->
+      <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+        <span class="cert-badge">
+          <img src="https://www.google.com/s2/favicons?sz=32&amp;domain=coursera.org" alt="Coursera" class="w-4 h-4 rounded-sm" />
+          Coursera
+        </span>
+        <span class="text-xs text-gray-500 font-mono">2024</span>
+      </div>
+
+      <!-- Course title -->
+      <h2 class="text-lg md:text-xl font-bold text-white mb-3 leading-snug">
+        <!-- TODO: replace with actual course name -->
+        Introduction to Cybersecurity Tools &amp; Cyber Attacks
+      </h2>
+
+      <!-- Description -->
+      <p class="text-sm text-gray-400 leading-relaxed mb-6">
+        <!-- TODO: replace with actual description -->
+        Covers the history of cybersecurity and an overview of common attack types, including social engineering, phishing,
+        malware, and network-based exploits. Introduces key security tools used in threat detection and incident response.
+      </p>
+
+      <div class="border-t border-slate-700/60 mb-5"></div>
+
+      <!-- Action buttons -->
+      <div class="flex flex-wrap gap-3 items-center">
+
+        <!-- Link to official verification page -->
+        <a href="https://coursera.org/verify/5N2LNGY9T8KH" target="_blank" rel="noopener noreferrer" class="cert-action-btn primary">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+          Verify on Coursera
+        </a>
+
+        <!-- PDF download -->
+        <a href="/sertificate/Coursera 5N2LNGY9T8KH.pdf" download="" class="cert-action-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+          Download PDF
+        </a>
+
+        <!-- Toggle PDF preview -->
+        <button type="button" class="cert-action-btn" onclick="
+            var preview = this.closest('.cert-card').querySelector('.cert-pdf-preview');
+            var isOpen = preview.classList.toggle('open');
+            this.textContent = isOpen ? '▲ Hide Preview' : '▼ Preview PDF';
+          ">
+          ▼ Preview PDF
+        </button>
+
+      </div>
+
+      <!-- PDF preview panel (hidden by default) -->
+      <div class="cert-pdf-preview">
+        <iframe src="/sertificate/Coursera 5N2LNGY9T8KH.pdf" class="w-full" style="height: 520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+      </div>
+
+    </div>
+    <!-- ── END CERTIFICATE CARD ─────────────────────────────────── -->
+
+  </div>
+</section>
+
+</main>
+
+
+
+<!-- JS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+
+<script>
+AOS.init({
+  duration: 800,
+  once: true
+});
+
+
+
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+
+if (menuToggle && mobileMenu) {
+  menuToggle.addEventListener('click', () => {
+    const isOpen = !mobileMenu.hasAttribute('hidden');
+    if (isOpen) {
+      mobileMenu.setAttribute('hidden', '');
+    } else {
+      mobileMenu.removeAttribute('hidden');
+    }
+    menuToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      mobileMenu.setAttribute('hidden', '');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+}
+</script>
+
+</body>
+</html>
+

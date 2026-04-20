@@ -82,6 +82,66 @@ translation_key: documents
       box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
     }
   }
+
+  .cert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    border: 1px solid rgba(34, 211, 238, 0.4);
+    color: rgb(103, 232, 249);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .cert-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 0.4rem;
+    border: 1px solid rgba(71, 85, 105, 0.7);
+    background: rgba(15, 23, 42, 0.75);
+    color: rgb(148, 163, 184);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .cert-action-btn:hover {
+    border-color: rgba(34, 211, 238, 0.7);
+    color: rgb(165, 243, 252);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .cert-action-btn.primary {
+    border-color: rgba(34, 211, 238, 0.55);
+    color: rgb(103, 232, 249);
+    background: rgba(34, 211, 238, 0.1);
+  }
+
+  .cert-action-btn.primary:hover {
+    background: rgba(34, 211, 238, 0.18);
+  }
+
+  .cert-pdf-preview {
+    display: none;
+    margin-top: 1.25rem;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: rgba(2, 8, 23, 0.8);
+  }
+
+  .cert-pdf-preview.open {
+    display: block;
+  }
 </style>
 
 <!-- ── Document Cards ─────────────────────────────────────────────── -->
@@ -203,38 +263,51 @@ translation_key: documents
       </div>
     </article>
 
-    <!-- Certificate 1 -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
-      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Certificate — English</h3>
-      <p class="text-xs text-slate-400">Professional cybersecurity certification</p>
-      <div class="border-t border-slate-700/60 pt-3">
-        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="#" class="doc-link transition">PDF</a>
-        </div>
-      </div>
-    </article>
+    <!-- Certificates entry -->
+    <div class="doc-filter-item col-span-full" data-doc-category="certificates">
+      <div class="doc-card rounded-xl p-6">
 
-    <!-- Certificate 2 -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
-      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Сертификат — Русский</h3>
-      <p class="text-xs text-slate-400">Профессиональный сертификат в области кибербезопасности</p>
-      <div class="border-t border-slate-700/60 pt-3">
-        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="#" class="doc-link transition">PDF</a>
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <span class="cert-badge">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=coursera.org" alt="Coursera" class="w-4 h-4 rounded-sm">
+            Coursera
+          </span>
+          <span class="text-xs text-gray-500 font-mono">2024</span>
         </div>
-      </div>
-    </article>
 
-    <!-- Certificate 3 -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
-      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">الشهادة — العربية</h3>
-      <p class="text-xs text-slate-400 font-[Noto_Sans_Arabic,sans-serif]">شهادة احترافية في الأمن السيبراني</p>
-      <div class="border-t border-slate-700/60 pt-3">
-        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="#" class="doc-link transition">PDF</a>
+        <h3 class="doc-title text-xl font-bold text-white mb-3 leading-snug">
+          Introduction to Cybersecurity Tools &amp; Cyber Attacks
+        </h3>
+
+        <p class="text-sm text-gray-400 leading-relaxed mb-6">
+          Covers the history of cybersecurity and an overview of common attack types, including social engineering, phishing,
+          malware, and network-based exploits. Introduces key security tools used in threat detection and incident response.
+        </p>
+
+        <div class="border-t border-slate-700/60 mb-5"></div>
+
+        <div class="flex flex-wrap gap-3 items-center">
+          <a href="https://coursera.org/verify/5N2LNGY9T8KH" target="_blank" rel="noopener noreferrer" class="cert-action-btn primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Verify on Coursera
+          </a>
+          <a href="/sertificate/Coursera 5N2LNGY9T8KH.pdf" download class="cert-action-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            Download PDF
+          </a>
+          <button type="button" class="cert-action-btn"
+            onclick="var p=this.closest('.doc-card').querySelector('.cert-pdf-preview');var o=p.classList.toggle('open');this.textContent=o?'\u25b2 Hide Preview':'\u25bc Preview PDF';"
+          >
+            &#9660; Preview PDF
+          </button>
         </div>
+
+        <div class="cert-pdf-preview">
+          <iframe src="/sertificate/Coursera 5N2LNGY9T8KH.pdf" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+        </div>
+
       </div>
-    </article>
+    </div>
 
   </div>
 </section>

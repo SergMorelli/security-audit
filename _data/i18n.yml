@@ -6,6 +6,7 @@ en:
     reports: Reports
     lab: Lab
     documents: Documents
+    certificates: Certificates
     about: About
   attack:
     heading: Attack Activity Overview
@@ -23,6 +24,7 @@ ru:
     reports: Отчеты
     lab: Лаборатория
     documents: Документы
+    certificates: Сертификаты
     about: О проекте
   attack:
     heading: Обзор активности атак
@@ -40,6 +42,7 @@ ar:
     reports: التقارير
     lab: المختبر
     documents: المستندات
+    certificates: الشهادات
     about: حول
   attack:
     heading: نظرة عامة على نشاط الهجمات
