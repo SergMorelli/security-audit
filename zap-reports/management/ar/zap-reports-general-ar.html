@@ -3,347 +3,1044 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>تقرير الأمان التشغيلي OWASP ZAP - example.com</title>
+  <title>تقرير ZAP الإداري - عربي</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Noto Sans Arabic', 'Segoe UI', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); color: #2c3e50; line-height: 1.8; direction: rtl; text-align: right; }
-    main { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
-    
-    .report-header { background: white; border-right: 8px solid #2980b9; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: right; }
-    .report-header h1 { font-size: 2.5em; color: #2c3e50; margin-bottom: 10px; font-weight: 700; }
-    .report-header .subtitle { font-size: 1.3em; color: #34495e; margin-bottom: 20px; }
-    
-    h2 { font-size: 1.8em; color: #2980b9; margin-top: 40px; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid #2980b9; font-weight: 700; }
-    h3 { font-size: 1.3em; color: #34495e; margin-top: 25px; margin-bottom: 15px; font-weight: 600; }
-    h4 { font-size: 1.1em; color: #2c3e50; margin-top: 15px; margin-bottom: 10px; font-weight: 600; }
-    
-    .section { background: white; padding: 30px; margin-bottom: 30px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); text-align: right; }
-    
-    .task-card { background: linear-gradient(135deg, #f0f7ff 0%, #e3f2fd 100%); border-right: 5px solid #2196F3; padding: 25px; margin: 20px 0; border-radius: 6px; }
-    .task-card h4 { color: #1565c0; margin-top: 0; }
-    
-    .checklist { list-style: none; padding-right: 0; }
-    .checklist li { padding-right: 30px; margin: 12px 0; position: relative; }
-    .checklist li:before { content: "☐ "; position: absolute; right: 0; color: #2980b9; font-weight: bold; font-size: 1.2em; }
-    .checklist li.done:before { content: "☑ "; color: #27ae60; }
-    
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    thead { background: #2c3e50; color: white; }
-    th { padding: 16px; text-align: right; font-weight: 600; }
-    td { padding: 14px 16px; border-bottom: 1px solid #ecf0f1; text-align: right; }
-    tbody tr { transition: background-color 0.2s ease; }
-    tbody tr:hover { background-color: #f8f9fa; }
-    
-    code { font-family: 'Courier New', monospace; background: #f4f4f4; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; color: #d63384; font-size: 0.95em; direction: ltr; }
-    pre { background: #282c34; color: #abb2bf; padding: 20px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.95em; line-height: 1.5; direction: ltr; text-align: left; }
-    
-    .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
-    .badge-critical { background: #ffcdd2; color: #c62828; }
-    .badge-high { background: #ffe0b2; color: #e65100; }
-    .badge-medium { background: #e1bee7; color: #6a1b9a; }
-    
-    ul, ol { margin: 15px 0; padding-right: 25px; }
-    li { margin: 8px 0; color: #34495e; }
-    
-    .alert { padding: 20px; border-radius: 6px; margin: 20px 0; text-align: right; }
-    .alert-warning { background: #fff3e0; border-right: 5px solid #e65100; color: #e65100; }
+    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; direction: rtl; }
+    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
+    h1 { font-size: 1.5rem; margin: 0 0 16px; text-align: right; }
+    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.6; text-align: right; direction: rtl; }
   </style>
 </head>
 <body>
   <main>
-    <div class="report-header">
-      <h1>خطة الأمان التشغيلية</h1>
-      <p class="subtitle">دليل التنفيذ الشامل للفرق</p>
-      <p style="color: #7f8c8d; margin-top: 20px;">تاريخ المسح: 30 ديسمبر 2025 | الأداة: OWASP ZAP 2.17.0</p>
-    </div>
-
-    <div class="section">
-      <h2>ملخص الإدارة</h2>
-      <p style="font-size: 1.05em;">يقدم هذا المستند إرشادات تشغيلية لقادة فريق التنفيذ، يغطي معالجة الأمان، وحلول الأكواد، وبروتوكولات الاستجابة للحوادث، وإجراءات المراقبة المستمرة. يتلقى كل فريق (Backend، Frontend، DevOps) تعليمات تقنية محددة وقوائم تحقق.</p>
-
-      <h3>مصفوفة مسؤولية الفريق</h3>
-      <table>
-        <thead><tr><th>الفريق</th><th>المهام الحرجة (الأيام 1-7)</th><th>الأولوية (الأسابيع 2-4)</th><th>الإشراف</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Backend</strong></td><td>حجب نقطة نهاية PII</td><td>تقوية أمان API</td><td>قائد الفريق + الأمان</td></tr>
-          <tr><td><strong>Frontend</strong></td><td>نشر رؤوس CSP</td><td>تنفيذ SRI</td><td>قائد الفريق + الأمان</td></tr>
-          <tr><td><strong>DevOps</strong></td><td>تكوين رؤوس الأمان</td><td>إعداد المراقبة</td><td>مدير DevOps + الأمان</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section">
-      <h2>المرحلة 1: الإجراءات الطارئة (الأيام 1-7)</h2>
-
-      <div class="alert alert-warning">
-        <strong>⚠️ حرج:</strong> يجب إكمال جميع المهام في هذا القسم خلال 7 أيام. عدم إكمال المعالجة يطيل نافذة انتهاك التنظيم.
-      </div>
-
-      <h3 style="color: #c0392b;">فريق Backend: حجب كشف البيانات الشخصية</h3>
-
-      <div class="task-card">
-        <h4>المهمة 1: تقييد نقطة نهاية API REST للمستخدمين</h4>
-        <p><strong>الأولوية:</strong> <span class="badge badge-critical">حرجة</span> | <strong>الجدول الزمني:</strong> الأيام 1-3</p>
-        
-        <h5>الوصف التقني:</h5>
-        <p>نقطة النهاية <code>/wp-json/wp/v2/users</code> تكشف عن معلومات المستخدم علناً. تنفيذ قيود الوصول علياً.</p>
-
-        <h5 style="margin-top: 20px;">الحل: تنفيذ PHP</h5>
-        <pre>// أضف إلى functions.php أو plugin مخصص
+    <h1>تقرير ZAP الإداري - عربي</h1>
+    <pre>
+الخطة التشغيلية للأمن السيبراني: دليل التنفيذ لقادة الفرق والمديرين
+كبير مسؤولي أمن المعلومات
+2026-01-02
+الملخص التنفيذي للمديرين
+تقدم هذه الوثيقة دليلاً عملياً للتنفيذ لتدابير الأمن السيبراني على مستوى الفرق والأقسام. بناءً على تدقيق الأمان المُجرى في 30 ديسمبر 2025، تم اكتشاف ثغرات حرجة تتطلب إجراءات تشغيلية فورية من قادة الفرق والإدارة الوسطى.
+⚠️ تنبيه حرج: تم اكتشاف ثغرة تعرض البيانات. يجب على فرقكم تنفيذ التدابير الوقائية خلال 72 ساعة.
+الأولويات الإدارية الرئيسية
+الأولوية
+المهمة
+الفريق المسؤول
+الموعد النهائي
+🔴 حرج
+حجب نقاط API المعرضة للخطر
+فرق Backend/DevOps
+24 ساعة
+🟡 عالي
+تنفيذ رؤوس الأمان
+فرق Frontend
+48 ساعة
+🔵 متوسط
+نشر أنظمة المراقبة
+فرق SRE/Ops
+أسبوع واحد
+ℹ️ منخفض
+تدريب الفرق على الأمان
+جميع الفرق
+أسبوعان
+مصفوفة مسؤولية الفرق
+الإجراءات الفورية (0-72 ساعة):
+فرق Backend: إغلاق ثغرات REST API
+فرق DevOps: تكوين إعدادات الخادم الآمنة
+فرق QA: التحقق من إصلاحات الأمان
+المهام قصيرة المدى (1-4 أسابيع):
+فرق Frontend: تنفيذ CSP و SRI
+فرق البنية التحتية: إعداد مراقبة الأمان
+فرق الأمان: وضع إجراءات الاستجابة للحوادث
+الوضع التقني وأولويات الفرق
+الثغرات الحرجة حسب الفريق
+فرق Backend/API - أولوية حرجة
+المشكلة: تعرض البيانات الشخصية عبر REST API
+الثغرة: /wp-json/wp/v2/users قابل للوصول بدون مصادقة
+المخاطر: جميع بيانات المستخدمين متاحة علنياً
+نقاط CVSS: 9.1 (حرج)
+الإجراءات الفورية:
+// عاجل: إضافة إلى functions.php
 add_filter('rest_endpoints', function($endpoints) {
     if (isset($endpoints['/wp/v2/users'])) {
         unset($endpoints['/wp/v2/users']);
     }
     return $endpoints;
 });
+قائمة مراجعة قائد فريق Backend:
+☐ حجب الوصول فوراً إلى /wp-json/wp/v2/users
+☐ تدقيق جميع نقاط REST API
+☐ تنفيذ المصادقة للنقاط الحساسة
+☐ إعداد تسجيل طلبات API
+☐ اختبار التغييرات على بيئة التطوير
+فرق Frontend - أولوية عالية
+المشكلة: غياب رؤوس الأمان الأساسية
+الثغرات: لا يوجد CSP، X-Frame-Options، SRI
+المخاطر: هجمات XSS، clickjacking، هجمات سلسلة التوريد
+الحلول العملية:
+سياسة أمان المحتوى (CSP)
+&lt;!-- إضافة إلى &lt;head&gt; --&gt;
+&lt;meta http-equiv="Content-Security-Policy" 
+      content="default-src 'self'; 
+               script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; 
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"&gt;
+تكامل الموارد الفرعية (SRI)
+&lt;!-- لجميع الموارد الخارجية --&gt;
+&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+        crossorigin="anonymous"&gt;&lt;/script&gt;
+قائمة مراجعة قائد فريق Frontend:
+☐ تنفيذ رؤوس CSP
+☐ إضافة SRI لجميع الموارد الخارجية
+☐ تكوين X-Frame-Options: DENY
+☐ اختبار التوافق مع المتصفحات
+☐ تحديث pipeline CI/CD للتحقق من الرؤوس
+فرق DevOps/البنية التحتية - أولوية عالية
+المشكلة: تكوين خادم الويب غير آمن
+الثغرات: غياب HSTS، كشف إصدارات البرمجيات
+المخاطر: هجمات man-in-the-middle، استطلاع المعلومات
+تكوينات الخادم:
+Apache (.htaccess):
+&lt;IfModule mod_headers.c&gt;
+    # رؤوس الأمان الأساسية
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    
+    # إخفاء معلومات الخادم
+    Header always unset Server
+    Header always unset X-Powered-By
+&lt;/IfModule&gt;
 
-// بديل: تقييد حسب التفويض
-add_filter('rest_prepare_user', function($response, $user) {
-    if (!current_user_can('list_users')) {
-        return new WP_Error(
-            'rest_forbidden',
-            'Unauthorized access',
-            ['status' => 403]
-        );
+# تعطيل توقيع الخادم
+ServerTokens Prod
+ServerSignature Off
+Nginx:
+server {
+    # رؤوس الأمان
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-Frame-Options "DENY" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+    
+    # إخفاء الإصدار
+    server_tokens off;
+    more_clear_headers Server;
+}
+قائمة مراجعة قائد فريق DevOps:
+☐ تطبيق تكوينات الأمان
+☐ فرض HTTPS
+☐ إخفاء إصدارات برمجيات الخادم
+☐ إعداد تسجيل الأمان
+☐ اختبار التكوينات
+الأدوات والتقنيات
+الأدوات الأساسية للفرق
+المراقبة والتنبيهات
+1. مراقبة سجلات الأمان
+# تكوين rsyslog لأحداث الأمان
+echo "local0.*    /var/log/security.log" &gt;&gt; /etc/rsyslog.conf
+systemctl restart rsyslog
+2. مراقبة ملفات التكوين
+#!/bin/bash
+# security_monitor.sh - مراقبة تغييرات التكوين
+inotifywait -m /etc/apache2/ /etc/nginx/ -e modify,create,delete \
+    --format '%w%f %e %T' --timefmt '%Y-%m-%d %H:%M:%S' \
+    &gt;&gt; /var/log/config_changes.log
+3. التحقق التلقائي من الرؤوس
+#!/usr/bin/env python3
+# header_check.py - التحقق من رؤوس الأمان
+import requests
+import sys
+
+def check_security_headers(url):
+    required_headers = {
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': ['DENY', 'SAMEORIGIN'],
+        'Strict-Transport-Security': 'max-age=',
+        'Content-Security-Policy': 'default-src'
     }
-    return $response;
-}, 10, 2);</pre>
+    
+    try:
+        response = requests.get(url, timeout=10)
+        headers = response.headers
+        
+        print(f"فحص الرؤوس لـ {url}:")
+        for header, expected in required_headers.items():
+            if header in headers:
+                print(f"✅ {header}: {headers[header]}")
+            else:
+                print(f"❌ {header}: مفقود")
+                
+    except Exception as e:
+        print(f"خطأ: {e}")
 
-        <h5 style="margin-top: 20px;">قائمة التحقق من التحقق:</h5>
-        <ul class="checklist">
-          <li>اختبار نقطة النهاية تعود 403 Forbidden للمستخدمين المجهولين</li>
-          <li>التحقق من أن المستخدمين المصرحين بالدور الصحيح يمكنهم الوصول</li>
-          <li>تأكيد عدم وجود تفاصيل المستخدم في استجابات JSON</li>
-          <li>فحص السجلات لعمليات الوصول</li>
-        </ul>
-      </div>
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("الاستخدام: python3 header_check.py &lt;url&gt;")
+        sys.exit(1)
+    
+    check_security_headers(sys.argv[1])
+أدوات التطوير
+1. خطافات الأمان قبل الالتزام
+# .pre-commit-config.yaml
+repos:
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.4
+    hooks:
+      - id: bandit
+        args: ['-r', '.']
+  
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.4.0
+    hooks:
+      - id: detect-secrets
+        args: ['--baseline', '.secrets.baseline']
+2. توليد SRI التلقائي
+// sri-generator.js - توليد SRI تلقائي
+const crypto = require('crypto');
+const fs = require('fs');
+const https = require('https');
 
-      <h3 style="color: #e65100; margin-top: 30px;">فريق Frontend: نشر سياسة أمان المحتوى</h3>
+function generateSRI(url) {
+    return new Promise((resolve, reject) =&gt; {
+        https.get(url, (response) =&gt; {
+            let data = '';
+            response.on('data', chunk =&gt; data += chunk);
+            response.on('end', () =&gt; {
+                const hash = crypto.createHash('sha384').update(data).digest('base64');
+                resolve(`sha384-${hash}`);
+            });
+        }).on('error', reject);
+    });
+}
 
-      <div class="task-card">
-        <h4>المهمة 2: تنفيذ رؤوس CSP</h4>
-        <p><strong>الأولوية:</strong> <span class="badge badge-high">عالية</span> | <strong>الجدول الزمني:</strong> الأيام 4-7</p>
+// الاستخدام في عملية البناء
+async function updateSRI() {
+    const externalResources = [
+        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
+        'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700'
+    ];
+    
+    for (const url of externalResources) {
+        try {
+            const sri = await generateSRI(url);
+            console.log(`${url}: integrity="${sri}"`);
+        } catch (error) {
+            console.error(`خطأ في ${url}:`, error.message);
+        }
+    }
+}
 
-        <h5>الوصف التقني:</h5>
-        <p>تمنع سياسة أمان المحتوى هجمات XSS بتقييد تحميل الموارد. نشر إعدادات CSP صارمة.</p>
+updateSRI();
+تكامل CI/CD
+تكوين GitLab CI:
+# .gitlab-ci.yml - الأمان في CI/CD
+stages:
+  - security-check
+  - build
+  - test
+  - deploy
 
-        <h5 style="margin-top: 20px;">الحل: علامات HTML Meta</h5>
-        <pre>&lt;meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src 'self' 'unsafe-inline' cdnjs.cloudflare.com;
-  style-src 'self' 'unsafe-inline' fonts.googleapis.com;
-  img-src 'self' data: https:;
-  font-src 'self' fonts.gstatic.com;
-  connect-src 'self';
-  frame-ancestors 'none';
-  upgrade-insecure-requests;
-"&gt;</pre>
+security_headers_check:
+  stage: security-check
+  script:
+    - python3 scripts/header_check.py $CI_ENVIRONMENT_URL
+  only:
+    - main
+    - develop
 
-        <h5 style="margin-top: 20px;">قائمة التحقق من التحقق:</h5>
-        <ul class="checklist">
-          <li>فحص وحدة تحكم المتصفح لتقارير انتهاك CSP</li>
-          <li>اختبار تنفيذ الأنماط من مصادر خارجية (يجب أن تفشل)</li>
-          <li>التحقق من عمل الأنماط المضمنة بدون 'unsafe-inline'</li>
-          <li>مراقبة CSP report-uri للانتهاكات</li>
-        </ul>
-      </div>
+dependency_check:
+  stage: security-check
+  script:
+    - npm audit --audit-level moderate
+    - composer audit
+  allow_failure: false
 
-      <h3 style="color: #2980b9; margin-top: 30px;">فريق DevOps: تكوين رؤوس أمان HTTP</h3>
+sri_validation:
+  stage: security-check
+  script:
+    - node scripts/sri-generator.js
+    - git diff --exit-code # التحقق من أن SRI محدثة
+  only:
+    - main
+تكوين GitHub Actions:
+# .github/workflows/security.yml
+name: فحوصات الأمان
 
-      <div class="task-card">
-        <h4>المهمة 3: نشر رؤوس أمان HTTP</h4>
-        <p><strong>الأولوية:</strong> <span class="badge badge-high">عالية</span> | <strong>الجدول الزمني:</strong> الأيام 5-7</p>
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
 
-        <h5>تكوين LiteSpeed (متوافق مع nginx):</h5>
-        <pre>server {
-    add_header X-Frame-Options DENY;
-    add_header X-Content-Type-Options nosniff;
-    add_header Referrer-Policy strict-origin-when-cross-origin;
-    add_header Permissions-Policy "geolocation=(), microphone=(), camera=()";
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
-}</pre>
+jobs:
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: فحص رؤوس الأمان
+      run: |
+        python3 scripts/header_check.py https://staging.example.com
+    
+    - name: تدقيق التبعيات
+      run: |
+        npm audit --audit-level moderate
+        
+    - name: فحص SAST
+      uses: github/super-linter@v4
+      env:
+        DEFAULT_BRANCH: main
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+العمليات والإجراءات
+إجراءات الاستجابة للحوادث
+المستوى 1: الاكتشاف (فرق التطوير)
+مؤشرات الحادث:
+نشاط غير عادي في السجلات
+تنبيهات من أنظمة المراقبة
+تقارير المستخدمين عن سلوك مشبوه
+فشل فحوصات الأمان التلقائية
+الإجراءات الفورية (أول 15 دقيقة):
+الهدوء - توثيق جميع الإجراءات
+العزل - تعطيل الخدمات المشبوهة
+الإخطار - إبلاغ قائد الفريق وفريق الأمان
+الحفظ - أخذ لقطات من السجلات وحالة النظام
+قالب الإخطار:
+حادث أمني
+الوقت: [YYYY-MM-DD HH:MM]
+المكتشف: [الاسم]
+النظام: [اسم النظام/الخدمة]
+الوصف: [وصف موجز للمشكلة]
+الإجراءات المتخذة: [ما تم فعله]
+الحالة: [نشط/محتوى/محلول]
+المستوى 2: التحليل (قادة الفرق)
+إجراء التحليل (30-60 دقيقة):
+جمع المعلومات
+# سكريبت جمع بيانات الحادث
+#!/bin/bash
+INCIDENT_ID=$(date +%Y%m%d_%H%M%S)
+INCIDENT_DIR="/var/log/incidents/$INCIDENT_ID"
 
-        <h5 style="margin-top: 20px;">تكوين Apache:</h5>
-        <pre>&lt;IfModule mod_headers.c&gt;
-    Header always set X-Frame-Options DENY
-    Header always set X-Content-Type-Options nosniff
-    Header always set Referrer-Policy strict-origin-when-cross-origin
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-&lt;/IfModule&gt;</pre>
+mkdir -p $INCIDENT_DIR
 
-        <h5 style="margin-top: 20px;">قائمة التحقق من التحقق:</h5>
-        <ul class="checklist">
-          <li>استخدام curl للتحقق من الرؤوس: <code>curl -I https://example.com</code></li>
-          <li>فحص علامة أدوات المتصفح Network للاطلاع على وجود الرأس</li>
-          <li>اختبار أهلية HSTS preload على https://hstspreload.org</li>
-          <li>مراقبة سجلات الأخطاء لمشاكل التكوين</li>
-        </ul>
-      </div>
-    </div>
+# جمع السجلات
+cp /var/log/apache2/access.log $INCIDENT_DIR/
+cp /var/log/apache2/error.log $INCIDENT_DIR/
+cp /var/log/security.log $INCIDENT_DIR/
 
-    <div class="section">
-      <h2>المرحلة 2: التنفيذ ذو الأولوية (الأسابيع 2-4)</h2>
+# حالة النظام
+ps aux &gt; $INCIDENT_DIR/processes.txt
+netstat -tulpn &gt; $INCIDENT_DIR/network.txt
+df -h &gt; $INCIDENT_DIR/disk_usage.txt
 
-      <h3>تنفيذ Subresource Integrity (SRI)</h3>
-      <p>حماية من موارد CDN المساومة بالتحقق من سلامة المحتوى.</p>
+# التغييرات الأخيرة
+find /var/www -type f -mtime -1 &gt; $INCIDENT_DIR/recent_changes.txt
 
-      <h5>مثال: Cloudflare CDN مع SRI</h5>
-      <pre>&lt;link 
-  rel="stylesheet" 
-  href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.0/tailwind.min.css"
-  integrity="sha384-..." 
-  crossorigin="anonymous"
-&gt;
-&lt;script 
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-  integrity="sha384-..." 
-  crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+echo "تم جمع بيانات الحادث في $INCIDENT_DIR"
+تصنيف الحادث
+المستوى 1: إعلامي (تسجيل، مراقبة)
+المستوى 2: تحذير (تهديد محتمل)
+المستوى 3: حرج (هجوم نشط، تسريب بيانات)
+قرارات التصعيد
+المستوى 1 → قائد الفريق → التوثيق
+المستوى 2 → قائد الفريق + الأمان → مراقبة معززة
+المستوى 3 → تصعيد فوري → الإدارة + خبراء خارجيون
+إجراءات تحديث الأمان
+الفحوصات الأسبوعية (كل يوم اثنين)
+قائمة مراجعة قائد الفريق:
+## المراجعة الأسبوعية للأمان
 
-      <h3 style="margin-top: 30px;">تحديثات مكونات WordPress</h3>
-      <ul class="checklist">
-        <li>تحديث نواة WordPress إلى أحدث إصدار</li>
-        <li>تحديث جميع الإضافات النشطة (Blocksy، Stackable، LiteSpeed Cache)</li>
-        <li>تحديث PHP إلى 8.1+ (الحد الأدنى 8.0)</li>
-        <li>اختبار التحديثات في بيئة التطوير أولاً</li>
-      </ul>
-    </div>
+### تحديثات النظام
+- [ ] فحص التحديثات الأمنية المتاحة
+- [ ] جدولة تثبيت التصحيحات الحرجة
+- [ ] تحديث تبعيات المشروع (npm, composer, pip)
 
-    <div class="section">
-      <h2>إجراءات الاستجابة للحوادث</h2>
+### المراقبة
+- [ ] مراجعة سجلات الأمان للأسبوع
+- [ ] تحليل تنبيهات المراقبة
+- [ ] التحقق من وظائف النسخ الاحتياطي
 
-      <h3>المستوى 1: الكشف والاستجابة الأولية (أول 15 دقيقة)</h3>
-      <ol>
-        <li><strong>إخطار التنبيه:</strong> يتلقى فريق الأمان تنبيهاً آلياً</li>
-        <li><strong>التحقق الأولي:</strong> تأكيد نوع الحادث وشدته</li>
-        <li><strong>إخطار الفريق:</strong> تنبيه الفرق التقنية ذات الصلة</li>
-        <li><strong>التسجيل:</strong> بدء تسجيل مفصل للحادث</li>
-      </ol>
+### التكوينات
+- [ ] التحقق من رؤوس الأمان
+- [ ] فحص انتهاء شهادات SSL
+- [ ] تدقيق صلاحيات وصول المستخدمين
 
-      <h3 style="margin-top: 20px;">المستوى 2: التحليل والاحتواء (15 دقيقة - ساعتان)</h3>
-      <ol>
-        <li><strong>تحليل السبب الجذري:</strong> تحديد متجه الهجوم والأنظمة المتأثرة</li>
-        <li><strong>إجراءات الاحتواء:</strong> عزل المكونات المتأثرة</li>
-        <li><strong>تقييم تأثير الأعمال:</strong> تقييم تأثير العملاء والتشغيل</li>
-        <li><strong>خطة الاتصال:</strong> إعداد إخطارات أصحاب المصلحة</li>
-      </ol>
+### الفريق
+- [ ] مناقشة حوادث الأمان في الاستعراض
+- [ ] تخطيط تدريب الأمان
+- [ ] تحديث وثائق الإجراءات
+التدقيقات الشهرية
+إجراء مديري الأقسام:
+التدقيق التقني
+#!/bin/bash
+# monthly_security_audit.sh
+echo "=== التدقيق الأمني الشهري ==="
+echo "التاريخ: $(date)"
 
-      <h3 style="margin-top: 20px;">المستوى 3: الاستعادة وما بعد الحادث (ساعتان +)</h3>
-      <ol>
-        <li><strong>استعادة النظام:</strong> استعادة الخدمات من نسخ احتياطية نظيفة</li>
-        <li><strong>الحفاظ على الأدلة:</strong> أرشفة السجلات للتحليل الشرعي</li>
-        <li><strong>إخطار الجهات التنظيمية:</strong> إخطار السلطات إذا لزم الأمر (GDPR: نافذة 72 ساعة)</li>
-        <li><strong>مراجعة ما بعد الحادث:</strong> جدولة جلسة درس التعلم</li>
-      </ol>
-    </div>
+# فحص المستخدمين بصلاحيات sudo
+echo "المستخدمون بصلاحيات sudo:"
+grep -Po '^sudo.+:\K.*$' /etc/group
 
-    <div class="section">
-      <h2>إجراءات الأمان الأسبوعية</h2>
+# فحص المنافذ المفتوحة
+echo "المنافذ المفتوحة:"
+nmap -sT -O localhost
 
-      <h4>الاثنين: التحديثات والرقع</h4>
-      <ul class="checklist">
-        <li>فحص قائمة البريد الأميني في WordPress للثغرات الجديدة</li>
-        <li>مراجعة إخطارات تحديث الإضافة</li>
-        <li>اختبار التحديثات في بيئة التطوير</li>
-        <li>نشر الرقع على staging إذا كانت متاحة</li>
-      </ul>
+# فحص محاولات تسجيل الدخول الفاشلة
+echo "محاولات تسجيل الدخول الفاشلة هذا الشهر:"
+grep "Failed password" /var/log/auth.log | wc -l
 
-      <h4 style="margin-top: 20px;">الأربعاء: تدقيق التكوين</h4>
-      <ul class="checklist">
-        <li>التحقق من تكوين رؤوس الأمان بشكل صحيح</li>
-        <li>فحص قواعد الجدار الناري للتغييرات غير المصرح بها</li>
-        <li>مراجعة سجلات الوصول للأنشطة المريبة</li>
-        <li>اختبار إجراءات استعادة النسخ الاحتياطية</li>
-      </ul>
+# فحص حجم سجلات الأمان
+echo "حجم سجلات الأمان:"
+du -sh /var/log/security.log
+تدقيق عمليات الفريق
+الامتثال لإجراءات الأمان
+فعالية الاستجابة للحوادث
+جودة التوثيق
+مستوى معرفة الفريق
+المراقبة والتحكم
+أنظمة المراقبة للفرق
+المراقبة الأساسية (مطلوبة لجميع الفرق)
+1. مراقبة التوفر والأداء
+#!/bin/bash
+# basic_monitoring.sh - المراقبة الأساسية
+WEBSITE="https://example.com"
+LOG_FILE="/var/log/monitoring.log"
 
-      <h4 style="margin-top: 20px;">الجمعة: إحاطة الفريق</h4>
-      <ul class="checklist">
-        <li>يجتمع فريق الأمان مع جميع الفرق التقنية</li>
-        <li>مراجعة الحوادث من الأسبوع الماضي</li>
-        <li>مناقشة أي تنبيهات أمان أو مخاوف</li>
-        <li>التخطيط لأنشطة أمان الأسبوع القادم</li>
-      </ul>
-    </div>
+# فحص التوفر
+if curl -s --head $WEBSITE | head -n 1 | grep -q "200 OK"; then
+    echo "$(date): $WEBSITE - متاح" &gt;&gt; $LOG_FILE
+else
+    echo "$(date): $WEBSITE - غير متاح" &gt;&gt; $LOG_FILE
+    # إرسال تنبيه
+    echo "الموقع غير متاح!" | mail -s "تنبيه: عدم توفر الموقع" admin@company.com
+fi
 
-    <div class="section">
-      <h2>إجراءات التدقيق الشهري</h2>
+# فحص رؤوس الأمان
+HEADERS=$(curl -s -I $WEBSITE)
+if echo "$HEADERS" | grep -q "X-Content-Type-Options"; then
+    echo "$(date): رؤوس الأمان - متاحة" &gt;&gt; $LOG_FILE
+else
+    echo "$(date): رؤوس الأمان - مفقودة" &gt;&gt; $LOG_FILE
+fi
+2. مراقبة سجلات الأمان
+#!/bin/bash
+# log_monitor.sh - مراقبة النشاط المشبوه
+SECURITY_LOG="/var/log/security.log"
+ALERT_EMAIL="security@company.com"
 
-      <h4>الأسبوع 1: مراجعة التحكم في الوصول</h4>
-      <ul class="checklist">
-        <li>تدقيق أذونات الوصول للمستخدمين عبر الأنظمة</li>
-        <li>إزالة حسابات المستخدمين غير النشطين (30+ يوم غير نشط)</li>
-        <li>التحقق من تفعيل MFA لجميع حسابات administrator</li>
-        <li>مراجعة أحداث تصعيد الامتيازات الأخيرة</li>
-      </ul>
+# البحث عن أنماط مشبوهة
+SUSPICIOUS_PATTERNS=(
+    "union.*select"
+    "&lt;script"
+    "\.\./"
+    "eval\("
+    "base64_decode"
+)
 
-      <h4 style="margin-top: 20px;">الأسبوع 2: تقييم الثغرات</h4>
-      <ul class="checklist">
-        <li>تشغيل أداة فحص أمان آلية (OWASP ZAP)</li>
-        <li>مقارنة النتائج مع نتائج الشهر السابق</li>
-        <li>توثيق حالة معالجة المشاكل المعروفة</li>
-        <li>تصعيد النتائج الحرجة الجديدة على الفور</li>
-      </ul>
+for pattern in "${SUSPICIOUS_PATTERNS[@]}"; do
+    if grep -i "$pattern" $SECURITY_LOG | tail -100 | grep -q "$(date +%Y-%m-%d)"; then
+        echo "تم اكتشاف نشاط مشبوه: $pattern" | \
+        mail -s "تنبيه: نشاط مشبوه" $ALERT_EMAIL
+    fi
+done
+المراقبة المتقدمة (لفرق DevOps)
+1. تكوين Prometheus + Grafana
+# prometheus.yml
+global:
+  scrape_interval: 15s
 
-      <h4 style="margin-top: 20px;">الأسبوع 3: التحقق من الامتثال</h4>
-      <ul class="checklist">
-        <li>التحقق من اتباع جميع سياسات الأمان</li>
-        <li>فحص التشفير للبيانات أثناء النقل وفي الراحة</li>
-        <li>مراجعة سجلات الاستجابة للحوادث</li>
-        <li>التحقق من سلامة النسخة الاحتياطية والاستعادة</li>
-      </ul>
+scrape_configs:
+  - job_name: 'security-metrics'
+    static_configs:
+      - targets: ['localhost:9090']
+    metrics_path: /metrics
+    scrape_interval: 30s
 
-      <h4 style="margin-top: 20px;">الأسبوع 4: التخطيط والتدريب</h4>
-      <ul class="checklist">
-        <li>يجري فريق الأمان جلسة تدريب الموظفين</li>
-        <li>مراجعة الدروس المستفادة من الحادث</li>
-        <li>التخطيط لمبادرات الأمان لشهر قادم</li>
-        <li>إنشاء تقرير الامتثال للإدارة</li>
-      </ul>
-    </div>
+  - job_name: 'web-security'
+    static_configs:
+      - targets: ['example.com:443']
+    metrics_path: /security-check
+    scheme: https
+2. مقاييس الأمان المخصصة
+#!/usr/bin/env python3
+# security_metrics.py - مقاييس مخصصة لـ Prometheus
+from prometheus_client import start_http_server, Counter, Gauge
+import time
+import requests
+import re
 
-    <div class="section">
-      <h2>إعداد المراقبة والكشف</h2>
+# المقاييس
+failed_logins = Counter('failed_logins_total', 'إجمالي محاولات تسجيل الدخول الفاشلة')
+security_headers = Gauge('security_headers_present', 'وجود رؤوس الأمان', ['header'])
+response_time = Gauge('security_check_response_time', 'وقت استجابة فحص الأمان')
 
-      <h3>المراقبة الأساسية المطلوبة:</h3>
-      <ul>
-        <li><strong>جدار الحماية لتطبيقات الويب (WAF):</strong> مراقبة سجلات Cloudflare للطلبات المحجوبة</li>
-        <li><strong>سجلات الوصول:</strong> تتبع أنماط الوصول غير العادية لنقاط النهاية الحساسة</li>
-        <li><strong>سجلات الأخطاء:</strong> مراقبة معدلات أخطاء PHP/خادم الويب</li>
-        <li><strong>موارد النظام:</strong> تنبيهات استخدام CPU والذاكرة والقرص</li>
-      </ul>
+def check_security_headers(url):
+    """فحص رؤوس الأمان"""
+    try:
+        response = requests.get(url, timeout=10)
+        headers = response.headers
+        
+        # فحص الرؤوس المهمة
+        security_headers.labels(header='x-content-type-options').set(
+            1 if 'X-Content-Type-Options' in headers else 0
+        )
+        security_headers.labels(header='x-frame-options').set(
+            1 if 'X-Frame-Options' in headers else 0
+        )
+        security_headers.labels(header='strict-transport-security').set(
+            1 if 'Strict-Transport-Security' in headers else 0
+        )
+        
+        return response.elapsed.total_seconds()
+    except Exception as e:
+        print(f"خطأ في الفحص: {e}")
+        return 0
 
-      <h3 style="margin-top: 20px;">المراقبة المتقدمة (موصى بها):</h3>
-      <ul>
-        <li><strong>منصة SIEM:</strong> تحليل السجل المركزي والتنبيهات</li>
-        <li><strong>كشف الاختراق (IDS):</strong> كشف التهديدات على مستوى الشبكة</li>
-        <li><strong>مراقبة سلامة الملفات (FIM):</strong> الكشف عن التغييرات غير المصرح بها في الملفات</li>
-        <li><strong>مراقبة نشاط قاعدة البيانات:</strong> تتبع استعلامات قاعدة البيانات المريبة</li>
-      </ul>
-    </div>
+def count_failed_logins():
+    """عد محاولات تسجيل الدخول الفاشلة"""
+    try:
+        with open('/var/log/auth.log', 'r') as f:
+            content = f.read()
+            failed_count = len(re.findall(r'Failed password', content))
+            failed_logins._value._value = failed_count
+    except Exception as e:
+        print(f"خطأ في قراءة السجلات: {e}")
 
-    <div class="section">
-      <h2>ملخص الإجراء السريع</h2>
-      
-      <h3>اكتمل قبل نهاية الأسبوع الأول:</h3>
-      <ol style="font-size: 1.05em;">
-        <li>حجب نقطة نهاية API REST للمستخدم (فريق Backend)</li>
-        <li>نشر رؤوس CSP (فريق Frontend)</li>
-        <li>تكوين رؤوس الأمان (فريق DevOps)</li>
-        <li>إجراء اختبار التحقق من الفريق</li>
-      </ol>
+if __name__ == '__main__':
+    # بدء خادم HTTP للمقاييس
+    start_http_server(8000)
+    
+    while True:
+        # تحديث المقاييس كل 60 ثانية
+        response_time_val = check_security_headers('https://example.com')
+        response_time.set(response_time_val)
+        
+        count_failed_logins()
+        
+        time.sleep(60)
+لوحات المعلومات والتقارير
+التقارير الأسبوعية لقادة الفرق
+مولد التقارير التلقائي:
+#!/usr/bin/env python3
+# weekly_security_report.py
+import datetime
+import json
+from collections import defaultdict
 
-      <h3 style="margin-top: 25px;">أكمل خلال الأسابيع 2-4:</h3>
-      <ol style="font-size: 1.05em;">
-        <li>تنفيذ Subresource Integrity لجميع موارد CDN</li>
-        <li>تحديث جميع مكونات WordPress</li>
-        <li>إنشاء إجراءات مراجعة الأمان الأسبوعية</li>
-        <li>نشر حل المراقبة المستمرة</li>
-      </ol>
-    </div>
+def generate_weekly_report():
+    """توليد التقرير الأسبوعي للأمان"""
+    
+    # فترة التقرير
+    end_date = datetime.datetime.now()
+    start_date = end_date - datetime.timedelta(days=7)
+    
+    report = {
+        'period': f"{start_date.strftime('%Y-%m-%d')} - {end_date.strftime('%Y-%m-%d')}",
+        'summary': {},
+        'incidents': [],
+        'metrics': {},
+        'recommendations': []
+    }
+    
+    # تحليل سجلات الأمان
+    security_events = analyze_security_logs(start_date, end_date)
+    report['summary']['security_events'] = len(security_events)
+    
+    # فحص حالة الرؤوس
+    headers_status = check_headers_compliance()
+    report['metrics']['headers_compliance'] = headers_status
+    
+    # التوصيات
+    if security_events:
+        report['recommendations'].append("تم اكتشاف أحداث أمنية - يتطلب التحليل")
+    
+    if not headers_status['all_present']:
+        report['recommendations'].append("ليست جميع رؤوس الأمان مكونة")
+    
+    return report
 
-    <div style="text-align: center; color: #7f8c8d; font-size: 0.9em; margin-top: 40px; padding-top: 20px; border-top: 2px solid #ecf0f1;">
-      <p>الإجراءات التشغيلية مشتقة من تقييم OWASP ZAP.<br>التاريخ: 30 ديسمبر 2025<br>راجع هذا المستند شهرياً وحدّث الإجراءات حسب الحاجة.</p>
-    </div>
+def analyze_security_logs(start_date, end_date):
+    """تحليل سجلات الأمان للفترة"""
+    events = []
+    try:
+        with open('/var/log/security.log', 'r') as f:
+            for line in f:
+                # تحليل بسيط - التنفيذ الحقيقي يحتاج تعقيد أكثر
+                if 'SECURITY' in line:
+                    events.append(line.strip())
+    except FileNotFoundError:
+        pass
+    
+    return events
+
+def check_headers_compliance():
+    """فحص امتثال رؤوس الأمان"""
+    import requests
+    
+    try:
+        response = requests.get('https://example.com', timeout=10)
+        headers = response.headers
+        
+        required_headers = [
+            'X-Content-Type-Options',
+            'X-Frame-Options', 
+            'Strict-Transport-Security',
+            'Content-Security-Policy'
+        ]
+        
+        present = [h for h in required_headers if h in headers]
+        
+        return {
+            'total_required': len(required_headers),
+            'present': len(present),
+            'missing': [h for h in required_headers if h not in present],
+            'all_present': len(present) == len(required_headers)
+        }
+    except Exception as e:
+        return {'error': str(e)}
+
+if __name__ == '__main__':
+    report = generate_weekly_report()
+    
+    # حفظ التقرير
+    filename = f"security_report_{datetime.datetime.now().strftime('%Y%m%d')}.json"
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(report, f, indent=2, ensure_ascii=False)
+    
+    print(f"تم حفظ التقرير: {filename}")
+    
+    # إرسال عبر البريد الإلكتروني (اختياري)
+    # send_report_email(report)
+التدريب وتعليم الفريق
+برامج التدريب للفرق
+التدريب الأساسي على الأمان (إجباري لجميع الفرق)
+1. وحدة الوعي الأمني
+المدة: 2 ساعة
+التكرار: شهرياً
+المحتوى:
+التعرف على التهديدات الشائعة
+أفضل ممارسات كلمات المرور
+التعرف على رسائل التصيد الاحتيالي
+إجراءات الإبلاغ عن الحوادث
+2. ورشة الترميز الآمن
+المدة: 4 ساعات
+التكرار: ربع سنوي
+المحتوى:
+ثغرات OWASP Top 10
+تقنيات التحقق من المدخلات
+إدارة الجلسات الآمنة
+التشفير وإدارة المفاتيح
+3. تمارين الاستجابة للحوادث
+المدة: 3 ساعات
+التكرار: نصف سنوي
+المحتوى:
+محاكاة حوادث أمنية
+تطبيق إجراءات الاستجابة
+التواصل أثناء الأزمات
+تحليل ما بعد الحادث
+التدريب المتخصص حسب الفريق
+فرق Backend:
+## برنامج تدريب أمان Backend
+
+### الأسبوع 1: أمان API
+- [ ] مصادقة وتفويض API
+- [ ] تقييد المعدل والحماية من DDoS
+- [ ] تشفير البيانات المنقولة والمخزنة
+- [ ] تسجيل وتدقيق API
+
+### الأسبوع 2: أمان قواعد البيانات
+- [ ] منع حقن SQL
+- [ ] إدارة الصلاحيات
+- [ ] تشفير البيانات الحساسة
+- [ ] النسخ الاحتياطي الآمن
+
+### الأسبوع 3: أمان الخادم
+- [ ] تقوية نظام التشغيل
+- [ ] إدارة التصحيحات
+- [ ] مراقبة الأمان
+- [ ] الاستجابة للحوادث
+
+### الأسبوع 4: التطبيق العملي
+- [ ] مراجعة الكود الأمني
+- [ ] اختبار الاختراق
+- [ ] تحليل الثغرات
+- [ ] وضع خطط التحسين
+فرق Frontend:
+## برنامج تدريب أمان Frontend
+
+### الأسبوع 1: أمان المتصفح
+- [ ] سياسة أمان المحتوى (CSP)
+- [ ] تكامل الموارد الفرعية (SRI)
+- [ ] رؤوس الأمان
+- [ ] إدارة ملفات تعريف الارتباط
+
+### الأسبوع 2: منع الهجمات
+- [ ] حماية من XSS
+- [ ] منع CSRF
+- [ ] حماية من Clickjacking
+- [ ] التحقق من المدخلات
+
+### الأسبوع 3: أمان التطبيقات
+- [ ] إدارة الحالة الآمنة
+- [ ] التشفير من جانب العميل
+- [ ] أمان التخزين المحلي
+- [ ] التواصل الآمن مع API
+
+### الأسبوع 4: أدوات وأتمتة
+- [ ] أدوات فحص الأمان
+- [ ] تكامل CI/CD
+- [ ] اختبار الأمان التلقائي
+- [ ] مراقبة الأداء الأمني
+فرق DevOps:
+## برنامج تدريب أمان DevOps
+
+### الأسبوع 1: أمان البنية التحتية
+- [ ] تقوية الخوادم
+- [ ] إدارة الشبكات الآمنة
+- [ ] مراقبة الأمان
+- [ ] إدارة الهوية والوصول
+
+### الأسبوع 2: أمان الحاويات
+- [ ] أمان Docker
+- [ ] أمان Kubernetes
+- [ ] فحص صور الحاويات
+- [ ] إدارة الأسرار
+
+### الأسبوع 3: أمان CI/CD
+- [ ] تأمين pipelines
+- [ ] فحص الكود التلقائي
+- [ ] إدارة التبعيات
+- [ ] نشر آمن
+
+### الأسبوع 4: المراقبة والاستجابة
+- [ ] أنظمة SIEM
+- [ ] تحليل السجلات
+- [ ] الاستجابة للحوادث
+- [ ] التعافي من الكوارث
+تقييم المهارات والشهادات
+نظام تقييم المهارات
+1. اختبارات دورية
+#!/usr/bin/env python3
+# skill_assessment.py - تقييم مهارات الأمان
+import json
+import datetime
+
+class SecuritySkillAssessment:
+    def __init__(self):
+        self.questions = {
+            'backend': [
+                {
+                    'question': 'ما هي أفضل طريقة لمنع حقن SQL؟',
+                    'options': ['تشفير البيانات', 'استخدام Prepared Statements', 'تقييد الوصول', 'جميع ما سبق'],
+                    'correct': 1,
+                    'points': 10
+                },
+                {
+                    'question': 'أي من التالي يُعتبر أفضل ممارسة لتخزين كلمات المرور؟',
+                    'options': ['MD5', 'SHA1', 'bcrypt', 'Base64'],
+                    'correct': 2,
+                    'points': 15
+                }
+            ],
+            'frontend': [
+                {
+                    'question': 'ما هو الغرض من Content Security Policy؟',
+                    'options': ['تشفير البيانات', 'منع XSS', 'تحسين الأداء', 'إدارة الذاكرة'],
+                    'correct': 1,
+                    'points': 10
+                },
+                {
+                    'question': 'متى يجب استخدام SRI؟',
+                    'options': ['مع جميع الموارد', 'مع الموارد الخارجية فقط', 'مع JavaScript فقط', 'غير ضروري'],
+                    'correct': 1,
+                    'points': 15
+                }
+            ]
+        }
+    
+    def conduct_assessment(self, team_type, employee_id):
+        """إجراء تقييم للموظف"""
+        if team_type not in self.questions:
+            return {'error': 'نوع فريق غير صحيح'}
+        
+        questions = self.questions[team_type]
+        score = 0
+        total_points = sum(q['points'] for q in questions)
+        
+        # محاكاة الإجابات (في التطبيق الحقيقي، ستأتي من واجهة المستخدم)
+        answers = [1, 2]  # إجابات تجريبية
+        
+        for i, question in enumerate(questions):
+            if i &lt; len(answers) and answers[i] == question['correct']:
+                score += question['points']
+        
+        percentage = (score / total_points) * 100
+        
+        result = {
+            'employee_id': employee_id,
+            'team_type': team_type,
+            'score': score,
+            'total_points': total_points,
+            'percentage': percentage,
+            'date': datetime.datetime.now().isoformat(),
+            'status': 'pass' if percentage &gt;= 70 else 'fail'
+        }
+        
+        return result
+    
+    def generate_certificate(self, assessment_result):
+        """توليد شهادة للموظف الناجح"""
+        if assessment_result['status'] == 'pass':
+            certificate = {
+                'certificate_id': f"SEC-{assessment_result['employee_id']}-{datetime.datetime.now().strftime('%Y%m%d')}",
+                'employee_id': assessment_result['employee_id'],
+                'skill_area': f"أمان {assessment_result['team_type']}",
+                'score': assessment_result['percentage'],
+                'issue_date': assessment_result['date'],
+                'valid_until': (datetime.datetime.now() + datetime.timedelta(days=365)).isoformat()
+            }
+            return certificate
+        return None
+
+# استخدام النظام
+if __name__ == '__main__':
+    assessor = SecuritySkillAssessment()
+    
+    # تقييم موظف backend
+    result = assessor.conduct_assessment('backend', 'EMP001')
+    print(f"نتيجة التقييم: {result}")
+    
+    # توليد شهادة إذا نجح
+    certificate = assessor.generate_certificate(result)
+    if certificate:
+        print(f"تم إصدار الشهادة: {certificate}")
+2. مسارات التطوير المهني
+## مسارات التطوير المهني في الأمان
+
+### المستوى المبتدئ (0-6 أشهر)
+- [ ] أساسيات الأمن السيبراني
+- [ ] التعرف على التهديدات الشائعة
+- [ ] أفضل ممارسات الترميز الآمن
+- [ ] استخدام أدوات الأمان الأساسية
+
+### المستوى المتوسط (6-18 شهر)
+- [ ] تحليل الثغرات المتقدم
+- [ ] تصميم الأنظمة الآمنة
+- [ ] إدارة الحوادث الأمنية
+- [ ] تدقيق الأمان
+
+### المستوى المتقدم (18+ شهر)
+- [ ] قيادة فرق الأمان
+- [ ] تطوير استراتيجيات الأمان
+- [ ] البحث في التهديدات الجديدة
+- [ ] التدريب والإرشاد
+
+### الشهادات المستهدفة
+- CompTIA Security+
+- CISSP (Certified Information Systems Security Professional)
+- CEH (Certified Ethical Hacker)
+- CISM (Certified Information Security Manager)
+التعاون بين الفرق والتفويض
+مصفوفة المسؤولية (RACI)
+المهمة
+Backend
+Frontend
+DevOps
+QA
+الأمان
+حجب ثغرات API
+R
+I
+C
+A
+C
+تنفيذ CSP/SRI
+I
+R
+C
+A
+C
+تكوين رؤوس الخادم
+I
+I
+R
+A
+C
+مراقبة الأمان
+I
+I
+R
+I
+A
+تدريب الفريق
+C
+C
+C
+C
+R
+الاستجابة للحوادث
+C
+C
+C
+C
+R
+الرموز:
+R (Responsible) - مسؤول عن التنفيذ
+A (Accountable) - مساءل عن النتائج
+C (Consulted) - مستشار
+I (Informed) - مُطلع
+خطط العمل للفرق
+فريق Backend (الأولوية 1)
+قائد فريق Backend: [الاسم] موعد الإنجاز: 24-48 ساعة
+المهام:
+فوري (0-4 ساعات)
+حجب الوصول إلى /wp-json/wp/v2/users
+تدقيق جميع نقاط REST API
+إنشاء قائمة بجميع APIs العامة
+قصير المدى (1-2 يوم)
+تنفيذ المصادقة للنقاط الحساسة
+إعداد تقييد المعدل
+إضافة تسجيل طلبات API
+متوسط المدى (أسبوع واحد)
+إجراء مراجعة أمان شاملة لـ API
+تنفيذ التحقق من المدخلات
+إعداد اختبارات الأمان التلقائية
+الموارد:
+2 مطور أول
+1 مطور مبتدئ للاختبار
+استشارات من فريق الأمان
+معايير الإنجاز:
+☐ جميع النقاط المعرضة للخطر محجوبة
+☐ المصادقة تعمل بشكل صحيح
+☐ التسجيل مكون
+☐ الاختبارات تمر بنجاح
+فريق Frontend (الأولوية 2)
+قائد فريق Frontend: [الاسم] موعد الإنجاز: 48-72 ساعة
+المهام:
+فوري (0-8 ساعات)
+تنفيذ رؤوس الأمان الأساسية
+إضافة CSP في وضع التقرير فقط
+اختبار على بيئة التطوير
+قصير المدى (1-3 أيام)
+إضافة SRI لجميع الموارد الخارجية
+تحويل CSP إلى وضع الإنفاذ
+تحديث عملية البناء
+متوسط المدى (أسبوع واحد)
+أتمتة توليد SRI
+إعداد مراقبة انتهاكات CSP
+تدريب الفريق على أفضل الممارسات
+الموارد:
+2 مطور frontend
+1 DevOps لإعداد CI/CD
+دعم فريق QA
+معايير الإنجاز:
+☐ CSP مكون ويعمل
+☐ SRI مضاف لجميع الموارد
+☐ لا توجد انتهاكات في المتصفحات
+☐ CI/CD يفحص الرؤوس
+فريق DevOps (الأولوية 2)
+قائد فريق DevOps: [الاسم] موعد الإنجاز: 72 ساعة
+المهام:
+فوري (0-4 ساعات)
+تطبيق تكوينات الأمان على خوادم الويب
+إخفاء إصدارات برمجيات الخادم
+تكوين HTTPS الإجباري
+قصير المدى (1-3 أيام)
+إعداد التسجيل المركزي
+تنفيذ مراقبة الأمان
+أتمتة فحوصات التكوين
+متوسط المدى (أسبوع واحد)
+إعداد تنبيهات أحداث الأمان
+تنفيذ Infrastructure as Code
+تدقيق جميع الخوادم
+الموارد:
+2 مهندس DevOps
+1 SRE للمراقبة
+وصول لخوادم الإنتاج
+معايير الإنجاز:
+☐ رؤوس الأمان مكونة
+☐ HTTPS مفروض
+☐ المراقبة تعمل
+☐ التنبيهات مكونة
+خطة التواصل
+الاجتماعات اليومية (أثناء الأزمة)
+الوقت: 9:00 صباحاً يومياً المشاركون: جميع قادة الفرق + قائد الأمان الشكل: 15 دقيقة كحد أقصى
+الهيكل:
+حالة المهام الحرجة (5 دقائق)
+المشاكل والعوائق الجديدة (5 دقائق)
+خطط اليوم (3 دقائق)
+الأسئلة والتنسيق (2 دقيقة)
+الاستعراضات الأسبوعية
+الوقت: الجمعة، 4:00 مساءً المشاركون: الفريق الموسع المدة: ساعة واحدة
+جدول الأعمال:
+ما سار بشكل جيد (15 دقيقة)
+ما يمكن تحسينه (20 دقيقة)
+دروس الأمان المستفادة (15 دقيقة)
+خطط الأسبوع القادم (10 دقائق)
+قنوات التواصل
+قنوات Slack:
+#security-incident - الإخطارات الطارئة
+#security-general - أسئلة الأمان العامة
+#security-updates - التحديثات والتصحيحات
+قوائم البريد الإلكتروني:
+security-team@company.com - فريق الأمان
+team-leads@company.com - جميع قادة الفرق
+security-alerts@company.com - التنبيهات الحرجة
+الخلاصة والخطوات التالية
+الإجراءات الحرجة للـ 72 ساعة القادمة
+اليوم 1 (0-24 ساعة):
+✅ Backend: حجب نقاط API المعرضة للخطر
+✅ DevOps: تطبيق رؤوس الأمان الأساسية
+✅ جميع الفرق: إعداد التواصل الطارئ
+اليوم 2 (24-48 ساعة):
+✅ Frontend: تنفيذ CSP والرؤوس الأساسية
+✅ Backend: إكمال تدقيق أمان API
+✅ QA: التحقق من جميع التغييرات
+اليوم 3 (48-72 ساعة):
+✅ DevOps: إعداد المراقبة والتنبيهات
+✅ Frontend: إضافة SRI للموارد الخارجية
+✅ جميع الفرق: توثيق التغييرات
+الأهداف متوسطة المدى (1-4 أسابيع)
+الأسبوع 1:
+تنفيذ كامل لجميع تدابير الأمان الأساسية
+إعداد المراقبة التلقائية
+تدريب الفرق على إجراءات الأمان
+الأسبوع 2-3:
+تنفيذ أدوات المراقبة المتقدمة
+أتمتة فحوصات الأمان في CI/CD
+إجراء اختبار اختراق داخلي
+الأسبوع 4:
+تدقيق شامل للتدابير المنفذة
+توثيق جميع الإجراءات
+تخطيط الاستراتيجية طويلة المدى
+مقاييس النجاح
+المقاييس التقنية:
+وقت اكتشاف التهديدات: &lt; ساعة واحدة
+وقت الاستجابة للحوادث: &lt; 4 ساعات
+تغطية رؤوس الأمان: 100%
+عدد الثغرات: انخفاض 90%
+مقاييس العمليات:
+الامتثال لإجراءات الأمان: &gt; 95%
+وقت إنجاز مهام الأمان: ضمن SLA
+جودة التوثيق: تغطية كاملة
+مستوى معرفة الفريق: اختبار منتظم
+الموارد والدعم
+الموارد الداخلية:
+فريق الأمان: الاستشارات والدعم
+فريق DevOps: دعم البنية التحتية
+فريق QA: الاختبار والتحقق
+الموارد الخارجية:
+استشاريو الأمان (عند الحاجة)
+أدوات المراقبة المتخصصة
+مواد ودورات التدريب
+جهات الاتصال للحالات الطارئة:
+قائد الأمان: [تفاصيل الاتصال]
+قائد DevOps: [تفاصيل الاتصال]
+المدير المناوب: [تفاصيل الاتصال]
+		
+هذه الوثيقة دليل حي يجب تحديثه مع تطور التهديدات ونضج عملياتنا الأمنية. جميع قادة الفرق مسؤولون عن إبقائها محدثة في مجالات خبرتهم.
+    </pre>
   </main>
 </body>
 </html>

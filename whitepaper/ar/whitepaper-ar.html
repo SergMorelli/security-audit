@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>قواعد الاشتباك: اختبار الاختراق وتقييم الأمن</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Noto Sans Arabic', 'Segoe UI', 'DejaVu Sans', sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #cdd9e8 100%); color: #2c3e50; line-height: 1.8; direction: rtl; }
+    main { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+    .report-header { background: white; border-right: 6px solid #1a6fa6; border-left: none; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 1.9em; color: #1a6fa6; margin-bottom: 8px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.05em; color: #34495e; margin-bottom: 12px; }
+    .report-header .meta { color: #7f8c8d; font-size: 0.9em; margin-top: 6px; }
+
+    .section { background: white; padding: 28px 32px; margin-bottom: 24px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    h2 { font-size: 1.35em; color: #1a6fa6; margin-top: 0; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #1a6fa6; font-weight: 700; }
+    h3 { font-size: 1.05em; color: #2c3e50; margin-top: 20px; margin-bottom: 10px; font-weight: 600; }
+    p { margin: 8px 0; color: #34495e; }
+
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.93em; }
+    thead { background: #1a6fa6; color: white; }
+    th { padding: 10px 14px; text-align: right; font-weight: 600; }
+    td { padding: 9px 14px; border-bottom: 1px solid #ecf0f1; vertical-align: top; text-align: right; }
+    tbody tr:nth-child(even) { background: #f7fafc; }
+    .field-value { color: #95a5a6; font-style: italic; }
+
+    .info-box  { background: #e8f4fb; border-right: 5px solid #1a6fa6; border-left: none; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .warn-box  { background: #fff8e1; border-right: 5px solid #f39c12; border-left: none; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .ok-box    { background: #e8f5e9; border-right: 5px solid #27ae60; border-left: none; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .danger-box{ background: #ffebee; border-right: 5px solid #c0392b; border-left: none; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .info-box strong, .warn-box strong, .ok-box strong, .danger-box strong { display: block; margin-bottom: 6px; }
+
+    ul, ol { margin: 10px 0; padding-right: 22px; padding-left: 0; }
+    li { margin: 5px 0; color: #34495e; }
+    .checklist { padding-right: 0; padding-left: 0; }
+    .checklist li { list-style: none; }
+    .checklist li::before { content: "☐ "; color: #95a5a6; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
+    .badge-p0 { background: #ffcdd2; color: #b71c1c; }
+    .badge-p1 { background: #ffe0b2; color: #e65100; }
+    .badge-p2 { background: #fff9c4; color: #f57f17; }
+    .badge-p3 { background: #c8e6c9; color: #1b5e20; }
+    .badge-p4 { background: #e3f2fd; color: #0d47a1; }
+
+    footer { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; padding: 20px; border-top: 1px solid #dde; }
+  </style>
+</head>
+<body>
+<main>
+
+  <div class="report-header">
+    <h1>قواعد الاشتباك: اختبار الاختراق وتقييم الأمن</h1>
+    <p class="subtitle">متخصص أمن المعلومات</p>
+    <p class="meta">📅 2025-12-21</p>
+  </div>
+
+  <!-- 1. نظرة عامة -->
+  <div class="section">
+    <h2>نظرة عامة</h2>
+    <p>تحدد هذه الوثيقة قواعد الاشتباك (Rules of Engagement) لإجراء اختبارات الاختراق وتقييم أمن أنظمة المعلومات. تُرسي الوثيقة إطار التعاون بين العميل وفريق الاختبار، مما يضمن سلامة العملية وقانونيتها وفعاليتها.</p>
+    <h3>أهداف الوثيقة</h3>
+    <div class="info-box">
+      <strong>المهمة الأساسية — ضمان اختبار مُتحكَّم به ومُفوَّض بأدنى المخاطر على الأنظمة الإنتاجية</strong>
+      تضمن قواعد الاشتباك:
+      <ul>
+        <li>أمان الأنظمة الإنتاجية</li>
+        <li>الامتثال للمتطلبات القانونية</li>
+        <li>التواصل الشفاف بين جميع الأطراف</li>
+        <li>اختبار مُتحكَّم به ومُفوَّض</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2. معلومات الاتصال -->
+  <div class="section">
+    <h2>معلومات الاتصال</h2>
+    <h3>منظمة العميل</h3>
+    <table>
+      <thead><tr><th>الدور</th><th>بيانات الاتصال</th></tr></thead>
+      <tbody>
+        <tr><td>جهة الاتصال الرئيسية — المنصب</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الرئيسية — الهاتف المحمول</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الرئيسية — البريد الإلكتروني</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الاحتياطية — المنصب</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الاحتياطية — الهاتف المحمول</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الاحتياطية — البريد الإلكتروني</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <h3>فريق الاختبار</h3>
+    <table>
+      <thead><tr><th>الدور</th><th>بيانات الاتصال</th></tr></thead>
+      <tbody>
+        <tr><td>قائد الفريق — الهاتف المحمول</td><td class="field-value">_________________________</td></tr>
+        <tr><td>قائد الفريق — البريد الإلكتروني</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الاحتياطية — الهاتف المحمول</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الاحتياطية — البريد الإلكتروني</td><td class="field-value">_________________________</td></tr>
+        <tr><td>الاتصال الطارئ 24/7 — الهاتف المحمول</td><td class="field-value">_________________________</td></tr>
+        <tr><td>الاتصال الطارئ 24/7 — البريد الإلكتروني</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. نطاق الاختبار -->
+  <div class="section">
+    <h2>نطاق الاختبار</h2>
+    <h3>الأصول المدرجة في الاختبار</h3>
+    <p><strong>البنية التحتية للشبكة:</strong></p>
+    <ul>
+      <li>النطاقات: <span class="field-value">_________________________________</span></li>
+      <li>النطاقات الفرعية: <span class="field-value">_____________________________</span></li>
+      <li>نطاقات IP: <span class="field-value">__________________________</span></li>
+      <li>الموارد السحابية: <span class="field-value">______________________</span></li>
+    </ul>
+    <p style="margin-top:12px;"><strong>التطبيقات والخدمات:</strong></p>
+    <ul>
+      <li>تطبيقات الويب: <span class="field-value">________________________</span></li>
+      <li>واجهات API: <span class="field-value">________________________</span></li>
+      <li>الأنظمة الداخلية: <span class="field-value">____________________</span></li>
+    </ul>
+    <h3>الأصول المستبعدة من الاختبار</h3>
+    <div class="warn-box">
+      <strong>⚠️ قيود حرجة:</strong>
+      <ul>
+        <li>الأنظمة التي لا تمتلكها المنظمة</li>
+        <li>الخدمات الخارجية دون إذن كتابي</li>
+        <li>قواعد البيانات الإنتاجية (ما لم يُسمح صراحةً)</li>
+        <li>الهندسة الاجتماعية (ما لم تُوافق عليها)</li>
+        <li>أنظمة البنية التحتية الحيوية</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. قواعد إجراء الاختبار -->
+  <div class="section">
+    <h2>قواعد إجراء الاختبار</h2>
+    <div class="two-col">
+      <div>
+        <h3>الأنشطة المسموح بها</h3>
+        <div class="ok-box">
+          <strong>✅ أساليب الاختبار المُفوَّضة:</strong>
+          <ul>
+            <li>فحص الثغرات</li>
+            <li>اختبار الاختراق اليدوي</li>
+            <li>اختبار تطبيقات الويب</li>
+            <li>اختبار واجهات API</li>
+            <li>تحليل تهيئة الخدمات السحابية</li>
+            <li>اختبار أمن الشبكة</li>
+            <li>فحص سياسات كلمات المرور</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3>الأنشطة المحظورة</h3>
+        <div class="danger-box">
+          <strong>❌ الإجراءات المحظورة صراحةً:</strong>
+          <ul>
+            <li>هجمات الحرمان من الخدمة (DoS/DDoS)</li>
+            <li>الاختراق الجسدي</li>
+            <li>الهندسة الاجتماعية بدون إذن صريح</li>
+            <li>هجمات القوة الغاشمة دون تحديد السرعة</li>
+            <li>الإجراءات التي قد تتسبب في تلف البيانات</li>
+            <li>الوصول غير المُصرَّح به للبيانات الشخصية</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. قيود الحمل -->
+  <div class="section">
+    <h2>قيود الحمل</h2>
+    <h3>القيود التقنية للأنظمة الإنتاجية</h3>
+    <div class="warn-box"><strong>⚡ حدود الحمل الحرجة:</strong></div>
+    <table>
+      <thead><tr><th>المعامل</th><th>القيد</th><th>ملاحظة</th></tr></thead>
+      <tbody>
+        <tr><td>الحد الأقصى للطلبات في الثانية</td><td class="field-value">_________________________</td><td>لمنع الإفراط في التحميل</td></tr>
+        <tr><td>الاتصالات المتزامنة</td><td class="field-value">_________________________</td><td>حد الاتصالات الموازية</td></tr>
+        <tr><td>حجم الحمولة</td><td class="field-value">_________________________</td><td>الحجم الأقصى للبيانات</td></tr>
+        <tr><td>مهلة الاتصال</td><td class="field-value">_________________________</td><td>وقت انتظار الاستجابة</td></tr>
+      </tbody>
+    </table>
+    <h3>القيود الزمنية</h3>
+    <div class="info-box">
+      <strong>🕐 جدول الاختبار المكثف:</strong>
+      <ul>
+        <li>عمليات المسح الجماعية: في أوقات غير العمل فقط</li>
+        <li>اختبار Fuzzing: <span class="field-value">_________________________</span></li>
+        <li>اختبار التحمل: بإشعار مسبق فقط</li>
+        <li>الماسحات الآلية: تحديد السرعة خلال ساعات العمل</li>
+      </ul>
+    </div>
+    <h3>مراقبة الحمل</h3>
+    <div class="info-box">
+      <strong>📊 التحكم في التأثير على الأنظمة:</strong>
+      <ul>
+        <li>مراقبة CPU والذاكرة للأنظمة المستهدفة</li>
+        <li>تتبع أوقات استجابة التطبيقات</li>
+        <li>مراقبة عرض نطاق الشبكة</li>
+        <li>الإيقاف الفوري عند تجاوز الحدود</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. الأساس القانوني -->
+  <div class="section">
+    <h2>الأساس القانوني</h2>
+    <h3>الإطار القانوني لإجراء الاختبار</h3>
+    <div class="ok-box">
+      <strong>⚖️ المبرر القانوني:</strong>
+      تُنفَّذ جميع إجراءات اختبار الاختراق حصراً بناءً على إذن كتابي من ممثل مُفوَّض من منظمة العميل.
+    </div>
+    <p><strong>الأسس الوثائقية:</strong></p>
+    <ul>
+      <li>العقد الموقَّع لتقديم الخدمات</li>
+      <li>قواعد الاشتباك الحالية</li>
+      <li>التوصيف التقني لنطاق الاختبار</li>
+      <li>اتفاقيات إضافية (عند الضرورة)</li>
+    </ul>
+    <h3>تحديد المسؤولية</h3>
+    <div class="info-box">
+      <strong>🛡️ إعفاء من المسؤولية — يُعفى فريق الاختبار من المسؤولية عن:</strong>
+      <ul>
+        <li>عدم توفر الأنظمة مؤقتاً نتيجة الاختبار المُفوَّض</li>
+        <li>اكتشاف ثغرات كانت موجودة قبل بدء الاختبار</li>
+        <li>الإجراءات المنفَّذة ضمن نطاق الاختبار المتفق عليه</li>
+        <li>الأضرار غير المباشرة المرتبطة بالكشف عن مشاكل أمنية</li>
+      </ul>
+    </div>
+    <h3>الامتثال للتشريعات</h3>
+    <div class="info-box">
+      <strong>📋 الامتثال التنظيمي:</strong>
+      <ul>
+        <li>الامتثال لمتطلبات تشريعات البيانات الشخصية</li>
+        <li>تطبيق معايير الأمن الخاصة بالقطاع</li>
+        <li>الاتساق مع الممارسات الدولية لاختبار الاختراق</li>
+        <li>توثيق جميع الإجراءات للتدقيق</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. مصفوفة أهمية الثغرات -->
+  <div class="section">
+    <h2>مصفوفة أهمية الثغرات</h2>
+    <div class="info-box"><strong>🎯 نظام تقييم موحَّد — التصنيف حسب مستويات المخاطر:</strong></div>
+    <table>
+      <thead><tr><th>المستوى</th><th>الوصف</th><th>أمثلة على الثغرات</th><th>وقت المعالجة</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-p0">P0 - حرج</span></td><td>تهديد أمني فوري</td><td>RCE, SQL Injection, Authentication Bypass</td><td>24–48 ساعة</td></tr>
+        <tr><td><span class="badge badge-p1">P1 - عالٍ</span></td><td>انتهاك أمني خطير</td><td>XSS, LFI, Privilege Escalation</td><td>1–2 أسابيع</td></tr>
+        <tr><td><span class="badge badge-p2">P2 - متوسط</span></td><td>مخاطرة معتدلة</td><td>Security Misconfiguration, CSRF</td><td>شهر واحد</td></tr>
+        <tr><td><span class="badge badge-p3">P3 - منخفض</span></td><td>مخاطرة دنيا</td><td>Information Disclosure, Weak Ciphers</td><td>3 أشهر</td></tr>
+        <tr><td><span class="badge badge-p4">P4 - معلوماتي</span></td><td>توصيات للتحسين</td><td>Best Practices, Hardening</td><td>حسب الإمكانية</td></tr>
+      </tbody>
+    </table>
+    <h3>معايير التقييم</h3>
+    <div class="info-box">
+      <strong>📈 عوامل تحديد الأهمية:</strong>
+      <ul>
+        <li>التأثير: الضرر المحتمل من الاستغلال</li>
+        <li>الاحتمالية: سهولة استغلال الثغرة</li>
+        <li>النطاق: عدد الأنظمة المتأثرة</li>
+        <li>إمكانية الوصول: متطلبات الوصول للاستغلال</li>
+      </ul>
+    </div>
+    <h3>إجراءات التصعيد</h3>
+    <div class="warn-box">
+      <strong>⚡ الاستجابة الطارئة للنتائج الحرجة:</strong>
+      <ol>
+        <li>P0–P1: إشعار فوري عبر الهاتف + البريد الإلكتروني</li>
+        <li>P2: إشعار خلال يوم عمل</li>
+        <li>P3–P4: إدراج في التقارير الدورية</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 8. قائمة الأدوات المستخدمة -->
+  <div class="section">
+    <h2>قائمة الأدوات المستخدمة</h2>
+    <div class="info-box"><strong>🔧 أدوات الاختبار المُفوَّضة — مجموعة الأدوات الأساسية:</strong></div>
+    <table>
+      <thead><tr><th>الفئة</th><th>الأداة</th><th>الغرض</th><th>الإصدار</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3">ماسحات الثغرات</td><td>Nessus</td><td>الفحص الآلي</td><td class="field-value">_________</td></tr>
+        <tr><td>OpenVAS</td><td>فحص الشبكة والتطبيقات</td><td class="field-value">_________</td></tr>
+        <tr><td>Qualys VMDR</td><td>الفحص السحابي</td><td class="field-value">_________</td></tr>
+        <tr><td rowspan="3">اختبار الويب</td><td>Burp Suite Professional</td><td>اختبار تطبيقات الويب</td><td class="field-value">_________</td></tr>
+        <tr><td>OWASP ZAP</td><td>تحليل أمن تطبيقات الويب</td><td class="field-value">_________</td></tr>
+        <tr><td>Nikto</td><td>فحص خوادم الويب</td><td class="field-value">_________</td></tr>
+        <tr><td rowspan="2">اختبار الشبكة</td><td>Nmap</td><td>فحص المنافذ والخدمات</td><td class="field-value">_________</td></tr>
+        <tr><td>Masscan</td><td>الفحص السريع</td><td class="field-value">_________</td></tr>
+        <tr><td rowspan="2">الاستغلال</td><td>Metasploit Framework</td><td>اختبار الاستغلال</td><td class="field-value">_________</td></tr>
+        <tr><td>Cobalt Strike</td><td>محاكاة الهجمات (بالتنسيق)</td><td class="field-value">_________</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🛠️ أدوات إضافية — برمجيات متخصصة (بالتنسيق):</strong>
+      <ul>
+        <li>الهندسة الاجتماعية: SET, Gophish (بإذن صريح فقط)</li>
+        <li>الشبكات اللاسلكية: Aircrack-ng, Kismet</li>
+        <li>تطبيقات الجوال: MobSF, Frida</li>
+        <li>أمن السحابة: ScoutSuite, Prowler</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <strong>⚠️ قيود الأدوات — الأدوات المحظورة أو المقيَّدة:</strong>
+      <ul>
+        <li>أدوات هجمات DDoS</li>
+        <li>الماسحات غير المُفوَّضة بإعدادات عدوانية</li>
+        <li>أدوات كسر كلمات المرور دون قيود سرعة</li>
+        <li>أي برمجيات غير منسَّق عليها مع العميل</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 9. تعريف فريق الاختبار -->
+  <div class="section">
+    <h2>تعريف فريق الاختبار</h2>
+    <div class="info-box"><strong>🔍 القوائم البيضاء لأنظمة الحماية — حرج لمنع حجب الاختبار المُصرَّح به:</strong></div>
+    <table>
+      <thead><tr><th>معامل التعريف</th><th>القيمة</th><th>الغرض</th></tr></thead>
+      <tbody>
+        <tr><td>عناوين IP المصدر</td><td class="field-value">_________________________</td><td>IP ثابتة للإضافة إلى القوائم البيضاء لـ WAF/IPS</td></tr>
+        <tr><td>نطاقات الشبكة الفرعية</td><td class="field-value">_________________________</td><td>شبكات الفريق الإضافية</td></tr>
+        <tr><td>سلاسل User-Agent</td><td class="field-value">_________________________</td><td>معرّفات خاصة لماسحات الويب</td></tr>
+        <tr><td>مفاتيح SSH</td><td class="field-value">_________________________</td><td>المفاتيح العامة للوصول المُفوَّض</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🏷️ معرّفات خاصة — علامات للتسجيل والمراقبة:</strong>
+      <ul>
+        <li>بادئة طلبات الاختبار: <span class="field-value">_________________________</span></li>
+        <li>رؤوس HTTP خاصة: <span class="field-value">_________________________</span></li>
+        <li>معرّفات الجلسات: <span class="field-value">_________________________</span></li>
+        <li>علامات في الحمولة: <span class="field-value">_________________________</span></li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <strong>📞 التنسيق مع الفريق الأزرق — التعاون مع فريق الدفاع:</strong>
+      <ul>
+        <li>إشعار مسبق ببدء الاختبار</li>
+        <li>قائمة جهات الاتصال في مركز عمليات الأمن (SOC)</li>
+        <li>إجراء تأكيد شرعية النشاط</li>
+        <li>بروتوكول الإيقاف الطارئ للاختبار</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 10. تعريف الاختبارات الخطرة -->
+  <div class="section">
+    <h2>تعريف الاختبارات الخطرة</h2>
+    <div class="warn-box"><strong>⚠️ تصنيف العمليات المحفوفة بالمخاطر — اختبارات عالية المخاطر تستلزم اهتماماً خاصاً:</strong></div>
+    <table>
+      <thead><tr><th>فئة الاختبار</th><th>الوصف</th><th>نافذة التنفيذ</th><th>تدابير إضافية</th></tr></thead>
+      <tbody>
+        <tr><td>هجمات القوة الغاشمة</td><td>تخمين كلمات المرور وأرقام PIN</td><td>أوقات غير العمل فقط</td><td>تحديد السرعة، مراقبة الإغلاقات</td></tr>
+        <tr><td>Fuzzing التطبيقات</td><td>إرسال بيانات غير صحيحة</td><td class="field-value">_________________________</td><td>مراقبة استقرار النظام</td></tr>
+        <tr><td>استغلال الثغرات</td><td>تنفيذ إثبات المفهوم</td><td>بالتنسيق</td><td>إشعار فوري عند النجاح</td></tr>
+        <tr><td>اختبار DoS</td><td>اختبار مقاومة التحميل</td><td>في البيئة التجريبية فقط</td><td>تنسيق مسبق</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🕐 نوافذ الصيانة للاختبارات الحرجة — فترات زمنية خاصة:</strong>
+      <ul>
+        <li>النافذة الرئيسية للاختبارات عالية المخاطر: <span class="field-value">_________________________</span></li>
+        <li>النافذة الاحتياطية: <span class="field-value">_________________________</span></li>
+        <li>النافذة الطارئة (بالتنسيق): <span class="field-value">_________________________</span></li>
+        <li>الفترات المحظورة: <span class="field-value">_________________________</span></li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <strong>👥 الاختبار على جانب العميل — حماية المستخدمين النهائيين:</strong>
+      <ul>
+        <li>محاكاة التصيد الاحتيالي: بموافقة كتابية من HR فقط</li>
+        <li>اختبار المتصفحات: أجهزة اختبار معزولة</li>
+        <li>الهندسة الاجتماعية: نطاق مقيَّد بصرامة</li>
+        <li>حماية البيانات الشخصية: تجنب الوصول للمعلومات الشخصية</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 11. المنهجية التقنية -->
+  <div class="section">
+    <h2>المنهجية التقنية</h2>
+    <div class="info-box"><strong>📊 المعايير والتصنيفات — المعايير الدولية المستخدمة:</strong></div>
+    <table>
+      <thead><tr><th>المعيار</th><th>الإصدار</th><th>التطبيق</th></tr></thead>
+      <tbody>
+        <tr><td>CVSS</td><td>v3.1/4.0</td><td>تقييم أهمية الثغرات</td></tr>
+        <tr><td>OWASP Top 10</td><td>2021</td><td>تطبيقات الويب</td></tr>
+        <tr><td>NIST Cybersecurity Framework</td><td>v1.1</td><td>المنهجية العامة</td></tr>
+        <tr><td>OSSTMM</td><td>v3</td><td>منهجية الاختبار</td></tr>
+        <tr><td>PTES</td><td>v1.0</td><td>معيار اختبار الاختراق</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🔍 نموذج الاختبار — مستوى الوصول للمعلومات:</strong>
+      <ul>
+        <li>☐ الصندوق الأسود — بدون معرفة مسبقة بالنظام</li>
+        <li>☐ الصندوق الرمادي — بوصول جزئي للوثائق/البنية</li>
+        <li>☐ الصندوق الأبيض — بوصول كامل للكود والبنية</li>
+      </ul>
+      <p style="margin-top:8px;">النموذج المختار: <span class="field-value">_________________________</span></p>
+    </div>
+    <div class="info-box">
+      <strong>📈 تقييم CVSS — معايير تقييم الثغرات:</strong>
+      <ul>
+        <li>المقاييس الأساسية: متجه الهجوم، التعقيد، الامتيازات، تفاعل المستخدم</li>
+        <li>المقاييس الزمنية: توفر الاستغلال، مستوى الإصلاح</li>
+        <li>المقاييس البيئية: التأثير على بيئة العميل المحددة</li>
+        <li>القيم العتبية: P0 (9.0–10.0), P1 (7.0–8.9), P2 (4.0–6.9), P3 (0.1–3.9)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 12. جوانب قانونية إضافية -->
+  <div class="section">
+    <h2>جوانب قانونية إضافية</h2>
+    <div class="info-box">
+      <strong>🌍 النقل العابر للحدود — الامتثال الدولي:</strong>
+      عند العمل مع فرق اختبار دولية، يُضمن الامتثال لمتطلبات GDPR وCCPA وغيرها من أنظمة حماية البيانات المعمول بها.
+      <ul style="margin-top:8px;">
+        <li>دولة مقر الفريق: <span class="field-value">_________________________</span></li>
+        <li>التشريع المطبَّق: <span class="field-value">_________________________</span></li>
+        <li>آليات نقل البيانات: Standard Contractual Clauses (SCC) / Adequacy Decision</li>
+        <li>توطين البيانات: <span class="field-value">_________________________</span></li>
+      </ul>
+    </div>
+    <h3>الامتثال للمعايير الدولية</h3>
+    <table>
+      <thead><tr><th>المعيار / التنظيم</th><th>حالة الامتثال</th><th>ملاحظات</th></tr></thead>
+      <tbody>
+        <tr><td>GDPR (EU)</td><td class="field-value">_________________________</td><td>حماية البيانات الشخصية</td></tr>
+        <tr><td>ISO 27001</td><td class="field-value">_________________________</td><td>نظام إدارة أمن المعلومات</td></tr>
+        <tr><td>SOC 2 Type II</td><td class="field-value">_________________________</td><td>ضوابط الأمن</td></tr>
+        <tr><td>PCI DSS</td><td class="field-value">_________________________</td><td>أنظمة الدفع</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🔍 حق التدقيق — يحق للعميل:</strong>
+      <ul>
+        <li>التحقق من إجراءات حذف البيانات بعد انتهاء المشروع</li>
+        <li>طلب تأكيد إتلاف المعلومات السرية</li>
+        <li>إجراء تدقيق على تدابير أمن فريق الاختبار</li>
+        <li>الحصول على شهادات الامتثال للمعايير المنطبقة</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 13. عملية الاستجابة للحالات الحرجة -->
+  <div class="section">
+    <h2>عملية الاستجابة للحالات الحرجة</h2>
+    <div class="danger-box">
+      <strong>🚨 خوارزمية الاستجابة الطارئة — الإجراء خطوة بخطوة للحوادث الحرجة:</strong>
+      <ol>
+        <li>اكتشاف الحالة الحرجة</li>
+        <li>إيقاف الاختبار فوراً</li>
+        <li>إشعار العميل (خلال 15 دقيقة)</li>
+        <li>تقييم التأثير والضرر</li>
+        <li>اتخاذ القرار بشأن الاستمرار</li>
+        <li>توثيق الحادثة</li>
+        <li>تحليل الأسباب واتخاذ الإجراءات التصحيحية</li>
+      </ol>
+    </div>
+    <h3>مصفوفة التصعيد</h3>
+    <table>
+      <thead><tr><th>المستوى</th><th>وقت الاستجابة</th><th>طريقة التواصل</th><th>المسؤول</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-p0">P0 - حرج</span></td><td>15 دقيقة</td><td>هاتف + SMS + بريد إلكتروني</td><td class="field-value">_________________________</td></tr>
+        <tr><td><span class="badge badge-p1">P1 - عالٍ</span></td><td>1 ساعة</td><td>هاتف + بريد إلكتروني</td><td class="field-value">_________________________</td></tr>
+        <tr><td><span class="badge badge-p2">P2 - متوسط</span></td><td>4 ساعات</td><td>بريد إلكتروني + Slack/Teams</td><td class="field-value">_________________________</td></tr>
+        <tr><td><span class="badge badge-p3">P3 - منخفض</span></td><td>24 ساعة</td><td>بريد إلكتروني</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <div class="danger-box">
+      <strong>🛑 معايير إيقاف الاختبار — المحفزات التلقائية لإيقاف العمل:</strong>
+      <ul>
+        <li>عدم توفر الخدمات الحرجة لأكثر من 5 دقائق</li>
+        <li>اكتشاف استغلال نشط للثغرات من قِبل أطراف ثالثة</li>
+        <li>تجاوز حدود الحمل المتفق عليها</li>
+        <li>طلب الإيقاف من أي ممثل مُفوَّض</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 14. التعامل مع الأدلة والتنظيف -->
+  <div class="section">
+    <h2>التعامل مع الأدلة والتنظيف</h2>
+    <div class="info-box"><strong>🔒 بروتوكول التعامل مع الأدلة — متطلبات أمنية صارمة:</strong></div>
+    <table>
+      <thead><tr><th>المرحلة</th><th>المتطلبات</th><th>المسؤول</th></tr></thead>
+      <tbody>
+        <tr><td>الجمع</td><td>التشفير، التجزئة، الطوابع الزمنية</td><td>المختبِر</td></tr>
+        <tr><td>التخزين</td><td>مستودع معزول، التحكم بالوصول</td><td>مدير المشروع</td></tr>
+        <tr><td>النقل</td><td>قنوات آمنة، تأكيد الاستلام</td><td>كلا الطرفين</td></tr>
+        <tr><td>الإتلاف</td><td>حذف لا رجعة فيه، شهادة الإتلاف</td><td>فريق الاختبار</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🧹 خطة التنظيف بعد الاختبار — الإجراءات الإلزامية:</strong>
+      <p style="margin-top:8px;"><em>حذف العناصر المُنشأة:</em></p>
+      <ul class="checklist">
+        <li>حسابات المستخدمين التجريبية</li>
+        <li>الملفات والسكريبتات المرفوعة</li>
+        <li>الإعدادات المؤقتة</li>
+        <li>قواعد البيانات والجداول التجريبية</li>
+      </ul>
+      <p style="margin-top:8px;"><em>استعادة الحالة الأصلية:</em></p>
+      <ul class="checklist">
+        <li>التراجع عن تغييرات الإعدادات</li>
+        <li>حذف الشهادات التجريبية</li>
+        <li>تنظيف سجلات الاختبار (بالتنسيق)</li>
+        <li>استعادة النسخ الاحتياطية (عند الضرورة)</li>
+      </ul>
+    </div>
+    <div class="ok-box">
+      <strong>📜 شهادة إتلاف البيانات — عند انتهاء المشروع يقدم فريق الاختبار:</strong>
+      <ul>
+        <li>شهادة الحذف الكامل لا رجعة فيه لجميع بيانات العميل</li>
+        <li>تقرير بإجراءات التنظيف المنفَّذة</li>
+        <li>تأكيد الامتثال لمعايير إتلاف البيانات (DoD 5220.22-M أو ما يعادلها)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 15. جدول الاختبار -->
+  <div class="section">
+    <h2>جدول الاختبار</h2>
+    <table>
+      <thead><tr><th>المعامل</th><th>القيمة</th></tr></thead>
+      <tbody>
+        <tr><td>تاريخ البدء</td><td class="field-value">_________________________</td></tr>
+        <tr><td>تاريخ الانتهاء</td><td class="field-value">_________________________</td></tr>
+        <tr><td>نافذة العمل</td><td class="field-value">_________________________</td></tr>
+        <tr><td>المنطقة الزمنية</td><td class="field-value">_________________________</td></tr>
+        <tr><td>الإحاطة اليومية</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>💡 بروتوكول التواصل — التحديثات المنتظمة:</strong>
+      <ul>
+        <li>تقارير الحالة اليومية</li>
+        <li>ملخصات التقدم الأسبوعية</li>
+        <li>إشعارات طارئة عند النتائج الحرجة</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 16. التعامل مع الحوادث -->
+  <div class="section">
+    <h2>التعامل مع الحوادث</h2>
+    <h3>إجراء الاستجابة للحوادث</h3>
+    <p>في حالة عدم استقرار النظام أثناء الاختبار:</p>
+    <ol>
+      <li>إيقاف الاختبار فوراً من قِبل الفريق</li>
+      <li>إشعار منظمة العميل</li>
+      <li>اتخاذ قرار الاستمرار من قِبل جهة الاتصال الطارئة</li>
+      <li>توثيق الحادثة</li>
+    </ol>
+    <div class="warn-box">
+      <strong>🔍 معايير إيقاف الاختبار — شروط إيقاف العمل:</strong>
+      <ul>
+        <li>اكتشاف ثغرات حرجة</li>
+        <li>عدم استقرار الأنظمة الإنتاجية</li>
+        <li>تجاوز نطاق الاختبار المتفق عليه</li>
+        <li>طلب من العميل</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 17. التعامل مع البيانات والسرية -->
+  <div class="section">
+    <h2>التعامل مع البيانات والسرية</h2>
+    <div class="info-box">
+      <strong>السرية — الأولوية الأولى عند التعامل مع أي معلومات</strong>
+      <p style="margin-top:8px;"><em>التزامات فريق الاختبار:</em></p>
+      <ul>
+        <li>عدم حفظ البيانات الحساسة دون ضرورة</li>
+        <li>تشفير جميع البيانات المجمَّعة</li>
+        <li>حذف البيانات بعد تسليم التقرير</li>
+        <li>تجنب الوصول للبيانات الشخصية</li>
+      </ul>
+    </div>
+    <div class="ok-box">
+      <strong>اتفاقية عدم الإفصاح — يلتزم جميع المشاركين في الاختبار بـ:</strong>
+      <ul>
+        <li>الحفاظ على سرية المعلومات المُتلقَّاة</li>
+        <li>عدم إفصاح النتائج لأطراف ثالثة</li>
+        <li>استخدام البيانات لأغراض الاختبار حصراً</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 18. متطلبات إعداد التقارير -->
+  <div class="section">
+    <h2>متطلبات إعداد التقارير</h2>
+    <div class="two-col">
+      <div class="info-box">
+        <strong>التقارير المرحلية:</strong>
+        <ul>
+          <li>تحديثات يومية أو أسبوعية</li>
+          <li>حالة تنفيذ المهام</li>
+          <li>النتائج الأولية</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <strong>التقارير النهائية:</strong>
+        <ul>
+          <li>التقرير التقني — وصف مفصَّل للثغرات</li>
+          <li>التقرير الإداري — توصيات للإدارة</li>
+          <li>الملخص التنفيذي — نظرة عامة موجزة للمدراء</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      <strong>📊 صيغة عرض النتائج — الهيكل الموحَّد:</strong>
+      <ul>
+        <li>تصنيف الثغرات حسب الأهمية</li>
+        <li>توصيات المعالجة</li>
+        <li>الأطر الزمنية للإصلاح</li>
+        <li>مقاييس الأمن</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 19. قبول المخاطر -->
+  <div class="section">
+    <h2>قبول المخاطر</h2>
+    <div class="ok-box">
+      <strong>تأكيد منظمة العميل — تُقرّ منظمة العميل بفهمها أن:</strong>
+      <ul>
+        <li>الاختبار قد يكشف عن ثغرات حرجة</li>
+        <li>بعض الاختبارات قد تُسبب انخفاضاً مؤقتاً في الأداء</li>
+        <li>جميع الإجراءات مُفوَّضة ومنسَّق عليها</li>
+        <li>النتائج ستُستخدم لتحسين الأمن</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 20. قائمة التحقق من الجاهزية -->
+  <div class="section">
+    <h2>قائمة التحقق من الجاهزية للاختبار</h2>
+    <div class="two-col">
+      <div>
+        <h3>أنشطة التحضير</h3>
+        <ul class="checklist">
+          <li>تحديد نطاق الاختبار</li>
+          <li>تعيين جهات الاتصال المسؤولة</li>
+          <li>التنسيق على الجدول الزمني</li>
+          <li>توقيع جميع الوثائق اللازمة</li>
+          <li>إعداد قنوات التواصل</li>
+          <li>تجهيز البيئة التجريبية (عند الضرورة)</li>
+          <li>إحاطة فريق الاختبار</li>
+        </ul>
+      </div>
+      <div>
+        <h3>نقاط التحكم أثناء الاختبار</h3>
+        <ul class="checklist">
+          <li>اجتماعات الحالة اليومية</li>
+          <li>مراقبة الأنظمة الإنتاجية</li>
+          <li>توثيق جميع الإجراءات</li>
+          <li>الالتزام بالأطر الزمنية</li>
+          <li>التواصل المنتظم مع العميل</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 21. التوقيعات والموافقات -->
+  <div class="section">
+    <h2>التوقيعات والموافقات</h2>
+    <div class="two-col">
+      <div>
+        <h3>ممثل منظمة العميل</h3>
+        <table>
+          <tbody>
+            <tr><td>الاسم والمنصب</td><td class="field-value">_________________________</td></tr>
+            <tr><td>التوقيع</td><td class="field-value">_________________________</td></tr>
+            <tr><td>التاريخ</td><td class="field-value">_________________________</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>قائد فريق الاختبار</h3>
+        <table>
+          <tbody>
+            <tr><td>الاسم والمنصب</td><td class="field-value">_________________________</td></tr>
+            <tr><td>التوقيع</td><td class="field-value">_________________________</td></tr>
+            <tr><td>التاريخ</td><td class="field-value">_________________________</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 22. نموذج الاتصال للحالات الطارئة -->
+  <div class="section" style="background:#e8f4fb; border-right:6px solid #1a6fa6; border-left:none;">
+    <h2>نموذج الاتصال للحالات الطارئة</h2>
+    <div class="info-box"><strong>معلومات للاستجابة السريعة:</strong></div>
+    <table>
+      <thead><tr><th>المعامل</th><th>بيانات الاتصال</th></tr></thead>
+      <tbody>
+        <tr><td>جهة الاتصال الرئيسية للعميل</td><td class="field-value">_________________________</td></tr>
+        <tr><td>جهة الاتصال الاحتياطية للعميل</td><td class="field-value">_________________________</td></tr>
+        <tr><td>قائد فريق الاختبار</td><td class="field-value">_________________________</td></tr>
+        <tr><td>الخط الطارئ 24/7</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <h3>إجراء الاتصال الطارئ</h3>
+    <ol>
+      <li>الاتصال الأوّلي — الممثل الرئيسي للعميل</li>
+      <li>عند عدم التوفر — جهة الاتصال الاحتياطية</li>
+      <li>الحالات الحرجة — الخط الطارئ 24/7</li>
+      <li>توثيق جميع المراسلات</li>
+    </ol>
+  </div>
+
+  <footer>
+    هذه الوثيقة اتفاقية ملزمة قانونياً بين الطرفين ويجب أن يوقّعها جميع المشاركين في عملية اختبار الاختراق.<br>
+    قواعد الاشتباك: اختبار الاختراق وتقييم الأمن | 2025-12-21
+  </footer>
+
+</main>
+</body>
+</html>

@@ -1,51 +1,34 @@
 ---
 layout: default
 title: Whitepaper
-permalink: /whitepaper/
+permalink: /ru/whitepaper/
+lang: ru
+translation_key: whitepaper
 ---
 
-# 📘 White Paper / Вводные документы / الورقة البيضاء
+# 📘 Вводные документы (White Paper)
 
 ---
 
-## 🇬🇧 EN
-
-This section contains **introductory white papers** that define the environment, ownership, scope, and rules of engagement for security assessments and penetration testing.  
-These documents help auditors understand the system, responsibilities, and constraints before starting any work.
-
-## 🇷🇺 RU
+## О разделе
 
 Этот раздел содержит **вводные документы (white papers)**, описывающие окружение, владельцев, зоны ответственности и правила проведения аудита безопасности.  
 Документы предназначены для подготовки к аудиту и помогают определить границы, риски и правила взаимодействия.
 
-## 🇸🇦 AR
-
-يحتوي هذا القسم على **الورقة البيضاء** التي توضح البيئة، المالكين، نطاق العمل، وقواعد تنفيذ تدقيق الأمن السيبراني.  
-تهدف هذه الوثائق إلى توفير فهم شامل قبل بدء أي اختبار أو تقييم.
-
 ---
 
-## 📁 Documents / Документы / الوثائق
+## 📁 Документы
 
-| Language | .PDF | .HTML |
-|----------|------|-------|
+| Язык | .PDF | .HTML |
+|------|------|-------|
 | 🇷🇺 Русский | [whitepaper-ru.pdf](/whitepaper/ru/whitepaper-ru.pdf) | [whitepaper-ru.html](/whitepaper/ru/whitepaper-ru.html) |
 | 🇬🇧 English | [whitepaper-en.pdf](/whitepaper/en/whitepaper-en.pdf) | [whitepaper-en.html](/whitepaper/en/whitepaper-en.html) |
 | 🇸🇦 العربية | [whitepaper-ar.pdf](/whitepaper/ar/whitepaper-ar.pdf) | [whitepaper-ar.html](/whitepaper/ar/whitepaper-ar.html) |
 
 ---
 
-## 📌 Purpose / Назначение / الهدف
+## 📌 Назначение
 
-### 🇬🇧 EN
-- Define system ownership and responsibilities
-- Establish scope and boundaries
-- Describe allowed and prohibited testing activities
-- Provide emergency contacts and escalation rules
-- Ensure legal and operational safety
-- Align expectations between the organization and the testing team
-
-### 🇷🇺 RU
 - Определить владельцев системы и зоны ответственности
 - Установить область аудита и границы тестирования
 - Описать разрешённые и запрещённые виды тестирования
@@ -53,17 +36,9 @@ These documents help auditors understand the system, responsibilities, and const
 - Обеспечить юридическую и операционную безопасность
 - Согласовать ожидания между организацией и командой тестирования
 
-### 🇸🇦 AR
-- تحديد مالكي النظام ومسؤولياتهم
-- وضع نطاق العمل والحدود التشغيلية
-- وصف الأنشطة المسموح بها والممنوعة أثناء الاختبار
-- توفير جهات الاتصال الطارئة وقواعد التصعيد
-- ضمان السلامة القانونية والتشغيلية
-- مواءمة التوقعات بين المؤسسة وفريق الاختبار
-
 ---
 
-## 🧭 Structure / Структура / الهيكل
+## 🧭 Структура
 
 ```
 📘 whitepaper/

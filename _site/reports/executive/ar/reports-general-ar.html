@@ -172,55 +172,157 @@
     </div>
 
     <div class="section">
-      <h2>التوصيات الاستراتيجية</h2>
+      <h2>سيناريوهات الهجوم وعواقبها التجارية</h2>
 
-      <h3 style="color: #0277bd;">خطة العمل الفورية (فترة 01 - 02 يوم)</h3>
-      <div class="action-item">
-        <strong>1️⃣ إغلاق المنافذ غير المصرح</strong>
-        <p>إزالة/تعطيل المنافذ 8080 و 8443 من التكوين العام. التأثير الفوري على تقليل سطح الهجوم بنسبة 40%.</p>
+      <h3>🎯 السيناريو 1: "تجاوز الحماية عبر المنفذ 8080"</h3>
+      <div style="background: #f8f9fa; padding: 20px; border-right: 4px solid #c0392b; border-radius: 4px; margin: 15px 0;">
+        <p><strong>متجه الهجوم:</strong></p>
+        <ol style="margin-top: 10px; padding-right: 20px;">
+          <li>يكتشف المهاجم المنفذ المفتوح 8080 (نقطة دخول بديلة)</li>
+          <li>يستخدمه لتجاوز نظام حماية Cloudflare</li>
+          <li>يحصل على وصول إلى لوحة إدارة WordPress</li>
+          <li>يثبت برامج خبيثة ويسرق قاعدة بيانات العملاء</li>
+        </ol>
       </div>
+      <p><strong style="color: #c0392b;">التأثير التجاري:</strong></p>
+      <ul>
+        <li>⏱️ <strong>مدة الهجوم:</strong> 2-4 ساعات</li>
+        <li>💰 <strong>الخسائر المباشرة:</strong> €2-5M (غرامات + استعادة)</li>
+        <li>📉 <strong>فقدان العملاء:</strong> 15-30% خلال عام</li>
+        <li>🏛️ <strong>عقوبات تنظيمية:</strong> تحقيق GDPR، تعليق محتمل</li>
+      </ul>
 
-      <div class="action-item">
-        <strong>2️⃣ تأمين WordPress</strong>
-        <p>فرض المصادقة على /wp-admin/، تحديث جميع المكونات، مسح الملفات الضارة المحتملة.</p>
+      <h3 style="margin-top: 30px;">🎯 السيناريو 2: "اختراق WordPress"</h3>
+      <div style="background: #f8f9fa; padding: 20px; border-right: 4px solid #c0392b; border-radius: 4px; margin: 15px 0;">
+        <p><strong>متجه الهجوم:</strong></p>
+        <ol style="margin-top: 10px; padding-right: 20px;">
+          <li>يحدد المهاجم لوحة إدارة WordPress (/wp-admin/)</li>
+          <li>يشن هجوم قوة غاشمة على كلمات المرور</li>
+          <li>يحصل على التحكم في الموقع</li>
+          <li>ينشر محتوى خبيثاً أو يطلب فدية</li>
+        </ol>
       </div>
+      <p><strong style="color: #c0392b;">التأثير التجاري:</strong></p>
+      <ul>
+        <li>⏱️ <strong>مدة الهجوم:</strong> 6-24 ساعة</li>
+        <li>💰 <strong>الخسائر المباشرة:</strong> €100K-500K</li>
+        <li>🔒 <strong>طلب الفدية:</strong> €50K-200K</li>
+        <li>📰 <strong>فضيحة إعلامية:</strong> تغطية سلبية، أضرار سمعة</li>
+      </ul>
+    </div>
 
-      <div class="action-item">
-        <strong>3️⃣ فعل رؤوس الأمان الأساسية</strong>
-        <p>تطبيق Strict-Transport-Security و X-Frame-Options و Content-Security-Policy على جميع الاستجابات.</p>
-      </div>
+    <div class="section">
+      <h2>تقييم نضج الأمان</h2>
+      <p style="font-size: 1.05em; margin-bottom: 20px;"><strong>المستوى الحالي:</strong> <span style="color: #c0392b; font-weight: 700; font-size: 1.2em;">2/5 (ابتدائي)</span></p>
+      <table>
+        <thead><tr><th>المجال</th><th>الوضع الحالي</th><th>المستوى المستهدف</th><th>الفجوة</th></tr></thead>
+        <tbody>
+          <tr class="critical-row"><td><strong>إدارة المخاطر</strong></td><td>🔴 غائب</td><td>🟢 محسّن</td><td><span class="badge badge-critical">حرج</span></td></tr>
+          <tr><td><strong>حماية المحيط</strong></td><td>🟡 أساسي</td><td>🟢 متقدم</td><td><span class="badge badge-high">كبير</span></td></tr>
+          <tr class="critical-row"><td><strong>المراقبة</strong></td><td>🔴 غائب</td><td>🟢 مستمر</td><td><span class="badge badge-critical">حرج</span></td></tr>
+          <tr class="critical-row"><td><strong>الاستجابة للحوادث</strong></td><td>🔴 غائب</td><td>🟢 آلي</td><td><span class="badge badge-critical">حرج</span></td></tr>
+          <tr><td><strong>الامتثال للمعايير</strong></td><td>🟡 جزئي</td><td>🟢 كامل</td><td><span class="badge badge-medium">معتدل</span></td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <h3 style="color: #0277bd; margin-top: 30px;">المرحلة 1 : تعزيز قصير الأجل (1-2 أسبوع)</h3>
-      <div class="action-item">
-        <strong>📊 تحسين التشفير</strong>
-        <p>ترقية أجنحة TLS إلى الإصدارات الحديثة فقط (TLS 1.3، AES-GCM). وقف استخدام وضع CBC.</p>
-      </div>
+    <div class="section">
+      <h2>الامتثال التنظيمي</h2>
+      <table>
+        <thead><tr><th>المعيار</th><th>الحالة الحالية</th><th>الإجراءات المطلوبة</th><th>الموعد</th></tr></thead>
+        <tbody>
+          <tr><td><strong>GDPR</strong></td><td><span class="badge badge-high">⚠️ جزئي</span></td><td>تعزيز حماية البيانات</td><td>30 يوماً</td></tr>
+          <tr class="critical-row"><td><strong>ISO 27001</strong></td><td><span class="badge badge-critical">❌ غير متطابق</span></td><td>تنفيذ ISMS</td><td>6 أشهر</td></tr>
+          <tr><td><strong>NIST CSF</strong></td><td><span class="badge badge-high">⚠️ مستوى 2/5</span></td><td>تحقيق مستوى 4/5</td><td>3 أشهر</td></tr>
+          <tr><td><strong>PCI DSS</strong></td><td><span class="badge badge-medium">❓ يتطلب تقييماً</span></td><td>إجراء تدقيق</td><td>60 يوماً</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="action-item">
-        <strong>🔒 شهادة SSL/TLS</strong>
-        <p>التحقق من صحة الشهادة، تفعيل HSTS Preload، ضمان التجديد التلقائي.</p>
-      </div>
+    <div class="section">
+      <h2>الثغرات الحرجة (P0 و P1)</h2>
+      <h3 style="color: #c0392b;">🔴 الأولوية P0 (فوراً - 24 ساعة)</h3>
+      <div class="risk-box"><h4>1. "الأبواب الخلفية" المفتوحة</h4><ul style="margin-top: 10px;"><li><strong>المشكلة:</strong> المنافذ 8080 و 8443 توفر نقاط دخول بديلة</li><li><strong>مخاطر العمل:</strong> تجاوز جميع أنظمة الحماية</li><li><strong>الحل:</strong> إغلاق المنافذ غير المستخدمة</li><li><strong>الميزانية:</strong> €0 (تغيير تكوين)</li><li><strong>المسؤول:</strong> CTO + مسؤول النظام</li></ul></div>
+      <div class="risk-box"><h4>2. لوحة إدارة غير محمية</h4><ul style="margin-top: 10px;"><li><strong>المشكلة:</strong> لوحة WordPress متاحة للجميع</li><li><strong>مخاطر العمل:</strong> اختراق كامل للموقع</li><li><strong>الحل:</strong> تقييد الوصول + مصادقة ثنائية</li><li><strong>الميزانية:</strong> €2,000-5,000</li><li><strong>المسؤول:</strong> CTO + مدير تقنية المعلومات</li></ul></div>
 
-      <div class="action-item">
-        <strong>⚙️ قواعد جدار الحماية المتقدمة</strong>
-        <p>تفعيل قواعد Cloudflare WAF لمنع هجمات WordPress والاستكشاف الآلي.</p>
-      </div>
+      <h3 style="color: #e65100; margin-top: 30px;">🟠 الأولوية P1 (أسبوع واحد)</h3>
+      <div class="risk-box"><h4>3. غياب نظام الإنذار المبكّر</h4><ul style="margin-top: 10px;"><li><strong>المشكلة:</strong> الهجمات قد تظل غير مكتشفة لساعات</li><li><strong>مخاطر العمل:</strong> زيادة الأضرار 5-10 مرات</li><li><strong>الحل:</strong> تنفيذ SOC</li><li><strong>الميزانية:</strong> €15,000-30,000/سنة</li></ul></div>
+      <div class="risk-box"><h4>4. بروتوكولات تشفير قديمة</h4><ul style="margin-top: 10px;"><li><strong>المشكلة:</strong> خوارزميات تشفير ضعيفة</li><li><strong>مخاطر العمل:</strong> اعتراض البيانات السرية</li><li><strong>الحل:</strong> تحديث تكوين SSL/TLS</li><li><strong>الميزانية:</strong> €3,000-8,000</li></ul></div>
+    </div>
 
-      <h3 style="color: #0277bd; margin-top: 30px;">الرؤية الطويلة الأجل (3-12 شهر)</h3>
-      <div class="action-item">
-        <strong>📈 برنامج مراقبة أمان شامل</strong>
-        <p>نشر أداة مراقبة أمان المعلومات SIEM، التنبيهات الفورية، الاستجابة التلقائية للحوادث.</p>
-      </div>
+    <div class="section">
+      <h2>التوصيات التنفيذية</h2>
+      <h3>القرارات الفورية (تتطلب موافقة CEO)</h3>
+      <div class="action-item"><h4>1. تشكيل فريق الاستجابة للأزمات</h4><ul style="margin-top: 10px;"><li><strong>التشكيلة:</strong> CTO، CISO، مستشار قانوني، مدير علاقات عامة</li><li><strong>الميزانية:</strong> €10,000</li><li><strong>الموعد:</strong> تشكيل خلال 24 ساعة</li></ul></div>
+      <div class="action-item"><h4>2. تدقيق طارئ لجميع أنظمة تكنولوجيا المعلومات</h4><ul style="margin-top: 10px;"><li><strong>الهدف:</strong> اكتشاف مشاكل مماثلة</li><li><strong>الميزانية:</strong> €25,000-50,000</li><li><strong>الموعد:</strong> أسبوعان</li></ul></div>
+      <div class="action-item"><h4>3. تنفيذ نظام مراقبة 24/7</h4><ul style="margin-top: 10px;"><li><strong>الهدف:</strong> اكتشاف الهجمات فورياً</li><li><strong>الميزانية:</strong> €20,000-40,000/سنة</li><li><strong>الموعد:</strong> 30 يوماً</li></ul></div>
 
-      <div class="action-item">
-        <strong>✅ شهادات الامتثال</strong>
-        <p>تحقيق ISO 27001, PCI DSS Level 1, GDPR الكامل، مراجعة منتظمة.</p>
-      </div>
+      <h3 style="margin-top: 30px;">المبادرات الاستراتيجية (3-6 أشهر)</h3>
+      <div class="action-item"><h4>4. برنامج تعزيز نضج الأمان</h4><ul style="margin-top: 10px;"><li><strong>الهدف:</strong> تحقيق مستوى 4/5 بحسب NIST CSF</li><li><strong>الميزانية:</strong> €100,000-200,000</li><li><strong>ROI:</strong> تخفيض المخاطر بقيمة €5-10M</li></ul></div>
+      <div class="action-item"><h4>5. شهادة ISO 27001</h4><ul style="margin-top: 10px;"><li><strong>الهدف:</strong> إظهار مستوى أمان عالٍ</li><li><strong>الميزانية:</strong> €50,000-80,000</li><li><strong>الموعد:</strong> 6-9 أشهر</li></ul></div>
+    </div>
 
-      <div class="action-item">
-        <strong>🎓 تدريب الموظفين</strong>
-        <p>برنامج توعية أمان دوري، اختبارات الهندسة الاجتماعية، عمليات تدقيق أمان سنوية.</p>
-      </div>
+    <div class="section">
+      <h2>الميزانية والموارد</h2>
+      <h3>الاستثمارات الطارئة (0-30 يوماً)</h3>
+      <table>
+        <thead><tr><th>البند</th><th>المبلغ</th><th>المبرر</th></tr></thead>
+        <tbody>
+          <tr><td><strong>فريق الأزمة</strong></td><td>€10,000</td><td>تنسيق إزالة التهديدات</td></tr>
+          <tr><td><strong>تدقيق طارئ</strong></td><td>€40,000</td><td>تحديد جميع الثغرات</td></tr>
+          <tr><td><strong>SOC</strong></td><td>€30,000</td><td>مراقبة 24/7</td></tr>
+          <tr><td><strong>استشارات خبراء</strong></td><td>€15,000</td><td>دعم تقني</td></tr>
+          <tr class="critical-row"><td><strong>المجموع الطارئ</strong></td><td><strong>€95,000</strong></td><td><strong>يمنع أضراراً بقيمة €20M+</strong></td></tr>
+        </tbody>
+      </table>
+      <h3 style="margin-top: 30px;">الاستثمارات الاستراتيجية (3-12 شهراً)</h3>
+      <table>
+        <thead><tr><th>البند</th><th>المبلغ</th><th>ROI</th></tr></thead>
+        <tbody>
+          <tr><td><strong>برنامج نضج الأمان</strong></td><td>€150,000</td><td>تخفيض مخاطر بقيمة €8M</td></tr>
+          <tr><td><strong>شهادة ISO 27001</strong></td><td>€65,000</td><td>مزايا تنافسية</td></tr>
+          <tr><td><strong>تدريب الموظفين</strong></td><td>€25,000</td><td>تقليل عامل الخطأ البشري</td></tr>
+          <tr><td><strong>أتمتة العمليات</strong></td><td>€80,000</td><td>توفير تكاليف تشغيلية</td></tr>
+          <tr class="critical-row"><td><strong>المجموع الاستراتيجي</strong></td><td><strong>€320,000</strong></td><td><strong>ROI: 2500%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>مخاطر التقاعس</h2>
+      <div class="risk-box"><h4>سيناريو "لا نتخذ إجراء"</h4><ul><li><strong>احتمالية الحادثة:</strong> <span style="color: #c0392b; font-weight: 700;">85% خلال 6 أشهر</span></li><li><strong>الأضرار المتوقعة:</strong> €15-25M</li><li><strong>الخسائر السمعة:</strong> لا يمكن عكسها</li></ul></div>
+      <div class="risk-box" style="border-right-color: #f39c12;"><h4 style="color: #e65100;">سيناريو "إجراءات محدودة"</h4><ul><li><strong>احتمالية الحادثة:</strong> <span style="color: #e65100; font-weight: 700;">45% خلال 12 شهراً</span></li><li><strong>الأضرار المتوقعة:</strong> €5-10M</li></ul></div>
+      <div class="action-item"><h4>✓ سيناريو "برنامج الأمان الشامل"</h4><ul><li><strong>احتمالية الحادثة:</strong> <span style="color: #1b5e20; font-weight: 700;">5% خلال 12 شهراً</span></li><li><strong>الأضرار المتوقعة:</strong> €100K-500K</li><li><strong>المزايا التنافسية:</strong> جوهرية</li></ul></div>
+    </div>
+
+    <div class="section">
+      <h2>قرارات مجلس الإدارة الموصى بها</h2>
+      <p><strong>القرار 1:</strong> اعتماد الميزانية الطارئة €95,000 — إزالة التهديدات الحرجة خلال 30 يوماً</p>
+      <p style="margin-top: 15px;"><strong>القرار 2:</strong> تعيين CISO / مستشار أمان (€80,000-120,000/سنة)</p>
+      <p style="margin-top: 15px;"><strong>القرار 3:</strong> اعتماد برنامج الأمان الاستراتيجي €320,000 لمدة 12 شهراً (ROI: 2500%)</p>
+      <p style="margin-top: 15px;"><strong>القرار 4:</strong> دمج الأمن السيبراني في استراتيجية الشركة كميزة تنافسية</p>
+    </div>
+
+    <div class="section" style="background: #c8e6c9; border-right: 6px solid #27ae60;">
+      <h2 style="border-bottom-color: #27ae60; color: #1b5e20;">الخطوات التالية</h2>
+      <h3 style="color: #1b5e20;">فوراً (اليوم)</h3>
+      <ol style="color: #1b5e20; padding-right: 20px;">
+        <li>✅ اعتماد الميزانية الطارئة — قرار CEO</li>
+        <li>✅ تشكيل فريق الأزمة — تحديد المسؤوليات</li>
+        <li>✅ بدء إزالة الثغرات الحرجة — الفريق التقني</li>
+      </ol>
+      <h3 style="margin-top: 25px; color: #1b5e20;">هذا الأسبوع</h3>
+      <ol style="color: #1b5e20; padding-right: 20px;">
+        <li>📋 إبرام عقد مع مزود SOC</li>
+        <li>🔍 إطلاق تدقيق أمني شامل</li>
+        <li>📢 إعداد استراتيجية التواصل للحوادث</li>
+      </ol>
+      <h3 style="margin-top: 25px; color: #1b5e20;">خلال شهر</h3>
+      <ol style="color: #1b5e20; padding-right: 20px;">
+        <li>🎯 تنفيذ جميع التدابير الطارئة</li>
+        <li>📊 تقييم الفعالية — قياس تخفيض المخاطر</li>
+        <li>🚀 إطلاق البرنامج الاستراتيجي</li>
+      </ol>
     </div>
 
     <div class="section">

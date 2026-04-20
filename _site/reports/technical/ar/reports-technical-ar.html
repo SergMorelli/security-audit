@@ -300,12 +300,27 @@ error code: 523</pre>
       </div>
 
       <div class="fix-section">
-        <h4>3. تقوية WordPress - اخفاء الإصدار</h4>
+        <h4>3. تقوية WordPress - إخفاء الإصدار</h4>
         <pre>// functions.php
 function remove_wp_version() {
    return '';
 }
 add_filter('the_generator', 'remove_wp_version');</pre>
+      </div>
+
+      <div class="fix-section">
+        <h4>4. حماية wp-admin (.htaccess)</h4>
+        <pre># /wp-admin/.htaccess
+AuthType Basic
+AuthName "Admin Area"
+AuthUserFile /var/www/.htpasswd
+Require valid-user
+
+# بديل القائمة البيضاء للـ IP
+&lt;RequireAll&gt;
+  Require ip 192.168.1.0/24
+  Require ip 10.0.0.0/8
+&lt;/RequireAll&gt;</pre>
       </div>
 
       <h3 style="margin-top: 30px;">تحسينات قصيرة الأجل (1-7 أيام)</h3>
@@ -327,12 +342,53 @@ add_filter('the_generator', 'remove_wp_version');</pre>
       </div>
 
       <div class="fix-section">
-        <h4>5. تحسين SSL/TLS</h4>
+        <h4>6. تحسين SSL/TLS</h4>
         <pre>ssl_protocols TLSv1.2 TLSv1.3;
-ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384';
+ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:TLS_AES_128_GCM_SHA256:TLS_AES_256_GCM_SHA384:TLS_CHACHA20_POLY1305_SHA256';
 ssl_prefer_server_ciphers off;
+
+# إعدادات الجلسة
 ssl_session_cache shared:SSL:10m;
-ssl_session_timeout 10m;</pre>
+ssl_session_timeout 10m;
+ssl_stapling on;
+ssl_stapling_verify on;</pre>
+      </div>
+
+      <div class="fix-section">
+        <h4>7. تكوين Cloudflare WAF</h4>
+        <p><strong>القاعدة 1: حجب الوصول لـ wp-admin</strong></p>
+        <pre>Expression: (http.request.uri.path contains "/wp-admin/") and (ip.src ne 192.168.1.1)
+Action: Block</pre>
+
+        <p style="margin-top: 15px;"><strong>القاعدة 2: تحديد معدل wp-login</strong></p>
+        <pre>Expression: (http.request.uri.path contains "/wp-login.php")
+Action: Rate limit (5 requests per 5 minutes)</pre>
+
+        <p style="margin-top: 15px;"><strong>القاعدة 3: حجب XML-RPC</strong></p>
+        <pre>Expression: (http.request.uri.path eq "/xmlrpc.php")
+Action: Block</pre>
+      </div>
+
+      <h3 style="margin-top: 30px;">الإجراءات طويلة الأجل (7-30 يوم)</h3>
+
+      <div class="fix-section">
+        <h4>8. المراقبة والأتمتة</h4>
+        <ul>
+          <li>أتمتة تحديثات شهادات SSL (Certbot)</li>
+          <li>مراقبة محاولات الوصول إلى الموارد المحمية</li>
+          <li>الفحص الدوري للثغرات</li>
+          <li>إعداد التسجيل والتنبيهات</li>
+        </ul>
+      </div>
+
+      <div class="fix-section">
+        <h4>9. مكونات أمان WordPress</h4>
+        <ul>
+          <li>Wordfence أو iThemes Security للحماية</li>
+          <li>المصادقة الثنائية (2FA/MFA)</li>
+          <li>إخفاء إصدار WordPress</li>
+          <li>التحديثات التلقائية للنواة والمكونات</li>
+        </ul>
       </div>
     </div>
 
@@ -376,6 +432,19 @@ ssl_session_timeout 10m;</pre>
         <li>☐ تدريب الموظفين</li>
         <li>☐ توثيق الإجراءات</li>
       </ul>
+    </div>
+
+    <div class="section">
+      <h2>الامتثال للمعايير</h2>
+      <table>
+        <thead><tr><th>المعيار</th><th>الحالة الحالية</th><th>الإجراءات المطلوبة</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NIST CSF</strong></td><td><span class="badge badge-medium">جزئي</span></td><td>تحسين وظائف الحماية والكشف</td></tr>
+          <tr class="critical-row"><td><strong>ISO 27001</strong></td><td><span class="badge badge-critical">غير ممتثل</span></td><td>تطبيق عمليات ISMS</td></tr>
+          <tr><td><strong>PCI DSS</strong></td><td><span class="badge badge-high">يتطلب مراجعة</span></td><td>تعزيز حماية البيانات</td></tr>
+          <tr><td><strong>GDPR</strong></td><td><span class="badge badge-medium">المستوى الأساسي</span></td><td>إضافة رؤوس الخصوصية</td></tr>
+        </tbody>
+      </table>
     </div>
 
     <div class="section">

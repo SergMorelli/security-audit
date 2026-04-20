@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rules of Engagement: Penetration Testing and Security Assessment</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif; background: linear-gradient(135deg, #f0f4f8 0%, #cdd9e8 100%); color: #2c3e50; line-height: 1.7; }
+    main { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+
+    .report-header { background: white; border-left: 6px solid #1a6fa6; padding: 40px; margin-bottom: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+    .report-header h1 { font-size: 1.9em; color: #1a6fa6; margin-bottom: 8px; font-weight: 700; }
+    .report-header .subtitle { font-size: 1.05em; color: #34495e; margin-bottom: 12px; }
+    .report-header .meta { color: #7f8c8d; font-size: 0.9em; margin-top: 6px; }
+
+    .section { background: white; padding: 28px 32px; margin-bottom: 24px; border-radius: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    h2 { font-size: 1.35em; color: #1a6fa6; margin-top: 0; margin-bottom: 18px; padding-bottom: 10px; border-bottom: 2px solid #1a6fa6; font-weight: 700; }
+    h3 { font-size: 1.05em; color: #2c3e50; margin-top: 20px; margin-bottom: 10px; font-weight: 600; }
+    p { margin: 8px 0; color: #34495e; }
+
+    table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.93em; }
+    thead { background: #1a6fa6; color: white; }
+    th { padding: 10px 14px; text-align: left; font-weight: 600; }
+    td { padding: 9px 14px; border-bottom: 1px solid #ecf0f1; vertical-align: top; }
+    tbody tr:nth-child(even) { background: #f7fafc; }
+    .field-value { color: #95a5a6; font-style: italic; }
+
+    .info-box  { background: #e8f4fb; border-left: 5px solid #1a6fa6; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .warn-box  { background: #fff8e1; border-left: 5px solid #f39c12; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .ok-box    { background: #e8f5e9; border-left: 5px solid #27ae60; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .danger-box{ background: #ffebee; border-left: 5px solid #c0392b; padding: 16px 18px; margin: 14px 0; border-radius: 4px; }
+    .info-box strong, .warn-box strong, .ok-box strong, .danger-box strong { display: block; margin-bottom: 6px; }
+
+    ul, ol { margin: 10px 0; padding-left: 22px; }
+    li { margin: 5px 0; color: #34495e; }
+    .checklist { padding-left: 0; }
+    .checklist li { list-style: none; }
+    .checklist li::before { content: "☐ "; color: #95a5a6; }
+
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+
+    .badge { display: inline-block; padding: 2px 9px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
+    .badge-p0 { background: #ffcdd2; color: #b71c1c; }
+    .badge-p1 { background: #ffe0b2; color: #e65100; }
+    .badge-p2 { background: #fff9c4; color: #f57f17; }
+    .badge-p3 { background: #c8e6c9; color: #1b5e20; }
+    .badge-p4 { background: #e3f2fd; color: #0d47a1; }
+
+    footer { text-align: center; color: #95a5a6; font-size: 0.85em; margin-top: 40px; padding: 20px; border-top: 1px solid #dde; }
+  </style>
+</head>
+<body>
+<main>
+
+  <div class="report-header">
+    <h1>Rules of Engagement: Penetration Testing and Security Assessment</h1>
+    <p class="subtitle">Information Security Specialist</p>
+    <p class="meta">📅 2025-12-21</p>
+  </div>
+
+  <!-- 1. Overview -->
+  <div class="section">
+    <h2>Overview</h2>
+    <p>This document defines the Rules of Engagement (RoE) for conducting penetration testing and security assessments of information systems. The document establishes the framework for collaboration between the client and testing team, ensuring security, legality, and effectiveness of the process.</p>
+    <h3>Document Objectives</h3>
+    <div class="info-box">
+      <strong>Primary Goal — Ensure controlled and authorized testing with minimal risks to production systems</strong>
+      The Rules of Engagement guarantee:
+      <ul>
+        <li>Security of production systems</li>
+        <li>Compliance with legal requirements</li>
+        <li>Transparent communication between all parties</li>
+        <li>Controlled and authorized testing</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 2. Contact Information -->
+  <div class="section">
+    <h2>Contact Information</h2>
+    <h3>Client Organization</h3>
+    <table>
+      <thead><tr><th>Role</th><th>Contact Details</th></tr></thead>
+      <tbody>
+        <tr><td>Primary Contact — Position</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Primary Contact — Mobile Phone</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Primary Contact — Email Address</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Secondary Contact — Position</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Secondary Contact — Mobile Phone</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Secondary Contact — Email Address</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <h3>Testing Team</h3>
+    <table>
+      <thead><tr><th>Role</th><th>Contact Details</th></tr></thead>
+      <tbody>
+        <tr><td>Team Lead — Mobile Phone</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Team Lead — Email Address</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Backup Contact — Mobile Phone</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Backup Contact — Email Address</td><td class="field-value">_________________________</td></tr>
+        <tr><td>24/7 Emergency Contact — Mobile Phone</td><td class="field-value">_________________________</td></tr>
+        <tr><td>24/7 Emergency Contact — Email Address</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. Scope of Testing -->
+  <div class="section">
+    <h2>Scope of Testing</h2>
+    <h3>In-Scope Assets</h3>
+    <p><strong>Network Infrastructure:</strong></p>
+    <ul>
+      <li>Domains: <span class="field-value">_________________________________</span></li>
+      <li>Subdomains: <span class="field-value">_____________________________</span></li>
+      <li>IP Ranges: <span class="field-value">__________________________</span></li>
+      <li>Cloud Resources: <span class="field-value">______________________</span></li>
+    </ul>
+    <p style="margin-top:12px;"><strong>Applications and Services:</strong></p>
+    <ul>
+      <li>Web Applications: <span class="field-value">________________________</span></li>
+      <li>API Interfaces: <span class="field-value">________________________</span></li>
+      <li>Internal Systems: <span class="field-value">____________________</span></li>
+    </ul>
+    <h3>Out-of-Scope Assets</h3>
+    <div class="warn-box">
+      <strong>⚠️ Critical Restrictions:</strong>
+      <ul>
+        <li>Systems not owned by the organization</li>
+        <li>Third-party services without written authorization</li>
+        <li>Production databases (unless explicitly permitted)</li>
+        <li>Social engineering (unless approved)</li>
+        <li>Critical infrastructure systems</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4. Testing Rules and Procedures -->
+  <div class="section">
+    <h2>Testing Rules and Procedures</h2>
+    <div class="two-col">
+      <div>
+        <h3>Authorized Activities</h3>
+        <div class="ok-box">
+          <strong>✅ Approved Testing Methods:</strong>
+          <ul>
+            <li>Vulnerability scanning</li>
+            <li>Manual penetration testing</li>
+            <li>Web application testing</li>
+            <li>API interface testing</li>
+            <li>Cloud configuration analysis</li>
+            <li>Network security testing</li>
+            <li>Password policy verification</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3>Prohibited Activities</h3>
+        <div class="danger-box">
+          <strong>❌ Strictly Forbidden Actions:</strong>
+          <ul>
+            <li>Denial of Service (DoS/DDoS) attacks</li>
+            <li>Physical intrusion</li>
+            <li>Social engineering without explicit authorization</li>
+            <li>Brute-force attacks without rate limiting</li>
+            <li>Actions that may cause data corruption</li>
+            <li>Unauthorized access to personal data</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. Load Limitations -->
+  <div class="section">
+    <h2>Load Limitations</h2>
+    <h3>Technical Constraints for Production Systems</h3>
+    <div class="warn-box"><strong>⚡ Critical Load Limits:</strong></div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Limitation</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Maximum Requests per Second</td><td class="field-value">_________________________</td><td>To prevent system overload</td></tr>
+        <tr><td>Concurrent Connections</td><td class="field-value">_________________________</td><td>Parallel connection limit</td></tr>
+        <tr><td>Payload Size</td><td class="field-value">_________________________</td><td>Maximum data size</td></tr>
+        <tr><td>Connection Timeout</td><td class="field-value">_________________________</td><td>Response wait time</td></tr>
+      </tbody>
+    </table>
+    <h3>Time Restrictions</h3>
+    <div class="info-box">
+      <strong>🕐 Intensive Testing Schedule:</strong>
+      <ul>
+        <li>Mass Scanning: Off-hours only</li>
+        <li>Fuzzing Testing: <span class="field-value">_________________________</span> (specify time windows)</li>
+        <li>Load Testing: Prior notification required</li>
+        <li>Automated Scanners: Rate-limited during business hours</li>
+      </ul>
+    </div>
+    <h3>Load Monitoring</h3>
+    <div class="info-box">
+      <strong>📊 System Impact Control:</strong>
+      <ul>
+        <li>CPU and memory monitoring of target systems</li>
+        <li>Application response time tracking</li>
+        <li>Network bandwidth control</li>
+        <li>Immediate halt if limits exceeded</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 6. Legal Basis -->
+  <div class="section">
+    <h2>Legal Basis</h2>
+    <h3>Legal Foundation for Testing</h3>
+    <div class="ok-box">
+      <strong>⚖️ Legal Justification:</strong>
+      All penetration testing activities are performed exclusively based on written authorization from an authorized representative of the client organization.
+    </div>
+    <p><strong>Documentary Basis:</strong></p>
+    <ul>
+      <li>Signed service agreement</li>
+      <li>These Rules of Engagement</li>
+      <li>Technical specification describing testing scope</li>
+      <li>Additional agreements (if necessary)</li>
+    </ul>
+    <h3>Limitation of Liability</h3>
+    <div class="info-box">
+      <strong>🛡️ Liability Exemption — The testing team is exempt from liability for:</strong>
+      <ul>
+        <li>Temporary system unavailability resulting from authorized testing</li>
+        <li>Discovery of vulnerabilities existing prior to testing commencement</li>
+        <li>Actions performed strictly within the agreed testing scope</li>
+        <li>Indirect losses related to security issue identification</li>
+      </ul>
+    </div>
+    <h3>Legal Compliance</h3>
+    <div class="info-box">
+      <strong>📋 Regulatory Compliance:</strong>
+      <ul>
+        <li>Adherence to personal data protection legislation</li>
+        <li>Compliance with industry security standards</li>
+        <li>Alignment with international penetration testing practices</li>
+        <li>Documentation of all actions for audit purposes</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 7. Vulnerability Criticality Matrix -->
+  <div class="section">
+    <h2>Vulnerability Criticality Matrix</h2>
+    <div class="info-box"><strong>🎯 Standardized Assessment System — Risk Level Classification:</strong></div>
+    <table>
+      <thead><tr><th>Level</th><th>Description</th><th>Vulnerability Examples</th><th>Remediation Time</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-p0">P0 - Critical</span></td><td>Immediate security threat</td><td>RCE, SQL Injection, Authentication Bypass</td><td>24–48 hours</td></tr>
+        <tr><td><span class="badge badge-p1">P1 - High</span></td><td>Serious security breach</td><td>XSS, LFI, Privilege Escalation</td><td>1–2 weeks</td></tr>
+        <tr><td><span class="badge badge-p2">P2 - Medium</span></td><td>Moderate risk</td><td>Security Misconfiguration, CSRF</td><td>1 month</td></tr>
+        <tr><td><span class="badge badge-p3">P3 - Low</span></td><td>Minimal risk</td><td>Information Disclosure, Weak Ciphers</td><td>3 months</td></tr>
+        <tr><td><span class="badge badge-p4">P4 - Informational</span></td><td>Improvement recommendations</td><td>Best Practices, Hardening</td><td>As possible</td></tr>
+      </tbody>
+    </table>
+    <h3>Assessment Criteria</h3>
+    <div class="info-box">
+      <strong>📈 Criticality Determination Factors:</strong>
+      <ul>
+        <li>Impact: Potential damage from exploitation</li>
+        <li>Likelihood: Ease of vulnerability exploitation</li>
+        <li>Scope: Number of affected systems</li>
+        <li>Accessibility: Access requirements for exploitation</li>
+      </ul>
+    </div>
+    <h3>Escalation Procedure</h3>
+    <div class="warn-box">
+      <strong>⚡ Emergency Response for Critical Findings:</strong>
+      <ol>
+        <li>P0–P1: Immediate notification by phone + email</li>
+        <li>P2: Notification within business day</li>
+        <li>P3–P4: Inclusion in regular reports</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- 8. Authorized Testing Tools -->
+  <div class="section">
+    <h2>Authorized Testing Tools</h2>
+    <div class="info-box"><strong>🔧 Core Toolset:</strong></div>
+    <table>
+      <thead><tr><th>Category</th><th>Tool</th><th>Purpose</th><th>Version</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3">Vulnerability Scanners</td><td>Nessus</td><td>Automated scanning</td><td class="field-value">_________</td></tr>
+        <tr><td>OpenVAS</td><td>Network and application scanning</td><td class="field-value">_________</td></tr>
+        <tr><td>Qualys VMDR</td><td>Cloud scanning</td><td class="field-value">_________</td></tr>
+        <tr><td rowspan="3">Web Testing</td><td>Burp Suite Professional</td><td>Web application testing</td><td class="field-value">_________</td></tr>
+        <tr><td>OWASP ZAP</td><td>Web application security analysis</td><td class="field-value">_________</td></tr>
+        <tr><td>Nikto</td><td>Web server scanning</td><td class="field-value">_________</td></tr>
+        <tr><td rowspan="2">Network Testing</td><td>Nmap</td><td>Port and service scanning</td><td class="field-value">_________</td></tr>
+        <tr><td>Masscan</td><td>High-speed scanning</td><td class="field-value">_________</td></tr>
+        <tr><td rowspan="2">Exploitation</td><td>Metasploit Framework</td><td>Exploit testing</td><td class="field-value">_________</td></tr>
+        <tr><td>Cobalt Strike</td><td>Attack simulation (with agreement)</td><td class="field-value">_________</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🛠️ Additional Tools — Specialized Software (by agreement):</strong>
+      <ul>
+        <li>Social Engineering: SET, Gophish (explicit permission only)</li>
+        <li>Wireless Networks: Aircrack-ng, Kismet</li>
+        <li>Mobile Applications: MobSF, Frida</li>
+        <li>Cloud Security: ScoutSuite, Prowler</li>
+      </ul>
+    </div>
+    <div class="danger-box">
+      <strong>⚠️ Prohibited or Restricted Tools:</strong>
+      <ul>
+        <li>DDoS attack tools</li>
+        <li>Unauthorized scanners with aggressive settings</li>
+        <li>Password cracking tools without rate limits</li>
+        <li>Any software not agreed upon with the client</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 9. Testing Team Identification -->
+  <div class="section">
+    <h2>Testing Team Identification</h2>
+    <div class="info-box"><strong>🔍 Whitelists for Defensive Systems — Critical for preventing authorized testing blockage:</strong></div>
+    <table>
+      <thead><tr><th>Identification Parameter</th><th>Value</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr><td>Source IP Addresses</td><td class="field-value">_________________________</td><td>Static IPs for WAF/IPS whitelisting</td></tr>
+        <tr><td>Subnet Ranges</td><td class="field-value">_________________________</td><td>Additional team network segments</td></tr>
+        <tr><td>User-Agent Strings</td><td class="field-value">_________________________</td><td>Specific identifiers for web scanners</td></tr>
+        <tr><td>SSH Keys</td><td class="field-value">_________________________</td><td>Public keys for authorized access</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🏷️ Special Identifiers — Markers for logging and monitoring:</strong>
+      <ul>
+        <li>Test Request Prefix: <span class="field-value">_________________________</span></li>
+        <li>Special HTTP Headers: <span class="field-value">_________________________</span></li>
+        <li>Session Identifiers: <span class="field-value">_________________________</span></li>
+        <li>Payload Markers: <span class="field-value">_________________________</span></li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <strong>📞 Blue Team Coordination — Interaction with defense team:</strong>
+      <ul>
+        <li>Pre-testing notification of commencement</li>
+        <li>SOC (Security Operations Center) contact list</li>
+        <li>Procedure for confirming activity legitimacy</li>
+        <li>Emergency testing halt protocol</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 10. High-Risk Test Definition -->
+  <div class="section">
+    <h2>High-Risk Test Definition</h2>
+    <div class="warn-box"><strong>⚠️ Risky Operation Classification — High-risk tests requiring special attention:</strong></div>
+    <table>
+      <thead><tr><th>Test Category</th><th>Description</th><th>Execution Window</th><th>Additional Measures</th></tr></thead>
+      <tbody>
+        <tr><td>Brute-force Attacks</td><td>Password/PIN guessing</td><td>Off-hours only</td><td>Rate limiting, lockout monitoring</td></tr>
+        <tr><td>Application Fuzzing</td><td>Invalid data submission</td><td class="field-value">_________________________</td><td>System stability control</td></tr>
+        <tr><td>Vulnerability Exploitation</td><td>Proof-of-concept execution</td><td>By agreement</td><td>Immediate notification on success</td></tr>
+        <tr><td>DoS Testing</td><td>Load resistance verification</td><td>Test environment only</td><td>Prior agreement required</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🕐 Critical Test Service Windows — Special time intervals:</strong>
+      <ul>
+        <li>Primary risky test window: <span class="field-value">_________________________</span></li>
+        <li>Backup window: <span class="field-value">_________________________</span></li>
+        <li>Emergency window (by agreement): <span class="field-value">_________________________</span></li>
+        <li>Prohibited periods: <span class="field-value">_________________________</span></li>
+      </ul>
+    </div>
+    <div class="info-box">
+      <strong>👥 Client-Side Testing — End-user protection:</strong>
+      <ul>
+        <li>Phishing Simulations: Written HR consent only</li>
+        <li>Browser Testing: Isolated test machines</li>
+        <li>Social Engineering: Strictly limited scope</li>
+        <li>Personal Data Protection: Avoid access to personal information</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 11. Technical Methodology -->
+  <div class="section">
+    <h2>Technical Methodology</h2>
+    <div class="info-box"><strong>📊 Standards and Classifications — International standards used:</strong></div>
+    <table>
+      <thead><tr><th>Standard</th><th>Version</th><th>Application</th></tr></thead>
+      <tbody>
+        <tr><td>CVSS</td><td>v3.1/4.0</td><td>Vulnerability criticality assessment</td></tr>
+        <tr><td>OWASP Top 10</td><td>2021</td><td>Web applications</td></tr>
+        <tr><td>NIST Cybersecurity Framework</td><td>v1.1</td><td>General methodology</td></tr>
+        <tr><td>OSSTMM</td><td>v3</td><td>Testing methodology</td></tr>
+        <tr><td>PTES</td><td>v1.0</td><td>Penetration testing standard</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🔍 Testing Model — Information access level:</strong>
+      <ul>
+        <li>☐ Black Box — No prior system knowledge</li>
+        <li>☐ Gray Box — Partial access to documentation/architecture</li>
+        <li>☐ White Box — Full access to code and architecture</li>
+      </ul>
+      <p style="margin-top:8px;">Selected Model: <span class="field-value">_________________________</span></p>
+    </div>
+    <div class="info-box">
+      <strong>📈 CVSS Assessment — Vulnerability assessment criteria:</strong>
+      <ul>
+        <li>Base Metrics: Attack vector, complexity, privileges, user interaction</li>
+        <li>Temporal Metrics: Exploit availability, remediation level</li>
+        <li>Environmental Metrics: Impact on client's specific environment</li>
+        <li>Threshold Values: P0 (9.0–10.0), P1 (7.0–8.9), P2 (4.0–6.9), P3 (0.1–3.9)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 12. Additional Legal Aspects -->
+  <div class="section">
+    <h2>Additional Legal Aspects</h2>
+    <div class="info-box">
+      <strong>🌍 Cross-Border Data Transfer — International compliance:</strong>
+      When working with international testing teams, compliance with GDPR, CCPA, and other applicable data protection regulations is ensured.
+      <ul style="margin-top:8px;">
+        <li>Team base country: <span class="field-value">_________________________</span></li>
+        <li>Applicable legislation: <span class="field-value">_________________________</span></li>
+        <li>Data transfer mechanisms: Standard Contractual Clauses (SCC) / Adequacy Decision</li>
+        <li>Data localization: <span class="field-value">_________________________</span></li>
+      </ul>
+    </div>
+    <h3>International Standards Compliance</h3>
+    <table>
+      <thead><tr><th>Standard / Regulation</th><th>Compliance Status</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>GDPR (EU)</td><td class="field-value">_________________________</td><td>Personal data protection</td></tr>
+        <tr><td>ISO 27001</td><td class="field-value">_________________________</td><td>Information security management system</td></tr>
+        <tr><td>SOC 2 Type II</td><td class="field-value">_________________________</td><td>Security controls</td></tr>
+        <tr><td>PCI DSS</td><td class="field-value">_________________________</td><td>Payment systems</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🔍 Audit Rights — The client has the right to:</strong>
+      <ul>
+        <li>Verify data deletion procedures after project completion</li>
+        <li>Request confirmation of confidential information destruction</li>
+        <li>Audit testing team security measures</li>
+        <li>Obtain compliance certificates for applicable standards</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 13. Critical Situation Response -->
+  <div class="section">
+    <h2>Critical Situation Response Process</h2>
+    <div class="danger-box">
+      <strong>🚨 Emergency Response Algorithm — Step-by-step procedure for critical incidents:</strong>
+      <ol>
+        <li>CRITICAL SITUATION DETECTION</li>
+        <li>IMMEDIATE TESTING HALT</li>
+        <li>CLIENT NOTIFICATION (within 15 minutes)</li>
+        <li>IMPACT AND DAMAGE ASSESSMENT</li>
+        <li>CONTINUATION DECISION</li>
+        <li>INCIDENT DOCUMENTATION</li>
+        <li>ROOT CAUSE ANALYSIS AND CORRECTIVE MEASURES</li>
+      </ol>
+    </div>
+    <h3>Escalation Matrix</h3>
+    <table>
+      <thead><tr><th>Level</th><th>Response Time</th><th>Communication Method</th><th>Responsible</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge badge-p0">P0 - Critical</span></td><td>15 minutes</td><td>Phone + SMS + Email</td><td class="field-value">_________________________</td></tr>
+        <tr><td><span class="badge badge-p1">P1 - High</span></td><td>1 hour</td><td>Phone + Email</td><td class="field-value">_________________________</td></tr>
+        <tr><td><span class="badge badge-p2">P2 - Medium</span></td><td>4 hours</td><td>Email + Slack/Teams</td><td class="field-value">_________________________</td></tr>
+        <tr><td><span class="badge badge-p3">P3 - Low</span></td><td>24 hours</td><td>Email</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <div class="danger-box">
+      <strong>🛑 Testing Halt Criteria — Automatic work cessation triggers:</strong>
+      <ul>
+        <li>Critical service unavailability for more than 5 minutes</li>
+        <li>Discovery of active vulnerability exploitation by third parties</li>
+        <li>Exceeding agreed load limits</li>
+        <li>Halt request from any authorized representative</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 14. Evidence Handling and Cleanup -->
+  <div class="section">
+    <h2>Evidence Handling and Cleanup</h2>
+    <div class="info-box"><strong>🔒 Evidence Handling Protocol — strict security requirements:</strong></div>
+    <table>
+      <thead><tr><th>Stage</th><th>Requirements</th><th>Responsible</th></tr></thead>
+      <tbody>
+        <tr><td>Collection</td><td>Encryption, hashing, timestamps</td><td>Tester</td></tr>
+        <tr><td>Storage</td><td>Isolated storage, access control</td><td>Project Manager</td></tr>
+        <tr><td>Transfer</td><td>Secure channels, receipt confirmation</td><td>Both parties</td></tr>
+        <tr><td>Destruction</td><td>Irreversible deletion, destruction certificate</td><td>Testing team</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>🧹 Post-Test Cleanup Plan — mandatory procedures:</strong>
+      <p style="margin-top:8px;"><em>Created Object Removal:</em></p>
+      <ul class="checklist">
+        <li>Test user accounts</li>
+        <li>Uploaded files and scripts</li>
+        <li>Temporary configurations</li>
+        <li>Test databases and tables</li>
+      </ul>
+      <p style="margin-top:8px;"><em>Original State Restoration:</em></p>
+      <ul class="checklist">
+        <li>Configuration change rollback</li>
+        <li>Test certificate removal</li>
+        <li>Testing log cleanup (by agreement)</li>
+        <li>Backup restoration (if necessary)</li>
+      </ul>
+    </div>
+    <div class="ok-box">
+      <strong>📜 Data Destruction Certification — Upon project completion, the testing team provides:</strong>
+      <ul>
+        <li>Certificate of irreversible deletion of all client data</li>
+        <li>Report on performed cleanup procedures</li>
+        <li>Confirmation of compliance with data destruction standards (DoD 5220.22-M or equivalent)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 15. Testing Schedule -->
+  <div class="section">
+    <h2>Testing Schedule</h2>
+    <table>
+      <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+      <tbody>
+        <tr><td>Start Date</td><td class="field-value">_________________________</td></tr>
+        <tr><td>End Date</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Testing Window</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Time Zone</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Daily Briefing</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">
+      <strong>💡 Communication Protocol — Regular Updates:</strong>
+      <ul>
+        <li>Daily status reports</li>
+        <li>Weekly progress summaries</li>
+        <li>Emergency notifications for critical findings</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 16. Incident Handling -->
+  <div class="section">
+    <h2>Incident Handling</h2>
+    <h3>Incident Response Procedure</h3>
+    <p>In case of system instability during testing:</p>
+    <ol>
+      <li>Immediate halt of testing by team</li>
+      <li>Notification of client organization</li>
+      <li>Decision making by emergency contact regarding continuation</li>
+      <li>Incident documentation</li>
+    </ol>
+    <div class="warn-box">
+      <strong>🔍 Testing Halt Criteria — Conditions for work cessation:</strong>
+      <ul>
+        <li>Discovery of critical vulnerabilities</li>
+        <li>Production system instability</li>
+        <li>Exceeding agreed testing scope</li>
+        <li>Client request</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 17. Data Handling and Confidentiality -->
+  <div class="section">
+    <h2>Data Handling and Confidentiality</h2>
+    <div class="info-box">
+      <strong>Confidentiality — priority number one when processing any information</strong>
+      <p style="margin-top:8px;"><em>Testing Team Obligations:</em></p>
+      <ul>
+        <li>Sensitive data not stored unless necessary</li>
+        <li>All collected data encrypted</li>
+        <li>Data deleted after report delivery</li>
+        <li>Avoidance of personal data access</li>
+      </ul>
+    </div>
+    <div class="ok-box">
+      <strong>Non-Disclosure Agreement — All testing participants commit to:</strong>
+      <ul>
+        <li>Maintain confidentiality of obtained information</li>
+        <li>Not disclose results to third parties</li>
+        <li>Use data exclusively for testing purposes</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 18. Reporting Requirements -->
+  <div class="section">
+    <h2>Reporting Requirements</h2>
+    <div class="two-col">
+      <div class="info-box">
+        <strong>Interim Reports:</strong>
+        <ul>
+          <li>Daily or weekly updates</li>
+          <li>Task completion status</li>
+          <li>Preliminary findings</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <strong>Final Reporting:</strong>
+        <ul>
+          <li>Technical Report — detailed vulnerability description</li>
+          <li>Management Report — recommendations for leadership</li>
+          <li>Executive Summary — brief overview for top management</li>
+        </ul>
+      </div>
+    </div>
+    <div class="info-box">
+      <strong>📊 Results Presentation Format — Standardized structure:</strong>
+      <ul>
+        <li>Vulnerability classification by criticality</li>
+        <li>Remediation recommendations</li>
+        <li>Remediation timeframes</li>
+        <li>Security metrics</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 19. Risk Acceptance -->
+  <div class="section">
+    <h2>Risk Acceptance</h2>
+    <div class="ok-box">
+      <strong>Client Organization Confirmation — The client organization confirms understanding that:</strong>
+      <ul>
+        <li>Testing may reveal critical vulnerabilities</li>
+        <li>Some tests may cause temporary performance degradation</li>
+        <li>All actions are authorized and agreed upon</li>
+        <li>Results will be used to improve security</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 20. Testing Readiness Checklist -->
+  <div class="section">
+    <h2>Testing Readiness Checklist</h2>
+    <div class="two-col">
+      <div>
+        <h3>Preparatory Activities</h3>
+        <ul class="checklist">
+          <li>Testing scope defined</li>
+          <li>Responsible contacts assigned</li>
+          <li>Work schedule agreed</li>
+          <li>All necessary documents signed</li>
+          <li>Communication channels established</li>
+          <li>Test environment prepared (if necessary)</li>
+          <li>Testing team briefing conducted</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Control Points During Testing</h3>
+        <ul class="checklist">
+          <li>Daily status meetings</li>
+          <li>Production system monitoring</li>
+          <li>All actions documented</li>
+          <li>Timeline compliance</li>
+          <li>Regular client communication</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 21. Signatures and Approvals -->
+  <div class="section">
+    <h2>Signatures and Approvals</h2>
+    <div class="two-col">
+      <div>
+        <h3>Client Organization Representative</h3>
+        <table>
+          <tbody>
+            <tr><td>Name and Position</td><td class="field-value">_________________________</td></tr>
+            <tr><td>Signature</td><td class="field-value">_________________________</td></tr>
+            <tr><td>Date</td><td class="field-value">_________________________</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Testing Team Lead</h3>
+        <table>
+          <tbody>
+            <tr><td>Name and Position</td><td class="field-value">_________________________</td></tr>
+            <tr><td>Signature</td><td class="field-value">_________________________</td></tr>
+            <tr><td>Date</td><td class="field-value">_________________________</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 22. Emergency Contact Form -->
+  <div class="section" style="background:#e8f4fb; border-left:6px solid #1a6fa6;">
+    <h2>Emergency Contact Form</h2>
+    <div class="info-box"><strong>Rapid Response Information:</strong></div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Contact Details</th></tr></thead>
+      <tbody>
+        <tr><td>Primary Client Contact</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Secondary Client Contact</td><td class="field-value">_________________________</td></tr>
+        <tr><td>Testing Lead</td><td class="field-value">_________________________</td></tr>
+        <tr><td>24/7 Emergency Line</td><td class="field-value">_________________________</td></tr>
+      </tbody>
+    </table>
+    <h3>Emergency Contact Procedure</h3>
+    <ol>
+      <li>Primary contact — main client representative</li>
+      <li>If unavailable — secondary contact</li>
+      <li>Critical situations — 24/7 emergency line</li>
+      <li>Documentation of all communications</li>
+    </ol>
+  </div>
+
+  <footer>
+    This document is a legally binding agreement between the parties and must be signed by all participants in the penetration testing process.<br>
+    Rules of Engagement: Penetration Testing and Security Assessment | 2025-12-21
+  </footer>
+
+</main>
+</body>
+</html>

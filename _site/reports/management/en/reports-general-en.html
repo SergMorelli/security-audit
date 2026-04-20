@@ -236,6 +236,70 @@
     </div>
 
     <div class="section">
+      <h2>Remediation Recommendations</h2>
+
+      <h3>Immediate Actions (24 hours)</h3>
+
+      <h4 style="margin-top: 20px;">1. Close Port 8443</h4>
+      <p>Disable in Cloudflare Dashboard or close on origin server:</p>
+      <pre>server {
+  listen 8443;
+  return 444; # Close connection
+}</pre>
+
+      <h4 style="margin-top: 20px;">2. Restrict Access to Port 8080</h4>
+      <pre>server {
+  listen 8080;
+  # Internal network only
+  allow 192.168.0.0/16;
+  deny all;
+}</pre>
+
+      <h4 style="margin-top: 20px;">3. Protect WordPress Admin Panel</h4>
+      <p>Add to .htaccess in /wp-admin/:</p>
+      <pre>AuthType Basic
+AuthName "Admin Area"
+AuthUserFile /path/to/.htpasswd
+Require valid-user</pre>
+
+      <h3 style="margin-top: 30px;">Short-term Improvements (7 days)</h3>
+
+      <h4 style="margin-top: 20px;">4. Add Security Headers</h4>
+      <pre>add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
+add_header X-Frame-Options "DENY";
+add_header Content-Security-Policy "default-src 'self'";
+add_header X-Content-Type-Options "nosniff";</pre>
+
+      <h4 style="margin-top: 20px;">5. Optimize SSL/TLS</h4>
+      <pre>ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384";
+ssl_protocols TLSv1.2 TLSv1.3;</pre>
+
+      <h4 style="margin-top: 20px;">6. Configure Cloudflare WAF</h4>
+      <ul>
+        <li>Block access to /wp-admin/ for unauthorized IPs</li>
+        <li>Set up rate limiting for /wp-login.php</li>
+        <li>Enable Bot Fight Mode</li>
+      </ul>
+
+      <h3 style="margin-top: 30px;">Long-term Measures (30 days)</h3>
+
+      <h4 style="margin-top: 20px;">7. Monitoring and Automation</h4>
+      <ul>
+        <li>Automatic SSL certificate renewal</li>
+        <li>Monitor access attempts to protected resources</li>
+        <li>Regular vulnerability scanning</li>
+      </ul>
+
+      <h4 style="margin-top: 20px;">8. WordPress Hardening</h4>
+      <ul>
+        <li>Install security plugins (Wordfence, iThemes Security)</li>
+        <li>Two-factor authentication</li>
+        <li>Hide WordPress version</li>
+        <li>Regular updates</li>
+      </ul>
+    </div>
+
+    <div class="section">
       <h2>Risk Matrix</h2>
       <table>
         <thead><tr><th>Issue</th><th>Probability</th><th>Impact</th><th>Priority</th></tr></thead>

@@ -96,7 +96,7 @@ translation_key: documents
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
           <a href="{{ site.baseurl }}/whitepaper/en/whitepaper-en.pdf" class="doc-link transition">PDF</a>
-          <a href="{{ site.baseurl }}/whitepaper/en/whitepaper-en.docx" class="doc-link transition">DOCX</a>
+          <a href="{{ site.baseurl }}/whitepaper/en/whitepaper-en.html" class="doc-link transition">HTML</a>
         </div>
       </div>
     </article>
@@ -108,7 +108,7 @@ translation_key: documents
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
           <a href="{{ site.baseurl }}/whitepaper/ru/whitepaper-ru.pdf" class="doc-link transition">PDF</a>
-          <a href="{{ site.baseurl }}/whitepaper/ru/whitepaper-ru.docx" class="doc-link transition">DOCX</a>
+          <a href="{{ site.baseurl }}/whitepaper/ru/whitepaper-ru.html" class="doc-link transition">HTML</a>
         </div>
       </div>
     </article>
@@ -120,19 +120,19 @@ translation_key: documents
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
           <a href="{{ site.baseurl }}/whitepaper/ar/whitepaper-ar.pdf" class="doc-link transition">PDF</a>
-          <a href="{{ site.baseurl }}/whitepaper/ar/whitepaper-ar.docx" class="doc-link transition">DOCX</a>
+          <a href="{{ site.baseurl }}/whitepaper/ar/whitepaper-ar.html" class="doc-link transition">HTML</a>
         </div>
       </div>
     </article>
 
-    <!-- Privacy Policy RU -->
+    <!-- Privacy Policy EN -->
     <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="policy">
-      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Privacy Policy — Русский</h3>
-      <p class="text-xs text-slate-400">Политика конфиденциальности TenArhiva</p>
+      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Privacy Policy — Shadow Archive</h3>
+      <p class="text-xs text-slate-400">Privacy Policy for the Shadow Archive game</p>
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
           <a href="{{ site.baseurl }}/privacy-policy/tenArhivaru/TenArhivaRu.pdf" class="doc-link transition">PDF</a>
-          <a href="{{ site.baseurl }}/privacy-policy/tenArhivaru/privacy-policy-tenArhiva-ru.md" class="doc-link transition">MD</a>
+          <a href="{{ site.baseurl }}/privacy-policy/tenArhivaru/privacy-policy-tenArhiva-en.html" class="doc-link transition">HTML</a>
         </div>
       </div>
     </article>
