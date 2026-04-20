@@ -138,67 +138,67 @@ translation_key: documents
     </article>
 
     <!-- License EN -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="licenses">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="licenses" data-doc-lang="en">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Documentation License — English</h3>
       <p class="text-xs text-slate-400">CC BY‑NC 4.0 — Usage terms for reports and templates</p>
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="{{ site.baseurl }}/licenses/LICENSE-DOCS-EN.md" class="doc-link transition">View</a>
+          <a href="{{ site.baseurl }}/licenses/LICENSE-DOCS-EN.html" class="doc-link transition">View</a>
         </div>
       </div>
     </article>
 
     <!-- License RU -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="licenses">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="licenses" data-doc-lang="ru">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Лицензия — Русский</h3>
       <p class="text-xs text-slate-400">CC BY‑NC 4.0 — Условия использования отчётов и шаблонов</p>
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="{{ site.baseurl }}/licenses/LICENSE-DOCS-RU.md" class="doc-link transition">View</a>
+          <a href="{{ site.baseurl }}/licenses/LICENSE-DOCS-RU.html" class="doc-link transition">View</a>
         </div>
       </div>
     </article>
 
     <!-- License AR -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="licenses">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="licenses" data-doc-lang="ar">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">الترخيص — العربية</h3>
       <p class="text-xs text-slate-400 font-[Noto_Sans_Arabic,sans-serif]">CC BY‑NC 4.0 — شروط استخدام التقارير والقوالب</p>
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="{{ site.baseurl }}/licenses/LICENSE-DOCS-AR.md" class="doc-link transition">View</a>
+          <a href="{{ site.baseurl }}/licenses/LICENSE-DOCS-AR.html" class="doc-link transition">View</a>
         </div>
       </div>
     </article>
 
     <!-- Trademarks EN -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="legal">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="legal" data-doc-lang="en">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Trademarks — English</h3>
       <p class="text-xs text-slate-400">DataDef branding and trademark notice</p>
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="{{ site.baseurl }}/licenses/TRADEMARKS-EN.md" class="doc-link transition">View</a>
+          <a href="{{ site.baseurl }}/licenses/TRADEMARKS-EN.html" class="doc-link transition">View</a>
         </div>
       </div>
     </article>
 
     <!-- Trademarks RU -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="legal">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="legal" data-doc-lang="ru">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Товарные знаки — Русский</h3>
       <p class="text-xs text-slate-400">Уведомление о торговой марке DataDef</p>
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="{{ site.baseurl }}/licenses/TRADEMARKS-RU.md" class="doc-link transition">View</a>
+          <a href="{{ site.baseurl }}/licenses/TRADEMARKS-RU.html" class="doc-link transition">View</a>
         </div>
       </div>
     </article>
 
     <!-- Trademarks AR -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="legal">
+    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="legal" data-doc-lang="ar">
       <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">العلامات التجارية — العربية</h3>
       <p class="text-xs text-slate-400 font-[Noto_Sans_Arabic,sans-serif]">إشعار العلامة التجارية لـ DataDef</p>
       <div class="border-t border-slate-700/60 pt-3">
         <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="{{ site.baseurl }}/licenses/TRADEMARKS-AR.md" class="doc-link transition">View</a>
+          <a href="{{ site.baseurl }}/licenses/TRADEMARKS-AR.html" class="doc-link transition">View</a>
         </div>
       </div>
     </article>
@@ -267,8 +267,7 @@ translation_key: documents
       },
       whitepaper: {
         title:    'Whitepaper',
-        audience: 'Introductory white papers that define the environment, ownership, scope, and rules of engagement for security assessments and penetration testing. Intended for auditors, clients, and security teams preparing for an engagement.',
-        focus:    'Focus: define system ownership and responsibilities · establish scope and testing boundaries · describe allowed and prohibited activities · provide emergency contacts and escalation rules · ensure legal and operational safety · align expectations between the organization and the testing team.'
+        audience: 'Introductory white papers that define the environment, ownership, scope, and rules of engagement for security assessments and penetration testing. Intended for auditors, clients, and security teams preparing for an engagement.'
       },
 
       policy: {
@@ -309,8 +308,8 @@ translation_key: documents
         var itemLang = (item.getAttribute('data-doc-lang') || '').trim().toLowerCase();
         var matches = category === 'all'
           ? true
-          : category === 'whitepaper'
-            ? item.getAttribute('data-doc-category') === 'whitepaper' && itemLang === pageLang
+          : (category === 'whitepaper' || category === 'licenses' || category === 'legal')
+            ? item.getAttribute('data-doc-category') === category && itemLang === pageLang
             : item.getAttribute('data-doc-category') === category;
         item.hidden = !matches;
         item.style.display = matches ? '' : 'none';
@@ -319,7 +318,7 @@ translation_key: documents
       if (descriptions[category]) {
         descriptionTitle.textContent    = descriptions[category].title;
         descriptionAudience.textContent = descriptions[category].audience;
-        descriptionFocus.textContent    = descriptions[category].focus;
+        descriptionFocus.textContent    = descriptions[category].focus || '';
       }
     }
 
