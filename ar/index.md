@@ -24,11 +24,11 @@ translation_key: home
     </p>
 
     <div class="flex justify-center gap-4">
-      <a href="/ar/reports/" class="px-6 py-3 bg-cyan-500 text-black font-bold hover:bg-cyan-400 transition">
+      <a href="{{ '/ar/reports/' | relative_url }}" class="px-6 py-3 bg-cyan-500 text-black font-bold hover:bg-cyan-400 transition">
         عرض التقارير
       </a>
 
-      <a href="/ar/lab/" class="px-6 py-3 border border-red-500 text-red-400 hover:bg-red-500 hover:text-black transition">
+      <a href="{{ '/ar/lab/' | relative_url }}" class="px-6 py-3 border border-red-500 text-red-400 hover:bg-red-500 hover:text-black transition">
         فتح المختبر
       </a>
     </div>

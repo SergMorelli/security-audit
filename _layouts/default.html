@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Tailwind -->
-  <link rel="stylesheet" href="/assets/css/output.css">
+  <link rel="stylesheet" href="{{ '/assets/css/output.css' | relative_url }}">
 
   <!-- AOS -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -145,7 +145,7 @@
       {{ t.attack.heading }}
     </h2>
 
-    <canvas id="attackChart" height="100" data-aos="fade-up"></canvas>
+    <canvas id="attackChart" height="100" data-aos="fade-up" data-url="{{ '/assets/data/attacks.json' | relative_url }}"></canvas>
     <p id="attackChartStatus" class="mt-4 text-xs text-gray-500" data-aos="fade-up"></p>
 
   </div>
@@ -216,7 +216,7 @@ function initAttackChart() {
   const fallbackLabels = ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'];
   const fallbackValues = [5, 12, 9, 18, 7, 14];
 
-  fetch('/assets/data/attacks.json', { cache: 'no-store' })
+  fetch(ctx.dataset.url || '/assets/data/attacks.json', { cache: 'no-store' })
     .then((response) => {
       if (!response.ok) {
         throw new Error('Failed to fetch attack data');

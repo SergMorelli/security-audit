@@ -291,7 +291,7 @@ translation_key: documents
             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
             Verify on Coursera
           </a>
-          <a href="/sertificate/Coursera 5N2LNGY9T8KH.pdf" download class="cert-action-btn">
+          <a href="{{ '/sertificate/Coursera 5N2LNGY9T8KH.pdf' | relative_url }}" download class="cert-action-btn">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
             Download PDF
           </a>
@@ -303,7 +303,7 @@ translation_key: documents
         </div>
 
         <div class="cert-pdf-preview">
-          <iframe src="/sertificate/Coursera 5N2LNGY9T8KH.pdf" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+          <iframe src="{{ '/sertificate/Coursera 5N2LNGY9T8KH.pdf' | relative_url }}" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
         </div>
 
       </div>

@@ -134,7 +134,7 @@ translation_key: certificates
 
         <!-- PDF download -->
         <a
-          href="/sertificate/Coursera 5N2LNGY9T8KH.pdf"
+          href="{{ '/sertificate/Coursera 5N2LNGY9T8KH.pdf' | relative_url }}"
           download
           class="cert-action-btn"
         >
@@ -160,7 +160,7 @@ translation_key: certificates
       <!-- PDF preview panel (hidden by default) -->
       <div class="cert-pdf-preview">
         <iframe
-          src="/sertificate/Coursera 5N2LNGY9T8KH.pdf"
+          src="{{ '/sertificate/Coursera 5N2LNGY9T8KH.pdf' | relative_url }}"
           class="w-full"
           style="height: 520px;"
           title="Certificate PDF preview"
