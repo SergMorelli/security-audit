@@ -15,7 +15,6 @@ translation_key: documents
 <section class="max-w-6xl mx-auto px-4 pb-8" data-docs-filter>
   <div class="overflow-x-auto">
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
-      <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="all">🌐 الكل</button>
       <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="whitepaper">📜 الورقة البيضاء</button>
       <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="policy">🔒 السياسة</button>
       <button type="button" class="doc-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="licenses">⚖️ التراخيص</button>
@@ -74,6 +73,89 @@ translation_key: documents
       color: rgb(165, 243, 252);
       box-shadow: 0 0 14px rgba(34, 211, 238, 0.25);
     }
+
+    [data-doc-category="certificates"] .doc-card:hover {
+      border-color: rgba(248, 113, 113, 0.95);
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.7), 0 0 18px rgba(239, 68, 68, 0.55), 0 0 42px rgba(185, 28, 28, 0.45);
+    }
+  }
+
+  .cert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    border: 1px solid rgba(34, 211, 238, 0.4);
+    color: rgb(103, 232, 249);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .cert-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    width: 9rem;
+    min-height: 1.95rem;
+    padding: 0.28rem 0.62rem;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 0.2rem;
+    border: 1px solid rgba(71, 85, 105, 0.7);
+    background: rgba(15, 23, 42, 0.75);
+    color: rgb(148, 163, 184);
+    transition: border-color 0.2s, color 0.2s, background 0.2s;
+  }
+
+  .cert-action-btn:hover {
+    border-color: rgba(34, 211, 238, 0.7);
+    color: rgb(165, 243, 252);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .cert-action-btn.primary {
+    border-color: rgba(34, 211, 238, 0.55);
+    color: rgb(103, 232, 249);
+    background: rgba(34, 211, 238, 0.1);
+  }
+
+  .cert-action-btn.primary:hover {
+    background: rgba(34, 211, 238, 0.18);
+  }
+
+  .cert-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 0.2rem;
+  }
+
+  @media (max-width: 480px) {
+    .cert-action-btn {
+      width: 8.5rem;
+      min-height: 1.9rem;
+    }
+  }
+
+  .cert-pdf-preview {
+    display: none;
+    margin-top: 1.25rem;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: rgba(2, 8, 23, 0.8);
+  }
+
+  .cert-pdf-preview.open {
+    display: block;
   }
 </style>
 
@@ -195,38 +277,241 @@ translation_key: documents
       </div>
     </article>
 
-    <!-- شهاداتي 1 -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
-      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Certificate — English</h3>
-      <p class="text-xs text-slate-400">Professional cybersecurity certification</p>
-      <div class="border-t border-slate-700/60 pt-3">
-        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="#" class="doc-link transition">PDF</a>
-        </div>
-      </div>
-    </article>
+    <!-- Certificates entry -->
+    <div class="doc-filter-item col-span-full" data-doc-category="certificates">
+      <div class="doc-card rounded-xl p-6">
 
-    <!-- شهاداتي 2 -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
-      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">Сертификат — Русский</h3>
-      <p class="text-xs text-slate-400">Профессиональный сертификат в области кибербезопасности</p>
-      <div class="border-t border-slate-700/60 pt-3">
-        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="#" class="doc-link transition">PDF</a>
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <span class="cert-badge">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=coursera.org" alt="Coursera" class="w-4 h-4 rounded-sm">
+            Coursera
+          </span>
+          <div class="flex items-center gap-2">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" class="rounded-sm bg-white/95" style="width:46px;height:23px;max-width:46px;max-height:23px;object-fit:contain;display:block;" title="IBM (International Business Machines)">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=credly.com" alt="Credly" class="w-7 h-7 rounded-sm" title="Credly">
+          </div>
         </div>
-      </div>
-    </article>
 
-    <!-- شهاداتي 3 -->
-    <article class="doc-filter-item doc-card rounded-xl flex flex-col gap-4" data-doc-category="certificates">
-      <h3 class="doc-title text-xl font-semibold text-slate-100 leading-tight">الشهادة — العربية</h3>
-      <p class="text-xs text-slate-400 font-[Noto_Sans_Arabic,sans-serif]">شهادة احترافية في الأمن السيبراني</p>
-      <div class="border-t border-slate-700/60 pt-3">
-        <div class="flex items-center gap-3 text-sm font-mono text-slate-300">
-          <a href="#" class="doc-link transition">PDF</a>
+        <h3 class="doc-title text-xl font-bold text-white mb-3 leading-snug">
+          IT Fundamentals for Cybersecurity
+        </h3>
+
+        <ul class="text-sm text-gray-400 leading-relaxed mb-5 list-disc list-inside space-y-1">
+          <li>Introduction to Cybersecurity Tools &amp; Cyberattacks</li>
+          <li>Operating Systems: Overview, Administration, and Security</li>
+          <li>Cybersecurity Compliance Framework, Standards &amp; Regulations</li>
+          <li>Computer Networks and Network Security</li>
+        </ul>
+
+        <div class="border-t border-slate-700/60 mb-3"></div>
+
+        <div class="cert-actions">
+          <a href="https://www.credly.com/badges/1b730c34-a8b6-4d97-8232-af097c3cb48e/public_url" target="_blank" rel="noopener noreferrer" class="cert-action-btn primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z"/></svg>
+            Badge Credly
+          </a>
+          <a href="https://coursera.org/share/a316fe91058dde6567813a3f3a316753" target="_blank" rel="noopener noreferrer" class="cert-action-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Verify on Coursera
+          </a>
+          <button type="button" class="cert-action-btn"
+            onclick="var p=this.closest('.doc-card').querySelector('.cert-pdf-preview');var o=p.classList.toggle('open');this.textContent=o?'\u25b2 Hide Preview':'\u25bc Preview PDF';"
+          >
+            &#9660; Preview PDF
+          </button>
         </div>
+
+        <div class="cert-pdf-preview">
+          <iframe src="{{ '/sertificate/Coursera 5N2LNGY9T8KH.pdf' | relative_url }}" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+        </div>
+
       </div>
-    </article>
+
+      <div class="doc-card rounded-xl p-6 mt-6">
+
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <span class="cert-badge">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=coursera.org" alt="Coursera" class="w-4 h-4 rounded-sm">
+            Coursera
+          </span>
+          <img src="https://logo.clearbit.com/eccouncil.org" alt="EC-Council" class="rounded-sm bg-white px-1 py-0.5" style="width:80px;height:40px;max-width:80px;max-height:40px;object-fit:contain;display:block;" title="EC-Council" onerror="this.onerror=null;this.src='https://www.google.com/s2/favicons?sz=128&domain=eccouncil.org';this.className='rounded-sm bg-white';this.style='width:40px;height:40px;max-width:40px;max-height:40px;object-fit:contain;display:block;';">
+        </div>
+
+        <h3 class="doc-title text-xl font-bold text-white mb-3 leading-snug">
+          Cybersecurity Attack and Defense Fundamentals
+        </h3>
+
+        <ul class="text-sm text-gray-400 leading-relaxed mb-5 list-disc list-inside space-y-1">
+          <li>Ethical Hacking Essentials (EHE)</li>
+          <li>Network Defense Essentials (NDE)</li>
+          <li>Digital Forensics Essentials (DFE)</li>
+        </ul>
+
+        <div class="border-t border-slate-700/60 mb-3"></div>
+
+        <div class="cert-actions">
+          <a href="https://coursera.org/share/cde0e4bf442d944f2ae3e98f72d0574d" target="_blank" rel="noopener noreferrer" class="cert-action-btn primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Verify on Coursera
+          </a>
+          <button type="button" class="cert-action-btn"
+            onclick="var p=this.closest('.doc-card').querySelector('.cert-pdf-preview');var o=p.classList.toggle('open');this.textContent=o?'\u25b2 Hide Preview':'\u25bc Preview PDF';"
+          >
+            &#9660; Preview PDF
+          </button>
+        </div>
+
+        <div class="cert-pdf-preview">
+          <iframe src="{{ '/sertificate/Coursera 80C2FPT2K0QG.pdf' | relative_url }}" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+        </div>
+
+      </div>
+
+      <div class="doc-card rounded-xl p-6 mt-6">
+
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <span class="cert-badge">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=coursera.org" alt="Coursera" class="w-4 h-4 rounded-sm">
+            Coursera
+          </span>
+          <div class="flex items-center gap-2">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=google.com" alt="Google" class="w-7 h-7 rounded-sm" title="Google">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=credly.com" alt="Credly" class="w-7 h-7 rounded-sm" title="Credly">
+          </div>
+        </div>
+
+        <h3 class="doc-title text-xl font-bold text-white mb-3 leading-snug">
+          Google Cybersecurity
+        </h3>
+
+        <ul class="text-sm text-gray-400 leading-relaxed mb-5 list-disc list-inside space-y-1">
+          <li>Foundations of Cybersecurity</li>
+          <li>Play It Safe: Manage Security Risks</li>
+          <li>Connect and Protect: Networks and Network Security</li>
+          <li>Tools of the Trade: Linux and SQL</li>
+          <li>Assets, Threats, and Vulnerabilities</li>
+          <li>Sound the Alarm: Detection and Response</li>
+          <li>Automate Cybersecurity Tasks with Python</li>
+          <li>Put It to Work: Prepare for Cybersecurity Jobs</li>
+        </ul>
+
+        <div class="border-t border-slate-700/60 mb-3"></div>
+
+        <div class="cert-actions">
+          <a href="https://www.credly.com/badges/4899c982-6381-473b-915e-4479222f0cc4/public_url" target="_blank" rel="noopener noreferrer" class="cert-action-btn primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z"/></svg>
+            Badge Credly
+          </a>
+          <a href="https://coursera.org/share/687ca5118a74e9887b0189e0e757b135" target="_blank" rel="noopener noreferrer" class="cert-action-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Verify on Coursera
+          </a>
+          <button type="button" class="cert-action-btn"
+            onclick="var p=this.closest('.doc-card').querySelector('.cert-pdf-preview');var o=p.classList.toggle('open');this.textContent=o?'\u25b2 Hide Preview':'\u25bc Preview PDF';"
+          >
+            &#9660; Preview PDF
+          </button>
+        </div>
+
+        <div class="cert-pdf-preview">
+          <iframe src="{{ '/sertificate/Coursera A7MUSAOT3OJ0.pdf' | relative_url }}" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+        </div>
+
+      </div>
+
+      <div class="doc-card rounded-xl p-6 mt-6">
+
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <span class="cert-badge">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=coursera.org" alt="Coursera" class="w-4 h-4 rounded-sm">
+            Coursera
+          </span>
+          <div class="flex items-center gap-2">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=microsoft.com" alt="Microsoft" class="w-7 h-7 rounded-sm" title="Microsoft">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=credly.com" alt="Credly" class="w-7 h-7 rounded-sm" title="Credly">
+          </div>
+        </div>
+
+        <h3 class="doc-title text-xl font-bold text-white mb-3 leading-snug">
+          Microsoft Cybersecurity Analyst
+        </h3>
+
+        <ul class="text-sm text-gray-400 leading-relaxed mb-5 list-disc list-inside space-y-1">
+          <li>Introduction to Computers and Operating Systems and Security</li>
+          <li>Introduction to Networking and Cloud Computing</li>
+          <li>Cybersecurity Threat Vectors and Mitigation</li>
+          <li>Cybersecurity Identity and Access Solutions using Azure AD</li>
+          <li>Cybersecurity Solutions and Microsoft Defender</li>
+          <li>Cybersecurity Tools and Technologies</li>
+          <li>Cybersecurity Management and Compliance</li>
+          <li>Advanced Cybersecurity Concepts and Capstone Project</li>
+        </ul>
+
+        <div class="border-t border-slate-700/60 mb-3"></div>
+
+        <div class="cert-actions">
+          <a href="https://www.credly.com/badges/b4529e87-f355-44e2-9b55-2f6f9d5e9a2a" target="_blank" rel="noopener noreferrer" class="cert-action-btn primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 3l7 4v5c0 5-3.5 8-7 9-3.5-1-7-4-7-9V7l7-4z"/></svg>
+            Badge Credly
+          </a>
+          <a href="https://coursera.org/share/c628b3add4065861f249ac0ce62e02d6" target="_blank" rel="noopener noreferrer" class="cert-action-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Verify on Coursera
+          </a>
+          <button type="button" class="cert-action-btn"
+            onclick="var p=this.closest('.doc-card').querySelector('.cert-pdf-preview');var o=p.classList.toggle('open');this.textContent=o?'\u25b2 Hide Preview':'\u25bc Preview PDF';"
+          >
+            &#9660; Preview PDF
+          </button>
+        </div>
+
+        <div class="cert-pdf-preview">
+          <iframe src="{{ '/sertificate/Coursera KLBK3U18FQHA.pdf' | relative_url }}" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+        </div>
+
+      </div>
+
+      <div class="doc-card rounded-xl p-6 mt-6">
+
+        <div class="flex items-center justify-between flex-wrap gap-3 mb-5">
+          <span class="cert-badge">
+            <img src="https://www.google.com/s2/favicons?sz=32&domain=coursera.org" alt="Coursera" class="w-4 h-4 rounded-sm">
+            Coursera
+          </span>
+          <img src="https://logo.clearbit.com/learnkarts.com" alt="Learnkarts" class="rounded-sm bg-white px-1 py-0.5" style="width:68px;height:34px;max-width:68px;max-height:34px;object-fit:contain;display:block;" title="Learnkarts" onerror="this.onerror=null;this.src='https://www.google.com/s2/favicons?sz=128&domain=learnkarts.com';this.className='rounded-sm bg-white';this.style='width:40px;height:40px;max-width:40px;max-height:40px;object-fit:contain;display:block;';">
+        </div>
+
+        <h3 class="doc-title text-xl font-bold text-white mb-3 leading-snug">
+          Ethical Hacking
+        </h3>
+
+        <ul class="text-sm text-gray-400 leading-relaxed mb-5 list-disc list-inside space-y-1">
+          <li>Ethical Hacking Fundamentals</li>
+          <li>System &amp; Network Security Essentials</li>
+          <li>Advanced Ethical Hacking &amp; Cybersecurity</li>
+          <li>Ethical Hacking Practice Project &amp; Questions</li>
+        </ul>
+
+        <div class="border-t border-slate-700/60 mb-3"></div>
+
+        <div class="cert-actions">
+          <a href="https://coursera.org/share/0d934c9e95db8ea390fa9085e7a7fcfc" target="_blank" rel="noopener noreferrer" class="cert-action-btn primary">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+            Verify on Coursera
+          </a>
+          <button type="button" class="cert-action-btn"
+            onclick="var p=this.closest('.doc-card').querySelector('.cert-pdf-preview');var o=p.classList.toggle('open');this.textContent=o?'\u25b2 Hide Preview':'\u25bc Preview PDF';"
+          >
+            &#9660; Preview PDF
+          </button>
+        </div>
+
+        <div class="cert-pdf-preview">
+          <iframe src="{{ '/sertificate/Coursera PSYSKZY1K3EC.pdf' | relative_url }}" class="w-full" style="height:520px;" title="Certificate PDF preview" loading="lazy"></iframe>
+        </div>
+
+      </div>
+    </div>
 
   </div>
 </section>
@@ -252,11 +537,6 @@ translation_key: documents
 
     var pageLang = resolvePageLang();
     var descriptions = {
-      all: {
-        title:    'جميع المستندات',
-        audience: 'نظرة عامة على جميع المستندات المتاحة في مكان واحد.',
-        focus:    'يشمل: الأوراق البيضاء، سياسات الخصوصية، التراخيص، الوثائق القانونية والشهادات.'
-      },
       whitepaper: {
         title:    'الورقة البيضاء',
         audience: 'للمدققين والعملاء وفرق الأمن.',
@@ -298,9 +578,7 @@ translation_key: documents
 
       items.forEach(function (item) {
         var itemLang = (item.getAttribute('data-doc-lang') || '').trim().toLowerCase();
-        var matches = category === 'all'
-          ? true
-          : (category === 'whitepaper' || category === 'licenses' || category === 'legal')
+        var matches = (category === 'whitepaper' || category === 'licenses' || category === 'legal')
             ? item.getAttribute('data-doc-category') === category && itemLang === pageLang
             : item.getAttribute('data-doc-category') === category;
         item.hidden = !matches;
@@ -318,6 +596,8 @@ translation_key: documents
       btn.addEventListener('click', function () { setFilter(btn.getAttribute('data-filter')); });
     });
 
-    setFilter('all');
+    if (buttons.length > 0) {
+      setFilter(buttons[0].getAttribute('data-filter'));
+    }
   });
 </script>

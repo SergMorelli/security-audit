@@ -15,7 +15,6 @@ translation_key: reports
 <section class="max-w-6xl mx-auto px-4 pb-8" data-reports-filter>
   <div class="overflow-x-auto">
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
-      <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="all">🌐 All</button>
       <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="technical">🛠 Technical</button>
       <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="management">📋 Management</button>
       <button type="button" class="report-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="executive">🏛 Executive</button>
@@ -66,8 +65,8 @@ translation_key: reports
   @media (hover: hover) {
     .soc-card:hover {
       transform: translateY(-6px);
-      border-color: rgba(34, 211, 238, 0.85);
-      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+      border-color: rgba(34, 211, 238, 0.95);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.55), 0 0 18px rgba(34, 211, 238, 0.45), 0 0 42px rgba(8, 145, 178, 0.4);
     }
 
     .soc-card:hover .soc-title {
@@ -235,11 +234,6 @@ translation_key: reports
     var descriptionFocus = document.getElementById('reportsFilterDescriptionFocus');
 
     var descriptions = {
-      all: {
-        title: 'All Reports',
-        audience: 'Overview of all report cards in one place.',
-        focus: 'Focus: each card includes report title, tools, and language-specific Technical/General links.'
-      },
       comprehensive: {
         title: 'Comprehensive',
         audience: 'Broad report coverage for EN / RU / AR audiences.',
@@ -275,7 +269,7 @@ translation_key: reports
       });
 
       sections.forEach(function (section) {
-        var matches = category === 'all' || section.getAttribute('data-report-category') === category;
+        var matches = section.getAttribute('data-report-category') === category;
         section.style.display = matches ? '' : 'none';
       });
 
@@ -292,6 +286,8 @@ translation_key: reports
       });
     });
 
-    setFilter('all');
+    if (buttons.length > 0) {
+      setFilter(buttons[0].getAttribute('data-filter'));
+    }
   });
 </script>
