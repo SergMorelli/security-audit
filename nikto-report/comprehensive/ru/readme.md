@@ -18,4 +18,4 @@ ar — арабоязычная версия
 Подходят для изучения структуры профессиональных отчётов или использования в качестве шаблонов.
 
 
-# [.PDF](/niktoreport-comprehensive-ru.pdf)
+# [.PDF](niktoreport-comprehensive-ru.pdf)

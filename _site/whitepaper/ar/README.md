@@ -3,4 +3,4 @@
 تهدف هذه الوثائق إلى توفير فهم شامل قبل بدء أي اختبار أو تقييم.
 
 
-# [.PDF](/whitepaper-ar.pdf)
+# [.PDF](whitepaper-ar.pdf)

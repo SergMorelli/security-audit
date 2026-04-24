@@ -5,186 +5,457 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Технический ZAP отчёт - Русский</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; direction: ltr; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; text-align: left; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.6; text-align: left; direction: ltr; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #d5e0ef 100%);
+      color: #1a2332;
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: linear-gradient(135deg, #0d47a1 0%, #0a1628 100%);
+      color: #fff;
+      padding: 52px 48px;
+      margin-bottom: 36px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .report-header h1 {
+      font-size: 1.95em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      line-height: 1.3;
+    }
+    .report-header .subtitle {
+      font-size: 1.05em;
+      opacity: .85;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .report-header .meta {
+      font-size: .9em;
+      opacity: .65;
+      position: relative;
+    }
+    .tool-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.9);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .82em;
+      margin-top: 18px;
+      position: relative;
+      letter-spacing: .04em;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: #fff;
+      padding: 34px 40px;
+      margin-bottom: 26px;
+      border-radius: 12px;
+      box-shadow: 0 2px 18px rgba(0,0,0,.07);
+      border-top: 3px solid #0d47a1;
+    }
+
+    /* ── Headings ── */
+    h2 {
+      font-size: 1.55em;
+      color: #0d47a1;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e4e9f0;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 1.15em;
+      color: #1a2332;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      padding-left: 10px;
+      border-left: 3px solid #0d47a1;
+    }
+    h4 {
+      font-size: 1.0em;
+      color: #2c3e50;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 18px 0;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .alert-critical {
+      background: #fff0f0;
+      border-left: 5px solid #c62828;
+      color: #b71c1c;
+    }
+    .alert-warning {
+      background: #fff8e1;
+      border-left: 5px solid #f57c00;
+      color: #e65100;
+    }
+    .alert-info {
+      background: #e8f4fd;
+      border-left: 5px solid #0d47a1;
+      color: #0d47a1;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,.1);
+      font-size: .93em;
+    }
+    thead {
+      background: #0d47a1;
+      color: #fff;
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: .88em;
+      letter-spacing: .03em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #2c3e50;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:hover { background: #eef2f7; transition: background .15s; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* KV (key-value) table variant */
+    table.kv-table th {
+      background: #f0f4f8;
+      color: #1a2332;
+      width: 36%;
+    }
+    table.kv-table td { color: #37474f; }
+
+    /* ── Lists ── */
+    ul, ol { margin: 10px 0; padding-left: 22px; }
+    li { margin: 6px 0; line-height: 1.65; color: #2c3e50; }
+
+    ul.checklist { list-style: none; padding-left: 0; }
+    ul.checklist li { padding: 5px 8px 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+    ul.checklist li::before { content: "☐"; color: #0d47a1; font-size: 1.1em; flex-shrink: 0; }
+    ul.checklist li.done::before { content: "☑"; color: #2e7d32; }
+
+    ul.status-list { list-style: none; padding-left: 0; }
+    ul.status-list li { padding: 4px 0; }
+    ul.status-list li.ok   { color: #2e7d32; }
+    ul.status-list li.fail { color: #c62828; }
+    ul.status-list li.warn { color: #e65100; }
+
+    /* ── TOC ── */
+    .toc { background: #f6f9fc; border-radius: 8px; padding: 20px 26px; }
+    .toc ol { counter-reset: toc-cnt; list-style: none; padding: 0; }
+    .toc li {
+      counter-increment: toc-cnt;
+      padding: 7px 0;
+      border-bottom: 1px solid #e4e9f0;
+      color: #0d47a1;
+      font-weight: 500;
+    }
+    .toc li::before {
+      content: counter(toc-cnt) ". ";
+      font-weight: 700;
+      min-width: 26px;
+      display: inline-block;
+    }
+    .toc li:last-child { border-bottom: none; }
+
+    /* ── Code ── */
+    code {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      color: #c62828;
+      font-size: .88em;
+    }
+    pre.code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 22px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      font-size: .87em;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── Misc ── */
+    p { margin: 10px 0; color: #2c3e50; }
+    .phase-box {
+      background: #f6f9fc;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid #dce6f0;
+    }
+
+    /* ── RTL support ── */
+    [dir="rtl"] h3 { padding-left: 0; padding-right: 10px; border-left: none; border-right: 3px solid #0d47a1; }
+    [dir="rtl"] .alert { border-left: none; border-right: 5px solid; }
+    [dir="rtl"] .alert-critical { border-right-color: #c62828; }
+    [dir="rtl"] .alert-warning  { border-right-color: #f57c00; }
+    [dir="rtl"] .alert-info     { border-right-color: #0d47a1; }
+    [dir="rtl"] th { text-align: right; }
+    [dir="rtl"] ul, [dir="rtl"] ol { padding-left: 0; padding-right: 22px; }
+    [dir="rtl"] ul.checklist li { padding-right: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .section { box-shadow: none; border: 1px solid #e0e0e0; page-break-inside: avoid; }
+      .report-header { box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+
   </style>
 </head>
 <body>
   <main>
-    <h1>Технический ZAP отчёт - Русский</h1>
-    <pre>
-Отчет о соответствии стандартам безопасности: Технический анализ сайта example.com
-Ведущий специалист по информационной безопасности
-2025-12-31
-Аннотация
-Настоящий технический отчет представляет детальный анализ соответствия веб-ресурса https://example.com требованиям российских и международных стандартов информационной безопасности. Анализ выполнен на основе автоматизированного сканирования безопасности с использованием OWASP ZAP 2.17.0 от Checkmarx, проведенного 30 декабря 2025 года.
-⚠️ КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ: Обнаружена утечка персональных данных (PII) - требуется немедленное техническое вмешательство!
-Ключевые технические находки:
-29 уязвимостей различного уровня критичности
-Критическая уязвимость утечки PII с высоким уровнем достоверности
-Отсутствие базовых механизмов защиты веб-приложения
-Несоответствие основным требованиям ГОСТ Р 57580.1-2017 и стандартов ФСТЭК
-Содержание
-Методология технического анализа
-Архитектурный анализ системы
-Детальный анализ уязвимостей
-Соответствие российским стандартам
-Соответствие международным стандартам
-Технический план устранения
-Рекомендации по архитектуре
-Методология технического анализа
-Параметры сканирования
-Инструментарий:
-Сканер: OWASP ZAP 2.17.0 (Zed Attack Proxy) [1]
-Движок: Checkmarx Security Engine
-Дата/время: 30 декабря 2025, 19:00:53 UTC+3
-Целевой ресурс: https://example.com
-Охват сканирования: 290 конечных точек
-Глубина анализа: Полное сканирование всех доступных контекстов
-Конфигурация сканера:
-scan_policy:
-  contexts: all_included
-  risk_levels: [high, medium, low, informational]
+<div class="report-header">
+  <h1>Отчет о соответствии стандартам безопасности: Технический анализ сайта example.com</h1>
+  <p class="subtitle">Ведущий специалист по информационной безопасности</p>
+  <p class="meta">2025-12-31</p>
+  <span class="tool-badge">OWASP ZAP 2.17.0 &mdash; Checkmarx Security Platform</span>
+</div>
+<div class="section">
+<p>Настоящий технический отчет представляет детальный анализ соответствия веб-ресурса https://example.com требованиям российских и международных стандартов информационной безопасности. Анализ выполнен на основе автоматизированного сканирования безопасности с использованием OWASP ZAP 2.17.0 от Checkmarx, проведенного 30 декабря 2025 года.</p>
+<div class="alert alert-warning">⚠️ КРИТИЧЕСКОЕ ПРЕДУПРЕЖДЕНИЕ: Обнаружена утечка персональных данных (PII) - требуется немедленное техническое вмешательство!</div>
+<h3>Ключевые технические находки:</h3>
+<ul>
+  <li>29 уязвимостей различного уровня критичности</li>
+  <li>Критическая уязвимость утечки PII с высоким уровнем достоверности</li>
+  <li>Отсутствие базовых механизмов защиты веб-приложения</li>
+  <li>Несоответствие основным требованиям ГОСТ Р 57580.1-2017 и стандартов ФСТЭК</li>
+  <li>Содержание</li>
+  <li>Методология технического анализа</li>
+  <li>Архитектурный анализ системы</li>
+</ul>
+</div>
+<div class="section">
+<h2>Детальный анализ уязвимостей</h2>
+<ul>
+  <li>Соответствие российским стандартам</li>
+  <li>Соответствие международным стандартам</li>
+</ul>
+</div>
+<div class="section">
+<h2>Технический план устранения</h2>
+<ul>
+  <li>Рекомендации по архитектуре</li>
+  <li>Методология технического анализа</li>
+  <li>Параметры сканирования</li>
+</ul>
+<h3>Инструментарий:</h3>
+<p><strong>Сканер:</strong> OWASP ZAP 2.17.0 (Zed Attack Proxy) [1]</p>
+<p><strong>Движок:</strong> Checkmarx Security Engine</p>
+<p><strong>Дата/время:</strong> 30 декабря 2025, 19:00:53 UTC+3</p>
+<p><strong>Целевой ресурс:</strong> https://example.com</p>
+<p><strong>Охват сканирования:</strong> 290 конечных точек</p>
+<p><strong>Глубина анализа:</strong> Полное сканирование всех доступных контекстов</p>
+<h3>Конфигурация сканера:</h3>
+<p>scan_policy:</p>
+<p><strong>contexts:</strong> all_included</p>
+<pre class="code-block">  risk_levels: [high, medium, low, informational]
   confidence_levels: [user_confirmed, high, medium, low]
   excluded_confidence: [false_positive]
   passive_scanners: enabled
   active_scanners: enabled
   spider_configuration:
     max_depth: unlimited
-    max_children: 10
-Статистика результатов
-Уровень риска
-Количество
-Процент
-Уровень достоверности
-🔴 Высокий
-1
-3.4%
-Высокий
-🟡 Средний
-3
-10.3%
-Высокий/Средний
-🔵 Низкий
-4
-13.8%
-Высокий/Средний/Низкий
-ℹ️ Информационный
-21
-72.4%
-Средний/Низкий
-Итого
-29
-100%
--
-Производительность сканирования
-Метрики производительности:
-Медленные ответы: 100% (превышен порог)
-HTTP 2xx ответы: 43%
-HTTP 3xx ответы: 37%
-HTTP 4xx ответы: 19% (превышен низкий порог)
-Ошибки ZAP: 1 в логах
-Предупреждения ZAP: 268 в логах
-Архитектурный анализ системы
-Технологический стек
-Серверная инфраструктура:
-┌─────────────────────────────────────┐
-│           Cloudflare CDN            │
-│    ┌─────────────────────────────┐  │
-│    │   Browser Insights          │  │
-│    │   HTTP/3 Support            │  │
-│    └─────────────────────────────┘  │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│         LiteSpeed Web Server        │
-│    ┌─────────────────────────────┐  │
-│    │   LiteSpeed Cache           │  │
-│    │   HSTS Partial Support      │  │
-│    └─────────────────────────────┘  │
-└─────────────────┬───────────────────┘
-                  │
-┌─────────────────▼───────────────────┐
-│            PHP Runtime              │
-│    ┌─────────────────────────────┐  │
-│    │   WordPress CMS             │  │
-│    │   ├─ Block Editor           │  │
-│    │   ├─ Blocksy Theme          │  │
-│    │   └─ Stackable Plugin       │  │
-│    └─────────────────────────────┘  │
-└─────────────────────────────────────┘
-Внешние зависимости:
-Google Font API: Загрузка веб-шрифтов
-Gravatar: Сервис аватаров пользователей
-Priority Hints: Оптимизация загрузки ресурсов
-RSS: Синдикация контента
-Анализ сетевой архитектуры
-Протоколы и заголовки:
-# Поддерживаемые протоколы
-HTTP/1.1: ✓ Поддерживается
-HTTP/2: ✓ Поддерживается  
-HTTP/3: ✓ Поддерживается (через Cloudflare)
-
-# Анализ заголовков безопасности
-Strict-Transport-Security: ❌ Отсутствует/некорректен
+    max_children: 10</pre>
+<ul>
+  <li>Статистика результатов</li>
+  <li>Уровень риска</li>
+  <li>Количество</li>
+  <li>Процент</li>
+  <li>Уровень достоверности</li>
+  <li>🔴 Высокий</li>
+  <li>1</li>
+  <li>3.4%</li>
+  <li>Высокий</li>
+  <li>🟡 Средний</li>
+  <li>3</li>
+  <li>10.3%</li>
+  <li>Высокий/Средний</li>
+  <li>🔵 Низкий</li>
+  <li>4</li>
+  <li>13.8%</li>
+  <li>Высокий/Средний/Низкий</li>
+  <li>ℹ️ Информационный</li>
+  <li>21</li>
+  <li>72.4%</li>
+  <li>Средний/Низкий</li>
+  <li>Итого</li>
+  <li>29</li>
+  <li>100%</li>
+  <li>-</li>
+</ul>
+<h3>Производительность сканирования</h3>
+<h3>Метрики производительности:</h3>
+<p><strong>Медленные ответы:</strong> 100% (превышен порог)</p>
+<p><strong>HTTP 2xx ответы:</strong> 43%</p>
+<p><strong>HTTP 3xx ответы:</strong> 37%</p>
+<p><strong>HTTP 4xx ответы:</strong> 19% (превышен низкий порог)</p>
+<p><strong>Ошибки ZAP:</strong> 1 в логах</p>
+<p><strong>Предупреждения ZAP:</strong> 268 в логах</p>
+<ul>
+  <li>Архитектурный анализ системы</li>
+  <li>Технологический стек</li>
+</ul>
+<h3>Серверная инфраструктура:</h3>
+<ul>
+  <li>┌─────────────────────────────────────┐</li>
+  <li>│           Cloudflare CDN            │</li>
+  <li>│    ┌─────────────────────────────┐  │</li>
+  <li>│    │   Browser Insights          │  │</li>
+  <li>│    │   HTTP/3 Support            │  │</li>
+  <li>│    └─────────────────────────────┘  │</li>
+  <li>└─────────────────┬───────────────────┘</li>
+  <li>│</li>
+  <li>┌─────────────────▼───────────────────┐</li>
+  <li>│         LiteSpeed Web Server        │</li>
+  <li>│    ┌─────────────────────────────┐  │</li>
+  <li>│    │   LiteSpeed Cache           │  │</li>
+  <li>│    │   HSTS Partial Support      │  │</li>
+  <li>│    └─────────────────────────────┘  │</li>
+  <li>└─────────────────┬───────────────────┘</li>
+  <li>│</li>
+  <li>┌─────────────────▼───────────────────┐</li>
+  <li>│            PHP Runtime              │</li>
+  <li>│    ┌─────────────────────────────┐  │</li>
+  <li>│    │   WordPress CMS             │  │</li>
+  <li>│    │   ├─ Block Editor           │  │</li>
+  <li>│    │   ├─ Blocksy Theme          │  │</li>
+  <li>│    │   └─ Stackable Plugin       │  │</li>
+  <li>│    └─────────────────────────────┘  │</li>
+  <li>└─────────────────────────────────────┘</li>
+</ul>
+<h3>Внешние зависимости:</h3>
+<p><strong>Google Font API:</strong> Загрузка веб-шрифтов</p>
+<p><strong>Gravatar:</strong> Сервис аватаров пользователей</p>
+<p><strong>Priority Hints:</strong> Оптимизация загрузки ресурсов</p>
+<p><strong>RSS:</strong> Синдикация контента</p>
+<h3>Анализ сетевой архитектуры</h3>
+<h3>Протоколы и заголовки:</h3>
+<p># Поддерживаемые протоколы</p>
+<p><strong>HTTP/1.1:</strong> ✓ Поддерживается</p>
+<p><strong>HTTP/2:</strong> ✓ Поддерживается</p>
+<p><strong>HTTP/3:</strong> ✓ Поддерживается (через Cloudflare)</p>
+<p># Анализ заголовков безопасности</p>
+<pre class="code-block">Strict-Transport-Security: ❌ Отсутствует/некорректен
 Content-Security-Policy: ❌ Отсутствует
 X-Frame-Options: ❌ Отсутствует
-X-Content-Type-Options: ❌ Отсутствует
-Subresource-Integrity: ❌ Отсутствует для внешних ресурсов
-Детальный анализ уязвимостей
-🔴 Критические уязвимости (Высокий риск)
-CVE-Подобная уязвимость: Утечка персональных данных
-Классификация: CWE-359 (Exposure of Private Information) | WASC-13 | Достоверность: Высокая
-Техническое описание:
-Vulnerability Type: Information Disclosure - PII
-Attack Vector: Direct Access
-Complexity: Low
-Privileges Required: None
-User Interaction: None
-Scope: Changed
-Confidentiality Impact: High
-Integrity Impact: None  
-Availability Impact: None
-Детали обнаружения:
-Местоположение: Множественные конечные точки
-Тип данных: Персональная информация пользователей
-Метод доступа: Прямой HTTP-запрос без аутентификации
-Формат утечки: Структурированные данные в ответе сервера
-Техническое воздействие:
-# Пример потенциального воздействия
-impact_assessment = {
-    "data_classification": "Персональные данные (ПДн)",
+X-Content-Type-Options: ❌ Отсутствует</pre>
+<p><strong>Subresource-Integrity:</strong> ❌ Отсутствует для внешних ресурсов</p>
+</div>
+<div class="section">
+<h2>Детальный анализ уязвимостей</h2>
+<h3>🔴 Критические уязвимости (Высокий риск)</h3>
+<p><strong>CVE-Подобная уязвимость:</strong> Утечка персональных данных</p>
+<p><strong>Классификация:</strong> CWE-359 (Exposure of Private Information) | WASC-13 | Достоверность: Высокая</p>
+<h3>Техническое описание:</h3>
+<p><strong>Vulnerability Type:</strong> Information Disclosure - PII</p>
+<p><strong>Attack Vector:</strong> Direct Access</p>
+<p><strong>Complexity:</strong> Low</p>
+<p><strong>Privileges Required:</strong> None</p>
+<p><strong>User Interaction:</strong> None</p>
+<p><strong>Scope:</strong> Changed</p>
+<p><strong>Confidentiality Impact:</strong> High</p>
+<p><strong>Integrity Impact:</strong> None</p>
+<p><strong>Availability Impact:</strong> None</p>
+<h3>Детали обнаружения:</h3>
+<p><strong>Местоположение:</strong> Множественные конечные точки</p>
+<p><strong>Тип данных:</strong> Персональная информация пользователей</p>
+<p><strong>Метод доступа:</strong> Прямой HTTP-запрос без аутентификации</p>
+<p><strong>Формат утечки:</strong> Структурированные данные в ответе сервера</p>
+<h3>Техническое воздействие:</h3>
+<ul>
+  <li># Пример потенциального воздействия</li>
+  <li>impact_assessment = {</li>
+</ul>
+<pre class="code-block">    "data_classification": "Персональные данные (ПДн)",
     "regulatory_framework": ["152-ФЗ", "GDPR", "CCPA"],
     "potential_fine": "До 6% от оборота (152-ФЗ)",
     "notification_requirement": "72 часа (GDPR)",
     "technical_risk": "Критический"
-}
-🟡 Уязвимости среднего риска
-1. Отсутствие Subresource Integrity (SRI)
-CWE-345 | WASC-15 | Количество: 5 экземпляров
-Технические детали:
-&lt;!-- Уязвимые ресурсы без SRI --&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet"&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"&gt;&lt;/script&gt;
-
-&lt;!-- Рекомендуемое исправление --&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=Roboto" 
-      rel="stylesheet" 
-      integrity="sha384-[hash]" 
-      crossorigin="anonymous"&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" 
-        integrity="sha384-[hash]" 
-        crossorigin="anonymous"&gt;&lt;/script&gt;
-Векторы атак:
-Supply Chain Attack: Компрометация CDN
-Man-in-the-Middle: Подмена ресурсов в транзите
-DNS Hijacking: Перенаправление на вредоносные ресурсы
-2. Отсутствие Content Security Policy (CSP)
-CWE-693 | WASC-15 | Количество: 5 экземпляров
-Рекомендуемая конфигурация CSP:
-Content-Security-Policy: 
+}</pre>
+<h3>🟡 Уязвимости среднего риска</h3>
+<ol>
+  <li>Отсутствие Subresource Integrity (SRI)</li>
+</ol>
+<p><strong>CWE-345 | WASC-15 | Количество:</strong> 5 экземпляров</p>
+</div>
+<div class="section">
+<h2>Технические детали:</h2>
+<ul>
+  <li>&lt;!-- Уязвимые ресурсы без SRI --&gt;</li>
+  <li>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet"&gt;</li>
+</ul>
+<pre class="code-block">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"&gt;&lt;/script&gt;</pre>
+<ul>
+  <li>&lt;!-- Рекомендуемое исправление --&gt;</li>
+  <li>&lt;link href="https://fonts.googleapis.com/css2?family=Roboto"</li>
+  <li>rel="stylesheet"</li>
+  <li>integrity="sha384-[hash]"</li>
+  <li>crossorigin="anonymous"&gt;</li>
+  <li>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"</li>
+  <li>integrity="sha384-[hash]"</li>
+  <li>crossorigin="anonymous"&gt;&lt;/script&gt;</li>
+</ul>
+<h3>Векторы атак:</h3>
+<p><strong>Supply Chain Attack:</strong> Компрометация CDN</p>
+<p><strong>Man-in-the-Middle:</strong> Подмена ресурсов в транзите</p>
+<p><strong>DNS Hijacking:</strong> Перенаправление на вредоносные ресурсы</p>
+<ol>
+  <li>Отсутствие Content Security Policy (CSP)</li>
+</ol>
+<p><strong>CWE-693 | WASC-15 | Количество:</strong> 5 экземпляров</p>
+<h3>Рекомендуемая конфигурация CSP:</h3>
+<pre class="code-block">Content-Security-Policy: 
   default-src 'self';
   script-src 'self' 'unsafe-inline' 
     https://cdnjs.cloudflare.com 
@@ -199,329 +470,369 @@ Content-Security-Policy:
   frame-ancestors 'none';
   base-uri 'self';
   form-action 'self';
-  upgrade-insecure-requests;
-3. Отсутствие защиты от Clickjacking
-CWE-1021 | WASC-15 | Количество: 5 экземпляров
-Технические решения:
-# Вариант 1: X-Frame-Options (устаревший, но совместимый)
-X-Frame-Options: DENY
-
-# Вариант 2: CSP frame-ancestors (современный)
-Content-Security-Policy: frame-ancestors 'none';
-
-# Вариант 3: Комбинированный подход
-X-Frame-Options: DENY
-Content-Security-Policy: frame-ancestors 'none';
-🔵 Уязвимости низкого риска
-1. Проблемы конфигурации HSTS
-CWE-319 | Количество: 6 экземпляров
-Текущее состояние:
-# Обнаруженные проблемы
-Strict-Transport-Security: отсутствует (1 экземпляр)
-Strict-Transport-Security: некорректная конфигурация (5 экземпляров)
-Рекомендуемая конфигурация:
-# Базовая конфигурация
-Strict-Transport-Security: max-age=31536000; includeSubDomains
-
-# Расширенная конфигурация с preload
-Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-Конфигурация для различных веб-серверов:
-Apache:
-# В .htaccess или виртуальном хосте
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-Nginx:
-# В блоке server
-add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
-LiteSpeed:
-# В .htaccess
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-2. Отсутствие X-Content-Type-Options
-CWE-693 | WASC-15
-Техническое решение:
-X-Content-Type-Options: nosniff
-Реализация:
-# Apache
-Header always set X-Content-Type-Options "nosniff"
-
-# Nginx  
-add_header X-Content-Type-Options "nosniff" always;
-3. Утечка Unix timestamp
-CWE-497 | WASC-13 | Количество: 4 экземпляра
-Анализ утечки:
-Источники: HTTP-заголовки, JavaScript, HTML-комментарии
-Информационная ценность: Время создания контента, версии файлов
-Рекомендации: Нормализация временных меток, удаление отладочной информации
-Соответствие российским стандартам
-ГОСТ Р 57580.1-2017 "Безопасность финансовых (банковских) операций"
-Раздел 6.2 "Защита информации при передаче"
-Требование 6.2.1: Использование криптографических протоколов
-✅ Частично выполнено: HTTPS реализован
-❌ Не выполнено: Отсутствует принудительное перенаправление
-❌ Не выполнено: Некорректная конфигурация HSTS
-Требование 6.2.2: Контроль целостности передаваемых данных
-❌ Не выполнено: Отсутствует SRI для внешних ресурсов
-❌ Не выполнено: Отсутствует CSP для контроля загружаемого контента
-Раздел 6.3 "Защита от несанкционированного доступа"
-Требование 6.3.1: Контроль доступа к информации
-❌ КРИТИЧЕСКОЕ НАРУШЕНИЕ: Обнаружена утечка персональных данных
-❌ Не выполнено: Отсутствуют механизмы контроля доступа
-Требования ФСТЭК России
-Приказ ФСТЭК №17 "Об утверждении Требований по обеспечению безопасности значимых объектов КИИ"
-Пункт 15: Обеспечение безопасности веб-приложений
-❌ Не выполнено: Отсутствуют базовые заголовки безопасности
-❌ Не выполнено: Не реализована защита от основных веб-угроз
-Пункт 23: Мониторинг безопасности
-❌ Не выполнено: Отсутствуют системы мониторинга безопасности
-❌ Не выполнено: Не реализовано журналирование событий безопасности
-Стандарты Банка России
-Положение Банка России №716-П
-Раздел 2.1: Требования к защите информации
-❌ Критическое нарушение: Утечка персональных данных
-❌ Нарушение: Отсутствие базовых механизмов защиты
-Раздел 2.3: Требования к мониторингу
-❌ Нарушение: Отсутствие систем обнаружения инцидентов
-❌ Нарушение: Отсутствие процедур реагирования на инциденты
-Соответствие международным стандартам
-OWASP Top 10 2021
-A01:2021 – Broken Access Control
-Статус: ❌ КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ
-Технические нарушения:
-violations:
-  - type: "PII Disclosure"
-    severity: "Critical"
+  upgrade-insecure-requests;</pre>
+<ol>
+  <li>Отсутствие защиты от Clickjacking</li>
+</ol>
+<p><strong>CWE-1021 | WASC-15 | Количество:</strong> 5 экземпляров</p>
+</div>
+<div class="section">
+<h2>Технические решения:</h2>
+<p><strong># Вариант 1:</strong> X-Frame-Options (устаревший, но совместимый)</p>
+<pre class="code-block">X-Frame-Options: DENY</pre>
+<p><strong># Вариант 2:</strong> CSP frame-ancestors (современный)</p>
+<pre class="code-block">Content-Security-Policy: frame-ancestors 'none';</pre>
+<p><strong># Вариант 3:</strong> Комбинированный подход</p>
+<pre class="code-block">X-Frame-Options: DENY
+Content-Security-Policy: frame-ancestors 'none';</pre>
+<h3>🔵 Уязвимости низкого риска</h3>
+<ol>
+  <li>Проблемы конфигурации HSTS</li>
+</ol>
+<p><strong>CWE-319 | Количество:</strong> 6 экземпляров</p>
+<h3>Текущее состояние:</h3>
+<p># Обнаруженные проблемы</p>
+<pre class="code-block">Strict-Transport-Security: отсутствует (1 экземпляр)
+Strict-Transport-Security: некорректная конфигурация (5 экземпляров)</pre>
+<h3>Рекомендуемая конфигурация:</h3>
+<p># Базовая конфигурация</p>
+<pre class="code-block">Strict-Transport-Security: max-age=31536000; includeSubDomains</pre>
+<p># Расширенная конфигурация с preload</p>
+<pre class="code-block">Strict-Transport-Security: max-age=63072000; includeSubDomains; preload</pre>
+<h3>Конфигурация для различных веб-серверов:</h3>
+<h3>Apache:</h3>
+<p># В .htaccess или виртуальном хосте</p>
+<pre class="code-block">Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"</pre>
+<h3>Nginx:</h3>
+<p># В блоке server</p>
+<pre class="code-block">add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;</pre>
+<h3>LiteSpeed:</h3>
+<p># В .htaccess</p>
+<pre class="code-block">Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"</pre>
+<ol>
+  <li>Отсутствие X-Content-Type-Options</li>
+</ol>
+<h3>CWE-693 | WASC-15</h3>
+<h3>Техническое решение:</h3>
+<pre class="code-block">X-Content-Type-Options: nosniff</pre>
+<h3>Реализация:</h3>
+<ul>
+  <li># Apache</li>
+  <li>Header always set X-Content-Type-Options "nosniff"</li>
+</ul>
+<ul>
+  <li># Nginx</li>
+  <li>add_header X-Content-Type-Options "nosniff" always;</li>
+</ul>
+<ol>
+  <li>Утечка Unix timestamp</li>
+</ol>
+<p><strong>CWE-497 | WASC-13 | Количество:</strong> 4 экземпляра</p>
+<h3>Анализ утечки:</h3>
+<p><strong>Источники:</strong> HTTP-заголовки, JavaScript, HTML-комментарии</p>
+<p><strong>Информационная ценность:</strong> Время создания контента, версии файлов</p>
+<p><strong>Рекомендации:</strong> Нормализация временных меток, удаление отладочной информации</p>
+<p>Соответствие российским стандартам</p>
+<p>ГОСТ Р 57580.1-2017 "Безопасность финансовых (банковских) операций"</p>
+<p>Раздел 6.2 "Защита информации при передаче"</p>
+<p><strong>Требование 6.2.1:</strong> Использование криптографических протоколов</p>
+<ul class="status-list">
+  <li class="ok">✅ Частично выполнено: HTTPS реализован</li>
+  <li class="fail">❌ Не выполнено: Отсутствует принудительное перенаправление</li>
+  <li class="fail">❌ Не выполнено: Некорректная конфигурация HSTS</li>
+</ul>
+<p><strong>Требование 6.2.2:</strong> Контроль целостности передаваемых данных</p>
+<ul class="status-list">
+  <li class="fail">❌ Не выполнено: Отсутствует SRI для внешних ресурсов</li>
+  <li class="fail">❌ Не выполнено: Отсутствует CSP для контроля загружаемого контента</li>
+</ul>
+<h3>Раздел 6.3 "Защита от несанкционированного доступа"</h3>
+<p><strong>Требование 6.3.1:</strong> Контроль доступа к информации</p>
+<ul class="status-list">
+  <li class="fail">❌ КРИТИЧЕСКОЕ НАРУШЕНИЕ: Обнаружена утечка персональных данных</li>
+  <li class="fail">❌ Не выполнено: Отсутствуют механизмы контроля доступа</li>
+</ul>
+<h3>Требования ФСТЭК России</h3>
+<p>Приказ ФСТЭК №17 "Об утверждении Требований по обеспечению безопасности значимых объектов КИИ"</p>
+<p><strong>Пункт 15:</strong> Обеспечение безопасности веб-приложений</p>
+<ul class="status-list">
+  <li class="fail">❌ Не выполнено: Отсутствуют базовые заголовки безопасности</li>
+  <li class="fail">❌ Не выполнено: Не реализована защита от основных веб-угроз</li>
+</ul>
+<p><strong>Пункт 23:</strong> Мониторинг безопасности</p>
+<ul class="status-list">
+  <li class="fail">❌ Не выполнено: Отсутствуют системы мониторинга безопасности</li>
+  <li class="fail">❌ Не выполнено: Не реализовано журналирование событий безопасности</li>
+</ul>
+<ul>
+  <li>Стандарты Банка России</li>
+  <li>Положение Банка России №716-П</li>
+</ul>
+<p><strong>Раздел 2.1:</strong> Требования к защите информации</p>
+<ul class="status-list">
+  <li class="fail">❌ Критическое нарушение: Утечка персональных данных</li>
+  <li class="fail">❌ Нарушение: Отсутствие базовых механизмов защиты</li>
+</ul>
+<p><strong>Раздел 2.3:</strong> Требования к мониторингу</p>
+<ul class="status-list">
+  <li class="fail">❌ Нарушение: Отсутствие систем обнаружения инцидентов</li>
+  <li class="fail">❌ Нарушение: Отсутствие процедур реагирования на инциденты</li>
+</ul>
+<h3>Соответствие международным стандартам</h3>
+</div>
+<div class="section">
+<h2>OWASP Top 10 2021</h2>
+<h3>A01:2021 – Broken Access Control</h3>
+<p><strong>Статус:</strong> ❌ КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ</p>
+</div>
+<div class="section">
+<h2>Технические нарушения:</h2>
+<p>violations:</p>
+<p><strong>- type:</strong> "PII Disclosure"</p>
+<pre class="code-block">    severity: "Critical"
     cwe: "CWE-359"
-    description: "Прямой доступ к персональным данным без авторизации"
-  
-  - type: "Missing Access Controls"
-    severity: "High"
-    description: "Отсутствие механизмов контроля доступа"
-A05:2021 – Security Misconfiguration
-Статус: ❌ КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ
-Детальный анализ конфигурации:
-security_headers:
-  content_security_policy:
-    status: "missing"
+    description: "Прямой доступ к персональным данным без авторизации"</pre>
+<p><strong>- type:</strong> "Missing Access Controls"</p>
+<pre class="code-block">    severity: "High"
+    description: "Отсутствие механизмов контроля доступа"</pre>
+<h3>A05:2021 – Security Misconfiguration</h3>
+<p><strong>Статус:</strong> ❌ КРИТИЧЕСКОЕ НЕСООТВЕТСТВИЕ</p>
+</div>
+<div class="section">
+<h2>Детальный анализ конфигурации:</h2>
+<p>security_headers:</p>
+<p>content_security_policy:</p>
+<pre class="code-block">    status: "missing"
     instances: 5
-    impact: "XSS, injection attacks"
-  
-  x_frame_options:
-    status: "missing"
+    impact: "XSS, injection attacks"</pre>
+<p>x_frame_options:</p>
+<pre class="code-block">    status: "missing"
     instances: 5
-    impact: "Clickjacking attacks"
-  
-  strict_transport_security:
-    status: "misconfigured"
+    impact: "Clickjacking attacks"</pre>
+<p>strict_transport_security:</p>
+<pre class="code-block">    status: "misconfigured"
     instances: 6
-    impact: "MITM attacks"
-  
-  x_content_type_options:
-    status: "missing"
+    impact: "MITM attacks"</pre>
+<p>x_content_type_options:</p>
+<pre class="code-block">    status: "missing"
     instances: 1
-    impact: "MIME sniffing attacks"
-A08:2021 – Software and Data Integrity Failures
-Статус: ❌ НЕСООТВЕТСТВИЕ
-Анализ целостности:
-subresource_integrity:
-  google_fonts:
-    status: "missing"
-    risk: "Supply chain attack"
-  
-  external_scripts:
-    status: "missing"
-    risk: "Code injection"
-  
-  cdn_resources:
-    status: "missing"
-    risk: "Resource tampering"
-NIST Cybersecurity Framework 2.0
-PROTECT (PR) - Функция защиты
-PR.DS-01: Защита данных в покое
-❌ Критический сбой: Обнаружена утечка PII
-Техническая оценка: 0% соответствия
-PR.DS-02: Защита данных при передаче
-⚠️ Частичное соответствие: HTTPS реализован, но HSTS некорректен
-Техническая оценка: 30% соответствия
-PR.PT-01: Аудит и журналирование
-❌ Отсутствует: Нет данных о системах аудита
-Техническая оценка: 0% соответствия
-Технический план устранения
-Фаза 1: Критические исправления (0-72 часа)
-Час 0-24: Устранение утечки PII
-Шаг 1: Немедленная блокировка (0-4 часа)
-# Временная блокировка доступа к уязвимым эндпоинтам
-# Apache .htaccess
-&lt;LocationMatch "/vulnerable-endpoint"&gt;
-    Require all denied
-&lt;/LocationMatch&gt;
-
-# Nginx
-location ~* /vulnerable-endpoint {
-    deny all;
-    return 403;
-}
-
-# Проверка блокировки
-curl -I https://example.com/vulnerable-endpoint
-# Ожидаемый результат: HTTP/1.1 403 Forbidden
-Шаг 2: Анализ и исправление кода (4-24 часа)
-// Пример исправления в WordPress
-// Было (уязвимо):
-function get_user_data() {
-    global $wpdb;
-    $users = $wpdb-&gt;get_results("SELECT * FROM wp_users");
-    return $users; // Возвращает все данные включая пароли
-}
-
-// Стало (безопасно):
-function get_user_data() {
-    global $wpdb;
-    $users = $wpdb-&gt;get_results(
-        "SELECT ID, user_login, user_email, display_name 
-         FROM wp_users 
-         WHERE user_status = 0"
-    );
-    
-    // Дополнительная фильтрация
-    foreach ($users as &amp;$user) {
-        unset($user-&gt;user_pass);
-        unset($user-&gt;user_activation_key);
-    }
-    
-    return $users;
-}
-Час 24-48: Базовые заголовки безопасности
-Конфигурация Apache (.htaccess):
-# Заголовки безопасности
-Header always set X-Content-Type-Options "nosniff"
-Header always set X-Frame-Options "DENY"
-Header always set X-XSS-Protection "1; mode=block"
-Header always set Referrer-Policy "strict-origin-when-cross-origin"
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-
-# Content Security Policy
-Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
-Конфигурация Nginx:
-# В блоке server
-add_header X-Content-Type-Options "nosniff" always;
-add_header X-Frame-Options "DENY" always;
-add_header X-XSS-Protection "1; mode=block" always;
-add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
-add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;
-Час 48-72: Проверка и валидация
-Скрипт автоматической проверки:
-#!/bin/bash
-# security_check.sh
-
-URL="https://example.com"
-HEADERS=(
-    "X-Content-Type-Options"
-    "X-Frame-Options" 
-    "Strict-Transport-Security"
-    "Content-Security-Policy"
-)
-
-echo "=== Проверка заголовков безопасности ==="
-for header in "${HEADERS[@]}"; do
-    result=$(curl -s -I "$URL" | grep -i "$header")
-    if [ -n "$result" ]; then
-        echo "✅ $header: $result"
-    else
-        echo "❌ $header: ОТСУТСТВУЕТ"
-    fi
-done
-
-echo -e "\n=== Проверка утечки PII ==="
-# Проверка ранее уязвимых эндпоинтов
-vulnerable_endpoints=(
-    "/wp-json/wp/v2/users"
-    "/api/users"
-    "/user-data"
-)
-
-for endpoint in "${vulnerable_endpoints[@]}"; do
+    impact: "MIME sniffing attacks"</pre>
+<h3>A08:2021 – Software and Data Integrity Failures</h3>
+<p><strong>Статус:</strong> ❌ НЕСООТВЕТСТВИЕ</p>
+<h3>Анализ целостности:</h3>
+<p>subresource_integrity:</p>
+<p>google_fonts:</p>
+<pre class="code-block">    status: "missing"
+    risk: "Supply chain attack"</pre>
+<p>external_scripts:</p>
+<pre class="code-block">    status: "missing"
+    risk: "Code injection"</pre>
+<p>cdn_resources:</p>
+<pre class="code-block">    status: "missing"
+    risk: "Resource tampering"</pre>
+</div>
+<div class="section">
+<h2>NIST Cybersecurity Framework 2.0</h2>
+<h3>PROTECT (PR) - Функция защиты</h3>
+<p><strong>PR.DS-01:</strong> Защита данных в покое</p>
+<ul class="status-list">
+  <li class="fail">❌ Критический сбой: Обнаружена утечка PII</li>
+</ul>
+<p><strong>Техническая оценка:</strong> 0% соответствия</p>
+<p><strong>PR.DS-02:</strong> Защита данных при передаче</p>
+<div class="alert alert-warning">⚠️ Частичное соответствие: HTTPS реализован, но HSTS некорректен</div>
+<p><strong>Техническая оценка:</strong> 30% соответствия</p>
+<p><strong>PR.PT-01:</strong> Аудит и журналирование</p>
+<ul class="status-list">
+  <li class="fail">❌ Отсутствует: Нет данных о системах аудита</li>
+</ul>
+<p><strong>Техническая оценка:</strong> 0% соответствия</p>
+</div>
+<div class="section">
+<h2>Технический план устранения</h2>
+<p><strong>Фаза 1:</strong> Критические исправления (0-72 часа)</p>
+<p><strong>Час 0-24:</strong> Устранение утечки PII</p>
+<p><strong>Шаг 1:</strong> Немедленная блокировка (0-4 часа)</p>
+<ul>
+  <li># Временная блокировка доступа к уязвимым эндпоинтам</li>
+  <li># Apache .htaccess</li>
+  <li>&lt;LocationMatch "/vulnerable-endpoint"&gt;</li>
+  <li>Require all denied</li>
+  <li>&lt;/LocationMatch&gt;</li>
+</ul>
+<ul>
+  <li># Nginx</li>
+  <li>location ~* /vulnerable-endpoint {</li>
+  <li>deny all;</li>
+  <li>return 403;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Проверка блокировки</li>
+  <li>curl -I https://example.com/vulnerable-endpoint</li>
+</ul>
+<p><strong># Ожидаемый результат:</strong> HTTP/1.1 403 Forbidden</p>
+<p><strong>Шаг 2:</strong> Анализ и исправление кода (4-24 часа)</p>
+<h3>// Пример исправления в WordPress</h3>
+<h3>// Было (уязвимо):</h3>
+<ul>
+  <li>function get_user_data() {</li>
+  <li>global $wpdb;</li>
+  <li>$users = $wpdb-&gt;get_results("SELECT * FROM wp_users");</li>
+  <li>return $users; // Возвращает все данные включая пароли</li>
+  <li>}</li>
+</ul>
+<h3>// Стало (безопасно):</h3>
+<ul>
+  <li>function get_user_data() {</li>
+  <li>global $wpdb;</li>
+  <li>$users = $wpdb-&gt;get_results(</li>
+  <li>"SELECT ID, user_login, user_email, display_name</li>
+  <li>FROM wp_users</li>
+  <li>WHERE user_status = 0"</li>
+  <li>);</li>
+</ul>
+<ul>
+  <li>// Дополнительная фильтрация</li>
+  <li>foreach ($users as &amp;$user) {</li>
+  <li>unset($user-&gt;user_pass);</li>
+  <li>unset($user-&gt;user_activation_key);</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">    return $users;
+}</pre>
+<p><strong>Час 24-48:</strong> Базовые заголовки безопасности</p>
+<h3>Конфигурация Apache (.htaccess):</h3>
+<ul>
+  <li># Заголовки безопасности</li>
+  <li>Header always set X-Content-Type-Options "nosniff"</li>
+  <li>Header always set X-Frame-Options "DENY"</li>
+  <li>Header always set X-XSS-Protection "1; mode=block"</li>
+  <li>Header always set Referrer-Policy "strict-origin-when-cross-origin"</li>
+</ul>
+<pre class="code-block">Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"</pre>
+<p># Content Security Policy</p>
+<pre class="code-block">Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"</pre>
+<h3>Конфигурация Nginx:</h3>
+<ul>
+  <li># В блоке server</li>
+  <li>add_header X-Content-Type-Options "nosniff" always;</li>
+  <li>add_header X-Frame-Options "DENY" always;</li>
+  <li>add_header X-XSS-Protection "1; mode=block" always;</li>
+  <li>add_header Referrer-Policy "strict-origin-when-cross-origin" always;</li>
+</ul>
+<pre class="code-block">add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;</pre>
+<p><strong>Час 48-72:</strong> Проверка и валидация</p>
+<h3>Скрипт автоматической проверки:</h3>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># security_check.sh</li>
+</ul>
+<ul>
+  <li>URL="https://example.com"</li>
+  <li>HEADERS=(</li>
+  <li>"X-Content-Type-Options"</li>
+  <li>"X-Frame-Options"</li>
+  <li>"Strict-Transport-Security"</li>
+  <li>"Content-Security-Policy"</li>
+  <li>)</li>
+</ul>
+<p>echo "=== Проверка заголовков безопасности ==="</p>
+<p>for header in "${HEADERS[@]}"; do</p>
+<p>result=$(curl -s -I "$URL" | grep -i "$header")</p>
+<p>if [ -n "$result" ]; then</p>
+<p><strong>echo "✅ $header:</strong> $result"</p>
+<p>else</p>
+<p><strong>echo "❌ $header:</strong> ОТСУТСТВУЕТ"</p>
+<ul>
+  <li>fi</li>
+  <li>done</li>
+</ul>
+<ul>
+  <li>echo -e "\n=== Проверка утечки PII ==="</li>
+  <li># Проверка ранее уязвимых эндпоинтов</li>
+  <li>vulnerable_endpoints=(</li>
+  <li>"/wp-json/wp/v2/users"</li>
+  <li>"/api/users"</li>
+  <li>"/user-data"</li>
+  <li>)</li>
+</ul>
+<pre class="code-block">for endpoint in "${vulnerable_endpoints[@]}"; do
     status=$(curl -s -o /dev/null -w "%{http_code}" "$URL$endpoint")
     if [ "$status" = "403" ] || [ "$status" = "404" ]; then
         echo "✅ $endpoint: Заблокирован ($status)"
     else
         echo "❌ $endpoint: Доступен ($status) - ТРЕБУЕТ ВНИМАНИЯ"
-    fi
-done
-Фаза 2: Средние исправления (3-14 дней)
-Неделя 1: Subresource Integrity
-Автоматизированное добавление SRI:
-#!/usr/bin/env python3
-# add_sri.py - Скрипт для добавления SRI к внешним ресурсам
-
-import hashlib
+    fi</pre>
+<p>done</p>
+<p><strong>Фаза 2:</strong> Средние исправления (3-14 дней)</p>
+<p><strong>Неделя 1:</strong> Subresource Integrity</p>
+<h3>Автоматизированное добавление SRI:</h3>
+<p>#!/usr/bin/env python3</p>
+<p># add_sri.py - Скрипт для добавления SRI к внешним ресурсам</p>
+<pre class="code-block">import hashlib
 import base64
 import requests
 import re
-from bs4 import BeautifulSoup
-
-def calculate_sri_hash(url):
+from bs4 import BeautifulSoup</pre>
+<pre class="code-block">def calculate_sri_hash(url):
     """Вычисляет SRI хеш для ресурса"""
     try:
         response = requests.get(url)
-        content = response.content
-        
-        # Вычисляем SHA384 хеш
-        hash_sha384 = hashlib.sha384(content).digest()
-        sri_hash = base64.b64encode(hash_sha384).decode()
-        
-        return f"sha384-{sri_hash}"
+        content = response.content</pre>
+<ul>
+  <li># Вычисляем SHA384 хеш</li>
+  <li>hash_sha384 = hashlib.sha384(content).digest()</li>
+  <li>sri_hash = base64.b64encode(hash_sha384).decode()</li>
+</ul>
+<pre class="code-block">        return f"sha384-{sri_hash}"
     except Exception as e:
         print(f"Ошибка при получении {url}: {e}")
-        return None
-
-def add_sri_to_html(html_content):
+        return None</pre>
+<pre class="code-block">def add_sri_to_html(html_content):
     """Добавляет SRI к внешним ресурсам в HTML"""
-    soup = BeautifulSoup(html_content, 'html.parser')
-    
-    # Обработка script тегов
-    for script in soup.find_all('script', src=True):
+    soup = BeautifulSoup(html_content, 'html.parser')</pre>
+<p># Обработка script тегов</p>
+<pre class="code-block">    for script in soup.find_all('script', src=True):
         src = script['src']
         if src.startswith('http') and 'integrity' not in script.attrs:
             sri_hash = calculate_sri_hash(src)
             if sri_hash:
                 script['integrity'] = sri_hash
                 script['crossorigin'] = 'anonymous'
-                print(f"Добавлен SRI для script: {src}")
-    
-    # Обработка link тегов (CSS)
-    for link in soup.find_all('link', href=True):
+                print(f"Добавлен SRI для script: {src}")</pre>
+<p># Обработка link тегов (CSS)</p>
+<pre class="code-block">    for link in soup.find_all('link', href=True):
         href = link['href']
         if href.startswith('http') and 'integrity' not in link.attrs:
             sri_hash = calculate_sri_hash(href)
             if sri_hash:
                 link['integrity'] = sri_hash
                 link['crossorigin'] = 'anonymous'
-                print(f"Добавлен SRI для link: {href}")
-    
-    return str(soup)
-
-# Пример использования
-if __name__ == "__main__":
+                print(f"Добавлен SRI для link: {href}")</pre>
+<pre class="code-block">    return str(soup)</pre>
+<p># Пример использования</p>
+<pre class="code-block">if __name__ == "__main__":
     # Читаем HTML файл
     with open('index.html', 'r', encoding='utf-8') as f:
-        html = f.read()
-    
-    # Добавляем SRI
-    updated_html = add_sri_to_html(html)
-    
-    # Сохраняем обновленный файл
-    with open('index_with_sri.html', 'w', encoding='utf-8') as f:
-        f.write(updated_html)
-    
-    print("SRI добавлен успешно!")
-Неделя 2: Расширенная конфигурация CSP
-Поэтапное внедрение CSP:
-Этап 1: Report-Only режим
-Content-Security-Policy-Report-Only: default-src 'self'; report-uri /csp-report
-Этап 2: Базовая политика
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'
-Этап 3: Строгая политика
-Content-Security-Policy: 
+        html = f.read()</pre>
+<ul>
+  <li># Добавляем SRI</li>
+  <li>updated_html = add_sri_to_html(html)</li>
+</ul>
+<p># Сохраняем обновленный файл</p>
+<p>with open('index_with_sri.html', 'w', encoding='utf-8') as f:</p>
+<p>f.write(updated_html)</p>
+<pre class="code-block">    print("SRI добавлен успешно!")</pre>
+<p><strong>Неделя 2:</strong> Расширенная конфигурация CSP</p>
+<h3>Поэтапное внедрение CSP:</h3>
+<p><strong>Этап 1:</strong> Report-Only режим</p>
+<p><strong>Content-Security-Policy-Report-Only:</strong> default-src 'self'; report-uri /csp-report</p>
+<p><strong>Этап 2:</strong> Базовая политика</p>
+<pre class="code-block">Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p><strong>Этап 3:</strong> Строгая политика</p>
+<pre class="code-block">Content-Security-Policy: 
   default-src 'self';
   script-src 'self' 'nonce-{random}';
   style-src 'self' 'nonce-{random}';
@@ -531,84 +842,97 @@ Content-Security-Policy:
   frame-ancestors 'none';
   base-uri 'self';
   form-action 'self';
-  upgrade-insecure-requests;
-PHP-скрипт для генерации nonce:
-&lt;?php
-// csp_nonce.php
-function generate_csp_nonce() {
-    return base64_encode(random_bytes(16));
-}
-
-function get_csp_header($nonce) {
-    return sprintf(
-        "default-src 'self'; " .
-        "script-src 'self' 'nonce-%s'; " .
-        "style-src 'self' 'nonce-%s'; " .
-        "img-src 'self' data: https:; " .
-        "font-src 'self' https://fonts.gstatic.com; " .
-        "connect-src 'self'; " .
-        "frame-ancestors 'none'; " .
-        "base-uri 'self'; " .
-        "form-action 'self'; " .
-        "upgrade-insecure-requests",
-        $nonce, $nonce
-    );
-}
-
-// Использование
-$nonce = generate_csp_nonce();
-header("Content-Security-Policy: " . get_csp_header($nonce));
-
-// В HTML используем nonce
-echo "&lt;script nonce='$nonce'&gt;console.log('Безопасный скрипт');&lt;/script&gt;";
-?&gt;
-Фаза 3: Долгосрочные улучшения (15-90 дней)
-Месяц 1: Система мониторинга
-Конфигурация ELK Stack для мониторинга безопасности:
-Logstash конфигурация:
-# logstash.conf
-input {
-  file {
-    path =&gt; "/var/log/apache2/access.log"
-    type =&gt; "apache_access"
-  }
-  file {
-    path =&gt; "/var/log/apache2/error.log"
-    type =&gt; "apache_error"
-  }
-}
-
-filter {
-  if [type] == "apache_access" {
-    grok {
-      match =&gt; { "message" =&gt; "%{COMBINEDAPACHELOG}" }
-    }
-    
-    # Обнаружение подозрительных запросов
-    if [request] =~ /(\.\./|&lt;script|javascript:|eval\(|union.*select)/i {
-      mutate {
-        add_tag =&gt; ["suspicious_request"]
-        add_field =&gt; { "alert_level" =&gt; "high" }
-      }
-    }
-    
-    # Обнаружение сканирования
-    if [response] == "404" {
-      mutate {
-        add_tag =&gt; ["not_found"]
-      }
-    }
-  }
-}
-
-output {
-  elasticsearch {
-    hosts =&gt; ["localhost:9200"]
-    index =&gt; "security-logs-%{+YYYY.MM.dd}"
-  }
-}
-Kibana дашборд для безопасности:
-{
+  upgrade-insecure-requests;</pre>
+<h3>PHP-скрипт для генерации nonce:</h3>
+<ul>
+  <li>&lt;?php</li>
+  <li>// csp_nonce.php</li>
+  <li>function generate_csp_nonce() {</li>
+  <li>return base64_encode(random_bytes(16));</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>function get_csp_header($nonce) {</li>
+  <li>return sprintf(</li>
+  <li>"default-src 'self'; " .</li>
+  <li>"script-src 'self' 'nonce-%s'; " .</li>
+</ul>
+<h3>"style-src 'self' 'nonce-%s'; " .</h3>
+<p><strong>"img-src 'self' data:</strong> https:; " .</p>
+<ul>
+  <li>"font-src 'self' https://fonts.gstatic.com; " .</li>
+  <li>"connect-src 'self'; " .</li>
+  <li>"frame-ancestors 'none'; " .</li>
+  <li>"base-uri 'self'; " .</li>
+  <li>"form-action 'self'; " .</li>
+  <li>"upgrade-insecure-requests",</li>
+  <li>$nonce, $nonce</li>
+  <li>);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>// Использование</li>
+  <li>$nonce = generate_csp_nonce();</li>
+</ul>
+<p><strong>header("Content-Security-Policy:</strong> " . get_csp_header($nonce));</p>
+<ul>
+  <li>// В HTML используем nonce</li>
+  <li>echo "&lt;script nonce='$nonce'&gt;console.log('Безопасный скрипт');&lt;/script&gt;";</li>
+  <li>?&gt;</li>
+</ul>
+<p><strong>Фаза 3:</strong> Долгосрочные улучшения (15-90 дней)</p>
+<p><strong>Месяц 1:</strong> Система мониторинга</p>
+<h3>Конфигурация ELK Stack для мониторинга безопасности:</h3>
+<h3>Logstash конфигурация:</h3>
+<ul>
+  <li># logstash.conf</li>
+  <li>input {</li>
+  <li>file {</li>
+  <li>path =&gt; "/var/log/apache2/access.log"</li>
+  <li>type =&gt; "apache_access"</li>
+  <li>}</li>
+  <li>file {</li>
+  <li>path =&gt; "/var/log/apache2/error.log"</li>
+  <li>type =&gt; "apache_error"</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>filter {</li>
+  <li>if [type] == "apache_access" {</li>
+  <li>grok {</li>
+  <li>match =&gt; { "message" =&gt; "%{COMBINEDAPACHELOG}" }</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Обнаружение подозрительных запросов</li>
+  <li>if [request] =~ /(\.\./|&lt;script|javascript:|eval\(|union.*select)/i {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["suspicious_request"]</li>
+  <li>add_field =&gt; { "alert_level" =&gt; "high" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Обнаружение сканирования</li>
+  <li>if [response] == "404" {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["not_found"]</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>output {</li>
+  <li>elasticsearch {</li>
+  <li>hosts =&gt; ["localhost:9200"]</li>
+  <li>index =&gt; "security-logs-%{+YYYY.MM.dd}"</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<h3>Kibana дашборд для безопасности:</h3>
+<pre class="code-block">{
   "dashboard": {
     "title": "Security Monitoring Dashboard",
     "panels": [
@@ -629,141 +953,147 @@ Kibana дашборд для безопасности:
       }
     ]
   }
-}
-Месяц 2-3: Автоматизация безопасности
-CI/CD пайплайн с проверками безопасности:
-GitLab CI конфигурация:
-# .gitlab-ci.yml
-stages:
-  - security_scan
-  - deploy
-  - security_test
-
-security_scan:
-  stage: security_scan
-  image: owasp/zap2docker-stable
-  script:
-    - zap-baseline.py -t $TARGET_URL -r security_report.html
-  artifacts:
-    reports:
-      junit: security_report.xml
-    paths:
-      - security_report.html
-  only:
-    - main
-
-deploy:
-  stage: deploy
-  script:
-    - ./deploy.sh
-  only:
-    - main
-
-security_headers_test:
-  stage: security_test
-  image: alpine:latest
-  before_script:
-    - apk add --no-cache curl
-  script:
-    - ./scripts/check_security_headers.sh $TARGET_URL
-  only:
-    - main
-Автоматизированный скрипт проверки заголовков:
-#!/bin/bash
-# check_security_headers.sh
-
-URL=$1
-REQUIRED_HEADERS=(
-    "strict-transport-security"
-    "content-security-policy"
-    "x-frame-options"
-    "x-content-type-options"
-)
-
-FAILED=0
-
-echo "Проверка заголовков безопасности для $URL"
-echo "================================================"
-
-for header in "${REQUIRED_HEADERS[@]}"; do
+}</pre>
+<p><strong>Месяц 2-3:</strong> Автоматизация безопасности</p>
+<h3>CI/CD пайплайн с проверками безопасности:</h3>
+<h3>GitLab CI конфигурация:</h3>
+<pre class="code-block"># .gitlab-ci.yml</pre>
+<p>stages:</p>
+<ul>
+  <li>- security_scan</li>
+  <li>- deploy</li>
+  <li>- security_test</li>
+</ul>
+<p>security_scan:</p>
+<p><strong>stage:</strong> security_scan</p>
+<p><strong>image:</strong> owasp/zap2docker-stable</p>
+<p>script:</p>
+<p>- zap-baseline.py -t $TARGET_URL -r security_report.html</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>junit:</strong> security_report.xml</p>
+<p>paths:</p>
+<p>- security_report.html</p>
+<p>only:</p>
+<p>- main</p>
+<p>deploy:</p>
+<p><strong>stage:</strong> deploy</p>
+<p>script:</p>
+<p>- ./deploy.sh</p>
+<p>only:</p>
+<p>- main</p>
+<p>security_headers_test:</p>
+<p><strong>stage:</strong> security_test</p>
+<p><strong>image:</strong> alpine:latest</p>
+<p>before_script:</p>
+<p>- apk add --no-cache curl</p>
+<p>script:</p>
+<p>- ./scripts/check_security_headers.sh $TARGET_URL</p>
+<p>only:</p>
+<p>- main</p>
+<h3>Автоматизированный скрипт проверки заголовков:</h3>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># check_security_headers.sh</li>
+</ul>
+<ul>
+  <li>URL=$1</li>
+  <li>REQUIRED_HEADERS=(</li>
+  <li>"strict-transport-security"</li>
+  <li>"content-security-policy"</li>
+  <li>"x-frame-options"</li>
+  <li>"x-content-type-options"</li>
+  <li>)</li>
+</ul>
+<h3>FAILED=0</h3>
+<ul>
+  <li>echo "Проверка заголовков безопасности для $URL"</li>
+  <li>echo "================================================"</li>
+</ul>
+<pre class="code-block">for header in "${REQUIRED_HEADERS[@]}"; do
     if curl -s -I "$URL" | grep -qi "$header"; then
         echo "✅ $header: ПРИСУТСТВУЕТ"
     else
         echo "❌ $header: ОТСУТСТВУЕТ"
         FAILED=1
-    fi
-done
-
-if [ $FAILED -eq 1 ]; then
-    echo "❌ Проверка заголовков безопасности ПРОВАЛЕНА"
-    exit 1
-else
-    echo "✅ Все заголовки безопасности настроены корректно"
-    exit 0
-fi
-Рекомендации по архитектуре
-Современная архитектура безопасности
-Рекомендуемая архитектура:
-┌─────────────────────────────────────────────────────────┐
-│                    WAF (Cloudflare)                    │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  DDoS Protection + Bot Management               │    │
-│  │  Rate Limiting + Geo-blocking                   │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────┬───────────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────────┐
-│                Load Balancer                           │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  SSL Termination + Security Headers             │    │
-│  │  Request Filtering + Logging                    │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────┬───────────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────────┐
-│              Application Server                        │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  WordPress + Security Plugins                   │    │
-│  │  Input Validation + Output Encoding             │    │
-│  │  Session Management + CSRF Protection           │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────┬───────────────────────────────────┘
-                      │
-┌─────────────────────▼───────────────────────────────────┐
-│                Database Layer                          │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  Encrypted Storage + Access Controls            │    │
-│  │  Query Parameterization + Audit Logging         │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────┘
-Рекомендуемые технологии
-Система мониторинга безопасности:
-SIEM: ELK Stack или Splunk
-Vulnerability Scanner: OpenVAS или Nessus
-Web Application Firewall: Cloudflare или ModSecurity
-Intrusion Detection: Suricata или Snort
-Инструменты разработки:
-Static Analysis: SonarQube с плагинами безопасности
-Dependency Check: OWASP Dependency-Check
-Container Security: Trivy или Clair
-Infrastructure as Code: Terraform с Checkov
-Заключение
-Анализ показал критические недостатки в системе безопасности веб-ресурса example.com. Обнаруженная утечка персональных данных требует немедленного вмешательства в соответствии с требованиями российского и международного законодательства.
-Критические метрики:
-Текущий уровень риска: 🔴 Критический
-Соответствие ГОСТ Р 57580.1-2017: 15%
-Соответствие требованиям ФСТЭК: 10%
-Соответствие OWASP Top 10: 25%
-Прогноз улучшений:
-После Фазы 1: Снижение до 🟡 Среднего уровня риска
-После Фазы 2: Достижение 🔵 Низкого уровня риска
-После Фазы 3: Достижение 🟢 Приемлемого уровня безопасности
-Реализация предложенного технического плана позволит достичь соответствия основным требованиям российских и международных стандартов безопасности в течение 90 дней.
-Ссылки
-[1] OWASP Foundation. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
-[2] ФСТЭК России. (2018). Приказ №17 "Об утверждении Требований по обеспечению безопасности значимых объектов КИИ". https://fstec.ru
-[3] Банк России. (2020). Положение №716-П "О требованиях к обеспечению защиты информации". https://cbr.ru
-    </pre>
+    fi</pre>
+<p>done</p>
+<ul>
+  <li>if [ $FAILED -eq 1 ]; then</li>
+  <li>echo "❌ Проверка заголовков безопасности ПРОВАЛЕНА"</li>
+  <li>exit 1</li>
+  <li>else</li>
+  <li>echo "✅ Все заголовки безопасности настроены корректно"</li>
+  <li>exit 0</li>
+  <li>fi</li>
+  <li>Рекомендации по архитектуре</li>
+</ul>
+<h3>Современная архитектура безопасности</h3>
+<h3>Рекомендуемая архитектура:</h3>
+<ul>
+  <li>┌─────────────────────────────────────────────────────────┐</li>
+  <li>│                    WAF (Cloudflare)                    │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  DDoS Protection + Bot Management               │    │</li>
+  <li>│  │  Rate Limiting + Geo-blocking                   │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│                Load Balancer                           │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  SSL Termination + Security Headers             │    │</li>
+  <li>│  │  Request Filtering + Logging                    │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│              Application Server                        │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  WordPress + Security Plugins                   │    │</li>
+  <li>│  │  Input Validation + Output Encoding             │    │</li>
+  <li>│  │  Session Management + CSRF Protection           │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│                Database Layer                          │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  Encrypted Storage + Access Controls            │    │</li>
+  <li>│  │  Query Parameterization + Audit Logging         │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────────────────────────────────────────┘</li>
+</ul>
+<h3>Рекомендуемые технологии</h3>
+<h3>Система мониторинга безопасности:</h3>
+<p><strong>SIEM:</strong> ELK Stack или Splunk</p>
+<p><strong>Vulnerability Scanner:</strong> OpenVAS или Nessus</p>
+<p><strong>Web Application Firewall:</strong> Cloudflare или ModSecurity</p>
+<p><strong>Intrusion Detection:</strong> Suricata или Snort</p>
+<h3>Инструменты разработки:</h3>
+<p><strong>Static Analysis:</strong> SonarQube с плагинами безопасности</p>
+<p><strong>Dependency Check:</strong> OWASP Dependency-Check</p>
+<p><strong>Container Security:</strong> Trivy или Clair</p>
+<p><strong>Infrastructure as Code:</strong> Terraform с Checkov</p>
+</div>
+<div class="section">
+<h2>Заключение</h2>
+<p>Анализ показал критические недостатки в системе безопасности веб-ресурса example.com. Обнаруженная утечка персональных данных требует немедленного вмешательства в соответствии с требованиями российского и международного законодательства.</p>
+<h3>Критические метрики:</h3>
+<p><strong>Текущий уровень риска:</strong> 🔴 Критический</p>
+<p><strong>Соответствие ГОСТ Р 57580.1-2017:</strong> 15%</p>
+<p><strong>Соответствие требованиям ФСТЭК:</strong> 10%</p>
+<p><strong>Соответствие OWASP Top 10:</strong> 25%</p>
+<h3>Прогноз улучшений:</h3>
+<p><strong>После Фазы 1:</strong> Снижение до 🟡 Среднего уровня риска</p>
+<p><strong>После Фазы 2:</strong> Достижение 🔵 Низкого уровня риска</p>
+<p><strong>После Фазы 3:</strong> Достижение 🟢 Приемлемого уровня безопасности</p>
+<p>Реализация предложенного технического плана позволит достичь соответствия основным требованиям российских и международных стандартов безопасности в течение 90 дней.</p>
+<p>Ссылки</p>
+<p>[1] OWASP Foundation. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org</p>
+<pre class="code-block">[2] ФСТЭК России. (2018). Приказ №17 "Об утверждении Требований по обеспечению безопасности значимых объектов КИИ". https://fstec.ru
+[3] Банк России. (2020). Положение №716-П "О требованиях к обеспечению защиты информации". https://cbr.ru</pre>
+</div>
   </main>
 </body>
 </html>

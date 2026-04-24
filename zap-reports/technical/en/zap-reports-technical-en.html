@@ -5,87 +5,332 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>zapreports technical en</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.45; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #d5e0ef 100%);
+      color: #1a2332;
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: linear-gradient(135deg, #0d47a1 0%, #0a1628 100%);
+      color: #fff;
+      padding: 52px 48px;
+      margin-bottom: 36px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .report-header h1 {
+      font-size: 1.95em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      line-height: 1.3;
+    }
+    .report-header .subtitle {
+      font-size: 1.05em;
+      opacity: .85;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .report-header .meta {
+      font-size: .9em;
+      opacity: .65;
+      position: relative;
+    }
+    .tool-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.9);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .82em;
+      margin-top: 18px;
+      position: relative;
+      letter-spacing: .04em;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: #fff;
+      padding: 34px 40px;
+      margin-bottom: 26px;
+      border-radius: 12px;
+      box-shadow: 0 2px 18px rgba(0,0,0,.07);
+      border-top: 3px solid #0d47a1;
+    }
+
+    /* ── Headings ── */
+    h2 {
+      font-size: 1.55em;
+      color: #0d47a1;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e4e9f0;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 1.15em;
+      color: #1a2332;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      padding-left: 10px;
+      border-left: 3px solid #0d47a1;
+    }
+    h4 {
+      font-size: 1.0em;
+      color: #2c3e50;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 18px 0;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .alert-critical {
+      background: #fff0f0;
+      border-left: 5px solid #c62828;
+      color: #b71c1c;
+    }
+    .alert-warning {
+      background: #fff8e1;
+      border-left: 5px solid #f57c00;
+      color: #e65100;
+    }
+    .alert-info {
+      background: #e8f4fd;
+      border-left: 5px solid #0d47a1;
+      color: #0d47a1;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,.1);
+      font-size: .93em;
+    }
+    thead {
+      background: #0d47a1;
+      color: #fff;
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: .88em;
+      letter-spacing: .03em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #2c3e50;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:hover { background: #eef2f7; transition: background .15s; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* KV (key-value) table variant */
+    table.kv-table th {
+      background: #f0f4f8;
+      color: #1a2332;
+      width: 36%;
+    }
+    table.kv-table td { color: #37474f; }
+
+    /* ── Lists ── */
+    ul, ol { margin: 10px 0; padding-left: 22px; }
+    li { margin: 6px 0; line-height: 1.65; color: #2c3e50; }
+
+    ul.checklist { list-style: none; padding-left: 0; }
+    ul.checklist li { padding: 5px 8px 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+    ul.checklist li::before { content: "☐"; color: #0d47a1; font-size: 1.1em; flex-shrink: 0; }
+    ul.checklist li.done::before { content: "☑"; color: #2e7d32; }
+
+    ul.status-list { list-style: none; padding-left: 0; }
+    ul.status-list li { padding: 4px 0; }
+    ul.status-list li.ok   { color: #2e7d32; }
+    ul.status-list li.fail { color: #c62828; }
+    ul.status-list li.warn { color: #e65100; }
+
+    /* ── TOC ── */
+    .toc { background: #f6f9fc; border-radius: 8px; padding: 20px 26px; }
+    .toc ol { counter-reset: toc-cnt; list-style: none; padding: 0; }
+    .toc li {
+      counter-increment: toc-cnt;
+      padding: 7px 0;
+      border-bottom: 1px solid #e4e9f0;
+      color: #0d47a1;
+      font-weight: 500;
+    }
+    .toc li::before {
+      content: counter(toc-cnt) ". ";
+      font-weight: 700;
+      min-width: 26px;
+      display: inline-block;
+    }
+    .toc li:last-child { border-bottom: none; }
+
+    /* ── Code ── */
+    code {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      color: #c62828;
+      font-size: .88em;
+    }
+    pre.code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 22px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      font-size: .87em;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── Misc ── */
+    p { margin: 10px 0; color: #2c3e50; }
+    .phase-box {
+      background: #f6f9fc;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid #dce6f0;
+    }
+
+    /* ── RTL support ── */
+    [dir="rtl"] h3 { padding-left: 0; padding-right: 10px; border-left: none; border-right: 3px solid #0d47a1; }
+    [dir="rtl"] .alert { border-left: none; border-right: 5px solid; }
+    [dir="rtl"] .alert-critical { border-right-color: #c62828; }
+    [dir="rtl"] .alert-warning  { border-right-color: #f57c00; }
+    [dir="rtl"] .alert-info     { border-right-color: #0d47a1; }
+    [dir="rtl"] th { text-align: right; }
+    [dir="rtl"] ul, [dir="rtl"] ol { padding-left: 0; padding-right: 22px; }
+    [dir="rtl"] ul.checklist li { padding-right: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .section { box-shadow: none; border: 1px solid #e0e0e0; page-break-inside: avoid; }
+      .report-header { box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+
   </style>
 </head>
 <body>
   <main>
-    <h1>zapreports technical en</h1>
-    <pre>
-      Technical Security Compliance Assessment: example.com
-                       Infrastructure Analysis
-                                 Senior Security Engineer
-
-                                       2025-12-31
-
-
-Executive Technical Summary
-This comprehensive technical assessment evaluates the security posture of
-https://example.com against multiple compliance frameworks including OWASP Top 10
-2021, NIST Cybersecurity Framework 2.0, SOC 2 Type II, and ISO 27001 requirements. The
-analysis leverages automated security scanning performed on December 30, 2025, using
-OWASP ZAP 2.17.0 by Checkmarx.
-        CRITICAL SECURITY ALERT: Personal Identifiable Information (PII) exposure
-       detected - immediate remediation required!
-Key Technical Findings:
-  •      29 security vulnerabilities identified across multiple severity levels
-  •      Critical PII disclosure vulnerability with high confidence rating
-  •      Missing fundamental security controls in web application layer
-  •      Non-compliance with essential requirements across all evaluated frameworks
-
-
-Table of Contents
-  1.     Technical Methodology &amp; Toolchain
-  2.     Infrastructure Architecture Analysis
-  3.     Vulnerability Deep Dive
-  4.     Multi-Framework Compliance Assessment
-  5.     Technical Remediation Roadmap
-  6.     DevSecOps Integration Strategy
-  7.     Monitoring &amp; Automation Implementation
-
-
-Technical Methodology &amp; Toolchain
-Scanning Infrastructure
-Primary Toolchain:
-security_scanner:
+<div class="report-header">
+  <h1>Technical Security Compliance Assessment: example.com</h1>
+  <p class="subtitle">Infrastructure Analysis</p>
+  <p class="meta">Senior Security Engineer</p>
+  <span class="tool-badge">OWASP ZAP 2.17.0 &mdash; Checkmarx Security Platform</span>
+</div>
+<div class="section">
+<h3>2025-12-31</h3>
+</div>
+<div class="section">
+<h2>Executive Technical Summary</h2>
+<h3>This comprehensive technical assessment evaluates the security posture of</h3>
+<p>https://example.com against multiple compliance frameworks including OWASP Top 10</p>
+<p>2021, NIST Cybersecurity Framework 2.0, SOC 2 Type II, and ISO 27001 requirements. The</p>
+<p>analysis leverages automated security scanning performed on December 30, 2025, using</p>
+<h3>OWASP ZAP 2.17.0 by Checkmarx.</h3>
+<div class="alert alert-critical">CRITICAL SECURITY ALERT: Personal Identifiable Information (PII) exposure</div>
+<h3>detected - immediate remediation required!</h3>
+<h3>Key Technical Findings:</h3>
+<ul>
+  <li>29 security vulnerabilities identified across multiple severity levels</li>
+  <li>Critical PII disclosure vulnerability with high confidence rating</li>
+  <li>Missing fundamental security controls in web application layer</li>
+  <li>Non-compliance with essential requirements across all evaluated frameworks</li>
+</ul>
+</div>
+<div class="section">
+<h2>Table of Contents</h2>
+<div class="toc"><ol>
+  <li>Technical Methodology &amp; Toolchain</li>
+  <li>Infrastructure Architecture Analysis</li>
+  <li>Vulnerability Deep Dive</li>
+  <li>Multi-Framework Compliance Assessment</li>
+  <li>Technical Remediation Roadmap</li>
+  <li>DevSecOps Integration Strategy</li>
+  <li>Monitoring &amp; Automation Implementation</li>
+</ol></div>
+</div>
+<div class="section">
+<h2>Technical Methodology &amp; Toolchain</h2>
+</div>
+<div class="section">
+<h2>Scanning Infrastructure</h2>
+<h3>Primary Toolchain:</h3>
+<pre class="code-block">security_scanner:
  tool: "OWASP ZAP 2.17.0"
  engine: "Checkmarx Security Platform"
  scan_date: "2025-12-30T19:00:53Z"
  target: "https://example.com"
- coverage:
-     endpoints: 290
-     scan_depth: "comprehensive"
-     contexts: "all_included"
-
-scan_configuration:
+ coverage:</pre>
+<p><strong>endpoints:</strong> 290</p>
+<pre class="code-block">     scan_depth: "comprehensive"
+     contexts: "all_included"</pre>
+<pre class="code-block">scan_configuration:
  risk_levels: ["high", "medium", "low", "informational"]
  confidence_levels: ["user_confirmed", "high", "medium", "low"]
- excluded_levels: ["false_positive"]
-
-    passive_rules:
+ excluded_levels: ["false_positive"]</pre>
+<pre class="code-block">    passive_rules:
      enabled: true
-     custom_rules: []
-
-    active_rules:
+     custom_rules: []</pre>
+<pre class="code-block">    active_rules:
      enabled: true
      injection_tests: true
      xss_tests: true
-     authentication_tests: true
-
-Vulnerability Distribution Matrix
-Risk Level Count Percentage Confidence Distribution
-    Critical   1        3.4%       High: 1
-🟡 High         3        10.3%      High: 2, Medium: 1
- Medium        4        13.8%      High: 2, Medium: 1, Low: 1
-ℹ️Low          21       72.4%      Medium: 18, Low: 3
-Total          29       100%       -
-
-Performance &amp; Quality Metrics
-Scan Performance Analysis:
-{
+     authentication_tests: true</pre>
+<ul>
+  <li>Vulnerability Distribution Matrix</li>
+  <li>Risk Level Count Percentage Confidence Distribution</li>
+</ul>
+<p><strong>Critical   1        3.4%       High:</strong> 1</p>
+<p><strong>🟡 High         3        10.3%      High:</strong> 2, Medium: 1</p>
+<p><strong>Medium        4        13.8%      High:</strong> 2, Medium: 1, Low: 1</p>
+<p><strong>ℹ️Low          21       72.4%      Medium:</strong> 18, Low: 3</p>
+<h3>Performance &amp; Quality Metrics</h3>
+<h3>Scan Performance Analysis:</h3>
+<pre class="code-block">{
     "response_metrics": {
       "slow_responses": "100%",
       "http_2xx": "43%",
@@ -99,271 +344,267 @@ Scan Performance Analysis:
       "coverage_completeness": "95%",
       "false_positive_rate": "&lt; 5%"
     }
-}
-Infrastructure Architecture Analysis
-Technology Stack Deep Dive
-Multi-Layer Architecture:
-┌─────────────────────────────────────────────────────────┐
-│          CDN Layer (Cloudflare)          │
-│ ┌─────────────────────────────────────────────────┐ │
-│ │ • HTTP/3 Support                   │ │
-│ │ • Browser Insights Analytics          │ │
-│ │ • DDoS Protection (Basic)            │ │
-│ │ • SSL/TLS Termination               │ │
-│ └─────────────────────────────────────────────────┘ │
-└─────────────────────┬───────────────────────────────────┘
-            │ HTTPS/HTTP/3
-┌─────────────────────▼───────────────────────────────────┐
-│        Web Server Layer (LiteSpeed)         │
-│ ┌─────────────────────────────────────────────────┐ │
-│ │ • LiteSpeed Web Server               │ │
-│ │ • LiteSpeed Cache Plugin              │ │
-│ │ • Partial HSTS Implementation            │ │
-│ │ • Missing Security Headers             │ │
-│ └─────────────────────────────────────────────────┘ │
-└─────────────────────┬───────────────────────────────────┘
-            │ FastCGI/LSAPI
-┌─────────────────────▼───────────────────────────────────┐
-│       Application Layer (PHP/WordPress)        │
-│ ┌─────────────────────────────────────────────────┐ │
-│ │ • WordPress CMS Core                  │ │
-│ │ • Block Editor (Gutenberg)            │ │
-│ │ • Blocksy Theme                   │ │
-│ │ • Stackable Plugin                │ │
-│ │ • Multiple WordPress Plugins            │ │
-│ └─────────────────────────────────────────────────┘ │
-└─────────────────────┬───────────────────────────────────┘
-            │ MySQL/MariaDB
-┌─────────────────────▼───────────────────────────────────┐
-│          Database Layer               │
-│ ┌─────────────────────────────────────────────────┐ │
-│ │ • MySQL/MariaDB Database                 │ │
-│ │ • WordPress Database Schema               │ │
-│ │ • User Data Storage (VULNERABLE)            │ │
-│ └─────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────┘
-
-External Dependencies Analysis
-Third-Party Service Integration:
-external_services:
- fonts:
-  - service: "Google Fonts API"
-    endpoint: "fonts.googleapis.com"
+}</pre>
+</div>
+<div class="section">
+<h2>Infrastructure Architecture Analysis</h2>
+<h3>Technology Stack Deep Dive</h3>
+<h3>Multi-Layer Architecture:</h3>
+<ul>
+  <li>┌─────────────────────────────────────────────────────────┐</li>
+  <li>│          CDN Layer (Cloudflare)          │</li>
+  <li>│ ┌─────────────────────────────────────────────────┐ │</li>
+  <li>│ │ • HTTP/3 Support                   │ │</li>
+  <li>│ │ • Browser Insights Analytics          │ │</li>
+  <li>│ │ • DDoS Protection (Basic)            │ │</li>
+  <li>│ │ • SSL/TLS Termination               │ │</li>
+  <li>│ └─────────────────────────────────────────────────┘ │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│ HTTPS/HTTP/3</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│        Web Server Layer (LiteSpeed)         │</li>
+  <li>│ ┌─────────────────────────────────────────────────┐ │</li>
+  <li>│ │ • LiteSpeed Web Server               │ │</li>
+  <li>│ │ • LiteSpeed Cache Plugin              │ │</li>
+  <li>│ │ • Partial HSTS Implementation            │ │</li>
+  <li>│ │ • Missing Security Headers             │ │</li>
+  <li>│ └─────────────────────────────────────────────────┘ │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│ FastCGI/LSAPI</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│       Application Layer (PHP/WordPress)        │</li>
+  <li>│ ┌─────────────────────────────────────────────────┐ │</li>
+  <li>│ │ • WordPress CMS Core                  │ │</li>
+  <li>│ │ • Block Editor (Gutenberg)            │ │</li>
+  <li>│ │ • Blocksy Theme                   │ │</li>
+  <li>│ │ • Stackable Plugin                │ │</li>
+  <li>│ │ • Multiple WordPress Plugins            │ │</li>
+  <li>│ └─────────────────────────────────────────────────┘ │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│ MySQL/MariaDB</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│          Database Layer               │</li>
+  <li>│ ┌─────────────────────────────────────────────────┐ │</li>
+  <li>│ │ • MySQL/MariaDB Database                 │ │</li>
+  <li>│ │ • WordPress Database Schema               │ │</li>
+  <li>│ │ • User Data Storage (VULNERABLE)            │ │</li>
+  <li>│ └─────────────────────────────────────────────────┘ │</li>
+  <li>└─────────────────────────────────────────────────────────┘</li>
+</ul>
+<h3>External Dependencies Analysis</h3>
+<h3>Third-Party Service Integration:</h3>
+<p>external_services:</p>
+<p>fonts:</p>
+<p><strong>- service:</strong> "Google Fonts API"</p>
+<pre class="code-block">    endpoint: "fonts.googleapis.com"
     security_status: "No SRI"
-    risk_level: "Medium"
-
- avatars:
-  - service: "Gravatar"
-    endpoint: "secure.gravatar.com"
+    risk_level: "Medium"</pre>
+<p>avatars:</p>
+<p><strong>- service:</strong> "Gravatar"</p>
+<pre class="code-block">    endpoint: "secure.gravatar.com"
     security_status: "HTTPS Only"
-    risk_level: "Low"
-
- cdn_resources:
-  - service: "Cloudflare CDN"
-    endpoints: ["cdnjs.cloudflare.com"]
+    risk_level: "Low"</pre>
+<p>cdn_resources:</p>
+<p><strong>- service:</strong> "Cloudflare CDN"</p>
+<pre class="code-block">    endpoints: ["cdnjs.cloudflare.com"]
     security_status: "No SRI"
-    risk_level: "High"
-
-protocol_support:
- http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/3"]
+    risk_level: "High"</pre>
+<p>protocol_support:</p>
+<pre class="code-block"> http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/3"]
  tls_versions: ["TLS 1.2", "TLS 1.3"]
- cipher_suites: "Modern (A+ Rating)"
-
-Security Headers Analysis
-Current Security Posture:
-# Missing Critical Headers
-Strict-Transport-Security: ❌ MISSING/MISCONFIGURED
+ cipher_suites: "Modern (A+ Rating)"</pre>
+<h3>Security Headers Analysis</h3>
+<h3>Current Security Posture:</h3>
+<p># Missing Critical Headers</p>
+<pre class="code-block">Strict-Transport-Security: ❌ MISSING/MISCONFIGURED
 Content-Security-Policy: ❌ MISSING
 X-Frame-Options: ❌ MISSING
 X-Content-Type-Options: ❌ MISSING
 Referrer-Policy: ❌ MISSING
-Permissions-Policy: ❌ MISSING
-
-# Present Headers
-Server: LiteSpeed ⚠️(Information Disclosure)
-X-Powered-By: ❌ PRESENT (Should be removed)
-
-
-Vulnerability Deep Dive
-  Critical Vulnerabilities (CVSS 9.0+)
-CVE-2025-XXXX-Equivalent: Personal Information Disclosure
-Technical Classification:
-vulnerability_details:
- cwe_id: "CWE-359"
+Permissions-Policy: ❌ MISSING</pre>
+<p># Present Headers</p>
+<p><strong>Server:</strong> LiteSpeed ⚠️(Information Disclosure)</p>
+<p><strong>X-Powered-By:</strong> ❌ PRESENT (Should be removed)</p>
+</div>
+<div class="section">
+<h2>Vulnerability Deep Dive</h2>
+<h3>Critical Vulnerabilities (CVSS 9.0+)</h3>
+<p><strong>CVE-2025-XXXX-Equivalent:</strong> Personal Information Disclosure</p>
+<h3>Technical Classification:</h3>
+<p>vulnerability_details:</p>
+<pre class="code-block"> cwe_id: "CWE-359"
  wasc_id: "WASC-13"
  cvss_v3_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N"
  cvss_score: 9.1
- confidence: "High"
-
-attack_vector:
- complexity: "Low"
+ confidence: "High"</pre>
+<p>attack_vector:</p>
+<pre class="code-block"> complexity: "Low"
  privileges_required: "None"
  user_interaction: "None"
- scope: "Changed"
-
-impact:
- confidentiality: "High"
+ scope: "Changed"</pre>
+<p>impact:</p>
+<pre class="code-block"> confidentiality: "High"
  integrity: "None"
- availability: "None"
-
-Technical Exploitation Details:
-# Proof of Concept (Sanitized)
-curl -X GET "https://example.com/wp-json/wp/v2/users" \
-   -H "Accept: application/json" \
-   -H "User-Agent: Security-Scanner/1.0"
-
-# Response contains sensitive user data:
-# - Email addresses
-# - User roles and capabilities
-# - Registration timestamps
-# - Profile information
-
-Immediate Technical Remediation:
-// WordPress functions.php - Immediate fix
-add_filter('rest_endpoints', function($endpoints) {
-    if (isset($endpoints['/wp/v2/users'])) {
-       unset($endpoints['/wp/v2/users']);
-    }
-    if (isset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)'])) {
-       unset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)']);
-    }
-    return $endpoints;
-});
-
-// Alternative: Restrict access with proper authentication
-add_filter('rest_user_query', function($prepared_args, $request) {
-   if (!is_user_logged_in()) {
-      return new WP_Error('rest_user_cannot_view',
-                  'Sorry, you are not allowed to list users.',
-                  array('status' =&gt; 401));
-   }
-   return $prepared_args;
-}, 10, 2);
-
-🟡 High Severity Vulnerabilities
-
-1. Missing Subresource Integrity (SRI)
-CWE-345 | WASC-15 | Instances: 5
-Vulnerable Resource Loading:
-&lt;!-- Current Vulnerable Implementation --&gt;
-&lt;link
-href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap"
-    rel="stylesheet"&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"&gt;&lt;/script&gt;
-
-Secure Implementation with SRI:
-&lt;!-- Hardened Implementation with SRI --&gt;
-&lt;link
-href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap"
-    rel="stylesheet"
-    integrity="sha384-
-BFAD6CLCknfkpYFOidFRlaoh581QJC4LTRxb4aHDwkN2D6AhzC4j6w2Q0+Cc7Gg"
-    crossorigin="anonymous"&gt;
-
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    integrity="sha384-
-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
-    crossorigin="anonymous"&gt;&lt;/script&gt;
-
-&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"
+ availability: "None"</pre>
+<h3>Technical Exploitation Details:</h3>
+<p># Proof of Concept (Sanitized)</p>
+<p>curl -X GET "https://example.com/wp-json/wp/v2/users" \</p>
+<p><strong>-H "Accept:</strong> application/json" \</p>
+<p><strong>-H "User-Agent:</strong> Security-Scanner/1.0"</p>
+<h3># Response contains sensitive user data:</h3>
+<ul>
+  <li># - Email addresses</li>
+  <li># - User roles and capabilities</li>
+  <li># - Registration timestamps</li>
+  <li># - Profile information</li>
+</ul>
+<h3>Immediate Technical Remediation:</h3>
+<ul>
+  <li>// WordPress functions.php - Immediate fix</li>
+  <li>add_filter('rest_endpoints', function($endpoints) {</li>
+  <li>if (isset($endpoints['/wp/v2/users'])) {</li>
+  <li>unset($endpoints['/wp/v2/users']);</li>
+  <li>}</li>
+  <li>if (isset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)'])) {</li>
+  <li>unset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)']);</li>
+  <li>}</li>
+  <li>return $endpoints;</li>
+  <li>});</li>
+</ul>
+<p><strong>// Alternative:</strong> Restrict access with proper authentication</p>
+<ul>
+  <li>add_filter('rest_user_query', function($prepared_args, $request) {</li>
+  <li>if (!is_user_logged_in()) {</li>
+  <li>return new WP_Error('rest_user_cannot_view',</li>
+  <li>'Sorry, you are not allowed to list users.',</li>
+  <li>array('status' =&gt; 401));</li>
+  <li>}</li>
+  <li>return $prepared_args;</li>
+  <li>}, 10, 2);</li>
+</ul>
+<h3>🟡 High Severity Vulnerabilities</h3>
+<ol>
+  <li>Missing Subresource Integrity (SRI)</li>
+</ol>
+<p><strong>CWE-345 | WASC-15 | Instances:</strong> 5</p>
+<h3>Vulnerable Resource Loading:</h3>
+<ul>
+  <li>&lt;!-- Current Vulnerable Implementation --&gt;</li>
+  <li>&lt;link</li>
+</ul>
+<p>href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap"</p>
+<p>rel="stylesheet"&gt;</p>
+<pre class="code-block">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"&gt;&lt;/script&gt;</pre>
+<h3>Secure Implementation with SRI:</h3>
+<ul>
+  <li>&lt;!-- Hardened Implementation with SRI --&gt;</li>
+  <li>&lt;link</li>
+</ul>
+<p>href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap"</p>
+<ul>
+  <li>rel="stylesheet"</li>
+  <li>integrity="sha384-</li>
+  <li>BFAD6CLCknfkpYFOidFRlaoh581QJC4LTRxb4aHDwkN2D6AhzC4j6w2Q0+Cc7Gg"</li>
+  <li>crossorigin="anonymous"&gt;</li>
+</ul>
+<pre class="code-block">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha384-</pre>
+<ul>
+  <li>vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"</li>
+  <li>crossorigin="anonymous"&gt;&lt;/script&gt;</li>
+</ul>
+<pre class="code-block">&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"
     integrity="sha384-[calculated-hash]"
-    crossorigin="anonymous"&gt;&lt;/script&gt;
-
-Automated SRI Generation Script:
-#!/usr/bin/env python3
-"""
-SRI Hash Generator for External Resources
-Usage: python3 sri_generator.py &lt;url&gt;
-"""
-
-import hashlib
+    crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+<h3>Automated SRI Generation Script:</h3>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li>"""</li>
+  <li>SRI Hash Generator for External Resources</li>
+</ul>
+<p><strong>Usage:</strong> python3 sri_generator.py &lt;url&gt;</p>
+<h3>"""</h3>
+<pre class="code-block">import hashlib
 import base64
 import requests
-import sys
-from urllib.parse import urlparse
-def generate_sri_hash(url, algorithm='sha384'):
+import sys</pre>
+<h3>from urllib.parse import urlparse</h3>
+<pre class="code-block">def generate_sri_hash(url, algorithm='sha384'):
   """Generate SRI hash for a given URL"""
   try:
      response = requests.get(url, timeout=30)
-     response.raise_for_status()
-
-    content = response.content
-    hash_obj = hashlib.new(algorithm)
-    hash_obj.update(content)
-
-    hash_digest = hash_obj.digest()
-    sri_hash = base64.b64encode(hash_digest).decode('ascii')
-
-    return f"{algorithm}-{sri_hash}"
-
-  except requests.RequestException as e:
+     response.raise_for_status()</pre>
+<ul>
+  <li>content = response.content</li>
+  <li>hash_obj = hashlib.new(algorithm)</li>
+  <li>hash_obj.update(content)</li>
+</ul>
+<ul>
+  <li>hash_digest = hash_obj.digest()</li>
+  <li>sri_hash = base64.b64encode(hash_digest).decode('ascii')</li>
+</ul>
+<pre class="code-block">    return f"{algorithm}-{sri_hash}"</pre>
+<pre class="code-block">  except requests.RequestException as e:
     print(f"Error fetching {url}: {e}")
-    return None
-
-def process_html_file(file_path):
+    return None</pre>
+<pre class="code-block">def process_html_file(file_path):
   """Process HTML file and add SRI to external resources"""
-  from bs4 import BeautifulSoup
-
-  with open(file_path, 'r', encoding='utf-8') as f:
-    soup = BeautifulSoup(f.read(), 'html.parser')
-
-  # Process script tags
-  for script in soup.find_all('script', src=True):
+  from bs4 import BeautifulSoup</pre>
+<p>with open(file_path, 'r', encoding='utf-8') as f:</p>
+<p>soup = BeautifulSoup(f.read(), 'html.parser')</p>
+<p># Process script tags</p>
+<pre class="code-block">  for script in soup.find_all('script', src=True):
     src = script['src']
     if src.startswith(('http://', 'https://')) and 'integrity' not in script.attrs:
        sri_hash = generate_sri_hash(src)
        if sri_hash:
           script['integrity'] = sri_hash
           script['crossorigin'] = 'anonymous'
-          print(f"Added SRI to script: {src}")
-
-  # Process link tags (CSS)
-  for link in soup.find_all('link', href=True, rel='stylesheet'):
+          print(f"Added SRI to script: {src}")</pre>
+<p># Process link tags (CSS)</p>
+<pre class="code-block">  for link in soup.find_all('link', href=True, rel='stylesheet'):
     href = link['href']
     if href.startswith(('http://', 'https://')) and 'integrity' not in link.attrs:
        sri_hash = generate_sri_hash(href)
        if sri_hash:
           link['integrity'] = sri_hash
           link['crossorigin'] = 'anonymous'
-          print(f"Added SRI to stylesheet: {href}")
-
-  # Write updated HTML
-  with open(f"{file_path}.sri", 'w', encoding='utf-8') as f:
-    f.write(str(soup))
-  print(f"Updated file saved as: {file_path}.sri")
-
-if __name__ == "__main__":
+          print(f"Added SRI to stylesheet: {href}")</pre>
+<p># Write updated HTML</p>
+<p>with open(f"{file_path}.sri", 'w', encoding='utf-8') as f:</p>
+<p>f.write(str(soup))</p>
+<pre class="code-block">  print(f"Updated file saved as: {file_path}.sri")</pre>
+<pre class="code-block">if __name__ == "__main__":
    if len(sys.argv) != 2:
       print("Usage: python3 sri_generator.py &lt;url_or_file&gt;")
-      sys.exit(1)
-
-  target = sys.argv[1]
-
-  if target.startswith(('http://', 'https://')):
-     # Generate SRI for single URL
-     sri_hash = generate_sri_hash(target)
-     if sri_hash:
-        print(f"SRI Hash for {target}:")
+      sys.exit(1)</pre>
+<h3>target = sys.argv[1]</h3>
+<p>if target.startswith(('http://', 'https://')):</p>
+<ul>
+  <li># Generate SRI for single URL</li>
+  <li>sri_hash = generate_sri_hash(target)</li>
+</ul>
+<p>if sri_hash:</p>
+<pre class="code-block">        print(f"SRI Hash for {target}:")
         print(f'integrity="{sri_hash}"')
   else:
      # Process HTML file
-     process_html_file(target)
-
-2. Missing Content Security Policy (CSP)
-CWE-693 | WASC-15 | Instances: 5
-Progressive CSP Implementation Strategy:
-Phase 1: Report-Only Mode
-Content-Security-Policy-Report-Only: default-src 'self'; report-uri /csp-violations
-
-Phase 2: Basic Enforcement
-Content-Security-Policy: default-src 'self';
+     process_html_file(target)</pre>
+<ol>
+  <li>Missing Content Security Policy (CSP)</li>
+</ol>
+<p><strong>CWE-693 | WASC-15 | Instances:</strong> 5</p>
+<h3>Progressive CSP Implementation Strategy:</h3>
+<p><strong>Phase 1:</strong> Report-Only Mode</p>
+<p><strong>Content-Security-Policy-Report-Only:</strong> default-src 'self'; report-uri /csp-violations</p>
+<p><strong>Phase 2:</strong> Basic Enforcement</p>
+<pre class="code-block">Content-Security-Policy: default-src 'self';
              script-src 'self' 'unsafe-inline';
              style-src 'self' 'unsafe-inline';
-             img-src 'self' data: https:;
-
-Phase 3: Strict Policy with Nonces
-Content-Security-Policy: default-src 'self';
+             img-src 'self' data: https:;</pre>
+<p><strong>Phase 3:</strong> Strict Policy with Nonces</p>
+<pre class="code-block">Content-Security-Policy: default-src 'self';
              script-src 'self' 'nonce-{RANDOM_NONCE}';
              style-src 'self' 'nonce-{RANDOM_NONCE}';
              img-src 'self' data: https:;
@@ -372,928 +613,1015 @@ Content-Security-Policy: default-src 'self';
              frame-ancestors 'none';
              base-uri 'self';
              form-action 'self';
-             upgrade-insecure-requests;
-
-CSP Implementation for Different Platforms:
-Apache (.htaccess):
-# CSP Implementation for Apache
-&lt;IfModule mod_headers.c&gt;
-   # Phase 1: Report-Only
-   # Header always set Content-Security-Policy-Report-Only "default-src 'self'; report-uri
-/csp-report"
-
-   # Phase 2: Basic Enforcement
-   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'
-https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src
-'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';
-form-action 'self'"
-&lt;/IfModule&gt;
-
-Nginx:
-# CSP Implementation for Nginx
-server {
-   # Phase 2: Basic Enforcement
-   add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'
-https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src
-'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';
-form-action 'self'" always;
-
-    # CSP Violation Reporting Endpoint
-    location /csp-report {
-      access_log /var/log/nginx/csp-violations.log;
-      return 204;
-    }
-}
-
-WordPress Plugin Implementation:
-&lt;?php
-/**
- * WordPress CSP Implementation
- * Plugin Name: Security Headers Pro
- */
-
-class SecurityHeadersCSP {
-  private $nonce;
-
-    public function __construct() {
-      add_action('init', [$this, 'generate_nonce']);
-      add_action('wp_head', [$this, 'add_csp_header'], 1);
-      add_action('script_loader_tag', [$this, 'add_nonce_to_scripts'], 10, 2);
-      add_action('style_loader_tag', [$this, 'add_nonce_to_styles'], 10, 2);
-    }
-    public function generate_nonce() {
-      $this-&gt;nonce = base64_encode(random_bytes(16));
-    }
-
-    public function add_csp_header() {
-      $csp_policy = sprintf(
-         "default-src 'self'; " .
-         "script-src 'self' 'nonce-%s' https://cdnjs.cloudflare.com; " .
-         "style-src 'self' 'nonce-%s' https://fonts.googleapis.com; " .
-         "img-src 'self' data: https: https://secure.gravatar.com; " .
-         "font-src 'self' https://fonts.gstatic.com; " .
-         "connect-src 'self'; " .
-         "frame-ancestors 'none'; " .
-         "base-uri 'self'; " .
-         "form-action 'self'",
-         $this-&gt;nonce,
-         $this-&gt;nonce
-      );
-
-        header("Content-Security-Policy: " . $csp_policy);
-    }
-
-    public function add_nonce_to_scripts($tag, $handle) {
-      return str_replace('&lt;script ', '&lt;script nonce="' . $this-&gt;nonce . '" ', $tag);
-    }
-
-    public function add_nonce_to_styles($tag, $handle) {
-      return str_replace('&lt;link ', '&lt;link nonce="' . $this-&gt;nonce . '" ', $tag);
-    }
-}
-
-new SecurityHeadersCSP();
-?&gt;
-
-3. Missing Clickjacking Protection
-CWE-1021 | WASC-15 | Instances: 5
-Multi-Layer Clickjacking Protection:
-# Legacy Browser Support
-X-Frame-Options: DENY
-
-# Modern Browser Support (CSP Level 2)
-Content-Security-Policy: frame-ancestors 'none'
-
-# Additional Protection
-X-Content-Type-Options: nosniff
-
-JavaScript-Based Frame Busting (Backup):
-// Frame-busting script (defense in depth)
-(function() {
-   'use strict';
-
-  // Check if page is in a frame
-  if (window.top !== window.self) {
-     // Attempt to break out of frame
-     try {
-        window.top.location = window.self.location;
-     } catch (e) {
-        // If blocked by same-origin policy, hide content
-        document.body.style.display = 'none';
-
-        // Show warning message
-        const warning = document.createElement('div');
-        warning.innerHTML = 'This page cannot be displayed in a frame for security
-reasons.';
-        warning.style.cssText =
-'position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-
-index:999999;display:flex;align-items:center;justify-content:center;font-size:18px;';
-        document.body.appendChild(warning);
-      }
-   }
-})();
-
-  Medium Severity Vulnerabilities
-HSTS Configuration Issues
-CWE-319 | Instances: 6
-Current Problematic Configuration:
-# Detected Issues
-Strict-Transport-Security: max-age=0 # Disables HSTS
-Strict-Transport-Security: max-age=3600 # Too short duration
-# Missing includeSubDomains directive
-# Missing preload directive
-
-Recommended HSTS Configuration:
-# Production-Ready HSTS Configuration
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-
-Implementation Across Different Platforms:
-Apache:
-&lt;IfModule mod_headers.c&gt;
-   # HSTS Configuration
-   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;
-preload"
-  # Conditional HSTS (only over HTTPS)
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;
-preload" env=HTTPS
-&lt;/IfModule&gt;
-
-# Force HTTPS Redirect
-&lt;IfModule mod_rewrite.c&gt;
-   RewriteEngine On
-   RewriteCond %{HTTPS} off
-   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-&lt;/IfModule&gt;
-
-Nginx:
-server {
-  listen 80;
-  server_name example.com www.example.com;
-  return 301 https://$server_name$request_uri;
-}
-
-server {
-  listen 443 ssl http2;
-  server_name example.com www.example.com;
-
-  # HSTS Configuration
-  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-always;
-
-    # Additional Security Headers
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-Frame-Options "DENY" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-}
-
-LiteSpeed (.htaccess):
-# LiteSpeed HSTS Configuration
-&lt;IfModule mod_headers.c&gt;
-   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;
-preload"
-&lt;/IfModule&gt;
-
-# Force HTTPS
-RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-Multi-Framework Compliance Assessment
-OWASP Top 10 2021 Technical Compliance
-A01:2021 – Broken Access Control
-Compliance Status: ❌ CRITICAL FAILURE
-Technical Violations:
-access_control_failures:
- pii_exposure:
-  severity: "Critical"
+             upgrade-insecure-requests;</pre>
+<h3>CSP Implementation for Different Platforms:</h3>
+<h3>Apache (.htaccess):</h3>
+<ul>
+  <li># CSP Implementation for Apache</li>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+</ul>
+<p><strong># Phase 1:</strong> Report-Only</p>
+<p># Header always set Content-Security-Policy-Report-Only "default-src 'self'; report-uri</p>
+<h3>/csp-report"</h3>
+<p><strong># Phase 2:</strong> Basic Enforcement</p>
+<pre class="code-block">   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p>https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'</p>
+<p>https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src</p>
+<p>'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';</p>
+<ul>
+  <li>form-action 'self'"</li>
+  <li>&lt;/IfModule&gt;</li>
+</ul>
+<h3>Nginx:</h3>
+<ul>
+  <li># CSP Implementation for Nginx</li>
+  <li>server {</li>
+</ul>
+<p><strong># Phase 2:</strong> Basic Enforcement</p>
+<pre class="code-block">   add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p>https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'</p>
+<p>https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src</p>
+<p>'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';</p>
+<h3>form-action 'self'" always;</h3>
+<ul>
+  <li># CSP Violation Reporting Endpoint</li>
+  <li>location /csp-report {</li>
+  <li>access_log /var/log/nginx/csp-violations.log;</li>
+  <li>return 204;</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<h3>WordPress Plugin Implementation:</h3>
+<ul>
+  <li>&lt;?php</li>
+  <li>/**</li>
+  <li>* WordPress CSP Implementation</li>
+</ul>
+<p><strong>* Plugin Name:</strong> Security Headers Pro</p>
+<p>*/</p>
+<pre class="code-block">class SecurityHeadersCSP {
+  private $nonce;</pre>
+<ul>
+  <li>public function __construct() {</li>
+  <li>add_action('init', [$this, 'generate_nonce']);</li>
+  <li>add_action('wp_head', [$this, 'add_csp_header'], 1);</li>
+  <li>add_action('script_loader_tag', [$this, 'add_nonce_to_scripts'], 10, 2);</li>
+  <li>add_action('style_loader_tag', [$this, 'add_nonce_to_styles'], 10, 2);</li>
+  <li>}</li>
+  <li>public function generate_nonce() {</li>
+  <li>$this-&gt;nonce = base64_encode(random_bytes(16));</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>public function add_csp_header() {</li>
+  <li>$csp_policy = sprintf(</li>
+  <li>"default-src 'self'; " .</li>
+  <li>"script-src 'self' 'nonce-%s' https://cdnjs.cloudflare.com; " .</li>
+</ul>
+<h3>"style-src 'self' 'nonce-%s' https://fonts.googleapis.com; " .</h3>
+<p><strong>"img-src 'self' data:</strong> https: https://secure.gravatar.com; " .</p>
+<ul>
+  <li>"font-src 'self' https://fonts.gstatic.com; " .</li>
+  <li>"connect-src 'self'; " .</li>
+  <li>"frame-ancestors 'none'; " .</li>
+  <li>"base-uri 'self'; " .</li>
+  <li>"form-action 'self'",</li>
+  <li>$this-&gt;nonce,</li>
+  <li>$this-&gt;nonce</li>
+  <li>);</li>
+</ul>
+<p><strong>header("Content-Security-Policy:</strong> " . $csp_policy);</p>
+<pre class="code-block">    }</pre>
+<p>public function add_nonce_to_scripts($tag, $handle) {</p>
+<p>return str_replace('&lt;script ', '&lt;script nonce="' . $this-&gt;nonce . '" ', $tag);</p>
+<p>}</p>
+<ul>
+  <li>public function add_nonce_to_styles($tag, $handle) {</li>
+  <li>return str_replace('&lt;link ', '&lt;link nonce="' . $this-&gt;nonce . '" ', $tag);</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>new SecurityHeadersCSP();</li>
+  <li>?&gt;</li>
+</ul>
+<ol>
+  <li>Missing Clickjacking Protection</li>
+</ol>
+<p><strong>CWE-1021 | WASC-15 | Instances:</strong> 5</p>
+<h3>Multi-Layer Clickjacking Protection:</h3>
+<p># Legacy Browser Support</p>
+<pre class="code-block">X-Frame-Options: DENY</pre>
+<p># Modern Browser Support (CSP Level 2)</p>
+<pre class="code-block">Content-Security-Policy: frame-ancestors 'none'</pre>
+<p># Additional Protection</p>
+<pre class="code-block">X-Content-Type-Options: nosniff</pre>
+<h3>JavaScript-Based Frame Busting (Backup):</h3>
+<ul>
+  <li>// Frame-busting script (defense in depth)</li>
+  <li>(function() {</li>
+  <li>'use strict';</li>
+</ul>
+<p>// Check if page is in a frame</p>
+<p>if (window.top !== window.self) {</p>
+<p>// Attempt to break out of frame</p>
+<p>try {</p>
+<p>window.top.location = window.self.location;</p>
+<p>} catch (e) {</p>
+<p>// If blocked by same-origin policy, hide content</p>
+<p>document.body.style.display = 'none';</p>
+<ul>
+  <li>// Show warning message</li>
+  <li>const warning = document.createElement('div');</li>
+  <li>warning.innerHTML = 'This page cannot be displayed in a frame for security</li>
+  <li>reasons.';</li>
+  <li>warning.style.cssText =</li>
+  <li>'position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-</li>
+</ul>
+<p>index:999999;display:flex;align-items:center;justify-content:center;font-size:18px;';</p>
+<ul>
+  <li>document.body.appendChild(warning);</li>
+  <li>}</li>
+  <li>}</li>
+  <li>})();</li>
+</ul>
+<ul>
+  <li>Medium Severity Vulnerabilities</li>
+  <li>HSTS Configuration Issues</li>
+</ul>
+<p><strong>CWE-319 | Instances:</strong> 6</p>
+<h3>Current Problematic Configuration:</h3>
+<p># Detected Issues</p>
+<pre class="code-block">Strict-Transport-Security: max-age=0 # Disables HSTS
+Strict-Transport-Security: max-age=3600 # Too short duration</pre>
+<ul>
+  <li># Missing includeSubDomains directive</li>
+  <li># Missing preload directive</li>
+</ul>
+<h3>Recommended HSTS Configuration:</h3>
+<p># Production-Ready HSTS Configuration</p>
+<pre class="code-block">Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</pre>
+<h3>Implementation Across Different Platforms:</h3>
+<h3>Apache:</h3>
+<ul>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+  <li># HSTS Configuration</li>
+</ul>
+<pre class="code-block">   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;</pre>
+<ul>
+  <li>preload"</li>
+  <li># Conditional HSTS (only over HTTPS)</li>
+</ul>
+<pre class="code-block">  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;</pre>
+<ul>
+  <li>preload" env=HTTPS</li>
+  <li>&lt;/IfModule&gt;</li>
+</ul>
+<ul>
+  <li># Force HTTPS Redirect</li>
+  <li>&lt;IfModule mod_rewrite.c&gt;</li>
+  <li>RewriteEngine On</li>
+  <li>RewriteCond %{HTTPS} off</li>
+  <li>RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</li>
+  <li>&lt;/IfModule&gt;</li>
+</ul>
+<h3>Nginx:</h3>
+<ul>
+  <li>server {</li>
+  <li>listen 80;</li>
+  <li>server_name example.com www.example.com;</li>
+  <li>return 301 https://$server_name$request_uri;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>server {</li>
+  <li>listen 443 ssl http2;</li>
+  <li>server_name example.com www.example.com;</li>
+</ul>
+<p># HSTS Configuration</p>
+<pre class="code-block">  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"</pre>
+<p>always;</p>
+<ul>
+  <li># Additional Security Headers</li>
+  <li>add_header X-Content-Type-Options "nosniff" always;</li>
+  <li>add_header X-Frame-Options "DENY" always;</li>
+  <li>add_header X-XSS-Protection "1; mode=block" always;</li>
+  <li>add_header Referrer-Policy "strict-origin-when-cross-origin" always;</li>
+  <li>}</li>
+</ul>
+<h3>LiteSpeed (.htaccess):</h3>
+<ul>
+  <li># LiteSpeed HSTS Configuration</li>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+</ul>
+<pre class="code-block">   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;</pre>
+<ul>
+  <li>preload"</li>
+  <li>&lt;/IfModule&gt;</li>
+</ul>
+<ul>
+  <li># Force HTTPS</li>
+  <li>RewriteEngine On</li>
+  <li>RewriteCond %{HTTPS} off</li>
+  <li>RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]</li>
+</ul>
+</div>
+<div class="section">
+<h2>Multi-Framework Compliance Assessment</h2>
+</div>
+<div class="section">
+<h2>OWASP Top 10 2021 Technical Compliance</h2>
+<h3>A01:2021 – Broken Access Control</h3>
+<p><strong>Compliance Status:</strong> ❌ CRITICAL FAILURE</p>
+<h3>Technical Violations:</h3>
+<p>access_control_failures:</p>
+<p>pii_exposure:</p>
+<pre class="code-block">  severity: "Critical"
   cwe: "CWE-359"
   technical_impact: "Complete user data exposure"
-  business_impact: "GDPR/CCPA violations, regulatory fines"
-
- missing_authorization:
-  endpoints: ["/wp-json/wp/v2/users", "/api/user-data"]
+  business_impact: "GDPR/CCPA violations, regulatory fines"</pre>
+<p>missing_authorization:</p>
+<pre class="code-block">  endpoints: ["/wp-json/wp/v2/users", "/api/user-data"]
   authentication_required: false
-  authorization_checks: false
-
- privilege_escalation_risk:
-  horizontal: "Possible"
+  authorization_checks: false</pre>
+<p>privilege_escalation_risk:</p>
+<pre class="code-block">  horizontal: "Possible"
   vertical: "Possible"
-  session_management: "Weak"
-
-Technical Remediation:
-// WordPress REST API Security Hardening
-class RestAPISecurityHardening {
-   public function __construct() {
-     add_filter('rest_authentication_errors', [$this, 'restrict_rest_api']);
-     add_filter('rest_pre_dispatch', [$this, 'validate_rest_request'], 10, 3);
-   }
-
-  public function restrict_rest_api($result) {
-    if (!is_user_logged_in() &amp;&amp; !$this-&gt;is_allowed_endpoint()) {
-       return new WP_Error(
-           'rest_not_logged_in',
-           'You are not currently logged in.',
-           array('status' =&gt; 401)
-       );
-    }
-    return $result;
-  }
-
-  private function is_allowed_endpoint() {
-    $allowed_endpoints = [
-      '/wp/v2/posts',
-      '/wp/v2/pages',
-              '/wp/v2/media'
-         ];
-
-         $current_route = $GLOBALS['wp']-&gt;query_vars['rest_route'] ?? '';
-
-         foreach ($allowed_endpoints as $endpoint) {
-           if (strpos($current_route, $endpoint) === 0) {
-              return true;
-           }
-         }
-
-         return false;
+  session_management: "Weak"</pre>
+<h3>Technical Remediation:</h3>
+<ul>
+  <li>// WordPress REST API Security Hardening</li>
+  <li>class RestAPISecurityHardening {</li>
+  <li>public function __construct() {</li>
+  <li>add_filter('rest_authentication_errors', [$this, 'restrict_rest_api']);</li>
+  <li>add_filter('rest_pre_dispatch', [$this, 'validate_rest_request'], 10, 3);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>public function restrict_rest_api($result) {</li>
+  <li>if (!is_user_logged_in() &amp;&amp; !$this-&gt;is_allowed_endpoint()) {</li>
+  <li>return new WP_Error(</li>
+  <li>'rest_not_logged_in',</li>
+  <li>'You are not currently logged in.',</li>
+  <li>array('status' =&gt; 401)</li>
+  <li>);</li>
+  <li>}</li>
+  <li>return $result;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>private function is_allowed_endpoint() {</li>
+  <li>$allowed_endpoints = [</li>
+  <li>'/wp/v2/posts',</li>
+  <li>'/wp/v2/pages',</li>
+  <li>'/wp/v2/media'</li>
+  <li>];</li>
+</ul>
+<h3>$current_route = $GLOBALS['wp']-&gt;query_vars['rest_route'] ?? '';</h3>
+<ul>
+  <li>foreach ($allowed_endpoints as $endpoint) {</li>
+  <li>if (strpos($current_route, $endpoint) === 0) {</li>
+  <li>return true;</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">         return false;
+     }</pre>
+<ul>
+  <li>public function validate_rest_request($result, $server, $request) {</li>
+  <li>$route = $request-&gt;get_route();</li>
+</ul>
+<ul>
+  <li>// Block sensitive user endpoints</li>
+  <li>if (preg_match('/\/wp\/v2\/users/', $route)) {</li>
+  <li>if (!current_user_can('list_users')) {</li>
+  <li>return new WP_Error(</li>
+  <li>'rest_forbidden',</li>
+  <li>'You do not have permission to access this resource.',</li>
+  <li>array('status' =&gt; 403)</li>
+  <li>);</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">         return $result;
      }
-
-     public function validate_rest_request($result, $server, $request) {
-       $route = $request-&gt;get_route();
-
-         // Block sensitive user endpoints
-         if (preg_match('/\/wp\/v2\/users/', $route)) {
-            if (!current_user_can('list_users')) {
-               return new WP_Error(
-                  'rest_forbidden',
-                  'You do not have permission to access this resource.',
-                  array('status' =&gt; 403)
-               );
-            }
-         }
-
-         return $result;
-     }
-}
-
-new RestAPISecurityHardening();
-
-A05:2021 – Security Misconfiguration
-Compliance Status: ❌ CRITICAL FAILURE
-Configuration Audit Results:
-security_misconfigurations:
- web_server:
-  server_tokens: "exposed" # LiteSpeed version visible
+}</pre>
+<p>new RestAPISecurityHardening();</p>
+<h3>A05:2021 – Security Misconfiguration</h3>
+<p><strong>Compliance Status:</strong> ❌ CRITICAL FAILURE</p>
+<h3>Configuration Audit Results:</h3>
+<p>security_misconfigurations:</p>
+<p>web_server:</p>
+<pre class="code-block">  server_tokens: "exposed" # LiteSpeed version visible
   error_pages: "default" # Information disclosure
-  directory_listing: "unknown"
-
-    application:
-     debug_mode: "unknown"
+  directory_listing: "unknown"</pre>
+<p>application:</p>
+<pre class="code-block">     debug_mode: "unknown"
      error_reporting: "verbose"
-     file_permissions: "needs_audit"
- security_headers:
-  csp: "missing"
+     file_permissions: "needs_audit"</pre>
+<p>security_headers:</p>
+<pre class="code-block">  csp: "missing"
   hsts: "misconfigured"
   x_frame_options: "missing"
   x_content_type_options: "missing"
-  referrer_policy: "missing"
-
-Comprehensive Security Headers Implementation:
-#!/bin/bash
-# security_headers_setup.sh - Comprehensive security headers configuration
-
-# Function to detect web server
-detect_web_server() {
-  if command -v apache2 &amp;&gt; /dev/null || command -v httpd &amp;&gt; /dev/null; then
-     echo "apache"
-  elif command -v nginx &amp;&gt; /dev/null; then
-     echo "nginx"
-  elif pgrep -f "litespeed" &amp;&gt; /dev/null; then
-     echo "litespeed"
-  else
-     echo "unknown"
-  fi
-}
-
-# Apache configuration
-configure_apache() {
-   cat &gt; /etc/apache2/conf-available/security-headers.conf &lt;&lt; 'EOF'
-&lt;IfModule mod_headers.c&gt;
-   # Security Headers
-   Header always set X-Content-Type-Options "nosniff"
-   Header always set X-Frame-Options "DENY"
-   Header always set X-XSS-Protection "1; mode=block"
-   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;
-preload"
-
-  # Content Security Policy
-  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-
-ancestors 'none'; base-uri 'self'; form-action 'self'"
-
-  # Remove server information
-  Header always unset Server
-  Header always unset X-Powered-By
-  # HSTS Preload (only after testing)
-  # Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains;
-preload"
-&lt;/IfModule&gt;
-
-# Server signature
-ServerTokens Prod
-ServerSignature Off
-EOF
-
-    a2enconf security-headers
-    systemctl reload apache2
-}
-
-# Nginx configuration
-configure_nginx() {
-  cat &gt; /etc/nginx/conf.d/security-headers.conf &lt;&lt; 'EOF'
-# Security Headers
-add_header X-Content-Type-Options "nosniff" always;
-add_header X-Frame-Options "DENY" always;
-add_header X-XSS-Protection "1; mode=block" always;
-add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;
-add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-always;
-
-# Content Security Policy
-add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-
-ancestors 'none'; base-uri 'self'; form-action 'self'" always;
-
-# Hide server information
-server_tokens off;
-more_clear_headers Server;
-more_clear_headers X-Powered-By;
-EOF
-
-    nginx -t &amp;&amp; systemctl reload nginx
-}
-
-# Main execution
-WEB_SERVER=$(detect_web_server)
-
-case $WEB_SERVER in
-  "apache")
-    echo "Configuring Apache security headers..."
-    configure_apache
-    ;;
-   "nginx")
-      echo "Configuring Nginx security headers..."
-      configure_nginx
-      ;;
-   "litespeed")
-      echo "For LiteSpeed, add the following to .htaccess:"
-      cat &lt;&lt; 'EOF'
-&lt;IfModule mod_headers.c&gt;
-   Header always set X-Content-Type-Options "nosniff"
-   Header always set X-Frame-Options "DENY"
-   Header always set X-XSS-Protection "1; mode=block"
-   Header always set Referrer-Policy "strict-origin-when-cross-origin"
-   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;
-preload"
-   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-
-ancestors 'none'; base-uri 'self'; form-action 'self'"
-&lt;/IfModule&gt;
-EOF
-      ;;
-   *)
-      echo "Unknown web server. Manual configuration required."
-      ;;
-esac
-
-echo "Security headers configuration completed!"
-
-NIST Cybersecurity Framework 2.0 Technical Assessment
-GOVERN (GV) Function
-Current Maturity: 15% - Needs Significant Improvement
-GV.OC-01: Organizational Cybersecurity Strategy
-current_state:
- cybersecurity_strategy: "undefined"
+  referrer_policy: "missing"</pre>
+<h3>Comprehensive Security Headers Implementation:</h3>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># security_headers_setup.sh - Comprehensive security headers configuration</li>
+</ul>
+<ul>
+  <li># Function to detect web server</li>
+  <li>detect_web_server() {</li>
+  <li>if command -v apache2 &amp;&gt; /dev/null || command -v httpd &amp;&gt; /dev/null; then</li>
+  <li>echo "apache"</li>
+  <li>elif command -v nginx &amp;&gt; /dev/null; then</li>
+  <li>echo "nginx"</li>
+  <li>elif pgrep -f "litespeed" &amp;&gt; /dev/null; then</li>
+  <li>echo "litespeed"</li>
+  <li>else</li>
+  <li>echo "unknown"</li>
+  <li>fi</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Apache configuration</li>
+  <li>configure_apache() {</li>
+  <li>cat &gt; /etc/apache2/conf-available/security-headers.conf &lt;&lt; 'EOF'</li>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+  <li># Security Headers</li>
+  <li>Header always set X-Content-Type-Options "nosniff"</li>
+  <li>Header always set X-Frame-Options "DENY"</li>
+  <li>Header always set X-XSS-Protection "1; mode=block"</li>
+  <li>Header always set Referrer-Policy "strict-origin-when-cross-origin"</li>
+  <li>Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"</li>
+</ul>
+<pre class="code-block">   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;</pre>
+<p>preload"</p>
+<p># Content Security Policy</p>
+<pre class="code-block">  Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p>https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;</p>
+<p><strong>img-src 'self' data:</strong> https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-</p>
+<h3>ancestors 'none'; base-uri 'self'; form-action 'self'"</h3>
+<ul>
+  <li># Remove server information</li>
+  <li>Header always unset Server</li>
+  <li>Header always unset X-Powered-By</li>
+  <li># HSTS Preload (only after testing)</li>
+</ul>
+<p># Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains;</p>
+<ul>
+  <li>preload"</li>
+  <li>&lt;/IfModule&gt;</li>
+</ul>
+<ul>
+  <li># Server signature</li>
+  <li>ServerTokens Prod</li>
+  <li>ServerSignature Off</li>
+  <li>EOF</li>
+</ul>
+<ul>
+  <li>a2enconf security-headers</li>
+  <li>systemctl reload apache2</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Nginx configuration</li>
+  <li>configure_nginx() {</li>
+  <li>cat &gt; /etc/nginx/conf.d/security-headers.conf &lt;&lt; 'EOF'</li>
+  <li># Security Headers</li>
+  <li>add_header X-Content-Type-Options "nosniff" always;</li>
+  <li>add_header X-Frame-Options "DENY" always;</li>
+  <li>add_header X-XSS-Protection "1; mode=block" always;</li>
+  <li>add_header Referrer-Policy "strict-origin-when-cross-origin" always;</li>
+  <li>add_header Permissions-Policy "geolocation=(), microphone=(), camera=()" always;</li>
+</ul>
+<pre class="code-block">add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"</pre>
+<p>always;</p>
+<p># Content Security Policy</p>
+<pre class="code-block">add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p>https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;</p>
+<p><strong>img-src 'self' data:</strong> https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-</p>
+<h3>ancestors 'none'; base-uri 'self'; form-action 'self'" always;</h3>
+<ul>
+  <li># Hide server information</li>
+  <li>server_tokens off;</li>
+  <li>more_clear_headers Server;</li>
+  <li>more_clear_headers X-Powered-By;</li>
+  <li>EOF</li>
+</ul>
+<ul>
+  <li>nginx -t &amp;&amp; systemctl reload nginx</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Main execution</li>
+  <li>WEB_SERVER=$(detect_web_server)</li>
+</ul>
+<ul>
+  <li>case $WEB_SERVER in</li>
+  <li>"apache")</li>
+  <li>echo "Configuring Apache security headers..."</li>
+  <li>configure_apache</li>
+  <li>;;</li>
+  <li>"nginx")</li>
+  <li>echo "Configuring Nginx security headers..."</li>
+  <li>configure_nginx</li>
+  <li>;;</li>
+  <li>"litespeed")</li>
+  <li>echo "For LiteSpeed, add the following to .htaccess:"</li>
+  <li>cat &lt;&lt; 'EOF'</li>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+  <li>Header always set X-Content-Type-Options "nosniff"</li>
+  <li>Header always set X-Frame-Options "DENY"</li>
+  <li>Header always set X-XSS-Protection "1; mode=block"</li>
+  <li>Header always set Referrer-Policy "strict-origin-when-cross-origin"</li>
+  <li>Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"</li>
+</ul>
+<pre class="code-block">   Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;</pre>
+<p>preload"</p>
+<pre class="code-block">   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p>https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;</p>
+<p><strong>img-src 'self' data:</strong> https:; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-</p>
+<ul>
+  <li>ancestors 'none'; base-uri 'self'; form-action 'self'"</li>
+  <li>&lt;/IfModule&gt;</li>
+  <li>EOF</li>
+  <li>;;</li>
+  <li>*)</li>
+  <li>echo "Unknown web server. Manual configuration required."</li>
+  <li>;;</li>
+  <li>esac</li>
+</ul>
+<h3>echo "Security headers configuration completed!"</h3>
+</div>
+<div class="section">
+<h2>NIST Cybersecurity Framework 2.0 Technical Assessment</h2>
+<h3>GOVERN (GV) Function</h3>
+<p><strong>Current Maturity:</strong> 15% - Needs Significant Improvement</p>
+<p><strong>GV.OC-01:</strong> Organizational Cybersecurity Strategy</p>
+<p>current_state:</p>
+<pre class="code-block"> cybersecurity_strategy: "undefined"
  risk_appetite: "not_documented"
- governance_structure: "informal"
-
-recommended_implementation:
- strategy_document: "required"
+ governance_structure: "informal"</pre>
+<p>recommended_implementation:</p>
+<pre class="code-block"> strategy_document: "required"
  risk_framework: "NIST RMF"
- governance_tools: ["GRC platform", "Policy management system"]
-
-IDENTIFY (ID) Function
-Current Maturity: 65% - Partially Implemented
-ID.AM-02: Software Asset Inventory
-#!/bin/bash
-# software_inventory.sh - Automated software asset discovery
-
-# WordPress component discovery
-discover_wordpress_components() {
-  echo "=== WordPress Asset Inventory ==="
-
-    # Core version
-    wp core version --path=/var/www/html
-
-    # Plugin inventory
-    echo "Installed Plugins:"
-    wp plugin list --path=/var/www/html --format=table
-
-    # Theme inventory
-    echo "Installed Themes:"
-    wp theme list --path=/var/www/html --format=table
-
-    # Database version
-    wp db version --path=/var/www/html
-}
-
-# System component discovery
-discover_system_components() {
-  echo "=== System Component Inventory ==="
-
-    # Web server
-    if command -v apache2 &amp;&gt; /dev/null; then
-       apache2 -v
-    elif command -v nginx &amp;&gt; /dev/null; then
-       nginx -v
-    fi
-
-    # PHP version
-    php -v
-
-    # Database
-    mysql --version 2&gt;/dev/null || mariadb --version 2&gt;/dev/null
-
-    # SSL/TLS
-    openssl version
-}
-
-# Generate JSON inventory
-generate_json_inventory() {
-  cat &gt; asset_inventory.json &lt;&lt; EOF
-{
-   "scan_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+ governance_tools: ["GRC platform", "Policy management system"]</pre>
+<h3>IDENTIFY (ID) Function</h3>
+<p><strong>Current Maturity:</strong> 65% - Partially Implemented</p>
+<p><strong>ID.AM-02:</strong> Software Asset Inventory</p>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># software_inventory.sh - Automated software asset discovery</li>
+</ul>
+<ul>
+  <li># WordPress component discovery</li>
+  <li>discover_wordpress_components() {</li>
+  <li>echo "=== WordPress Asset Inventory ==="</li>
+</ul>
+<ul>
+  <li># Core version</li>
+  <li>wp core version --path=/var/www/html</li>
+</ul>
+<ul>
+  <li># Plugin inventory</li>
+  <li>echo "Installed Plugins:"</li>
+  <li>wp plugin list --path=/var/www/html --format=table</li>
+</ul>
+<ul>
+  <li># Theme inventory</li>
+  <li>echo "Installed Themes:"</li>
+  <li>wp theme list --path=/var/www/html --format=table</li>
+</ul>
+<ul>
+  <li># Database version</li>
+  <li>wp db version --path=/var/www/html</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># System component discovery</li>
+  <li>discover_system_components() {</li>
+  <li>echo "=== System Component Inventory ==="</li>
+</ul>
+<ul>
+  <li># Web server</li>
+  <li>if command -v apache2 &amp;&gt; /dev/null; then</li>
+  <li>apache2 -v</li>
+  <li>elif command -v nginx &amp;&gt; /dev/null; then</li>
+  <li>nginx -v</li>
+  <li>fi</li>
+</ul>
+<ul>
+  <li># PHP version</li>
+  <li>php -v</li>
+</ul>
+<ul>
+  <li># Database</li>
+  <li>mysql --version 2&gt;/dev/null || mariadb --version 2&gt;/dev/null</li>
+</ul>
+<ul>
+  <li># SSL/TLS</li>
+  <li>openssl version</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Generate JSON inventory</li>
+  <li>generate_json_inventory() {</li>
+  <li>cat &gt; asset_inventory.json &lt;&lt; EOF</li>
+  <li>{</li>
+</ul>
+<pre class="code-block">   "scan_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
    "wordpress": {
        "core_version": "$(wp core version --path=/var/www/html 2&gt;/dev/null)",
-       "plugins": $(wp plugin list --path=/var/www/html --format=json 2&gt;/dev/null || echo
-"[]"),
-       "themes": $(wp theme list --path=/var/www/html --format=json 2&gt;/dev/null || echo
-"[]")
-   },
-   "system": {
+       "plugins": $(wp plugin list --path=/var/www/html --format=json 2&gt;/dev/null || echo</pre>
+<h3>"[]"),</h3>
+<pre class="code-block">       "themes": $(wp theme list --path=/var/www/html --format=json 2&gt;/dev/null || echo</pre>
+<ul>
+  <li>"[]")</li>
+  <li>},</li>
+</ul>
+<pre class="code-block">   "system": {
        "web_server": "$(nginx -v 2&gt;&amp;1 || apache2 -v 2&gt;&amp;1 || echo 'Unknown')",
        "php_version": "$(php -v | head -n1)",
-       "database": "$(mysql --version 2&gt;/dev/null || mariadb --version 2&gt;/dev/null || echo
-'Unknown')",
-       "openssl": "$(openssl version)"
+       "database": "$(mysql --version 2&gt;/dev/null || mariadb --version 2&gt;/dev/null || echo</pre>
+<h3>'Unknown')",</h3>
+<pre class="code-block">       "openssl": "$(openssl version)"
    }
-}
-EOF
-}
-
-# Execute inventory
-discover_wordpress_components
-discover_system_components
-generate_json_inventory
-
-echo "Asset inventory completed. Results saved to asset_inventory.json"
-
-PROTECT (PR) Function
-Current Maturity: 20% - Critical Gaps
-PR.DS-01: Data Protection Implementation
-&lt;?php
-/**
- * WordPress Data Protection Enhancement
- * Implements GDPR/CCPA compliance measures
- */
-
-class DataProtectionEnhancement {
+}</pre>
+<ul>
+  <li>EOF</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Execute inventory</li>
+  <li>discover_wordpress_components</li>
+  <li>discover_system_components</li>
+  <li>generate_json_inventory</li>
+</ul>
+<h3>PROTECT (PR) Function</h3>
+<p><strong>Current Maturity:</strong> 20% - Critical Gaps</p>
+<p><strong>PR.DS-01:</strong> Data Protection Implementation</p>
+<ul>
+  <li>&lt;?php</li>
+  <li>/**</li>
+  <li>* WordPress Data Protection Enhancement</li>
+  <li>* Implements GDPR/CCPA compliance measures</li>
+  <li>*/</li>
+</ul>
+<pre class="code-block">class DataProtectionEnhancement {
   public function __construct() {
     add_action('init', [$this, 'init_data_protection']);
     add_filter('wp_privacy_personal_data_exporters', [$this, 'register_exporters']);
     add_filter('wp_privacy_personal_data_erasers', [$this, 'register_erasers']);
-  }
-
-  public function init_data_protection() {
-    // Encrypt sensitive data in database
-    add_filter('pre_update_option', [$this, 'encrypt_sensitive_options'], 10, 3);
-    add_filter('option_value', [$this, 'decrypt_sensitive_options'], 10, 2);
-    // Implement data retention policies
-    add_action('wp_scheduled_delete', [$this, 'cleanup_expired_data']);
-}
-
-public function encrypt_sensitive_options($value, $option, $old_value) {
-  $sensitive_options = [
-     'admin_email',
-     'users_can_register',
-     'default_role'
-  ];
-
-    if (in_array($option, $sensitive_options) &amp;&amp; is_string($value)) {
-       return $this-&gt;encrypt_data($value);
-    }
-
-    return $value;
-}
-
-public function decrypt_sensitive_options($value, $option) {
-  $sensitive_options = [
-     'admin_email',
-     'users_can_register',
-     'default_role'
-  ];
-
-    if (in_array($option, $sensitive_options) &amp;&amp; $this-&gt;is_encrypted($value)) {
-       return $this-&gt;decrypt_data($value);
-    }
-
-    return $value;
-}
-
-private function encrypt_data($data) {
-  $key = $this-&gt;get_encryption_key();
-  $iv = random_bytes(16);
-  $encrypted = openssl_encrypt($data, 'AES-256-CBC', $key, 0, $iv);
-  return base64_encode($iv . $encrypted);
-}
-
-private function decrypt_data($encrypted_data) {
-  $key = $this-&gt;get_encryption_key();
-  $data = base64_decode($encrypted_data);
-  $iv = substr($data, 0, 16);
-  $encrypted = substr($data, 16);
-  return openssl_decrypt($encrypted, 'AES-256-CBC', $key, 0, $iv);
-}
-
-private function get_encryption_key() {
-  if (!defined('DATA_ENCRYPTION_KEY')) {
-          define('DATA_ENCRYPTION_KEY', hash('sha256', AUTH_KEY . SECURE_AUTH_KEY));
-        }
-        return DATA_ENCRYPTION_KEY;
-    }
-
-    private function is_encrypted($value) {
-      return is_string($value) &amp;&amp; base64_encode(base64_decode($value, true)) === $value;
-    }
-
-    public function cleanup_expired_data() {
-      global $wpdb;
-
-       // Remove expired user sessions
-       $wpdb-&gt;query("DELETE FROM {$wpdb-&gt;usermeta}
-                WHERE meta_key = 'session_tokens'
-                AND meta_value LIKE '%\"expiration\";i:%'
-                AND CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(meta_value, '\"expiration\";i:',
--1), ';', 1) AS UNSIGNED) &lt; UNIX_TIMESTAMP()");
-
-        // Remove old login attempts
-        $wpdb-&gt;query("DELETE FROM {$wpdb-&gt;options}
-              WHERE option_name LIKE 'login_attempts_%'
-              AND option_value &lt; (UNIX_TIMESTAMP() - 86400)");
-    }
-}
-
-new DataProtectionEnhancement();
-?&gt;
-
-
-Technical Remediation Roadmap
-Phase 1: Critical Security Fixes (0-72 Hours)
-Hour 0-4: Emergency Response
-#!/bin/bash
-# emergency_response.sh - Immediate security lockdown
-
-# 1. Block vulnerable endpoints
-cat &gt; /tmp/emergency_block.conf &lt;&lt; 'EOF'
-# Block vulnerable WordPress REST API endpoints
-&lt;LocationMatch "^/wp-json/wp/v2/users"&gt;
-  Require all denied
-&lt;/LocationMatch&gt;
-
-&lt;LocationMatch "^/wp-json/wp/v2/users/[0-9]+"&gt;
-  Require all denied
-&lt;/LocationMatch&gt;
-EOF
-# Apply emergency blocks
-if [ -f /etc/apache2/apache2.conf ]; then
-   cp /tmp/emergency_block.conf /etc/apache2/conf-available/emergency-block.conf
-   a2enconf emergency-block
-   systemctl reload apache2
-elif [ -f /etc/nginx/nginx.conf ]; then
-   cat &gt;&gt; /etc/nginx/conf.d/emergency-block.conf &lt;&lt; 'EOF'
-location ~* ^/wp-json/wp/v2/users {
-   deny all;
-   return 403;
-}
-EOF
-   nginx -t &amp;&amp; systemctl reload nginx
-fi
-
-# 2. Enable basic security headers immediately
-cat &gt; /tmp/basic_security.conf &lt;&lt; 'EOF'
-Header always set X-Content-Type-Options "nosniff"
-Header always set X-Frame-Options "DENY"
-Header always set X-XSS-Protection "1; mode=block"
-EOF
-
-echo "Emergency security measures applied!"
-echo "Next steps:"
-echo "1. Review application logs for exploitation attempts"
-echo "2. Audit user accounts for unauthorized access"
-echo "3. Implement permanent fixes within 24 hours"
-
-Hour 4-24: Permanent PII Fix
-&lt;?php
-// wp-content/mu-plugins/security-hardening.php
-// Must-use plugin for immediate security hardening
-
-/**
- * Emergency Security Hardening
- * This file implements immediate security fixes
- */
-
-// Disable user enumeration via REST API
-add_filter('rest_endpoints', function($endpoints) {
-    if (isset($endpoints['/wp/v2/users'])) {
-       unset($endpoints['/wp/v2/users']);
-    }
-    if (isset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)'])) {
-       unset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)']);
-    }
-    return $endpoints;
-});
-// Disable user enumeration via author archives
-add_action('template_redirect', function() {
-    if (is_author()) {
-       wp_redirect(home_url());
-       exit;
-    }
-});
-
-// Remove user enumeration via ?author=N
-add_action('init', function() {
-    if (isset($_GET['author']) &amp;&amp; is_numeric($_GET['author'])) {
-       wp_redirect(home_url());
-       exit;
-    }
-});
-
-// Secure REST API access
-add_filter('rest_authentication_errors', function($result) {
-   if (!empty($result)) {
-      return $result;
-   }
-
-  if (!is_user_logged_in()) {
-     return new WP_Error('rest_not_logged_in', 'You are not currently logged in.',
-array('status' =&gt; 401));
-  }
-
-      return $result;
-});
-
-// Log security events
-function log_security_event($event, $details = '') {
-   $log_entry = sprintf(
-      "[%s] %s - %s - IP: %s - User Agent: %s\n",
-      date('Y-m-d H:i:s'),
-      $event,
-      $details,
-      $_SERVER['REMOTE_ADDR'] ?? 'unknown',
-      $_SERVER['HTTP_USER_AGENT'] ?? 'unknown'
-   );
-
-      error_log($log_entry, 3, WP_CONTENT_DIR . '/security.log');
-}
-
-// Monitor failed login attempts
-add_action('wp_login_failed', function($username) {
-    log_security_event('LOGIN_FAILED', "Username: $username");
-});
-// Monitor successful logins
-add_action('wp_login', function($user_login, $user) {
-   log_security_event('LOGIN_SUCCESS', "Username: $user_login, Role: " . implode(',',
-$user-&gt;roles));
-}, 10, 2);
-
-?&gt;
-
-Hour 24-48: Security Headers Implementation
-#!/bin/bash
-# security_headers_deployment.sh - Comprehensive security headers deployment
-
-# Backup current configuration
-backup_config() {
-  timestamp=$(date +%Y%m%d_%H%M%S)
-
-    if [ -f /etc/apache2/apache2.conf ]; then
-       cp /etc/apache2/apache2.conf "/etc/apache2/apache2.conf.backup_$timestamp"
-    elif [ -f /etc/nginx/nginx.conf ]; then
-       cp /etc/nginx/nginx.conf "/etc/nginx/nginx.conf.backup_$timestamp"
-    fi
-
-    echo "Configuration backed up with timestamp: $timestamp"
-}
-
-# Deploy comprehensive security headers
-deploy_security_headers() {
-  cat &gt; /tmp/comprehensive_security_headers.conf &lt;&lt; 'EOF'
-# Comprehensive Security Headers Configuration
-
-&lt;IfModule mod_headers.c&gt;
-   # Prevent MIME type sniffing
-   Header always set X-Content-Type-Options "nosniff"
-
-    # Prevent clickjacking
-    Header always set X-Frame-Options "DENY"
-
-    # XSS Protection (legacy browsers)
-    Header always set X-XSS-Protection "1; mode=block"
-
-    # Referrer Policy
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-
-  # Permissions Policy (Feature Policy)
-  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(),
-payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=()"
-
-    # Strict Transport Security
-  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;
-preload"
-
-   # Content Security Policy
-   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'
-https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src
-'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';
-form-action 'self'; upgrade-insecure-requests"
-
-  # Remove server information
-  Header always unset Server
-  Header always unset X-Powered-By
-  Header always unset X-Generator
-
-  # Cross-Origin Policies
-  Header always set Cross-Origin-Embedder-Policy "require-corp"
-  Header always set Cross-Origin-Opener-Policy "same-origin"
-  Header always set Cross-Origin-Resource-Policy "same-origin"
-&lt;/IfModule&gt;
-
-# Server Information Hiding
-ServerTokens Prod
-ServerSignature Off
-
-# Additional Security Configurations
-&lt;IfModule mod_rewrite.c&gt;
-   RewriteEngine On
-
-  # Block access to sensitive files
-  RewriteRule ^wp-config\.php$ - [F,L]
-  RewriteRule ^wp-admin/includes/ - [F,L]
-  RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]
-  RewriteRule ^wp-includes/js/tinymce/langs/.+\.php$ - [F,L]
-  RewriteRule ^wp-includes/theme-compat/ - [F,L]
-
-  # Block access to readme and license files
-  RewriteRule ^(readme|license|changelog)\.txt$ - [F,L]
-
-  # Block access to debug.log
-  RewriteRule ^wp-content/debug\.log$ - [F,L]
-&lt;/IfModule&gt;
-EOF
-
-  # Deploy based on web server
-  if command -v apache2 &amp;&gt; /dev/null || command -v httpd &amp;&gt; /dev/null; then
-     cp /tmp/comprehensive_security_headers.conf /etc/apache2/conf-available/security-
-headers.conf
-     a2enconf security-headers
-    apache2ctl configtest &amp;&amp; systemctl reload apache2
-    echo "Apache security headers deployed successfully"
-  elif command -v nginx &amp;&gt; /dev/null; then
-    # Convert to Nginx format
-    cat &gt; /etc/nginx/conf.d/security-headers.conf &lt;&lt; 'EOF'
-# Comprehensive Security Headers for Nginx
-
-# Prevent MIME type sniffing
-add_header X-Content-Type-Options "nosniff" always;
-
-# Prevent clickjacking
-add_header X-Frame-Options "DENY" always;
-
-# XSS Protection
-add_header X-XSS-Protection "1; mode=block" always;
-
-# Referrer Policy
-add_header Referrer-Policy "strict-origin-when-cross-origin" always;
-
-# Permissions Policy
-add_header Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(),
-usb=(), magnetometer=(), gyroscope=(), speaker=()" always;
-
-# Strict Transport Security
-add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-always;
-
-# Content Security Policy
-add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'
-https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'
-https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src
-'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';
-form-action 'self'; upgrade-insecure-requests" always;
-
-# Cross-Origin Policies
-add_header Cross-Origin-Embedder-Policy "require-corp" always;
-add_header Cross-Origin-Opener-Policy "same-origin" always;
-add_header Cross-Origin-Resource-Policy "same-origin" always;
-
-# Hide server information
-server_tokens off;
-more_clear_headers Server;
-more_clear_headers X-Powered-By;
-more_clear_headers X-Generator;
-EOF
-     nginx -t &amp;&amp; systemctl reload nginx
-     echo "Nginx security headers deployed successfully"
-  fi
-}
-# Validation function
-validate_headers() {
-  echo "Validating security headers deployment..."
-
- # Test security headers
- curl -I https://example.com 2&gt;/dev/null | grep -E "(X-Content-Type-Options|X-Frame-
-Options|Strict-Transport-Security|Content-Security-Policy)"
-
-    if [ $? -eq 0 ]; then
-       echo " Security headers are properly configured"
-    else
-       echo "❌ Security headers validation failed"
-       return 1
-    fi
-}
-
-# Main execution
-echo "Starting security headers deployment..."
-backup_config
-deploy_security_headers
-sleep 5
-validate_headers
-
-echo "Security headers deployment completed!"
-
-Hour 48-72: Validation &amp; Testing
-#!/usr/bin/env python3
-"""
-Security Validation Suite
-Comprehensive testing of implemented security measures
-"""
-
-import requests
+  }</pre>
+<ul>
+  <li>public function init_data_protection() {</li>
+  <li>// Encrypt sensitive data in database</li>
+  <li>add_filter('pre_update_option', [$this, 'encrypt_sensitive_options'], 10, 3);</li>
+  <li>add_filter('option_value', [$this, 'decrypt_sensitive_options'], 10, 2);</li>
+  <li>// Implement data retention policies</li>
+  <li>add_action('wp_scheduled_delete', [$this, 'cleanup_expired_data']);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>public function encrypt_sensitive_options($value, $option, $old_value) {</li>
+  <li>$sensitive_options = [</li>
+  <li>'admin_email',</li>
+  <li>'users_can_register',</li>
+  <li>'default_role'</li>
+  <li>];</li>
+</ul>
+<ul>
+  <li>if (in_array($option, $sensitive_options) &amp;&amp; is_string($value)) {</li>
+  <li>return $this-&gt;encrypt_data($value);</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">    return $value;
+}</pre>
+<ul>
+  <li>public function decrypt_sensitive_options($value, $option) {</li>
+  <li>$sensitive_options = [</li>
+  <li>'admin_email',</li>
+  <li>'users_can_register',</li>
+  <li>'default_role'</li>
+  <li>];</li>
+</ul>
+<ul>
+  <li>if (in_array($option, $sensitive_options) &amp;&amp; $this-&gt;is_encrypted($value)) {</li>
+  <li>return $this-&gt;decrypt_data($value);</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">    return $value;
+}</pre>
+<ul>
+  <li>private function encrypt_data($data) {</li>
+  <li>$key = $this-&gt;get_encryption_key();</li>
+  <li>$iv = random_bytes(16);</li>
+  <li>$encrypted = openssl_encrypt($data, 'AES-256-CBC', $key, 0, $iv);</li>
+  <li>return base64_encode($iv . $encrypted);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>private function decrypt_data($encrypted_data) {</li>
+  <li>$key = $this-&gt;get_encryption_key();</li>
+  <li>$data = base64_decode($encrypted_data);</li>
+  <li>$iv = substr($data, 0, 16);</li>
+  <li>$encrypted = substr($data, 16);</li>
+  <li>return openssl_decrypt($encrypted, 'AES-256-CBC', $key, 0, $iv);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>private function get_encryption_key() {</li>
+  <li>if (!defined('DATA_ENCRYPTION_KEY')) {</li>
+  <li>define('DATA_ENCRYPTION_KEY', hash('sha256', AUTH_KEY . SECURE_AUTH_KEY));</li>
+  <li>}</li>
+  <li>return DATA_ENCRYPTION_KEY;</li>
+  <li>}</li>
+</ul>
+<p>private function is_encrypted($value) {</p>
+<pre class="code-block">      return is_string($value) &amp;&amp; base64_encode(base64_decode($value, true)) === $value;
+    }</pre>
+<ul>
+  <li>public function cleanup_expired_data() {</li>
+  <li>global $wpdb;</li>
+</ul>
+<ul>
+  <li>// Remove expired user sessions</li>
+  <li>$wpdb-&gt;query("DELETE FROM {$wpdb-&gt;usermeta}</li>
+  <li>WHERE meta_key = 'session_tokens'</li>
+  <li>AND meta_value LIKE '%\"expiration\";i:%'</li>
+  <li>AND CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(meta_value, '\"expiration\";i:',</li>
+  <li>-1), ';', 1) AS UNSIGNED) &lt; UNIX_TIMESTAMP()");</li>
+</ul>
+<ul>
+  <li>// Remove old login attempts</li>
+  <li>$wpdb-&gt;query("DELETE FROM {$wpdb-&gt;options}</li>
+  <li>WHERE option_name LIKE 'login_attempts_%'</li>
+  <li>AND option_value &lt; (UNIX_TIMESTAMP() - 86400)");</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>new DataProtectionEnhancement();</li>
+  <li>?&gt;</li>
+</ul>
+<h3>Technical Remediation Roadmap</h3>
+<p><strong>Phase 1:</strong> Critical Security Fixes (0-72 Hours)</p>
+<p><strong>Hour 0-4:</strong> Emergency Response</p>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># emergency_response.sh - Immediate security lockdown</li>
+</ul>
+<ul>
+  <li># 1. Block vulnerable endpoints</li>
+  <li>cat &gt; /tmp/emergency_block.conf &lt;&lt; 'EOF'</li>
+  <li># Block vulnerable WordPress REST API endpoints</li>
+  <li>&lt;LocationMatch "^/wp-json/wp/v2/users"&gt;</li>
+  <li>Require all denied</li>
+  <li>&lt;/LocationMatch&gt;</li>
+</ul>
+<ul>
+  <li>&lt;LocationMatch "^/wp-json/wp/v2/users/[0-9]+"&gt;</li>
+  <li>Require all denied</li>
+  <li>&lt;/LocationMatch&gt;</li>
+  <li>EOF</li>
+  <li># Apply emergency blocks</li>
+  <li>if [ -f /etc/apache2/apache2.conf ]; then</li>
+  <li>cp /tmp/emergency_block.conf /etc/apache2/conf-available/emergency-block.conf</li>
+  <li>a2enconf emergency-block</li>
+  <li>systemctl reload apache2</li>
+  <li>elif [ -f /etc/nginx/nginx.conf ]; then</li>
+  <li>cat &gt;&gt; /etc/nginx/conf.d/emergency-block.conf &lt;&lt; 'EOF'</li>
+  <li>location ~* ^/wp-json/wp/v2/users {</li>
+  <li>deny all;</li>
+  <li>return 403;</li>
+  <li>}</li>
+  <li>EOF</li>
+  <li>nginx -t &amp;&amp; systemctl reload nginx</li>
+  <li>fi</li>
+</ul>
+<ul>
+  <li># 2. Enable basic security headers immediately</li>
+  <li>cat &gt; /tmp/basic_security.conf &lt;&lt; 'EOF'</li>
+  <li>Header always set X-Content-Type-Options "nosniff"</li>
+  <li>Header always set X-Frame-Options "DENY"</li>
+  <li>Header always set X-XSS-Protection "1; mode=block"</li>
+  <li>EOF</li>
+</ul>
+<p>echo "Emergency security measures applied!"</p>
+<p>echo "Next steps:"</p>
+<p>echo "1. Review application logs for exploitation attempts"</p>
+<p>echo "2. Audit user accounts for unauthorized access"</p>
+<p>echo "3. Implement permanent fixes within 24 hours"</p>
+<p><strong>Hour 4-24:</strong> Permanent PII Fix</p>
+<ul>
+  <li>&lt;?php</li>
+  <li>// wp-content/mu-plugins/security-hardening.php</li>
+  <li>// Must-use plugin for immediate security hardening</li>
+</ul>
+<ul>
+  <li>/**</li>
+  <li>* Emergency Security Hardening</li>
+  <li>* This file implements immediate security fixes</li>
+  <li>*/</li>
+</ul>
+<ul>
+  <li>// Disable user enumeration via REST API</li>
+  <li>add_filter('rest_endpoints', function($endpoints) {</li>
+  <li>if (isset($endpoints['/wp/v2/users'])) {</li>
+  <li>unset($endpoints['/wp/v2/users']);</li>
+  <li>}</li>
+  <li>if (isset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)'])) {</li>
+  <li>unset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)']);</li>
+  <li>}</li>
+  <li>return $endpoints;</li>
+  <li>});</li>
+  <li>// Disable user enumeration via author archives</li>
+  <li>add_action('template_redirect', function() {</li>
+  <li>if (is_author()) {</li>
+  <li>wp_redirect(home_url());</li>
+  <li>exit;</li>
+  <li>}</li>
+  <li>});</li>
+</ul>
+<ul>
+  <li>// Remove user enumeration via ?author=N</li>
+  <li>add_action('init', function() {</li>
+  <li>if (isset($_GET['author']) &amp;&amp; is_numeric($_GET['author'])) {</li>
+  <li>wp_redirect(home_url());</li>
+  <li>exit;</li>
+  <li>}</li>
+  <li>});</li>
+</ul>
+<ul>
+  <li>// Secure REST API access</li>
+  <li>add_filter('rest_authentication_errors', function($result) {</li>
+  <li>if (!empty($result)) {</li>
+  <li>return $result;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>if (!is_user_logged_in()) {</li>
+  <li>return new WP_Error('rest_not_logged_in', 'You are not currently logged in.',</li>
+  <li>array('status' =&gt; 401));</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">      return $result;</pre>
+<h3>});</h3>
+<ul>
+  <li>// Log security events</li>
+  <li>function log_security_event($event, $details = '') {</li>
+  <li>$log_entry = sprintf(</li>
+</ul>
+<p><strong>"[%s] %s - %s - IP:</strong> %s - User Agent: %s\n",</p>
+<ul>
+  <li>date('Y-m-d H:i:s'),</li>
+  <li>$event,</li>
+  <li>$details,</li>
+  <li>$_SERVER['REMOTE_ADDR'] ?? 'unknown',</li>
+  <li>$_SERVER['HTTP_USER_AGENT'] ?? 'unknown'</li>
+  <li>);</li>
+</ul>
+<ul>
+  <li>error_log($log_entry, 3, WP_CONTENT_DIR . '/security.log');</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>// Monitor failed login attempts</li>
+  <li>add_action('wp_login_failed', function($username) {</li>
+</ul>
+<p><strong>log_security_event('LOGIN_FAILED', "Username:</strong> $username");</p>
+<ul>
+  <li>});</li>
+  <li>// Monitor successful logins</li>
+  <li>add_action('wp_login', function($user_login, $user) {</li>
+</ul>
+<p><strong>log_security_event('LOGIN_SUCCESS', "Username:</strong> $user_login, Role: " . implode(',',</p>
+<ul>
+  <li>$user-&gt;roles));</li>
+  <li>}, 10, 2);</li>
+</ul>
+<p>?&gt;</p>
+<p><strong>Hour 24-48:</strong> Security Headers Implementation</p>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># security_headers_deployment.sh - Comprehensive security headers deployment</li>
+</ul>
+<ul>
+  <li># Backup current configuration</li>
+  <li>backup_config() {</li>
+  <li>timestamp=$(date +%Y%m%d_%H%M%S)</li>
+</ul>
+<ul>
+  <li>if [ -f /etc/apache2/apache2.conf ]; then</li>
+  <li>cp /etc/apache2/apache2.conf "/etc/apache2/apache2.conf.backup_$timestamp"</li>
+  <li>elif [ -f /etc/nginx/nginx.conf ]; then</li>
+  <li>cp /etc/nginx/nginx.conf "/etc/nginx/nginx.conf.backup_$timestamp"</li>
+  <li>fi</li>
+</ul>
+<p><strong>echo "Configuration backed up with timestamp:</strong> $timestamp"</p>
+<pre class="code-block">}</pre>
+<ul>
+  <li># Deploy comprehensive security headers</li>
+  <li>deploy_security_headers() {</li>
+  <li>cat &gt; /tmp/comprehensive_security_headers.conf &lt;&lt; 'EOF'</li>
+  <li># Comprehensive Security Headers Configuration</li>
+</ul>
+<ul>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+  <li># Prevent MIME type sniffing</li>
+  <li>Header always set X-Content-Type-Options "nosniff"</li>
+</ul>
+<ul>
+  <li># Prevent clickjacking</li>
+  <li>Header always set X-Frame-Options "DENY"</li>
+</ul>
+<p># XSS Protection (legacy browsers)</p>
+<p>Header always set X-XSS-Protection "1; mode=block"</p>
+<ul>
+  <li># Referrer Policy</li>
+  <li>Header always set Referrer-Policy "strict-origin-when-cross-origin"</li>
+</ul>
+<p># Permissions Policy (Feature Policy)</p>
+<p>Header always set Permissions-Policy "geolocation=(), microphone=(), camera=(),</p>
+<p>payment=(), usb=(), magnetometer=(), gyroscope=(), speaker=()"</p>
+<p># Strict Transport Security</p>
+<pre class="code-block">  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains;</pre>
+<p>preload"</p>
+<p># Content Security Policy</p>
+<pre class="code-block">   Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p>https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'</p>
+<p>https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src</p>
+<p>'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';</p>
+<h3>form-action 'self'; upgrade-insecure-requests"</h3>
+<ul>
+  <li># Remove server information</li>
+  <li>Header always unset Server</li>
+  <li>Header always unset X-Powered-By</li>
+  <li>Header always unset X-Generator</li>
+</ul>
+<ul>
+  <li># Cross-Origin Policies</li>
+  <li>Header always set Cross-Origin-Embedder-Policy "require-corp"</li>
+  <li>Header always set Cross-Origin-Opener-Policy "same-origin"</li>
+  <li>Header always set Cross-Origin-Resource-Policy "same-origin"</li>
+  <li>&lt;/IfModule&gt;</li>
+</ul>
+<ul>
+  <li># Server Information Hiding</li>
+  <li>ServerTokens Prod</li>
+  <li>ServerSignature Off</li>
+</ul>
+<ul>
+  <li># Additional Security Configurations</li>
+  <li>&lt;IfModule mod_rewrite.c&gt;</li>
+  <li>RewriteEngine On</li>
+</ul>
+<ul>
+  <li># Block access to sensitive files</li>
+  <li>RewriteRule ^wp-config\.php$ - [F,L]</li>
+  <li>RewriteRule ^wp-admin/includes/ - [F,L]</li>
+  <li>RewriteRule ^wp-includes/[^/]+\.php$ - [F,L]</li>
+  <li>RewriteRule ^wp-includes/js/tinymce/langs/.+\.php$ - [F,L]</li>
+  <li>RewriteRule ^wp-includes/theme-compat/ - [F,L]</li>
+</ul>
+<p># Block access to readme and license files</p>
+<p>RewriteRule ^(readme|license|changelog)\.txt$ - [F,L]</p>
+<ul>
+  <li># Block access to debug.log</li>
+  <li>RewriteRule ^wp-content/debug\.log$ - [F,L]</li>
+  <li>&lt;/IfModule&gt;</li>
+  <li>EOF</li>
+</ul>
+<p># Deploy based on web server</p>
+<p>if command -v apache2 &amp;&gt; /dev/null || command -v httpd &amp;&gt; /dev/null; then</p>
+<p>cp /tmp/comprehensive_security_headers.conf /etc/apache2/conf-available/security-</p>
+<ul>
+  <li>headers.conf</li>
+  <li>a2enconf security-headers</li>
+  <li>apache2ctl configtest &amp;&amp; systemctl reload apache2</li>
+  <li>echo "Apache security headers deployed successfully"</li>
+  <li>elif command -v nginx &amp;&gt; /dev/null; then</li>
+  <li># Convert to Nginx format</li>
+  <li>cat &gt; /etc/nginx/conf.d/security-headers.conf &lt;&lt; 'EOF'</li>
+  <li># Comprehensive Security Headers for Nginx</li>
+</ul>
+<ul>
+  <li># Prevent MIME type sniffing</li>
+  <li>add_header X-Content-Type-Options "nosniff" always;</li>
+</ul>
+<ul>
+  <li># Prevent clickjacking</li>
+  <li>add_header X-Frame-Options "DENY" always;</li>
+</ul>
+<ul>
+  <li># XSS Protection</li>
+  <li>add_header X-XSS-Protection "1; mode=block" always;</li>
+</ul>
+<ul>
+  <li># Referrer Policy</li>
+  <li>add_header Referrer-Policy "strict-origin-when-cross-origin" always;</li>
+</ul>
+<p># Permissions Policy</p>
+<pre class="code-block">add_header Permissions-Policy "geolocation=(), microphone=(), camera=(), payment=(),</pre>
+<p>usb=(), magnetometer=(), gyroscope=(), speaker=()" always;</p>
+<p># Strict Transport Security</p>
+<pre class="code-block">add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"</pre>
+<p>always;</p>
+<p># Content Security Policy</p>
+<pre class="code-block">add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'</pre>
+<p>https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline'</p>
+<p>https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src</p>
+<p>'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self';</p>
+<h3>form-action 'self'; upgrade-insecure-requests" always;</h3>
+<ul>
+  <li># Cross-Origin Policies</li>
+  <li>add_header Cross-Origin-Embedder-Policy "require-corp" always;</li>
+  <li>add_header Cross-Origin-Opener-Policy "same-origin" always;</li>
+  <li>add_header Cross-Origin-Resource-Policy "same-origin" always;</li>
+</ul>
+<ul>
+  <li># Hide server information</li>
+  <li>server_tokens off;</li>
+  <li>more_clear_headers Server;</li>
+  <li>more_clear_headers X-Powered-By;</li>
+  <li>more_clear_headers X-Generator;</li>
+  <li>EOF</li>
+  <li>nginx -t &amp;&amp; systemctl reload nginx</li>
+  <li>echo "Nginx security headers deployed successfully"</li>
+  <li>fi</li>
+  <li>}</li>
+  <li># Validation function</li>
+  <li>validate_headers() {</li>
+  <li>echo "Validating security headers deployment..."</li>
+</ul>
+<p># Test security headers</p>
+<pre class="code-block"> curl -I https://example.com 2&gt;/dev/null | grep -E "(X-Content-Type-Options|X-Frame-</pre>
+<h3>Options|Strict-Transport-Security|Content-Security-Policy)"</h3>
+<ul>
+  <li>if [ $? -eq 0 ]; then</li>
+  <li>echo " Security headers are properly configured"</li>
+  <li>else</li>
+  <li>echo "❌ Security headers validation failed"</li>
+  <li>return 1</li>
+  <li>fi</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Main execution</li>
+  <li>echo "Starting security headers deployment..."</li>
+  <li>backup_config</li>
+  <li>deploy_security_headers</li>
+  <li>sleep 5</li>
+  <li>validate_headers</li>
+</ul>
+<h3>echo "Security headers deployment completed!"</h3>
+<p><strong>Hour 48-72:</strong> Validation &amp; Testing</p>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li>"""</li>
+  <li>Security Validation Suite</li>
+  <li>Comprehensive testing of implemented security measures</li>
+  <li>"""</li>
+</ul>
+<pre class="code-block">import requests
 import json
-import sys
-from urllib.parse import urljoin
-import ssl
-import socket
-from datetime import datetime
-
-class SecurityValidator:
+import sys</pre>
+<ul>
+  <li>from urllib.parse import urljoin</li>
+  <li>import ssl</li>
+  <li>import socket</li>
+  <li>from datetime import datetime</li>
+</ul>
+<pre class="code-block">class SecurityValidator:
   def __init__(self, base_url):
     self.base_url = base_url.rstrip('/')
     self.session = requests.Session()
     self.session.headers.update({
        'User-Agent': 'SecurityValidator/1.0'
     })
-    self.results = {
-      'timestamp': datetime.utcnow().isoformat(),
-      'target': base_url,
-      'tests': {}
-  }
-
-def test_security_headers(self):
+    self.results = {</pre>
+<p><strong>'timestamp':</strong> datetime.utcnow().isoformat(),</p>
+<p><strong>'target':</strong> base_url,</p>
+<p><strong>'tests':</strong> {}</p>
+<pre class="code-block">  }</pre>
+<pre class="code-block">def test_security_headers(self):
   """Test for presence and configuration of security headers"""
-  print("Testing security headers...")
-
-  required_headers = {
+  print("Testing security headers...")</pre>
+<pre class="code-block">  required_headers = {
     'X-Content-Type-Options': 'nosniff',
     'X-Frame-Options': ['DENY', 'SAMEORIGIN'],
     'Strict-Transport-Security': 'max-age=',
     'Content-Security-Policy': 'default-src',
     'Referrer-Policy': 'strict-origin-when-cross-origin'
-  }
-
-  try:
-    response = self.session.get(self.base_url, timeout=10)
-    headers = response.headers
-
-      results = {}
+  }</pre>
+<p>try:</p>
+<ul>
+  <li>response = self.session.get(self.base_url, timeout=10)</li>
+  <li>headers = response.headers</li>
+</ul>
+<pre class="code-block">      results = {}
       for header, expected in required_headers.items():
         if header in headers:
            header_value = headers[header]
@@ -1314,27 +1642,24 @@ def test_security_headers(self):
               'present': False,
               'value': None,
               'valid': False
-           }
-
-      self.results['tests']['security_headers'] = results
-      return results
-
-  except requests.RequestException as e:
+           }</pre>
+<ul>
+  <li>self.results['tests']['security_headers'] = results</li>
+  <li>return results</li>
+</ul>
+<pre class="code-block">  except requests.RequestException as e:
     print(f"Error testing security headers: {e}")
-    return None
-
-def test_pii_exposure(self):
+    return None</pre>
+<pre class="code-block">def test_pii_exposure(self):
   """Test for PII exposure vulnerabilities"""
-  print("Testing PII exposure...")
-
-  vulnerable_endpoints = [
+  print("Testing PII exposure...")</pre>
+<pre class="code-block">  vulnerable_endpoints = [
     '/wp-json/wp/v2/users',
     '/wp-json/wp/v2/users/1',
     '/api/users',
     '/?author=1'
-  ]
-
-  results = {}
+  ]</pre>
+<pre class="code-block">  results = {}
   for endpoint in vulnerable_endpoints:
     url = urljoin(self.base_url, endpoint)
     try:
@@ -1343,37 +1668,37 @@ def test_pii_exposure(self):
          'status_code': response.status_code,
          'blocked': response.status_code in [401, 403, 404],
          'response_size': len(response.content)
-       }
-
-       # Check for user data in response
-       if response.status_code == 200:
-          content = response.text.lower()
-          has_user_data = any(keyword in content for keyword in
-                    ['email', 'username', 'user_login', 'display_name'])
-          results[endpoint]['contains_user_data'] = has_user_data
-
-    except requests.RequestException as e:
+       }</pre>
+<p># Check for user data in response</p>
+<p>if response.status_code == 200:</p>
+<ul>
+  <li>content = response.text.lower()</li>
+  <li>has_user_data = any(keyword in content for keyword in</li>
+  <li>['email', 'username', 'user_login', 'display_name'])</li>
+  <li>results[endpoint]['contains_user_data'] = has_user_data</li>
+</ul>
+<pre class="code-block">    except requests.RequestException as e:
       results[endpoint] = {
         'error': str(e),
         'blocked': True
-      }
-
-  self.results['tests']['pii_exposure'] = results
-  return results
-
-def test_ssl_configuration(self):
+      }</pre>
+<ul>
+  <li>self.results['tests']['pii_exposure'] = results</li>
+  <li>return results</li>
+</ul>
+<pre class="code-block">def test_ssl_configuration(self):
   """Test SSL/TLS configuration"""
-  print("Testing SSL/TLS configuration...")
-
-  try:
-    hostname = self.base_url.replace('https://', '').replace('http://', '').split('/')[0]
-    context = ssl.create_default_context()
-       with socket.create_connection((hostname, 443), timeout=10) as sock:
-         with context.wrap_socket(sock, server_hostname=hostname) as ssock:
-           cert = ssock.getpeercert()
-           cipher = ssock.cipher()
-
-            results = {
+  print("Testing SSL/TLS configuration...")</pre>
+<p>try:</p>
+<p>hostname = self.base_url.replace('https://', '').replace('http://', '').split('/')[0]</p>
+<p>context = ssl.create_default_context()</p>
+<p>with socket.create_connection((hostname, 443), timeout=10) as sock:</p>
+<p>with context.wrap_socket(sock, server_hostname=hostname) as ssock:</p>
+<ul>
+  <li>cert = ssock.getpeercert()</li>
+  <li>cipher = ssock.cipher()</li>
+</ul>
+<pre class="code-block">            results = {
               'certificate': {
                  'subject': dict(x[0] for x in cert['subject']),
                  'issuer': dict(x[0] for x in cert['issuer']),
@@ -1386,40 +1711,39 @@ def test_ssl_configuration(self):
                  'bits': cipher[2]
               },
               'protocol': ssock.version()
-            }
-
-            self.results['tests']['ssl_configuration'] = results
-            return results
-
-    except Exception as e:
+            }</pre>
+<ul>
+  <li>self.results['tests']['ssl_configuration'] = results</li>
+  <li>return results</li>
+</ul>
+<pre class="code-block">    except Exception as e:
       print(f"Error testing SSL configuration: {e}")
-      return None
-
-  def test_subresource_integrity(self):
+      return None</pre>
+<pre class="code-block">  def test_subresource_integrity(self):
     """Test for Subresource Integrity implementation"""
-    print("Testing Subresource Integrity...")
-
-    try:
-      response = self.session.get(self.base_url, timeout=10)
-      content = response.text
-
-       # Look for external scripts and stylesheets
-       import re
-
-       external_scripts = re.findall(r'&lt;script[^&gt;]+src=["\']https?://[^"\']+["\'][^&gt;]*&gt;', content)
-       external_styles =
-re.findall(r'&lt;link[^&gt;]+href=["\']https?://[^"\']+["\'][^&gt;]*rel=["\']stylesheet["\'][^&gt;]*&gt;', content)
-
-       results = {
+    print("Testing Subresource Integrity...")</pre>
+<p>try:</p>
+<ul>
+  <li>response = self.session.get(self.base_url, timeout=10)</li>
+  <li>content = response.text</li>
+</ul>
+<ul>
+  <li># Look for external scripts and stylesheets</li>
+  <li>import re</li>
+</ul>
+<p>external_scripts = re.findall(r'&lt;script[^&gt;]+src=["\']https?://[^"\']+["\'][^&gt;]*&gt;', content)</p>
+<h3>external_styles =</h3>
+<p>re.findall(r'&lt;link[^&gt;]+href=["\']https?://[^"\']+["\'][^&gt;]*rel=["\']stylesheet["\'][^&gt;]*&gt;', content)</p>
+<pre class="code-block">       results = {
          'external_scripts': [],
          'external_styles': [],
          'sri_coverage': 0
-       }
-
-       sri_count = 0
-    total_external = 0
-
-    for script in external_scripts:
+       }</pre>
+<ul>
+  <li>sri_count = 0</li>
+  <li>total_external = 0</li>
+</ul>
+<pre class="code-block">    for script in external_scripts:
       has_integrity = 'integrity=' in script
       results['external_scripts'].append({
          'tag': script,
@@ -1427,9 +1751,8 @@ re.findall(r'&lt;link[^&gt;]+href=["\']https?://[^"\']+["\'][^&gt;]*rel=["\']sty
       })
       if has_integrity:
          sri_count += 1
-      total_external += 1
-
-    for style in external_styles:
+      total_external += 1</pre>
+<pre class="code-block">    for style in external_styles:
       has_integrity = 'integrity=' in style
       results['external_styles'].append({
          'tag': style,
@@ -1437,515 +1760,546 @@ re.findall(r'&lt;link[^&gt;]+href=["\']https?://[^"\']+["\'][^&gt;]*rel=["\']sty
       })
       if has_integrity:
          sri_count += 1
-      total_external += 1
-
-    if total_external &gt; 0:
-       results['sri_coverage'] = (sri_count / total_external) * 100
-
-    self.results['tests']['subresource_integrity'] = results
-    return results
-
-  except requests.RequestException as e:
+      total_external += 1</pre>
+<p>if total_external &gt; 0:</p>
+<p>results['sri_coverage'] = (sri_count / total_external) * 100</p>
+<ul>
+  <li>self.results['tests']['subresource_integrity'] = results</li>
+  <li>return results</li>
+</ul>
+<pre class="code-block">  except requests.RequestException as e:
     print(f"Error testing SRI: {e}")
-    return None
-
-def generate_report(self):
+    return None</pre>
+<pre class="code-block">def generate_report(self):
   """Generate comprehensive security report"""
   print("\n" + "="*60)
   print("SECURITY VALIDATION REPORT")
-  print("="*60)
-
-  # Security Headers Report
-  if 'security_headers' in self.results['tests']:
-     print("\n🔒 SECURITY HEADERS:")
+  print("="*60)</pre>
+<p># Security Headers Report</p>
+<p>if 'security_headers' in self.results['tests']:</p>
+<pre class="code-block">     print("\n🔒 SECURITY HEADERS:")
     headers = self.results['tests']['security_headers']
     for header, data in headers.items():
       status = " " if data['present'] and data['valid'] else "❌"
-      print(f" {status} {header}: {data.get('value', 'MISSING')}")
-
-  # PII Exposure Report
-  if 'pii_exposure' in self.results['tests']:
-      print("\n🛡️ PII EXPOSURE PROTECTION:")
+      print(f" {status} {header}: {data.get('value', 'MISSING')}")</pre>
+<p># PII Exposure Report</p>
+<p>if 'pii_exposure' in self.results['tests']:</p>
+<pre class="code-block">      print("\n🛡️ PII EXPOSURE PROTECTION:")
       pii_tests = self.results['tests']['pii_exposure']
       for endpoint, data in pii_tests.items():
          if 'error' in data:
             print(f" ⚠️ {endpoint}: Error - {data['error']}")
          else:
             status = " " if data['blocked'] else "❌"
-            print(f" {status} {endpoint}: Status {data['status_code']}")
-
-    # SSL Configuration Report
-    if 'ssl_configuration' in self.results['tests']:
-       print("\n SSL/TLS CONFIGURATION:")
+            print(f" {status} {endpoint}: Status {data['status_code']}")</pre>
+<p># SSL Configuration Report</p>
+<p>if 'ssl_configuration' in self.results['tests']:</p>
+<pre class="code-block">       print("\n SSL/TLS CONFIGURATION:")
        ssl_data = self.results['tests']['ssl_configuration']
        print(f" Protocol: {ssl_data['protocol']}")
-       print(f" Cipher: {ssl_data['cipher']['name']} ({ssl_data['cipher']['bits']} bits)")
-
-    # SRI Report
-    if 'subresource_integrity' in self.results['tests']:
-       print("\n SUBRESOURCE INTEGRITY:")
+       print(f" Cipher: {ssl_data['cipher']['name']} ({ssl_data['cipher']['bits']} bits)")</pre>
+<p># SRI Report</p>
+<p>if 'subresource_integrity' in self.results['tests']:</p>
+<pre class="code-block">       print("\n SUBRESOURCE INTEGRITY:")
        sri_data = self.results['tests']['subresource_integrity']
        print(f" Coverage: {sri_data['sri_coverage']:.1f}%")
        print(f" External Scripts: {len(sri_data['external_scripts'])}")
-       print(f" External Styles: {len(sri_data['external_styles'])}")
-
-    # Save detailed results
-    with open('security_validation_report.json', 'w') as f:
-      json.dump(self.results, f, indent=2)
-
-    print(f"\n Detailed report saved to: security_validation_report.json")
-
-  def run_all_tests(self):
+       print(f" External Styles: {len(sri_data['external_styles'])}")</pre>
+<p># Save detailed results</p>
+<p>with open('security_validation_report.json', 'w') as f:</p>
+<p>json.dump(self.results, f, indent=2)</p>
+<pre class="code-block">    print(f"\n Detailed report saved to: security_validation_report.json")</pre>
+<pre class="code-block">  def run_all_tests(self):
     """Run all security validation tests"""
-    print(f"Starting security validation for: {self.base_url}")
-
-    self.test_security_headers()
-    self.test_pii_exposure()
-    self.test_ssl_configuration()
-    self.test_subresource_integrity()
-
-    self.generate_report()
-
-if __name__ == "__main__":
+    print(f"Starting security validation for: {self.base_url}")</pre>
+<ul>
+  <li>self.test_security_headers()</li>
+  <li>self.test_pii_exposure()</li>
+  <li>self.test_ssl_configuration()</li>
+  <li>self.test_subresource_integrity()</li>
+</ul>
+<p>self.generate_report()</p>
+<pre class="code-block">if __name__ == "__main__":
    if len(sys.argv) != 2:
       print("Usage: python3 security_validator.py &lt;url&gt;")
-      sys.exit(1)
-
-  url = sys.argv[1]
-  validator = SecurityValidator(url)
-    validator.run_all_tests()
-
-Phase 2: Enhanced Security Implementation (3-14 Days)
-Week 1: Subresource Integrity &amp; CSP Enhancement
-Automated SRI Implementation:
-#!/bin/bash
-# sri_implementation.sh - Automated SRI implementation for WordPress
-
-# WordPress directory
-WP_DIR="/var/www/html"
-
-# Backup current theme files
-backup_theme_files() {
-  ACTIVE_THEME=$(wp theme list --status=active --field=name --path=$WP_DIR)
-  THEME_DIR="$WP_DIR/wp-content/themes/$ACTIVE_THEME"
-
-    if [ -d "$THEME_DIR" ]; then
-       cp -r "$THEME_DIR" "${THEME_DIR}_backup_$(date +%Y%m%d)"
-       echo "Theme backed up to ${THEME_DIR}_backup_$(date +%Y%m%d)"
-    fi
-}
-
-# Generate SRI hashes for common CDN resources
-generate_common_sri_hashes() {
-  cat &gt; /tmp/common_sri_hashes.json &lt;&lt; 'EOF'
-{
-  "jquery": {
-     "3.6.0": "sha384-
-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK",
-     "3.7.1": "sha384-
-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"
-  },
-  "bootstrap": {
-     "5.3.0": "sha384-
-9ndCyUa/9ktNUyTBXGxps2+hbUHtMOcFBBP4YidV26hrKfSJZo7MqHpRmmsobJmJ",
-     "4.6.2": "sha384-
-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
-  },
-  "font_awesome": {
-     "6.4.0": "sha384-
-iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EJPGf+HU7Pqk7KJE5n8FvFzL8p9KpQoQ"
-  }
-}
-EOF
-}
-
-# WordPress plugin for SRI implementation
-create_sri_plugin() {
-   cat &gt; "$WP_DIR/wp-content/plugins/sri-security/sri-security.php" &lt;&lt; 'EOF'
-&lt;?php
-/**
- * Plugin Name: SRI Security Enhancement
- * Description: Automatically adds Subresource Integrity to external resources
- * Version: 1.0.0
- */
-
-class SRISecurityEnhancement {
-   private $sri_hashes = [];
-
-  public function __construct() {
-    add_action('wp_enqueue_scripts', [$this, 'enqueue_secure_scripts'], 999);
-    add_filter('script_loader_tag', [$this, 'add_sri_to_scripts'], 10, 3);
-    add_filter('style_loader_tag', [$this, 'add_sri_to_styles'], 10, 4);
-
-      $this-&gt;load_sri_hashes();
-  }
-
-  private function load_sri_hashes() {
-    $this-&gt;sri_hashes = [
-       'jquery' =&gt; [
-          '3.6.0' =&gt; 'sha384-
-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK',
-          '3.7.1' =&gt; 'sha384-
-1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs'
-       ],
-       'bootstrap' =&gt; [
-          '5.3.0' =&gt; 'sha384-
-9ndCyUa/9ktNUyTBXGxps2+hbUHtMOcFBBP4YidV26hrKfSJZo7MqHpRmmsobJmJ'
-       ]
-    ];
-  }
-
-  public function add_sri_to_scripts($tag, $handle, $src) {
-    if (!$this-&gt;is_external_resource($src)) {
-        return $tag;
+      sys.exit(1)</pre>
+<ul>
+  <li>url = sys.argv[1]</li>
+  <li>validator = SecurityValidator(url)</li>
+  <li>validator.run_all_tests()</li>
+</ul>
+<p><strong>Phase 2:</strong> Enhanced Security Implementation (3-14 Days)</p>
+<p><strong>Week 1:</strong> Subresource Integrity &amp; CSP Enhancement</p>
+<h3>Automated SRI Implementation:</h3>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># sri_implementation.sh - Automated SRI implementation for WordPress</li>
+</ul>
+<ul>
+  <li># WordPress directory</li>
+  <li>WP_DIR="/var/www/html"</li>
+</ul>
+<ul>
+  <li># Backup current theme files</li>
+  <li>backup_theme_files() {</li>
+  <li>ACTIVE_THEME=$(wp theme list --status=active --field=name --path=$WP_DIR)</li>
+  <li>THEME_DIR="$WP_DIR/wp-content/themes/$ACTIVE_THEME"</li>
+</ul>
+<ul>
+  <li>if [ -d "$THEME_DIR" ]; then</li>
+  <li>cp -r "$THEME_DIR" "${THEME_DIR}_backup_$(date +%Y%m%d)"</li>
+  <li>echo "Theme backed up to ${THEME_DIR}_backup_$(date +%Y%m%d)"</li>
+  <li>fi</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Generate SRI hashes for common CDN resources</li>
+  <li>generate_common_sri_hashes() {</li>
+  <li>cat &gt; /tmp/common_sri_hashes.json &lt;&lt; 'EOF'</li>
+  <li>{</li>
+</ul>
+<pre class="code-block">  "jquery": {
+     "3.6.0": "sha384-</pre>
+<p>vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK",</p>
+<p><strong>"3.7.1":</strong> "sha384-</p>
+<ul>
+  <li>1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs"</li>
+  <li>},</li>
+</ul>
+<pre class="code-block">  "bootstrap": {
+     "5.3.0": "sha384-</pre>
+<h3>9ndCyUa/9ktNUyTBXGxps2+hbUHtMOcFBBP4YidV26hrKfSJZo7MqHpRmmsobJmJ",</h3>
+<p><strong>"4.6.2":</strong> "sha384-</p>
+<ul>
+  <li>xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"</li>
+  <li>},</li>
+</ul>
+<pre class="code-block">  "font_awesome": {
+     "6.4.0": "sha384-</pre>
+<ul>
+  <li>iw3OoTErCYJJB9mCa8LNS2hbsQ7M3C0EJPGf+HU7Pqk7KJE5n8FvFzL8p9KpQoQ"</li>
+  <li>}</li>
+  <li>}</li>
+  <li>EOF</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># WordPress plugin for SRI implementation</li>
+  <li>create_sri_plugin() {</li>
+  <li>cat &gt; "$WP_DIR/wp-content/plugins/sri-security/sri-security.php" &lt;&lt; 'EOF'</li>
+  <li>&lt;?php</li>
+  <li>/**</li>
+</ul>
+<p><strong>* Plugin Name:</strong> SRI Security Enhancement</p>
+<p><strong>* Description:</strong> Automatically adds Subresource Integrity to external resources</p>
+<p><strong>* Version:</strong> 1.0.0</p>
+<p>*/</p>
+<pre class="code-block">class SRISecurityEnhancement {
+   private $sri_hashes = [];</pre>
+<ul>
+  <li>public function __construct() {</li>
+  <li>add_action('wp_enqueue_scripts', [$this, 'enqueue_secure_scripts'], 999);</li>
+  <li>add_filter('script_loader_tag', [$this, 'add_sri_to_scripts'], 10, 3);</li>
+  <li>add_filter('style_loader_tag', [$this, 'add_sri_to_styles'], 10, 4);</li>
+</ul>
+<ul>
+  <li>$this-&gt;load_sri_hashes();</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>private function load_sri_hashes() {</li>
+  <li>$this-&gt;sri_hashes = [</li>
+  <li>'jquery' =&gt; [</li>
+  <li>'3.6.0' =&gt; 'sha384-</li>
+  <li>vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK',</li>
+  <li>'3.7.1' =&gt; 'sha384-</li>
+  <li>1H217gwSVyLSIfaLxHbE7dRb3v4mYCKbpQvzx0cegeju1MVsGrX5xXxAvs/HgeFs'</li>
+  <li>],</li>
+  <li>'bootstrap' =&gt; [</li>
+  <li>'5.3.0' =&gt; 'sha384-</li>
+  <li>9ndCyUa/9ktNUyTBXGxps2+hbUHtMOcFBBP4YidV26hrKfSJZo7MqHpRmmsobJmJ'</li>
+  <li>]</li>
+  <li>];</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>public function add_sri_to_scripts($tag, $handle, $src) {</li>
+  <li>if (!$this-&gt;is_external_resource($src)) {</li>
+  <li>return $tag;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>$sri_hash = $this-&gt;get_sri_hash($src);</li>
+  <li>if ($sri_hash) {</li>
+  <li>$tag = str_replace('&lt;script ', '&lt;script integrity="' . $sri_hash . '"</li>
+  <li>crossorigin="anonymous" ', $tag);</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">      return $tag;
+  }</pre>
+<ul>
+  <li>public function add_sri_to_styles($tag, $handle, $href, $media) {</li>
+  <li>if (!$this-&gt;is_external_resource($href)) {</li>
+  <li>return $tag;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>$sri_hash = $this-&gt;get_sri_hash($href);</li>
+  <li>if ($sri_hash) {</li>
+</ul>
+<p>$tag = str_replace('&lt;link ', '&lt;link integrity="' . $sri_hash . '" crossorigin="anonymous" ',</p>
+<ul>
+  <li>$tag);</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">      return $tag;
+  }</pre>
+<ul>
+  <li>private function is_external_resource($url) {</li>
+  <li>$parsed_url = parse_url($url);</li>
+  <li>$site_host = parse_url(home_url(), PHP_URL_HOST);</li>
+</ul>
+<pre class="code-block">      return isset($parsed_url['host']) &amp;&amp; $parsed_url['host'] !== $site_host;
+  }</pre>
+<ul>
+  <li>private function get_sri_hash($url) {</li>
+  <li>// Check if we have a pre-computed hash</li>
+  <li>foreach ($this-&gt;sri_hashes as $library =&gt; $versions) {</li>
+  <li>foreach ($versions as $version =&gt; $hash) {</li>
+  <li>if (strpos($url, $library) !== false &amp;&amp; strpos($url, $version) !== false) {</li>
+  <li>return $hash;</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>// Generate hash on-the-fly (cache for performance)</li>
+  <li>return $this-&gt;generate_sri_hash($url);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>private function generate_sri_hash($url) {</li>
+  <li>$cache_key = 'sri_hash_' . md5($url);</li>
+  <li>$cached_hash = get_transient($cache_key);</li>
+</ul>
+<ul>
+  <li>if ($cached_hash) {</li>
+  <li>return $cached_hash;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>$response = wp_remote_get($url, ['timeout' =&gt; 30]);</li>
+  <li>if (is_wp_error($response)) {</li>
+  <li>return false;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>$content = wp_remote_retrieve_body($response);</li>
+  <li>$hash = base64_encode(hash('sha384', $content, true));</li>
+  <li>$sri_hash = 'sha384-' . $hash;</li>
+</ul>
+<ul>
+  <li>// Cache for 24 hours</li>
+  <li>set_transient($cache_key, $sri_hash, DAY_IN_SECONDS);</li>
+</ul>
+<pre class="code-block">        return $sri_hash;
     }
-
-    $sri_hash = $this-&gt;get_sri_hash($src);
-    if ($sri_hash) {
-        $tag = str_replace('&lt;script ', '&lt;script integrity="' . $sri_hash . '"
-crossorigin="anonymous" ', $tag);
-    }
-
-      return $tag;
-  }
-  public function add_sri_to_styles($tag, $handle, $href, $media) {
-    if (!$this-&gt;is_external_resource($href)) {
-        return $tag;
-    }
-
-    $sri_hash = $this-&gt;get_sri_hash($href);
-    if ($sri_hash) {
-        $tag = str_replace('&lt;link ', '&lt;link integrity="' . $sri_hash . '" crossorigin="anonymous" ',
-$tag);
-    }
-
-      return $tag;
-  }
-
-  private function is_external_resource($url) {
-    $parsed_url = parse_url($url);
-    $site_host = parse_url(home_url(), PHP_URL_HOST);
-
-      return isset($parsed_url['host']) &amp;&amp; $parsed_url['host'] !== $site_host;
-  }
-
-  private function get_sri_hash($url) {
-    // Check if we have a pre-computed hash
-    foreach ($this-&gt;sri_hashes as $library =&gt; $versions) {
-       foreach ($versions as $version =&gt; $hash) {
-         if (strpos($url, $library) !== false &amp;&amp; strpos($url, $version) !== false) {
-             return $hash;
-         }
-       }
-    }
-
-      // Generate hash on-the-fly (cache for performance)
-      return $this-&gt;generate_sri_hash($url);
-  }
-
-  private function generate_sri_hash($url) {
-    $cache_key = 'sri_hash_' . md5($url);
-    $cached_hash = get_transient($cache_key);
-
-      if ($cached_hash) {
-          return $cached_hash;
-      }
-
-      $response = wp_remote_get($url, ['timeout' =&gt; 30]);
-      if (is_wp_error($response)) {
-          return false;
-      }
-
-      $content = wp_remote_retrieve_body($response);
-        $hash = base64_encode(hash('sha384', $content, true));
-        $sri_hash = 'sha384-' . $hash;
-
-        // Cache for 24 hours
-        set_transient($cache_key, $sri_hash, DAY_IN_SECONDS);
-
-        return $sri_hash;
-    }
-}
-
-new SRISecurityEnhancement();
-EOF
-
-    # Create plugin directory if it doesn't exist
-    mkdir -p "$WP_DIR/wp-content/plugins/sri-security"
-
-    # Activate the plugin
-    wp plugin activate sri-security --path=$WP_DIR
-
-    echo "SRI Security plugin created and activated"
-}
-
-# Main execution
-echo "Starting SRI implementation..."
-backup_theme_files
-generate_common_sri_hashes
-create_sri_plugin
-
-echo "SRI implementation completed!"
-echo "External resources will now include integrity checks."
-
-
-DevSecOps Integration Strategy
-CI/CD Security Pipeline
-GitLab CI Security Pipeline:
-# .gitlab-ci.yml - Comprehensive security pipeline
-
-stages:
- - security-scan
- - build
- - security-test
- - deploy
- - post-deploy-security
-
-variables:
- DOCKER_DRIVER: overlay2
- SECURE_ANALYZERS_PREFIX: "registry.gitlab.com/gitlab-org/security-products/analyzers"
-# Security Scanning Stage
-sast:
- stage: security-scan
- image: $SECURE_ANALYZERS_PREFIX/semgrep:latest
- script:
-  - semgrep --config=auto --json --output=sast-report.json .
- artifacts:
-  reports:
-    sast: sast-report.json
-  paths:
-    - sast-report.json
-  expire_in: 1 week
+}</pre>
+<ul>
+  <li>new SRISecurityEnhancement();</li>
+  <li>EOF</li>
+</ul>
+<p># Create plugin directory if it doesn't exist</p>
+<p>mkdir -p "$WP_DIR/wp-content/plugins/sri-security"</p>
+<ul>
+  <li># Activate the plugin</li>
+  <li>wp plugin activate sri-security --path=$WP_DIR</li>
+</ul>
+<ul>
+  <li>echo "SRI Security plugin created and activated"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Main execution</li>
+  <li>echo "Starting SRI implementation..."</li>
+  <li>backup_theme_files</li>
+  <li>generate_common_sri_hashes</li>
+  <li>create_sri_plugin</li>
+</ul>
+<p>echo "SRI implementation completed!"</p>
+<p>echo "External resources will now include integrity checks."</p>
+</div>
+<div class="section">
+<h2>DevSecOps Integration Strategy</h2>
+<h3>CI/CD Security Pipeline</h3>
+<h3>GitLab CI Security Pipeline:</h3>
+<pre class="code-block"># .gitlab-ci.yml - Comprehensive security pipeline</pre>
+<p>stages:</p>
+<ul>
+  <li>- security-scan</li>
+  <li>- build</li>
+  <li>- security-test</li>
+  <li>- deploy</li>
+  <li>- post-deploy-security</li>
+</ul>
+<p>variables:</p>
+<p><strong>DOCKER_DRIVER:</strong> overlay2</p>
+<p><strong>SECURE_ANALYZERS_PREFIX:</strong> "registry.gitlab.com/gitlab-org/security-products/analyzers"</p>
+<p># Security Scanning Stage</p>
+<p>sast:</p>
+<p><strong>stage:</strong> security-scan</p>
+<p><strong>image:</strong> $SECURE_ANALYZERS_PREFIX/semgrep:latest</p>
+<p>script:</p>
+<p>- semgrep --config=auto --json --output=sast-report.json .</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>sast:</strong> sast-report.json</p>
+<p>paths:</p>
+<p>- sast-report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>- merge_requests</li>
+</ul>
+<p>dependency_scanning:</p>
+<p><strong>stage:</strong> security-scan</p>
+<p><strong>image:</strong> $SECURE_ANALYZERS_PREFIX/gemnasium:latest</p>
+<p>script:</p>
+<p>- gemnasium-dependency_scanning</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>dependency_scanning:</strong> dependency-scanning-report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>- merge_requests</li>
+</ul>
+<p>secret_detection:</p>
+<p><strong>stage:</strong> security-scan</p>
+<p><strong>image:</strong> $SECURE_ANALYZERS_PREFIX/secrets:latest</p>
+<p>script:</p>
+<p>- secrets-analyzer</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>secret_detection:</strong> secret-detection-report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>- merge_requests</li>
+</ul>
+<p># Build Stage with Security Hardening</p>
+<p>build_secure:</p>
+<p><strong>stage:</strong> build</p>
+<p><strong>image:</strong> docker:latest</p>
+<p>services:</p>
+<p>- docker:dind</p>
+<p>before_script:</p>
+<p>- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY</p>
+<p>script:</p>
+<ul>
+  <li># Build with security scanning</li>
+  <li>- docker build --target security-scan -t $CI_REGISTRY_IMAGE/security-</li>
+  <li>scan:$CI_COMMIT_SHA .</li>
+  <li>- docker run --rm -v $(pwd):/workspace $CI_REGISTRY_IMAGE/security-</li>
+  <li>scan:$CI_COMMIT_SHA</li>
+</ul>
+<ul>
+  <li># Build production image</li>
+  <li>- docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .</li>
+  <li>- docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA</li>
+</ul>
+<p>only:</p>
+<p>- main</p>
+<p># Security Testing Stage</p>
+<p>zap_baseline:</p>
+<p><strong>stage:</strong> security-test</p>
+<p><strong>image:</strong> owasp/zap2docker-stable:latest</p>
+<p>script:</p>
+<p>- mkdir -p /zap/wrk</p>
+<p>- zap-baseline.py -t $TEST_URL -r zap-baseline-report.html -x zap-baseline-report.xml</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>junit:</strong> zap-baseline-report.xml</p>
+<p>paths:</p>
+<p>- zap-baseline-report.html</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<pre class="code-block"> allow_failure: true
  only:
-  - main
-  - merge_requests
-
-dependency_scanning:
- stage: security-scan
- image: $SECURE_ANALYZERS_PREFIX/gemnasium:latest
- script:
-  - gemnasium-dependency_scanning
- artifacts:
-  reports:
-    dependency_scanning: dependency-scanning-report.json
-  expire_in: 1 week
- only:
-  - main
-  - merge_requests
-
-secret_detection:
- stage: security-scan
- image: $SECURE_ANALYZERS_PREFIX/secrets:latest
- script:
-  - secrets-analyzer
- artifacts:
-  reports:
-    secret_detection: secret-detection-report.json
-  expire_in: 1 week
- only:
-  - main
-  - merge_requests
-
-# Build Stage with Security Hardening
-build_secure:
- stage: build
- image: docker:latest
- services:
-  - docker:dind
- before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
- script:
-  # Build with security scanning
-  - docker build --target security-scan -t $CI_REGISTRY_IMAGE/security-
-scan:$CI_COMMIT_SHA .
-  - docker run --rm -v $(pwd):/workspace $CI_REGISTRY_IMAGE/security-
-scan:$CI_COMMIT_SHA
-
-  # Build production image
-  - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-  - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
- only:
-  - main
-
-# Security Testing Stage
-zap_baseline:
- stage: security-test
- image: owasp/zap2docker-stable:latest
- script:
-  - mkdir -p /zap/wrk
-  - zap-baseline.py -t $TEST_URL -r zap-baseline-report.html -x zap-baseline-report.xml
- artifacts:
-  reports:
-    junit: zap-baseline-report.xml
-  paths:
-    - zap-baseline-report.html
-  expire_in: 1 week
- allow_failure: true
- only:
-  - main
-
-security_headers_test:
- stage: security-test
- image: alpine:latest
- before_script:
-  - apk add --no-cache curl jq
- script:
-  -|
-    # Test security headers
-    HEADERS_RESPONSE=$(curl -s -I $TEST_URL)
-
-   # Check required headers
-   echo "Testing security headers for $TEST_URL"
-
-   # X-Content-Type-Options
-   if echo "$HEADERS_RESPONSE" | grep -qi "x-content-type-options: nosniff"; then
-    echo " X-Content-Type-Options: PASS"
-  else
-    echo "❌ X-Content-Type-Options: FAIL"
-    exit 1
-  fi
-
-  # X-Frame-Options
-  if echo "$HEADERS_RESPONSE" | grep -qi "x-frame-options: deny"; then
-    echo " X-Frame-Options: PASS"
-  else
-    echo "❌ X-Frame-Options: FAIL"
-    exit 1
-  fi
-
-  # Strict-Transport-Security
-  if echo "$HEADERS_RESPONSE" | grep -qi "strict-transport-security"; then
-    echo " Strict-Transport-Security: PASS"
-  else
-    echo "❌ Strict-Transport-Security: FAIL"
-    exit 1
-  fi
-
-  # Content-Security-Policy
-  if echo "$HEADERS_RESPONSE" | grep -qi "content-security-policy"; then
-    echo " Content-Security-Policy: PASS"
-  else
-    echo "❌ Content-Security-Policy: FAIL"
-    exit 1
-  fi
-
-   echo "All security headers tests passed!"
-only:
- - main
-
-# Deployment with Security Validation
-deploy_production:
- stage: deploy
- image: alpine:latest
- before_script:
-  - apk add --no-cache openssh-client rsync
-  - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - ssh-keyscan $DEPLOY_HOST &gt;&gt; ~/.ssh/known_hosts
- script:
-  # Deploy application
-  - rsync -avz --delete ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/
- # Apply security configurations
- - ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH
-&amp;&amp; ./scripts/apply_security_config.sh"
-
-  # Restart services
-  - ssh $DEPLOY_USER@$DEPLOY_HOST "sudo systemctl reload apache2 || sudo
-systemctl reload nginx"
- only:
-  - main
- when: manual
-
-# Post-Deployment Security Verification
-post_deploy_security_check:
- stage: post-deploy-security
- image: python:3.9-alpine
- before_script:
-  - pip install requests beautifulsoup4
- script:
-  - python3 scripts/security_validator.py $PRODUCTION_URL
- artifacts:
-  paths:
-    - security_validation_report.json
-  expire_in: 1 week
- only:
-  - main
-
-# Continuous Security Monitoring
-security_monitoring:
- stage: post-deploy-security
- image: alpine:latest
- before_script:
-  - apk add --no-cache curl
- script:
-  -|
-    # Check for new vulnerabilities
-    curl -X POST "$SLACK_WEBHOOK" \
-       -H 'Content-type: application/json' \
-       --data '{"text":"Security deployment completed for '"$CI_COMMIT_REF_NAME"'. All
-security checks passed."}'
- only:
-  - main
-
-Docker Security Scanning:
-# Dockerfile with security scanning
-FROM php:8.1-apache as base
-
-# Install security tools
-RUN apt-get update &amp;&amp; apt-get install -y \
-  curl \
-  wget \
-  unzip \
-  &amp;&amp; rm -rf /var/lib/apt/lists/*
-
-# Security hardening
-RUN echo "ServerTokens Prod" &gt;&gt; /etc/apache2/apache2.conf \
-  &amp;&amp; echo "ServerSignature Off" &gt;&gt; /etc/apache2/apache2.conf
-
-# Security scan stage
-FROM base as security-scan
-
-# Install security scanning tools
-RUN curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -
-b /usr/local/bin
-RUN curl -sSfL
-https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b
-/usr/local/bin
-
-# Copy application code
-COPY . /var/www/html/
-
-# Run security scans
-RUN grype /var/www/html --output json --file /tmp/grype-report.json
-RUN trivy fs --format json --output /tmp/trivy-report.json /var/www/html
-
-# Production stage
-FROM base as production
-
-# Copy application code
-COPY . /var/www/html/
-
-# Set secure permissions
-RUN chown -R www-data:www-data /var/www/html \
-  &amp;&amp; find /var/www/html -type d -exec chmod 755 {} \; \
-  &amp;&amp; find /var/www/html -type f -exec chmod 644 {} \;
-
-# Security headers configuration
-COPY docker/security-headers.conf /etc/apache2/conf-available/
-RUN a2enconf security-headers
-
-# Enable required modules
-RUN a2enmod headers rewrite ssl
-
-EXPOSE 80 443
-
-CMD ["apache2-foreground"]
-Monitoring &amp; Automation Implementation
-ELK Stack Security Monitoring
-Elasticsearch Index Template:
-{
+  - main</pre>
+<p>security_headers_test:</p>
+<p><strong>stage:</strong> security-test</p>
+<p><strong>image:</strong> alpine:latest</p>
+<p>before_script:</p>
+<p>- apk add --no-cache curl jq</p>
+<p>script:</p>
+<ul>
+  <li>-|</li>
+  <li># Test security headers</li>
+  <li>HEADERS_RESPONSE=$(curl -s -I $TEST_URL)</li>
+</ul>
+<p># Check required headers</p>
+<p>echo "Testing security headers for $TEST_URL"</p>
+<p># X-Content-Type-Options</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "x-content-type-options: nosniff"; then</p>
+<p><strong>echo " X-Content-Type-Options:</strong> PASS"</p>
+<p>else</p>
+<p><strong>echo "❌ X-Content-Type-Options:</strong> FAIL"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<p># X-Frame-Options</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "x-frame-options: deny"; then</p>
+<p><strong>echo " X-Frame-Options:</strong> PASS"</p>
+<p>else</p>
+<p><strong>echo "❌ X-Frame-Options:</strong> FAIL"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<p># Strict-Transport-Security</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "strict-transport-security"; then</p>
+<p><strong>echo " Strict-Transport-Security:</strong> PASS"</p>
+<p>else</p>
+<p><strong>echo "❌ Strict-Transport-Security:</strong> FAIL"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<p># Content-Security-Policy</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "content-security-policy"; then</p>
+<p><strong>echo " Content-Security-Policy:</strong> PASS"</p>
+<p>else</p>
+<p><strong>echo "❌ Content-Security-Policy:</strong> FAIL"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<h3>echo "All security headers tests passed!"</h3>
+<p>only:</p>
+<p>- main</p>
+<p># Deployment with Security Validation</p>
+<p>deploy_production:</p>
+<p><strong>stage:</strong> deploy</p>
+<p><strong>image:</strong> alpine:latest</p>
+<p>before_script:</p>
+<p>- apk add --no-cache openssh-client rsync</p>
+<p>- eval $(ssh-agent -s)</p>
+<p>- echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -</p>
+<p>- mkdir -p ~/.ssh</p>
+<p>- chmod 700 ~/.ssh</p>
+<p>- ssh-keyscan $DEPLOY_HOST &gt;&gt; ~/.ssh/known_hosts</p>
+<p>script:</p>
+<ul>
+  <li># Deploy application</li>
+  <li>- rsync -avz --delete ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/</li>
+  <li># Apply security configurations</li>
+  <li>- ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH</li>
+  <li>&amp;&amp; ./scripts/apply_security_config.sh"</li>
+</ul>
+<p># Restart services</p>
+<p>- ssh $DEPLOY_USER@$DEPLOY_HOST "sudo systemctl reload apache2 || sudo</p>
+<p>systemctl reload nginx"</p>
+<p>only:</p>
+<p>- main</p>
+<p><strong>when:</strong> manual</p>
+<p># Post-Deployment Security Verification</p>
+<p>post_deploy_security_check:</p>
+<p><strong>stage:</strong> post-deploy-security</p>
+<p><strong>image:</strong> python:3.9-alpine</p>
+<p>before_script:</p>
+<p>- pip install requests beautifulsoup4</p>
+<p>script:</p>
+<p>- python3 scripts/security_validator.py $PRODUCTION_URL</p>
+<p>artifacts:</p>
+<p>paths:</p>
+<p>- security_validation_report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<p>- main</p>
+<p># Continuous Security Monitoring</p>
+<p>security_monitoring:</p>
+<p><strong>stage:</strong> post-deploy-security</p>
+<p><strong>image:</strong> alpine:latest</p>
+<p>before_script:</p>
+<p>- apk add --no-cache curl</p>
+<p>script:</p>
+<ul>
+  <li>-|</li>
+  <li># Check for new vulnerabilities</li>
+  <li>curl -X POST "$SLACK_WEBHOOK" \</li>
+</ul>
+<p><strong>-H 'Content-type:</strong> application/json' \</p>
+<p>--data '{"text":"Security deployment completed for '"$CI_COMMIT_REF_NAME"'. All</p>
+<p>security checks passed."}'</p>
+<p>only:</p>
+<p>- main</p>
+<h3>Docker Security Scanning:</h3>
+<ul>
+  <li># Dockerfile with security scanning</li>
+  <li>FROM php:8.1-apache as base</li>
+</ul>
+<ul>
+  <li># Install security tools</li>
+  <li>RUN apt-get update &amp;&amp; apt-get install -y \</li>
+  <li>curl \</li>
+  <li>wget \</li>
+  <li>unzip \</li>
+  <li>&amp;&amp; rm -rf /var/lib/apt/lists/*</li>
+</ul>
+<p># Security hardening</p>
+<p>RUN echo "ServerTokens Prod" &gt;&gt; /etc/apache2/apache2.conf \</p>
+<p>&amp;&amp; echo "ServerSignature Off" &gt;&gt; /etc/apache2/apache2.conf</p>
+<ul>
+  <li># Security scan stage</li>
+  <li>FROM base as security-scan</li>
+</ul>
+<p># Install security scanning tools</p>
+<p>RUN curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -</p>
+<ul>
+  <li>b /usr/local/bin</li>
+  <li>RUN curl -sSfL</li>
+</ul>
+<p>https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b</p>
+<h3>/usr/local/bin</h3>
+<ul>
+  <li># Copy application code</li>
+  <li>COPY . /var/www/html/</li>
+</ul>
+<p># Run security scans</p>
+<p>RUN grype /var/www/html --output json --file /tmp/grype-report.json</p>
+<p>RUN trivy fs --format json --output /tmp/trivy-report.json /var/www/html</p>
+<ul>
+  <li># Production stage</li>
+  <li>FROM base as production</li>
+</ul>
+<ul>
+  <li># Copy application code</li>
+  <li>COPY . /var/www/html/</li>
+</ul>
+<p># Set secure permissions</p>
+<p>RUN chown -R www-data:www-data /var/www/html \</p>
+<p>&amp;&amp; find /var/www/html -type d -exec chmod 755 {} \; \</p>
+<p>&amp;&amp; find /var/www/html -type f -exec chmod 644 {} \;</p>
+<ul>
+  <li># Security headers configuration</li>
+  <li>COPY docker/security-headers.conf /etc/apache2/conf-available/</li>
+  <li>RUN a2enconf security-headers</li>
+</ul>
+<ul>
+  <li># Enable required modules</li>
+  <li>RUN a2enmod headers rewrite ssl</li>
+</ul>
+<h3>CMD ["apache2-foreground"]</h3>
+</div>
+<div class="section">
+<h2>Monitoring &amp; Automation Implementation</h2>
+<h3>ELK Stack Security Monitoring</h3>
+<h3>Elasticsearch Index Template:</h3>
+<pre class="code-block">{
     "index_patterns": ["security-logs-*"],
     "template": {
      "settings": {
@@ -1987,144 +2341,161 @@ Elasticsearch Index Template:
           "type": "keyword"
         },
         "blocked": {
-          "type": "boolean"
-                },
-                "geolocation": {
+          "type": "boolean"</pre>
+<p>},</p>
+<pre class="code-block">                "geolocation": {
                   "type": "geo_point"
                 }
             }
         }
     }
-}
-
-Logstash Security Configuration:
-# logstash-security.conf
-input {
- file {
-   path =&gt; "/var/log/apache2/access.log"
-   type =&gt; "apache_access"
-   start_position =&gt; "beginning"
- }
-
-    file {
-      path =&gt; "/var/log/apache2/error.log"
-      type =&gt; "apache_error"
-      start_position =&gt; "beginning"
-    }
-
-    file {
-      path =&gt; "/var/www/html/wp-content/security.log"
-      type =&gt; "wordpress_security"
-      start_position =&gt; "beginning"
-    }
-}
-
-filter {
-  if [type] == "apache_access" {
-    grok {
-      match =&gt; {
-        "message" =&gt; "%{COMBINEDAPACHELOG}"
+}</pre>
+<h3>Logstash Security Configuration:</h3>
+<ul>
+  <li># logstash-security.conf</li>
+  <li>input {</li>
+  <li>file {</li>
+  <li>path =&gt; "/var/log/apache2/access.log"</li>
+  <li>type =&gt; "apache_access"</li>
+  <li>start_position =&gt; "beginning"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>file {</li>
+  <li>path =&gt; "/var/log/apache2/error.log"</li>
+  <li>type =&gt; "apache_error"</li>
+  <li>start_position =&gt; "beginning"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>file {</li>
+  <li>path =&gt; "/var/www/html/wp-content/security.log"</li>
+  <li>type =&gt; "wordpress_security"</li>
+  <li>start_position =&gt; "beginning"</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>filter {</li>
+  <li>if [type] == "apache_access" {</li>
+  <li>grok {</li>
+  <li>match =&gt; {</li>
+  <li>"message" =&gt; "%{COMBINEDAPACHELOG}"</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Detect suspicious patterns</li>
+  <li>if [request] =~</li>
+</ul>
+<p>/(\.\./|&lt;script|javascript:|eval\(|union.*select|drop.*table|insert.*into|update.*set|delete</p>
+<ul>
+  <li>.*from)/i {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["suspicious_request", "potential_attack"]</li>
+  <li>add_field =&gt; { "attack_type" =&gt; "injection_attempt" }</li>
+  <li>add_field =&gt; { "severity" =&gt; "high" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Detect XSS attempts</li>
+  <li>if [request] =~ /(&lt;script|javascript:|onload=|onerror=|onclick=)/i {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["xss_attempt"]</li>
+  <li>add_field =&gt; { "attack_type" =&gt; "xss" }</li>
+  <li>add_field =&gt; { "severity" =&gt; "high" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Detect directory traversal</li>
+  <li>if [request] =~ /(\.\./|\.\.\\|%2e%2e%2f|%2e%2e\\)/i {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["directory_traversal"]</li>
+  <li>add_field =&gt; { "attack_type" =&gt; "path_traversal" }</li>
+  <li>add_field =&gt; { "severity" =&gt; "medium" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Detect scanning behavior</li>
+  <li>if [response] == "404" {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["not_found"]</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># GeoIP enrichment</li>
+  <li>geoip {</li>
+  <li>source =&gt; "clientip"</li>
+  <li>target =&gt; "geoip"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Convert response to integer</li>
+  <li>mutate {</li>
+  <li>convert =&gt; { "response" =&gt; "integer" }</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Add timestamp</li>
+  <li>date {</li>
+  <li>match =&gt; [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>if [type] == "wordpress_security" {</li>
+  <li>grok {</li>
+  <li>match =&gt; {</li>
+  <li>"message" =&gt; "\[%{TIMESTAMP_ISO8601:timestamp}\] %{WORD:event_type}</li>
+  <li>- %{DATA:details} - IP: %{IP:source_ip} - User Agent: %{GREEDYDATA:user_agent}"</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>if [event_type] == "LOGIN_FAILED" {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["failed_login"]</li>
+  <li>add_field =&gt; { "severity" =&gt; "medium" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>if [event_type] == "LOGIN_SUCCESS" {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["successful_login"]</li>
+  <li>add_field =&gt; { "severity" =&gt; "info" }</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>output {</li>
+  <li>elasticsearch {</li>
+  <li>hosts =&gt; ["localhost:9200"]</li>
+  <li>index =&gt; "security-logs-%{+YYYY.MM.dd}"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># Send high severity events to Slack</li>
+  <li>if [severity] == "high" {</li>
+  <li>http {</li>
+  <li>url =&gt; "${SLACK_WEBHOOK_URL}"</li>
+  <li>http_method =&gt; "post"</li>
+  <li>format =&gt; "json"</li>
+</ul>
+<h3>mapping =&gt; {</h3>
+<p><strong>"text" =&gt; " Security Alert:</strong> %{attack_type} detected from %{source_ip} - %{request}"</p>
+<pre class="code-block">        }
       }
     }
-
-   # Detect suspicious patterns
-   if [request] =~
-/(\.\./|&lt;script|javascript:|eval\(|union.*select|drop.*table|insert.*into|update.*set|delete
-.*from)/i {
-     mutate {
-       add_tag =&gt; ["suspicious_request", "potential_attack"]
-       add_field =&gt; { "attack_type" =&gt; "injection_attempt" }
-       add_field =&gt; { "severity" =&gt; "high" }
-     }
-     }
-
-     # Detect XSS attempts
-     if [request] =~ /(&lt;script|javascript:|onload=|onerror=|onclick=)/i {
-       mutate {
-         add_tag =&gt; ["xss_attempt"]
-         add_field =&gt; { "attack_type" =&gt; "xss" }
-         add_field =&gt; { "severity" =&gt; "high" }
-       }
-     }
-
-     # Detect directory traversal
-     if [request] =~ /(\.\./|\.\.\\|%2e%2e%2f|%2e%2e\\)/i {
-       mutate {
-         add_tag =&gt; ["directory_traversal"]
-         add_field =&gt; { "attack_type" =&gt; "path_traversal" }
-         add_field =&gt; { "severity" =&gt; "medium" }
-       }
-     }
-
-     # Detect scanning behavior
-     if [response] == "404" {
-       mutate {
-         add_tag =&gt; ["not_found"]
-       }
-     }
-
-     # GeoIP enrichment
-     geoip {
-       source =&gt; "clientip"
-       target =&gt; "geoip"
-     }
-
-     # Convert response to integer
-     mutate {
-       convert =&gt; { "response" =&gt; "integer" }
-     }
-
-     # Add timestamp
-     date {
-       match =&gt; [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]
-     }
- }
-
-  if [type] == "wordpress_security" {
-    grok {
-      match =&gt; {
-       "message" =&gt; "\[%{TIMESTAMP_ISO8601:timestamp}\] %{WORD:event_type}
-- %{DATA:details} - IP: %{IP:source_ip} - User Agent: %{GREEDYDATA:user_agent}"
-            }
-        }
-
-        if [event_type] == "LOGIN_FAILED" {
-          mutate {
-            add_tag =&gt; ["failed_login"]
-            add_field =&gt; { "severity" =&gt; "medium" }
-          }
-        }
-
-        if [event_type] == "LOGIN_SUCCESS" {
-          mutate {
-            add_tag =&gt; ["successful_login"]
-            add_field =&gt; { "severity" =&gt; "info" }
-          }
-        }
-    }
-}
-
-output {
- elasticsearch {
-   hosts =&gt; ["localhost:9200"]
-   index =&gt; "security-logs-%{+YYYY.MM.dd}"
- }
-
-    # Send high severity events to Slack
-    if [severity] == "high" {
-      http {
-        url =&gt; "${SLACK_WEBHOOK_URL}"
-        http_method =&gt; "post"
-        format =&gt; "json"
-        mapping =&gt; {
-          "text" =&gt; " Security Alert: %{attack_type} detected from %{source_ip} - %{request}"
-        }
-      }
-    }
-}
-
-Kibana Security Dashboard:
-{
+}</pre>
+<h3>Kibana Security Dashboard:</h3>
+<pre class="code-block">{
     "version": "8.0.0",
     "objects": [
      {
@@ -2132,15 +2503,15 @@ Kibana Security Dashboard:
        "type": "dashboard",
        "attributes": {
         "title": "Security Overview Dashboard",
-        "description": "Comprehensive security monitoring dashboard",
-        "panelsJSON":
-"[{\"version\":\"8.0.0\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"1\"},\"panelIndex\":
-\"1\",\"embeddableConfig\":{},\"panelRefName\":\"panel_1\"}]",
-        "timeRestore": true,
-        "timeTo": "now",
-        "timeFrom": "now-24h",
-        "refreshInterval": {
-          "pause": false,
+        "description": "Comprehensive security monitoring dashboard",</pre>
+<h3>"panelsJSON":</h3>
+<p>"[{\"version\":\"8.0.0\",\"gridData\":{\"x\":0,\"y\":0,\"w\":24,\"h\":15,\"i\":\"1\"},\"panelIndex\":</p>
+<h3>\"1\",\"embeddableConfig\":{},\"panelRefName\":\"panel_1\"}]",</h3>
+<p><strong>"timeRestore":</strong> true,</p>
+<p><strong>"timeTo":</strong> "now",</p>
+<p><strong>"timeFrom":</strong> "now-24h",</p>
+<p><strong>"refreshInterval":</strong> {</p>
+<pre class="code-block">          "pause": false,
           "value": 30000
         }
       }
@@ -2150,59 +2521,62 @@ Kibana Security Dashboard:
       "type": "visualization",
       "attributes": {
         "title": "Attack Attempts Over Time",
-        "visState": "{\"title\":\"Attack Attempts Over
-Time\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#ee
-e\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-
-1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\
-"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"Value
-Axis-1\",\"name\":\"LeftAxis-
-1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"
-,\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"
-title\":{\"text\":\"Count\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"line\",\"mode\":\"nor
-mal\",\"data\":{\"label\":\"Count\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-
-1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend
-\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\
-",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabl
-ed\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@times
-tamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_boun
-ds\":{}}}]}",
-        "uiStateJSON": "{}",
-        "kibanaSavedObjectMeta": {
-          "searchSourceJSON": "{\"index\":\"security-logs-
-*\",\"query\":{\"match\":{\"tags\":\"potential_attack\"}},\"filter\":[]}"
-        }
-      }
-    }
-  ]
-}
-
-Automated Incident Response
-Python Incident Response Bot:
-#!/usr/bin/env python3
-"""
-Automated Security Incident Response System
-Monitors security logs and responds to threats automatically
-"""
-
-import json
+        "visState": "{\"title\":\"Attack Attempts Over</pre>
+<p>Time\",\"type\":\"line\",\"params\":{\"grid\":{\"categoryLines\":false,\"style\":{\"color\":\"#ee</p>
+<p>e\"}},\"categoryAxes\":[{\"id\":\"CategoryAxis-</p>
+<p>1\",\"type\":\"category\",\"position\":\"bottom\",\"show\":true,\"style\":{},\"scale\":{\"type\":\</p>
+<p>"linear\"},\"labels\":{\"show\":true,\"truncate\":100},\"title\":{}}],\"valueAxes\":[{\"id\":\"Value</p>
+<h3>Axis-1\",\"name\":\"LeftAxis-</h3>
+<p>1\",\"type\":\"value\",\"position\":\"left\",\"show\":true,\"style\":{},\"scale\":{\"type\":\"linear\"</p>
+<p>,\"mode\":\"normal\"},\"labels\":{\"show\":true,\"rotate\":0,\"filter\":false,\"truncate\":100},\"</p>
+<p>title\":{\"text\":\"Count\"}}],\"seriesParams\":[{\"show\":true,\"type\":\"line\",\"mode\":\"nor</p>
+<p>mal\",\"data\":{\"label\":\"Count\",\"id\":\"1\"},\"valueAxis\":\"ValueAxis-</p>
+<p>1\",\"drawLinesBetweenPoints\":true,\"showCircles\":true}],\"addTooltip\":true,\"addLegend</p>
+<p>\":true,\"legendPosition\":\"right\",\"times\":[],\"addTimeMarker\":false},\"aggs\":[{\"id\":\"1\</p>
+<p>",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"2\",\"enabl</p>
+<p>ed\":true,\"type\":\"date_histogram\",\"schema\":\"segment\",\"params\":{\"field\":\"@times</p>
+<p>tamp\",\"interval\":\"auto\",\"customInterval\":\"2h\",\"min_doc_count\":1,\"extended_boun</p>
+<p>ds\":{}}}]}",</p>
+<p><strong>"uiStateJSON":</strong> "{}",</p>
+<p><strong>"kibanaSavedObjectMeta":</strong> {</p>
+<p><strong>"searchSourceJSON":</strong> "{\"index\":\"security-logs-</p>
+<ul>
+  <li>*\",\"query\":{\"match\":{\"tags\":\"potential_attack\"}},\"filter\":[]}"</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+  <li>]</li>
+  <li>}</li>
+</ul>
+<h3>Automated Incident Response</h3>
+<h3>Python Incident Response Bot:</h3>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li>"""</li>
+  <li>Automated Security Incident Response System</li>
+  <li>Monitors security logs and responds to threats automatically</li>
+  <li>"""</li>
+</ul>
+<pre class="code-block">import json
 import time
 import requests
 import subprocess
 from datetime import datetime, timedelta
 from elasticsearch import Elasticsearch
-import smtplib
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
-
-class SecurityIncidentResponder:
+import smtplib</pre>
+<ul>
+  <li>from email.mime.text import MimeText</li>
+  <li>from email.mime.multipart import MimeMultipart</li>
+</ul>
+<pre class="code-block">class SecurityIncidentResponder:
   def __init__(self, config_file='security_config.json'):
     with open(config_file, 'r') as f:
-       self.config = json.load(f)
-
-    self.es = Elasticsearch([self.config['elasticsearch']['host']])
-    self.blocked_ips = set()
-
-  def monitor_security_events(self):
+       self.config = json.load(f)</pre>
+<ul>
+  <li>self.es = Elasticsearch([self.config['elasticsearch']['host']])</li>
+  <li>self.blocked_ips = set()</li>
+</ul>
+<pre class="code-block">  def monitor_security_events(self):
     """Continuously monitor for security events"""
     while True:
        try:
@@ -2217,49 +2591,43 @@ class SecurityIncidentResponder:
                }
             },
             "sort": [{"@timestamp": {"order": "desc"}}]
-         }
-
-         response = self.es.search(
-           index="security-logs-*",
-           body=query,
-           size=100
-         )
-
-         for hit in response['hits']['hits']:
-           self.process_security_event(hit['_source'])
-
-         time.sleep(60) # Check every minute
-    except Exception as e:
+         }</pre>
+<ul>
+  <li>response = self.es.search(</li>
+  <li>index="security-logs-*",</li>
+  <li>body=query,</li>
+  <li>size=100</li>
+  <li>)</li>
+</ul>
+<pre class="code-block">         for hit in response['hits']['hits']:
+           self.process_security_event(hit['_source'])</pre>
+<p>time.sleep(60) # Check every minute</p>
+<pre class="code-block">    except Exception as e:
       print(f"Error monitoring security events: {e}")
-      time.sleep(60)
-
-def process_security_event(self, event):
+      time.sleep(60)</pre>
+<pre class="code-block">def process_security_event(self, event):
   """Process individual security events"""
   source_ip = event.get('source_ip')
   attack_type = event.get('attack_type')
-  severity = event.get('severity')
-
-  print(f"Processing security event: {attack_type} from {source_ip}")
-
-  # Automatic IP blocking for repeated attacks
-  if self.should_block_ip(source_ip, attack_type):
-     self.block_ip(source_ip, attack_type)
-
-  # Send notifications for critical events
-  if severity == 'high':
-     self.send_security_alert(event)
-
-  # Log incident for tracking
-  self.log_incident(event)
-
-def should_block_ip(self, ip, attack_type):
+  severity = event.get('severity')</pre>
+<pre class="code-block">  print(f"Processing security event: {attack_type} from {source_ip}")</pre>
+<p># Automatic IP blocking for repeated attacks</p>
+<p>if self.should_block_ip(source_ip, attack_type):</p>
+<p>self.block_ip(source_ip, attack_type)</p>
+<p># Send notifications for critical events</p>
+<p>if severity == 'high':</p>
+<p>self.send_security_alert(event)</p>
+<ul>
+  <li># Log incident for tracking</li>
+  <li>self.log_incident(event)</li>
+</ul>
+<pre class="code-block">def should_block_ip(self, ip, attack_type):
   """Determine if an IP should be blocked"""
   if ip in self.blocked_ips:
-     return False
-
-  # Check attack frequency in the last hour
-  query = {
-    "query": {
+     return False</pre>
+<p># Check attack frequency in the last hour</p>
+<p>query = {</p>
+<pre class="code-block">    "query": {
       "bool": {
         "must": [
            {"term": {"source_ip": ip}},
@@ -2268,37 +2636,36 @@ def should_block_ip(self, ip, attack_type):
         ]
       }
     }
-  }
-
-  response = self.es.count(index="security-logs-*", body=query)
-  attack_count = response['count']
-
-  # Block if more than 5 attacks in the last hour
-  return attack_count &gt;= 5
-
-def block_ip(self, ip, attack_type):
-  """Block malicious IP address"""
-  try:
-     # Add to iptables
-     subprocess.run([
-        'sudo', 'iptables', '-A', 'INPUT',
-        '-s', ip, '-j', 'DROP'
-     ], check=True)
-
-    # Add to Apache/Nginx block list
-    self.add_to_web_server_block_list(ip)
-
-    self.blocked_ips.add(ip)
-
-    print(f"Blocked IP {ip} due to {attack_type}")
-
-    # Log the blocking action
-    self.log_ip_block(ip, attack_type)
-
-  except subprocess.CalledProcessError as e:
-    print(f"Error blocking IP {ip}: {e}")
-
-def add_to_web_server_block_list(self, ip):
+  }</pre>
+<ul>
+  <li>response = self.es.count(index="security-logs-*", body=query)</li>
+  <li>attack_count = response['count']</li>
+</ul>
+<p># Block if more than 5 attacks in the last hour</p>
+<p>return attack_count &gt;= 5</p>
+<pre class="code-block">def block_ip(self, ip, attack_type):</pre>
+<h3>"""Block malicious IP address"""</h3>
+<p>try:</p>
+<ul>
+  <li># Add to iptables</li>
+  <li>subprocess.run([</li>
+  <li>'sudo', 'iptables', '-A', 'INPUT',</li>
+  <li>'-s', ip, '-j', 'DROP'</li>
+  <li>], check=True)</li>
+</ul>
+<ul>
+  <li># Add to Apache/Nginx block list</li>
+  <li>self.add_to_web_server_block_list(ip)</li>
+</ul>
+<p>self.blocked_ips.add(ip)</p>
+<pre class="code-block">    print(f"Blocked IP {ip} due to {attack_type}")</pre>
+<ul>
+  <li># Log the blocking action</li>
+  <li>self.log_ip_block(ip, attack_type)</li>
+</ul>
+<pre class="code-block">  except subprocess.CalledProcessError as e:
+    print(f"Error blocking IP {ip}: {e}")</pre>
+<pre class="code-block">def add_to_web_server_block_list(self, ip):
   """Add IP to web server block list"""
   # Apache .htaccess method
   try:
@@ -2306,30 +2673,29 @@ def add_to_web_server_block_list(self, ip):
        f.write(f"\n# Auto-blocked {datetime.now()}\n")
        f.write(f"Deny from {ip}\n")
   except Exception as e:
-     print(f"Error adding to .htaccess: {e}")
-
-  # Nginx method (if using Nginx)
-  try:
-    with open('/etc/nginx/conf.d/blocked_ips.conf', 'a') as f:
-       f.write(f"deny {ip}; # Auto-blocked {datetime.now()}\n")
-
-    # Reload Nginx
-    subprocess.run(['sudo', 'nginx', '-s', 'reload'], check=True)
-  except Exception as e:
-    print(f"Error adding to Nginx block list: {e}")
-
-def send_security_alert(self, event):
+     print(f"Error adding to .htaccess: {e}")</pre>
+<p># Nginx method (if using Nginx)</p>
+<p>try:</p>
+<p>with open('/etc/nginx/conf.d/blocked_ips.conf', 'a') as f:</p>
+<p>f.write(f"deny {ip}; # Auto-blocked {datetime.now()}\n")</p>
+<ul>
+  <li># Reload Nginx</li>
+  <li>subprocess.run(['sudo', 'nginx', '-s', 'reload'], check=True)</li>
+</ul>
+<pre class="code-block">  except Exception as e:
+    print(f"Error adding to Nginx block list: {e}")</pre>
+<pre class="code-block">def send_security_alert(self, event):
   """Send security alert notifications"""
   # Slack notification
-  self.send_slack_alert(event)
-
-  # Email notification
-  self.send_email_alert(event)
-def send_slack_alert(self, event):
+  self.send_slack_alert(event)</pre>
+<ul>
+  <li># Email notification</li>
+  <li>self.send_email_alert(event)</li>
+</ul>
+<pre class="code-block">def send_slack_alert(self, event):
   """Send alert to Slack"""
-  webhook_url = self.config['notifications']['slack_webhook']
-
-  message = {
+  webhook_url = self.config['notifications']['slack_webhook']</pre>
+<pre class="code-block">  message = {
     "text": f" Security Alert",
     "attachments": [
        {
@@ -2358,45 +2724,43 @@ def send_security_alert(self, event):
          ]
        }
     ]
-  }
-
-  try:
-    requests.post(webhook_url, json=message, timeout=10)
-  except Exception as e:
-    print(f"Error sending Slack alert: {e}")
-
-def send_email_alert(self, event):
+  }</pre>
+<p>try:</p>
+<p>requests.post(webhook_url, json=message, timeout=10)</p>
+<pre class="code-block">  except Exception as e:
+    print(f"Error sending Slack alert: {e}")</pre>
+<pre class="code-block">def send_email_alert(self, event):
   """Send email alert"""
-  smtp_config = self.config['notifications']['email']
-
-  msg = MimeMultipart()
-  msg['From'] = smtp_config['from']
-  msg['To'] = smtp_config['to']
-  msg['Subject'] = f"Security Alert: {event.get('attack_type', 'Unknown Attack')}"
-    body = f"""
-Security Alert Detected
-
-Attack Type: {event.get('attack_type', 'Unknown')}
-Source IP: {event.get('source_ip', 'Unknown')}
-Request: {event.get('request', 'N/A')}
-User Agent: {event.get('user_agent', 'N/A')}
-Timestamp: {event.get('@timestamp', 'Unknown')}
-
-This is an automated alert from the Security Monitoring System.
-"""
-
-    msg.attach(MimeText(body, 'plain'))
-
-    try:
-      server = smtplib.SMTP(smtp_config['host'], smtp_config['port'])
-      server.starttls()
-      server.login(smtp_config['username'], smtp_config['password'])
-      server.send_message(msg)
-      server.quit()
-    except Exception as e:
-      print(f"Error sending email alert: {e}")
-
-  def log_incident(self, event):
+  smtp_config = self.config['notifications']['email']</pre>
+<ul>
+  <li>msg = MimeMultipart()</li>
+  <li>msg['From'] = smtp_config['from']</li>
+  <li>msg['To'] = smtp_config['to']</li>
+</ul>
+<p><strong>msg['Subject'] = f"Security Alert:</strong> {event.get('attack_type', 'Unknown Attack')}"</p>
+<ul>
+  <li>body = f"""</li>
+  <li>Security Alert Detected</li>
+</ul>
+<p><strong>Attack Type:</strong> {event.get('attack_type', 'Unknown')}</p>
+<p><strong>Source IP:</strong> {event.get('source_ip', 'Unknown')}</p>
+<p><strong>Request:</strong> {event.get('request', 'N/A')}</p>
+<p><strong>User Agent:</strong> {event.get('user_agent', 'N/A')}</p>
+<p><strong>Timestamp:</strong> {event.get('@timestamp', 'Unknown')}</p>
+<p>This is an automated alert from the Security Monitoring System.</p>
+<p>"""</p>
+<p>msg.attach(MimeText(body, 'plain'))</p>
+<p>try:</p>
+<ul>
+  <li>server = smtplib.SMTP(smtp_config['host'], smtp_config['port'])</li>
+  <li>server.starttls()</li>
+  <li>server.login(smtp_config['username'], smtp_config['password'])</li>
+  <li>server.send_message(msg)</li>
+  <li>server.quit()</li>
+</ul>
+<pre class="code-block">    except Exception as e:
+      print(f"Error sending email alert: {e}")</pre>
+<pre class="code-block">  def log_incident(self, event):
     """Log security incident for tracking"""
     incident = {
        '@timestamp': datetime.utcnow().isoformat(),
@@ -2407,36 +2771,36 @@ This is an automated alert from the Security Monitoring System.
        'request': event.get('request'),
        'user_agent': event.get('user_agent'),
        'response_action': 'logged'
-    }
-
-    try:
-      self.es.index(
-         index=f"security-incidents-{datetime.now().strftime('%Y.%m.%d')}",
-         body=incident
-      )
-    except Exception as e:
-      print(f"Error logging incident: {e}")
-
-  def log_ip_block(self, ip, attack_type):
+    }</pre>
+<p>try:</p>
+<ul>
+  <li>self.es.index(</li>
+  <li>index=f"security-incidents-{datetime.now().strftime('%Y.%m.%d')}",</li>
+  <li>body=incident</li>
+  <li>)</li>
+</ul>
+<pre class="code-block">    except Exception as e:
+      print(f"Error logging incident: {e}")</pre>
+<pre class="code-block">  def log_ip_block(self, ip, attack_type):
     """Log IP blocking action"""
     block_log = {
-       '@timestamp': datetime.utcnow().isoformat(),
-        'event_type': 'ip_blocked',
-        'blocked_ip': ip,
-        'reason': attack_type,
-        'action': 'automatic_block',
-        'blocked_by': 'security_incident_responder'
-    }
-
-    try:
-      self.es.index(
-         index=f"security-actions-{datetime.now().strftime('%Y.%m.%d')}",
-         body=block_log
-      )
-    except Exception as e:
-      print(f"Error logging IP block: {e}")
-
-if __name__ == "__main__":
+       '@timestamp': datetime.utcnow().isoformat(),</pre>
+<p><strong>'event_type':</strong> 'ip_blocked',</p>
+<p><strong>'blocked_ip':</strong> ip,</p>
+<p><strong>'reason':</strong> attack_type,</p>
+<p><strong>'action':</strong> 'automatic_block',</p>
+<p><strong>'blocked_by':</strong> 'security_incident_responder'</p>
+<pre class="code-block">    }</pre>
+<p>try:</p>
+<ul>
+  <li>self.es.index(</li>
+  <li>index=f"security-actions-{datetime.now().strftime('%Y.%m.%d')}",</li>
+  <li>body=block_log</li>
+  <li>)</li>
+</ul>
+<pre class="code-block">    except Exception as e:
+      print(f"Error logging IP block: {e}")</pre>
+<pre class="code-block">if __name__ == "__main__":
    # Configuration file example
    config = {
      "elasticsearch": {
@@ -2453,53 +2817,59 @@ if __name__ == "__main__":
            "to": "admin@example.com"
         }
      }
-   }
-
-  # Save config
-  with open('security_config.json', 'w') as f:
-    json.dump(config, f, indent=2)
-
-  # Start monitoring
-  responder = SecurityIncidentResponder()
-  responder.monitor_security_events()
-
-
-Conclusion
-This comprehensive technical security assessment reveals critical vulnerabilities in the
-example.com infrastructure that require immediate attention. The identified PII disclosure
-vulnerability poses significant regulatory and business risks, while the absence of
-fundamental security controls leaves the application vulnerable to common web attacks.
-Critical Metrics Summary
-Current Security Posture:
-  •   Risk Level: Critical
-  •   OWASP Top 10 2021 Compliance: 25%
-  •   NIST CSF 2.0 Maturity: 19%
-  •   SOC 2 Readiness: 15%
-Implementation Timeline:
-  •   Phase 1 (0-72 hours): Critical vulnerability remediation
-  •   Phase 2 (3-14 days): Enhanced security controls
-  •   Phase 3 (15-90 days): Comprehensive security program
-Expected Outcomes:
-
-  •   Post-Phase 1: Risk reduction to 🟡 Medium level
-  •   Post-Phase 2: Achievement of Low risk status
-  •   Post-Phase 3: Attainment of 🟢 Acceptable security posture
-
-The provided technical solutions, automation scripts, and monitoring systems offer a
-complete roadmap for transforming the current critical security state into a robust,
-compliant, and continuously monitored security infrastructure. Implementation of these
-measures will ensure compliance with international security standards and provide
-ongoing protection against evolving threats.
-
-
-References
-[1] OWASP Foundation. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
+   }</pre>
+<p># Save config</p>
+<p>with open('security_config.json', 'w') as f:</p>
+<p>json.dump(config, f, indent=2)</p>
+<ul>
+  <li># Start monitoring</li>
+  <li>responder = SecurityIncidentResponder()</li>
+  <li>responder.monitor_security_events()</li>
+</ul>
+</div>
+<div class="section">
+<h2>Conclusion</h2>
+<p>This comprehensive technical security assessment reveals critical vulnerabilities in the</p>
+<p>example.com infrastructure that require immediate attention. The identified PII disclosure</p>
+<p>vulnerability poses significant regulatory and business risks, while the absence of</p>
+<p>fundamental security controls leaves the application vulnerable to common web attacks.</p>
+<h3>Critical Metrics Summary</h3>
+<h3>Current Security Posture:</h3>
+<ul>
+  <li>Risk Level: Critical</li>
+  <li>OWASP Top 10 2021 Compliance: 25%</li>
+  <li>NIST CSF 2.0 Maturity: 19%</li>
+  <li>SOC 2 Readiness: 15%</li>
+</ul>
+<h3>Implementation Timeline:</h3>
+<ul>
+  <li>Phase 1 (0-72 hours): Critical vulnerability remediation</li>
+  <li>Phase 2 (3-14 days): Enhanced security controls</li>
+  <li>Phase 3 (15-90 days): Comprehensive security program</li>
+</ul>
+<h3>Expected Outcomes:</h3>
+<ul>
+  <li>Post-Phase 1: Risk reduction to 🟡 Medium level</li>
+  <li>Post-Phase 2: Achievement of Low risk status</li>
+  <li>Post-Phase 3: Attainment of 🟢 Acceptable security posture</li>
+</ul>
+<p>The provided technical solutions, automation scripts, and monitoring systems offer a</p>
+<p>complete roadmap for transforming the current critical security state into a robust,</p>
+<p>compliant, and continuously monitored security infrastructure. Implementation of these</p>
+<p>measures will ensure compliance with international security standards and provide</p>
+<h3>ongoing protection against evolving threats.</h3>
+</div>
+<div class="section">
+<h2>References</h2>
+<pre class="code-block">[1] OWASP Foundation. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
 [2] OWASP Foundation. (2021). OWASP Top 10:2021. https://owasp.org/Top10/2021/
-[3] NIST. (2024). The NIST Cybersecurity Framework (CSF) 2.0.
-https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
-[4] AICPA. (2023). SOC 2 Type II Examination Guide.
-https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome.html
-    </pre>
+[3] NIST. (2024). The NIST Cybersecurity Framework (CSF) 2.0.</pre>
+<ul>
+  <li>https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20</li>
+  <li>[4] AICPA. (2023). SOC 2 Type II Examination Guide.</li>
+  <li>https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome.html</li>
+</ul>
+</div>
   </main>
 </body>
 </html>

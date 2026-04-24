@@ -5,499 +5,785 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZAP Management Report - English</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; direction: ltr; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; text-align: left; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.6; text-align: left; direction: ltr; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #d5e0ef 100%);
+      color: #1a2332;
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: linear-gradient(135deg, #2e7d32 0%, #0a1628 100%);
+      color: #fff;
+      padding: 52px 48px;
+      margin-bottom: 36px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .report-header h1 {
+      font-size: 1.95em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      line-height: 1.3;
+    }
+    .report-header .subtitle {
+      font-size: 1.05em;
+      opacity: .85;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .report-header .meta {
+      font-size: .9em;
+      opacity: .65;
+      position: relative;
+    }
+    .tool-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.9);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .82em;
+      margin-top: 18px;
+      position: relative;
+      letter-spacing: .04em;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: #fff;
+      padding: 34px 40px;
+      margin-bottom: 26px;
+      border-radius: 12px;
+      box-shadow: 0 2px 18px rgba(0,0,0,.07);
+      border-top: 3px solid #2e7d32;
+    }
+
+    /* ── Headings ── */
+    h2 {
+      font-size: 1.55em;
+      color: #2e7d32;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e4e9f0;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 1.15em;
+      color: #1a2332;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      padding-left: 10px;
+      border-left: 3px solid #2e7d32;
+    }
+    h4 {
+      font-size: 1.0em;
+      color: #2c3e50;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 18px 0;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .alert-critical {
+      background: #fff0f0;
+      border-left: 5px solid #c62828;
+      color: #b71c1c;
+    }
+    .alert-warning {
+      background: #fff8e1;
+      border-left: 5px solid #f57c00;
+      color: #e65100;
+    }
+    .alert-info {
+      background: #e8f4fd;
+      border-left: 5px solid #2e7d32;
+      color: #0d47a1;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,.1);
+      font-size: .93em;
+    }
+    thead {
+      background: #2e7d32;
+      color: #fff;
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: .88em;
+      letter-spacing: .03em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #2c3e50;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:hover { background: #eef2f7; transition: background .15s; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* KV (key-value) table variant */
+    table.kv-table th {
+      background: #f0f4f8;
+      color: #1a2332;
+      width: 36%;
+    }
+    table.kv-table td { color: #37474f; }
+
+    /* ── Lists ── */
+    ul, ol { margin: 10px 0; padding-left: 22px; }
+    li { margin: 6px 0; line-height: 1.65; color: #2c3e50; }
+
+    ul.checklist { list-style: none; padding-left: 0; }
+    ul.checklist li { padding: 5px 8px 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+    ul.checklist li::before { content: "☐"; color: #2e7d32; font-size: 1.1em; flex-shrink: 0; }
+    ul.checklist li.done::before { content: "☑"; color: #2e7d32; }
+
+    ul.status-list { list-style: none; padding-left: 0; }
+    ul.status-list li { padding: 4px 0; }
+    ul.status-list li.ok   { color: #2e7d32; }
+    ul.status-list li.fail { color: #c62828; }
+    ul.status-list li.warn { color: #e65100; }
+
+    /* ── TOC ── */
+    .toc { background: #f6f9fc; border-radius: 8px; padding: 20px 26px; }
+    .toc ol { counter-reset: toc-cnt; list-style: none; padding: 0; }
+    .toc li {
+      counter-increment: toc-cnt;
+      padding: 7px 0;
+      border-bottom: 1px solid #e4e9f0;
+      color: #2e7d32;
+      font-weight: 500;
+    }
+    .toc li::before {
+      content: counter(toc-cnt) ". ";
+      font-weight: 700;
+      min-width: 26px;
+      display: inline-block;
+    }
+    .toc li:last-child { border-bottom: none; }
+
+    /* ── Code ── */
+    code {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      color: #c62828;
+      font-size: .88em;
+    }
+    pre.code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 22px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      font-size: .87em;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── Misc ── */
+    p { margin: 10px 0; color: #2c3e50; }
+    .phase-box {
+      background: #f6f9fc;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid #dce6f0;
+    }
+
+    /* ── RTL support ── */
+    [dir="rtl"] h3 { padding-left: 0; padding-right: 10px; border-left: none; border-right: 3px solid #2e7d32; }
+    [dir="rtl"] .alert { border-left: none; border-right: 5px solid; }
+    [dir="rtl"] .alert-critical { border-right-color: #c62828; }
+    [dir="rtl"] .alert-warning  { border-right-color: #f57c00; }
+    [dir="rtl"] .alert-info     { border-right-color: #2e7d32; }
+    [dir="rtl"] th { text-align: right; }
+    [dir="rtl"] ul, [dir="rtl"] ol { padding-left: 0; padding-right: 22px; }
+    [dir="rtl"] ul.checklist li { padding-right: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .section { box-shadow: none; border: 1px solid #e0e0e0; page-break-inside: avoid; }
+      .report-header { box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+
   </style>
 </head>
 <body>
   <main>
-    <h1>ZAP Management Report - English</h1>
-    <pre>
-Cybersecurity Operational Plan: Manager and Team Lead Implementation Guide
-Chief Information Security Officer
-2026-01-02
-Executive Summary for Managers
-This document provides a practical implementation guide for cybersecurity measures at the team and department level. Based on the security audit conducted on December 30, 2025, critical vulnerabilities have been identified that require immediate operational action from middle management and team leads.
-⚠️ CRITICAL ALERT: Data exposure vulnerability discovered. Your teams must implement protective measures within 72 hours.
-Key Management Priorities
-Priority
-Task
-Responsible Team
-Deadline
-🔴 Critical
-Block vulnerable API endpoints
-Backend/DevOps teams
-24 hours
-🟡 High
-Implement security headers
-Frontend teams
-48 hours
-🔵 Medium
-Deploy monitoring systems
-SRE/Ops teams
-1 week
-ℹ️ Low
-Team security training
-All teams
-2 weeks
-Team Responsibility Matrix
-Immediate Actions (0-72 hours):
-Backend teams: Close REST API vulnerabilities
-DevOps teams: Configure secure server settings
-QA teams: Validate security fixes
-Short-term Tasks (1-4 weeks):
-Frontend teams: Implement CSP and SRI
-Infrastructure teams: Set up security monitoring
-Security teams: Establish incident response procedures
-Technical Situation and Team Priorities
-Critical Vulnerabilities by Team
-Backend/API Teams - CRITICAL PRIORITY
-Issue: Personal data exposure through REST API
-Vulnerability: /wp-json/wp/v2/users accessible without authentication
-Risk: All user data publicly accessible
-CVSS Score: 9.1 (Critical)
-Immediate Actions:
-// URGENT: Add to functions.php
-add_filter('rest_endpoints', function($endpoints) {
-    if (isset($endpoints['/wp/v2/users'])) {
-        unset($endpoints['/wp/v2/users']);
-    }
-    return $endpoints;
-});
-Backend Team Lead Checklist:
-☐ Immediately block access to /wp-json/wp/v2/users
-☐ Audit all REST API endpoints
-☐ Implement authentication for sensitive endpoints
-☐ Set up API request logging
-☐ Test changes on staging environment
-Frontend Teams - HIGH PRIORITY
-Issue: Missing basic security headers
-Vulnerabilities: No CSP, X-Frame-Options, SRI
-Risk: XSS attacks, clickjacking, supply chain attacks
-Practical Solutions:
-Content Security Policy (CSP)
-&lt;!-- Add to &lt;head&gt; --&gt;
-&lt;meta http-equiv="Content-Security-Policy" 
-      content="default-src 'self'; 
-               script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; 
-               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"&gt;
-Subresource Integrity (SRI)
-&lt;!-- For all external resources --&gt;
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-        integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
-        crossorigin="anonymous"&gt;&lt;/script&gt;
-Frontend Team Lead Checklist:
-☐ Implement CSP headers
-☐ Add SRI for all external resources
-☐ Configure X-Frame-Options: DENY
-☐ Test browser compatibility
-☐ Update CI/CD pipeline for header validation
-DevOps/Infrastructure Teams - HIGH PRIORITY
-Issue: Insecure web server configuration
-Vulnerabilities: Missing HSTS, software version disclosure
-Risk: Man-in-the-middle attacks, information reconnaissance
-Server Configurations:
-Apache (.htaccess):
-&lt;IfModule mod_headers.c&gt;
-    # Basic security headers
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set X-Frame-Options "DENY"
-    Header always set X-XSS-Protection "1; mode=block"
-    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
-    
-    # Hide server information
-    Header always unset Server
-    Header always unset X-Powered-By
-&lt;/IfModule&gt;
-
-# Disable server signature
-ServerTokens Prod
-ServerSignature Off
-Nginx:
-server {
-    # Security headers
-    add_header X-Content-Type-Options "nosniff" always;
-    add_header X-Frame-Options "DENY" always;
-    add_header X-XSS-Protection "1; mode=block" always;
-    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
-    
-    # Hide version
-    server_tokens off;
-    more_clear_headers Server;
-}
-DevOps Team Lead Checklist:
-☐ Apply security configurations
-☐ Enforce HTTPS
-☐ Hide server software versions
-☐ Set up security logging
-☐ Test configurations
-Tools and Technologies
-Essential Tools for Teams
-Monitoring and Alerting
-1. Security Log Monitoring
-# Configure rsyslog for security events
-echo "local0.*    /var/log/security.log" &gt;&gt; /etc/rsyslog.conf
-systemctl restart rsyslog
-2. Configuration File Monitoring
-#!/bin/bash
-# security_monitor.sh - Monitor configuration changes
-inotifywait -m /etc/apache2/ /etc/nginx/ -e modify,create,delete \
-    --format '%w%f %e %T' --timefmt '%Y-%m-%d %H:%M:%S' \
-    &gt;&gt; /var/log/config_changes.log
-3. Automated Header Validation
-#!/usr/bin/env python3
-# header_check.py - Security header validation
-import requests
-import sys
-
-def check_security_headers(url):
+<div class="report-header">
+  <h1>Cybersecurity Operational Plan: Manager and Team Lead Implementation Guide</h1>
+  <p class="subtitle">Chief Information Security Officer</p>
+  <p class="meta">2026-01-02</p>
+  <span class="tool-badge">OWASP ZAP 2.17.0 &mdash; Checkmarx Security Platform</span>
+</div>
+<div class="section">
+<h2>Executive Summary for Managers</h2>
+<p>This document provides a practical implementation guide for cybersecurity measures at the team and department level. Based on the security audit conducted on December 30, 2025, critical vulnerabilities have been identified that require immediate operational action from middle management and team leads.</p>
+<div class="alert alert-warning">⚠️ CRITICAL ALERT: Data exposure vulnerability discovered. Your teams must implement protective measures within 72 hours.</div>
+</div>
+<div class="section">
+<h2>Key Management Priorities</h2>
+<table><thead><tr><th>Priority</th><th>Task</th><th>Responsible Team</th><th>Deadline</th></tr></thead><tbody><tr><td>🔴 Critical</td><td>Block vulnerable API endpoints</td><td>Backend/DevOps teams</td><td>24 hours</td></tr><tr><td>🟡 High</td><td>Implement security headers</td><td>Frontend teams</td><td>48 hours</td></tr><tr><td>🔵 Medium</td><td>Deploy monitoring systems</td><td>SRE/Ops teams</td><td>1 week</td></tr><tr><td>ℹ️ Low</td><td>Team security training</td><td>All teams</td><td>2 weeks</td></tr></tbody></table>
+</div>
+<div class="section">
+<h2>Team Responsibility Matrix</h2>
+<h3>Immediate Actions (0-72 hours):</h3>
+<p><strong>Backend teams:</strong> Close REST API vulnerabilities</p>
+<p><strong>DevOps teams:</strong> Configure secure server settings</p>
+<p><strong>QA teams:</strong> Validate security fixes</p>
+<h3>Short-term Tasks (1-4 weeks):</h3>
+<p><strong>Frontend teams:</strong> Implement CSP and SRI</p>
+<p><strong>Infrastructure teams:</strong> Set up security monitoring</p>
+<p><strong>Security teams:</strong> Establish incident response procedures</p>
+</div>
+<div class="section">
+<h2>Technical Situation and Team Priorities</h2>
+<ul>
+  <li>Critical Vulnerabilities by Team</li>
+  <li>Backend/API Teams - CRITICAL PRIORITY</li>
+</ul>
+<p><strong>Issue:</strong> Personal data exposure through REST API</p>
+<p><strong>Vulnerability:</strong> /wp-json/wp/v2/users accessible without authentication</p>
+<p><strong>Risk:</strong> All user data publicly accessible</p>
+<p><strong>CVSS Score:</strong> 9.1 (Critical)</p>
+<h3>Immediate Actions:</h3>
+<p><strong>// URGENT:</strong> Add to functions.php</p>
+<ul>
+  <li>add_filter('rest_endpoints', function($endpoints) {</li>
+  <li>if (isset($endpoints['/wp/v2/users'])) {</li>
+  <li>unset($endpoints['/wp/v2/users']);</li>
+  <li>}</li>
+  <li>return $endpoints;</li>
+  <li>});</li>
+</ul>
+<h3>Backend Team Lead Checklist:</h3>
+<ul class="checklist">
+  <li>Immediately block access to /wp-json/wp/v2/users</li>
+  <li>Audit all REST API endpoints</li>
+  <li>Implement authentication for sensitive endpoints</li>
+  <li>Set up API request logging</li>
+  <li>Test changes on staging environment</li>
+</ul>
+<h3>Frontend Teams - HIGH PRIORITY</h3>
+<p><strong>Issue:</strong> Missing basic security headers</p>
+<p><strong>Vulnerabilities:</strong> No CSP, X-Frame-Options, SRI</p>
+<p><strong>Risk:</strong> XSS attacks, clickjacking, supply chain attacks</p>
+<h3>Practical Solutions:</h3>
+<ul>
+  <li>Content Security Policy (CSP)</li>
+  <li>&lt;!-- Add to &lt;head&gt; --&gt;</li>
+  <li>&lt;meta http-equiv="Content-Security-Policy"</li>
+  <li>content="default-src 'self';</li>
+  <li>script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;</li>
+  <li>style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;"&gt;</li>
+  <li>Subresource Integrity (SRI)</li>
+  <li>&lt;!-- For all external resources --&gt;</li>
+  <li>&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"</li>
+</ul>
+<pre class="code-block">        integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
+        crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+<h3>Frontend Team Lead Checklist:</h3>
+<ul class="checklist">
+  <li>Implement CSP headers</li>
+  <li>Add SRI for all external resources</li>
+  <li>Configure X-Frame-Options: DENY</li>
+  <li>Test browser compatibility</li>
+  <li>Update CI/CD pipeline for header validation</li>
+</ul>
+<h3>DevOps/Infrastructure Teams - HIGH PRIORITY</h3>
+<p><strong>Issue:</strong> Insecure web server configuration</p>
+<p><strong>Vulnerabilities:</strong> Missing HSTS, software version disclosure</p>
+<p><strong>Risk:</strong> Man-in-the-middle attacks, information reconnaissance</p>
+<h3>Server Configurations:</h3>
+<h3>Apache (.htaccess):</h3>
+<ul>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+  <li># Basic security headers</li>
+  <li>Header always set X-Content-Type-Options "nosniff"</li>
+  <li>Header always set X-Frame-Options "DENY"</li>
+  <li>Header always set X-XSS-Protection "1; mode=block"</li>
+</ul>
+<pre class="code-block">    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"</pre>
+<ul>
+  <li># Hide server information</li>
+  <li>Header always unset Server</li>
+  <li>Header always unset X-Powered-By</li>
+  <li>&lt;/IfModule&gt;</li>
+</ul>
+<ul>
+  <li># Disable server signature</li>
+  <li>ServerTokens Prod</li>
+  <li>ServerSignature Off</li>
+</ul>
+<h3>Nginx:</h3>
+<ul>
+  <li>server {</li>
+  <li># Security headers</li>
+  <li>add_header X-Content-Type-Options "nosniff" always;</li>
+  <li>add_header X-Frame-Options "DENY" always;</li>
+  <li>add_header X-XSS-Protection "1; mode=block" always;</li>
+</ul>
+<pre class="code-block">    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;</pre>
+<ul>
+  <li># Hide version</li>
+  <li>server_tokens off;</li>
+  <li>more_clear_headers Server;</li>
+  <li>}</li>
+</ul>
+<h3>DevOps Team Lead Checklist:</h3>
+<ul class="checklist">
+  <li>Apply security configurations</li>
+  <li>Enforce HTTPS</li>
+  <li>Hide server software versions</li>
+  <li>Set up security logging</li>
+  <li>Test configurations</li>
+</ul>
+<ul>
+  <li>Tools and Technologies</li>
+  <li>Essential Tools for Teams</li>
+  <li>Monitoring and Alerting</li>
+</ul>
+<ol>
+  <li>Security Log Monitoring</li>
+</ol>
+<ul>
+  <li># Configure rsyslog for security events</li>
+  <li>echo "local0.*    /var/log/security.log" &gt;&gt; /etc/rsyslog.conf</li>
+  <li>systemctl restart rsyslog</li>
+</ul>
+<ol>
+  <li>Configuration File Monitoring</li>
+</ol>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># security_monitor.sh - Monitor configuration changes</li>
+  <li>inotifywait -m /etc/apache2/ /etc/nginx/ -e modify,create,delete \</li>
+  <li>--format '%w%f %e %T' --timefmt '%Y-%m-%d %H:%M:%S' \</li>
+  <li>&gt;&gt; /var/log/config_changes.log</li>
+</ul>
+<ol>
+  <li>Automated Header Validation</li>
+</ol>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li># header_check.py - Security header validation</li>
+  <li>import requests</li>
+  <li>import sys</li>
+</ul>
+<pre class="code-block">def check_security_headers(url):
     required_headers = {
         'X-Content-Type-Options': 'nosniff',
         'X-Frame-Options': ['DENY', 'SAMEORIGIN'],
         'Strict-Transport-Security': 'max-age=',
         'Content-Security-Policy': 'default-src'
-    }
-    
-    try:
-        response = requests.get(url, timeout=10)
-        headers = response.headers
-        
-        print(f"Checking headers for {url}:")
+    }</pre>
+<p>try:</p>
+<ul>
+  <li>response = requests.get(url, timeout=10)</li>
+  <li>headers = response.headers</li>
+</ul>
+<pre class="code-block">        print(f"Checking headers for {url}:")
         for header, expected in required_headers.items():
             if header in headers:
                 print(f"✅ {header}: {headers[header]}")
             else:
-                print(f"❌ {header}: MISSING")
-                
-    except Exception as e:
-        print(f"Error: {e}")
-
-if __name__ == "__main__":
+                print(f"❌ {header}: MISSING")</pre>
+<pre class="code-block">    except Exception as e:
+        print(f"Error: {e}")</pre>
+<pre class="code-block">if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python3 header_check.py &lt;url&gt;")
-        sys.exit(1)
-    
-    check_security_headers(sys.argv[1])
-Development Tools
-1. Pre-commit Security Hooks
-# .pre-commit-config.yaml
-repos:
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.4
-    hooks:
-      - id: bandit
-        args: ['-r', '.']
-  
-  - repo: https://github.com/Yelp/detect-secrets
-    rev: v1.4.0
-    hooks:
-      - id: detect-secrets
-        args: ['--baseline', '.secrets.baseline']
-2. Automated SRI Generation
-// sri-generator.js - Automatic SRI generation
-const crypto = require('crypto');
-const fs = require('fs');
-const https = require('https');
-
-function generateSRI(url) {
-    return new Promise((resolve, reject) =&gt; {
-        https.get(url, (response) =&gt; {
-            let data = '';
-            response.on('data', chunk =&gt; data += chunk);
-            response.on('end', () =&gt; {
-                const hash = crypto.createHash('sha384').update(data).digest('base64');
-                resolve(`sha384-${hash}`);
-            });
-        }).on('error', reject);
-    });
-}
-
-// Usage in build process
-async function updateSRI() {
-    const externalResources = [
-        'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',
-        'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700'
-    ];
-    
-    for (const url of externalResources) {
-        try {
-            const sri = await generateSRI(url);
-            console.log(`${url}: integrity="${sri}"`);
-        } catch (error) {
-            console.error(`Error for ${url}:`, error.message);
-        }
-    }
-}
-
-updateSRI();
-CI/CD Integration
-GitLab CI Configuration:
-# .gitlab-ci.yml - Security in CI/CD
-stages:
-  - security-check
-  - build
-  - test
-  - deploy
-
-security_headers_check:
-  stage: security-check
-  script:
-    - python3 scripts/header_check.py $CI_ENVIRONMENT_URL
-  only:
-    - main
-    - develop
-
-dependency_check:
-  stage: security-check
-  script:
-    - npm audit --audit-level moderate
-    - composer audit
-  allow_failure: false
-
-sri_validation:
-  stage: security-check
-  script:
-    - node scripts/sri-generator.js
-    - git diff --exit-code # Check that SRI hashes are current
-  only:
-    - main
-GitHub Actions Configuration:
-# .github/workflows/security.yml
-name: Security Checks
-
-on:
-  push:
-    branches: [ main, develop ]
+        sys.exit(1)</pre>
+<ul>
+  <li>check_security_headers(sys.argv[1])</li>
+  <li>Development Tools</li>
+</ul>
+<ol>
+  <li>Pre-commit Security Hooks</li>
+</ol>
+<pre class="code-block"># .pre-commit-config.yaml</pre>
+<p>repos:</p>
+<p><strong>- repo:</strong> https://github.com/PyCQA/bandit</p>
+<p><strong>rev:</strong> 1.7.4</p>
+<p>hooks:</p>
+<p><strong>- id:</strong> bandit</p>
+<pre class="code-block">        args: ['-r', '.']</pre>
+<p><strong>- repo:</strong> https://github.com/Yelp/detect-secrets</p>
+<p><strong>rev:</strong> v1.4.0</p>
+<p>hooks:</p>
+<p><strong>- id:</strong> detect-secrets</p>
+<pre class="code-block">        args: ['--baseline', '.secrets.baseline']</pre>
+<ol>
+  <li>Automated SRI Generation</li>
+</ol>
+<ul>
+  <li>// sri-generator.js - Automatic SRI generation</li>
+  <li>const crypto = require('crypto');</li>
+  <li>const fs = require('fs');</li>
+  <li>const https = require('https');</li>
+</ul>
+<ul>
+  <li>function generateSRI(url) {</li>
+  <li>return new Promise((resolve, reject) =&gt; {</li>
+  <li>https.get(url, (response) =&gt; {</li>
+  <li>let data = '';</li>
+  <li>response.on('data', chunk =&gt; data += chunk);</li>
+  <li>response.on('end', () =&gt; {</li>
+  <li>const hash = crypto.createHash('sha384').update(data).digest('base64');</li>
+  <li>resolve(`sha384-${hash}`);</li>
+  <li>});</li>
+  <li>}).on('error', reject);</li>
+  <li>});</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>// Usage in build process</li>
+  <li>async function updateSRI() {</li>
+  <li>const externalResources = [</li>
+  <li>'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js',</li>
+  <li>'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700'</li>
+  <li>];</li>
+</ul>
+<ul>
+  <li>for (const url of externalResources) {</li>
+  <li>try {</li>
+  <li>const sri = await generateSRI(url);</li>
+</ul>
+<p><strong>console.log(`${url}:</strong> integrity="${sri}"`);</p>
+<ul>
+  <li>} catch (error) {</li>
+  <li>console.error(`Error for ${url}:`, error.message);</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>updateSRI();</li>
+  <li>CI/CD Integration</li>
+</ul>
+<h3>GitLab CI Configuration:</h3>
+<pre class="code-block"># .gitlab-ci.yml - Security in CI/CD</pre>
+<p>stages:</p>
+<ul>
+  <li>- security-check</li>
+  <li>- build</li>
+  <li>- test</li>
+  <li>- deploy</li>
+</ul>
+<p>security_headers_check:</p>
+<p><strong>stage:</strong> security-check</p>
+<p>script:</p>
+<p>- python3 scripts/header_check.py $CI_ENVIRONMENT_URL</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>- develop</li>
+</ul>
+<p>dependency_check:</p>
+<p><strong>stage:</strong> security-check</p>
+<p>script:</p>
+<ul>
+  <li>- npm audit --audit-level moderate</li>
+  <li>- composer audit</li>
+</ul>
+<pre class="code-block">  allow_failure: false</pre>
+<p>sri_validation:</p>
+<p><strong>stage:</strong> security-check</p>
+<p>script:</p>
+<p>- node scripts/sri-generator.js</p>
+<p>- git diff --exit-code # Check that SRI hashes are current</p>
+<p>only:</p>
+<p>- main</p>
+<h3>GitHub Actions Configuration:</h3>
+<pre class="code-block"># .github/workflows/security.yml</pre>
+<p><strong>name:</strong> Security Checks</p>
+<p>on:</p>
+<p>push:</p>
+<pre class="code-block">    branches: [ main, develop ]
   pull_request:
-    branches: [ main ]
-
-jobs:
-  security-scan:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v3
-    
-    - name: Security Header Check
-      run: |
-        python3 scripts/header_check.py https://staging.example.com
-    
-    - name: Dependency Audit
-      run: |
-        npm audit --audit-level moderate
-        
-    - name: SAST Scan
-      uses: github/super-linter@v4
-      env:
-        DEFAULT_BRANCH: main
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-Processes and Procedures
-Incident Response Procedures
-Level 1: Detection (Development Teams)
-Incident Indicators:
-Unusual activity in logs
-Monitoring system alerts
-User reports of suspicious behavior
-Automated security check failures
-Immediate Actions (first 15 minutes):
-Stay calm - document all actions
-Isolate - disable suspicious services
-Notify - inform team lead and security team
-Preserve - take snapshots of logs and system state
-Notification Template:
-SECURITY INCIDENT
-Time: [YYYY-MM-DD HH:MM]
-Discovered by: [Name]
-System: [System/service name]
-Description: [Brief problem description]
-Actions taken: [What has been done]
-Status: [Active/Contained/Resolved]
-Level 2: Analysis (Team Leads)
-Analysis Procedure (30-60 minutes):
-Information Gathering
-# Incident data collection script
-#!/bin/bash
-INCIDENT_ID=$(date +%Y%m%d_%H%M%S)
-INCIDENT_DIR="/var/log/incidents/$INCIDENT_ID"
-
-mkdir -p $INCIDENT_DIR
-
-# Collect logs
-cp /var/log/apache2/access.log $INCIDENT_DIR/
-cp /var/log/apache2/error.log $INCIDENT_DIR/
-cp /var/log/security.log $INCIDENT_DIR/
-
-# System state
-ps aux &gt; $INCIDENT_DIR/processes.txt
-netstat -tulpn &gt; $INCIDENT_DIR/network.txt
-df -h &gt; $INCIDENT_DIR/disk_usage.txt
-
-# Recent changes
-find /var/www -type f -mtime -1 &gt; $INCIDENT_DIR/recent_changes.txt
-
-echo "Incident data collected in $INCIDENT_DIR"
-Incident Classification
-Level 1: Informational (logging, monitoring)
-Level 2: Warning (potential threat)
-Level 3: Critical (active attack, data breach)
-Escalation Decisions
-Level 1 → Team Lead → Documentation
-Level 2 → Team Lead + Security → Enhanced monitoring
-Level 3 → Immediate escalation → Management + external experts
-Security Update Procedures
-Weekly Security Checks (Every Monday)
-Team Lead Checklist:
-## Weekly Security Review
-
-### System Updates
-- [ ] Check for available security updates
-- [ ] Schedule critical patch installation
-- [ ] Update project dependencies (npm, composer, pip)
-
-### Monitoring
-- [ ] Review security logs for the week
-- [ ] Analyze monitoring alerts
-- [ ] Verify backup functionality
-
-### Configurations
-- [ ] Validate security headers
-- [ ] Check SSL certificate expiration
-- [ ] Audit user access permissions
-
-### Team
-- [ ] Discuss security incidents in retrospective
-- [ ] Plan security training
-- [ ] Update procedure documentation
-Monthly Security Audits
-Department Manager Procedure:
-Technical Audit
-#!/bin/bash
-# monthly_security_audit.sh
-echo "=== Monthly Security Audit ==="
-echo "Date: $(date)"
-
-# Check users with sudo privileges
-echo "Users with sudo privileges:"
-grep -Po '^sudo.+:\K.*$' /etc/group
-
-# Check open ports
-echo "Open ports:"
-nmap -sT -O localhost
-
-# Check failed login attempts
-echo "Failed login attempts this month:"
-grep "Failed password" /var/log/auth.log | wc -l
-
-# Check security log size
-echo "Security log size:"
-du -sh /var/log/security.log
-Team Process Audit
-Security procedure compliance
-Incident response effectiveness
-Documentation quality
-Team knowledge level
-Monitoring and Control
-Monitoring Systems for Teams
-Basic Monitoring (Required for All Teams)
-1. Availability and Performance Monitoring
-#!/bin/bash
-# basic_monitoring.sh - Basic monitoring
-WEBSITE="https://example.com"
-LOG_FILE="/var/log/monitoring.log"
-
-# Check availability
-if curl -s --head $WEBSITE | head -n 1 | grep -q "200 OK"; then
-    echo "$(date): $WEBSITE - OK" &gt;&gt; $LOG_FILE
-else
-    echo "$(date): $WEBSITE - DOWN" &gt;&gt; $LOG_FILE
-    # Send alert
-    echo "Website is down!" | mail -s "ALERT: Website Down" admin@company.com
-fi
-
-# Check security headers
-HEADERS=$(curl -s -I $WEBSITE)
-if echo "$HEADERS" | grep -q "X-Content-Type-Options"; then
-    echo "$(date): Security headers - OK" &gt;&gt; $LOG_FILE
-else
-    echo "$(date): Security headers - MISSING" &gt;&gt; $LOG_FILE
-fi
-2. Security Log Monitoring
-#!/bin/bash
-# log_monitor.sh - Monitor suspicious activity
-SECURITY_LOG="/var/log/security.log"
-ALERT_EMAIL="security@company.com"
-
-# Search for suspicious patterns
-SUSPICIOUS_PATTERNS=(
-    "union.*select"
-    "&lt;script"
-    "\.\./"
-    "eval\("
-    "base64_decode"
-)
-
-for pattern in "${SUSPICIOUS_PATTERNS[@]}"; do
+    branches: [ main ]</pre>
+<p>jobs:</p>
+<p>security-scan:</p>
+<p><strong>runs-on:</strong> ubuntu-latest</p>
+<p>steps:</p>
+<p><strong>- uses:</strong> actions/checkout@v3</p>
+<p><strong>- name:</strong> Security Header Check</p>
+<p><strong>run:</strong> |</p>
+<pre class="code-block">        python3 scripts/header_check.py https://staging.example.com</pre>
+<p><strong>- name:</strong> Dependency Audit</p>
+<p><strong>run:</strong> |</p>
+<pre class="code-block">        npm audit --audit-level moderate</pre>
+<p><strong>- name:</strong> SAST Scan</p>
+<p><strong>uses:</strong> github/super-linter@v4</p>
+<p>env:</p>
+<p><strong>DEFAULT_BRANCH:</strong> main</p>
+<p><strong>GITHUB_TOKEN:</strong> ${{ secrets.GITHUB_TOKEN }}</p>
+<ul>
+  <li>Processes and Procedures</li>
+  <li>Incident Response Procedures</li>
+</ul>
+<p><strong>Level 1:</strong> Detection (Development Teams)</p>
+<h3>Incident Indicators:</h3>
+<ul>
+  <li>Unusual activity in logs</li>
+  <li>Monitoring system alerts</li>
+  <li>User reports of suspicious behavior</li>
+  <li>Automated security check failures</li>
+</ul>
+<h3>Immediate Actions (first 15 minutes):</h3>
+<p>Stay calm - document all actions</p>
+<p>Isolate - disable suspicious services</p>
+<p>Notify - inform team lead and security team</p>
+<p>Preserve - take snapshots of logs and system state</p>
+<h3>Notification Template:</h3>
+<h3>SECURITY INCIDENT</h3>
+<p><strong>Time:</strong> [YYYY-MM-DD HH:MM]</p>
+<p><strong>Discovered by:</strong> [Name]</p>
+<p><strong>System:</strong> [System/service name]</p>
+<p><strong>Description:</strong> [Brief problem description]</p>
+<p><strong>Actions taken:</strong> [What has been done]</p>
+<p><strong>Status:</strong> [Active/Contained/Resolved]</p>
+<p><strong>Level 2:</strong> Analysis (Team Leads)</p>
+<h3>Analysis Procedure (30-60 minutes):</h3>
+<ul>
+  <li>Information Gathering</li>
+  <li># Incident data collection script</li>
+  <li>#!/bin/bash</li>
+  <li>INCIDENT_ID=$(date +%Y%m%d_%H%M%S)</li>
+  <li>INCIDENT_DIR="/var/log/incidents/$INCIDENT_ID"</li>
+</ul>
+<pre class="code-block">mkdir -p $INCIDENT_DIR</pre>
+<ul>
+  <li># Collect logs</li>
+  <li>cp /var/log/apache2/access.log $INCIDENT_DIR/</li>
+  <li>cp /var/log/apache2/error.log $INCIDENT_DIR/</li>
+  <li>cp /var/log/security.log $INCIDENT_DIR/</li>
+</ul>
+<ul>
+  <li># System state</li>
+  <li>ps aux &gt; $INCIDENT_DIR/processes.txt</li>
+  <li>netstat -tulpn &gt; $INCIDENT_DIR/network.txt</li>
+  <li>df -h &gt; $INCIDENT_DIR/disk_usage.txt</li>
+</ul>
+<p># Recent changes</p>
+<p>find /var/www -type f -mtime -1 &gt; $INCIDENT_DIR/recent_changes.txt</p>
+<ul>
+  <li>echo "Incident data collected in $INCIDENT_DIR"</li>
+  <li>Incident Classification</li>
+</ul>
+<p><strong>Level 1:</strong> Informational (logging, monitoring)</p>
+<p><strong>Level 2:</strong> Warning (potential threat)</p>
+<p><strong>Level 3:</strong> Critical (active attack, data breach)</p>
+<p>Escalation Decisions</p>
+<p>Level 1 → Team Lead → Documentation</p>
+<p>Level 2 → Team Lead + Security → Enhanced monitoring</p>
+<p>Level 3 → Immediate escalation → Management + external experts</p>
+<p>Security Update Procedures</p>
+<h3>Weekly Security Checks (Every Monday)</h3>
+<h3>Team Lead Checklist:</h3>
+<p>## Weekly Security Review</p>
+<p>### System Updates</p>
+<p>- [ ] Check for available security updates</p>
+<p>- [ ] Schedule critical patch installation</p>
+<p>- [ ] Update project dependencies (npm, composer, pip)</p>
+<p>### Monitoring</p>
+<p>- [ ] Review security logs for the week</p>
+<p>- [ ] Analyze monitoring alerts</p>
+<p>- [ ] Verify backup functionality</p>
+<p>### Configurations</p>
+<p>- [ ] Validate security headers</p>
+<p>- [ ] Check SSL certificate expiration</p>
+<p>- [ ] Audit user access permissions</p>
+<p>### Team</p>
+<p>- [ ] Discuss security incidents in retrospective</p>
+<p>- [ ] Plan security training</p>
+<p>- [ ] Update procedure documentation</p>
+<h3>Monthly Security Audits</h3>
+<h3>Department Manager Procedure:</h3>
+<ul>
+  <li>Technical Audit</li>
+  <li>#!/bin/bash</li>
+  <li># monthly_security_audit.sh</li>
+  <li>echo "=== Monthly Security Audit ==="</li>
+</ul>
+<p><strong>echo "Date:</strong> $(date)"</p>
+<p># Check users with sudo privileges</p>
+<p>echo "Users with sudo privileges:"</p>
+<p>grep -Po '^sudo.+:\K.*$' /etc/group</p>
+<ul>
+  <li># Check open ports</li>
+  <li>echo "Open ports:"</li>
+  <li>nmap -sT -O localhost</li>
+</ul>
+<p># Check failed login attempts</p>
+<p>echo "Failed login attempts this month:"</p>
+<p>grep "Failed password" /var/log/auth.log | wc -l</p>
+<ul>
+  <li># Check security log size</li>
+  <li>echo "Security log size:"</li>
+  <li>du -sh /var/log/security.log</li>
+  <li>Team Process Audit</li>
+  <li>Security procedure compliance</li>
+  <li>Incident response effectiveness</li>
+  <li>Documentation quality</li>
+  <li>Team knowledge level</li>
+  <li>Monitoring and Control</li>
+  <li>Monitoring Systems for Teams</li>
+  <li>Basic Monitoring (Required for All Teams)</li>
+</ul>
+<ol>
+  <li>Availability and Performance Monitoring</li>
+</ol>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># basic_monitoring.sh - Basic monitoring</li>
+  <li>WEBSITE="https://example.com"</li>
+  <li>LOG_FILE="/var/log/monitoring.log"</li>
+</ul>
+<p># Check availability</p>
+<p>if curl -s --head $WEBSITE | head -n 1 | grep -q "200 OK"; then</p>
+<p><strong>echo "$(date):</strong> $WEBSITE - OK" &gt;&gt; $LOG_FILE</p>
+<p>else</p>
+<p><strong>echo "$(date):</strong> $WEBSITE - DOWN" &gt;&gt; $LOG_FILE</p>
+<p># Send alert</p>
+<p><strong>echo "Website is down!" | mail -s "ALERT:</strong> Website Down" admin@company.com</p>
+<p>fi</p>
+<p># Check security headers</p>
+<p>HEADERS=$(curl -s -I $WEBSITE)</p>
+<p>if echo "$HEADERS" | grep -q "X-Content-Type-Options"; then</p>
+<p><strong>echo "$(date):</strong> Security headers - OK" &gt;&gt; $LOG_FILE</p>
+<p>else</p>
+<p><strong>echo "$(date):</strong> Security headers - MISSING" &gt;&gt; $LOG_FILE</p>
+<p>fi</p>
+<ol>
+  <li>Security Log Monitoring</li>
+</ol>
+<ul>
+  <li>#!/bin/bash</li>
+  <li># log_monitor.sh - Monitor suspicious activity</li>
+  <li>SECURITY_LOG="/var/log/security.log"</li>
+  <li>ALERT_EMAIL="security@company.com"</li>
+</ul>
+<ul>
+  <li># Search for suspicious patterns</li>
+  <li>SUSPICIOUS_PATTERNS=(</li>
+  <li>"union.*select"</li>
+  <li>"&lt;script"</li>
+  <li>"\.\./"</li>
+  <li>"eval\("</li>
+  <li>"base64_decode"</li>
+  <li>)</li>
+</ul>
+<pre class="code-block">for pattern in "${SUSPICIOUS_PATTERNS[@]}"; do
     if grep -i "$pattern" $SECURITY_LOG | tail -100 | grep -q "$(date +%Y-%m-%d)"; then
         echo "Suspicious activity detected: $pattern" | \
         mail -s "ALERT: Suspicious Activity" $ALERT_EMAIL
-    fi
-done
-Advanced Monitoring (For DevOps Teams)
-1. Prometheus + Grafana Configuration
-# prometheus.yml
-global:
-  scrape_interval: 15s
-
-scrape_configs:
-  - job_name: 'security-metrics'
-    static_configs:
-      - targets: ['localhost:9090']
-    metrics_path: /metrics
-    scrape_interval: 30s
-
-  - job_name: 'web-security'
-    static_configs:
-      - targets: ['example.com:443']
-    metrics_path: /security-check
-    scheme: https
-2. Custom Security Metrics
-#!/usr/bin/env python3
-# security_metrics.py - Custom metrics for Prometheus
-from prometheus_client import start_http_server, Counter, Gauge
-import time
-import requests
-import re
-
-# Metrics
-failed_logins = Counter('failed_logins_total', 'Total failed login attempts')
-security_headers = Gauge('security_headers_present', 'Security headers present', ['header'])
-response_time = Gauge('security_check_response_time', 'Security check response time')
-
-def check_security_headers(url):
+    fi</pre>
+<ul>
+  <li>done</li>
+  <li>Advanced Monitoring (For DevOps Teams)</li>
+</ul>
+<ol>
+  <li>Prometheus + Grafana Configuration</li>
+</ol>
+<p># prometheus.yml</p>
+<p>global:</p>
+<p><strong>scrape_interval:</strong> 15s</p>
+<p>scrape_configs:</p>
+<p><strong>- job_name:</strong> 'security-metrics'</p>
+<p>static_configs:</p>
+<p><strong>- targets:</strong> ['localhost:9090']</p>
+<p><strong>metrics_path:</strong> /metrics</p>
+<p><strong>scrape_interval:</strong> 30s</p>
+<p><strong>- job_name:</strong> 'web-security'</p>
+<p>static_configs:</p>
+<p><strong>- targets:</strong> ['example.com:443']</p>
+<p><strong>metrics_path:</strong> /security-check</p>
+<p><strong>scheme:</strong> https</p>
+<ol>
+  <li>Custom Security Metrics</li>
+</ol>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li># security_metrics.py - Custom metrics for Prometheus</li>
+  <li>from prometheus_client import start_http_server, Counter, Gauge</li>
+  <li>import time</li>
+  <li>import requests</li>
+  <li>import re</li>
+</ul>
+<ul>
+  <li># Metrics</li>
+  <li>failed_logins = Counter('failed_logins_total', 'Total failed login attempts')</li>
+</ul>
+<p>security_headers = Gauge('security_headers_present', 'Security headers present', ['header'])</p>
+<p>response_time = Gauge('security_check_response_time', 'Security check response time')</p>
+<pre class="code-block">def check_security_headers(url):
     """Check security headers"""
     try:
         response = requests.get(url, timeout=10)
-        headers = response.headers
-        
-        # Check for important headers
-        security_headers.labels(header='x-content-type-options').set(
-            1 if 'X-Content-Type-Options' in headers else 0
-        )
-        security_headers.labels(header='x-frame-options').set(
-            1 if 'X-Frame-Options' in headers else 0
-        )
-        security_headers.labels(header='strict-transport-security').set(
-            1 if 'Strict-Transport-Security' in headers else 0
-        )
-        
-        return response.elapsed.total_seconds()
+        headers = response.headers</pre>
+<ul>
+  <li># Check for important headers</li>
+  <li>security_headers.labels(header='x-content-type-options').set(</li>
+  <li>1 if 'X-Content-Type-Options' in headers else 0</li>
+  <li>)</li>
+  <li>security_headers.labels(header='x-frame-options').set(</li>
+  <li>1 if 'X-Frame-Options' in headers else 0</li>
+  <li>)</li>
+  <li>security_headers.labels(header='strict-transport-security').set(</li>
+  <li>1 if 'Strict-Transport-Security' in headers else 0</li>
+  <li>)</li>
+</ul>
+<pre class="code-block">        return response.elapsed.total_seconds()
     except Exception as e:
         print(f"Check error: {e}")
-        return 0
-
-def count_failed_logins():
+        return 0</pre>
+<pre class="code-block">def count_failed_logins():
     """Count failed login attempts"""
     try:
         with open('/var/log/auth.log', 'r') as f:
@@ -505,62 +791,59 @@ def count_failed_logins():
             failed_count = len(re.findall(r'Failed password', content))
             failed_logins._value._value = failed_count
     except Exception as e:
-        print(f"Log reading error: {e}")
-
-if __name__ == '__main__':
+        print(f"Log reading error: {e}")</pre>
+<pre class="code-block">if __name__ == '__main__':
     # Start HTTP server for metrics
-    start_http_server(8000)
-    
-    while True:
+    start_http_server(8000)</pre>
+<pre class="code-block">    while True:
         # Update metrics every 60 seconds
         response_time_val = check_security_headers('https://example.com')
-        response_time.set(response_time_val)
-        
-        count_failed_logins()
-        
-        time.sleep(60)
-Dashboards and Reporting
-Weekly Reports for Team Leads
-Automated Report Generator:
-#!/usr/bin/env python3
-# weekly_security_report.py
-import datetime
-import json
-from collections import defaultdict
-
-def generate_weekly_report():
-    """Generate weekly security report"""
-    
-    # Report period
-    end_date = datetime.datetime.now()
-    start_date = end_date - datetime.timedelta(days=7)
-    
-    report = {
+        response_time.set(response_time_val)</pre>
+<p>count_failed_logins()</p>
+<ul>
+  <li>time.sleep(60)</li>
+  <li>Dashboards and Reporting</li>
+  <li>Weekly Reports for Team Leads</li>
+</ul>
+<h3>Automated Report Generator:</h3>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li># weekly_security_report.py</li>
+  <li>import datetime</li>
+  <li>import json</li>
+  <li>from collections import defaultdict</li>
+</ul>
+<pre class="code-block">def generate_weekly_report():
+    """Generate weekly security report"""</pre>
+<ul>
+  <li># Report period</li>
+  <li>end_date = datetime.datetime.now()</li>
+  <li>start_date = end_date - datetime.timedelta(days=7)</li>
+</ul>
+<pre class="code-block">    report = {
         'period': f"{start_date.strftime('%Y-%m-%d')} - {end_date.strftime('%Y-%m-%d')}",
         'summary': {},
         'incidents': [],
         'metrics': {},
         'recommendations': []
-    }
-    
-    # Analyze security logs
-    security_events = analyze_security_logs(start_date, end_date)
-    report['summary']['security_events'] = len(security_events)
-    
-    # Check header compliance
-    headers_status = check_headers_compliance()
-    report['metrics']['headers_compliance'] = headers_status
-    
-    # Recommendations
-    if security_events:
-        report['recommendations'].append("Security events detected - analysis required")
-    
-    if not headers_status['all_present']:
-        report['recommendations'].append("Not all security headers are configured")
-    
-    return report
-
-def analyze_security_logs(start_date, end_date):
+    }</pre>
+<ul>
+  <li># Analyze security logs</li>
+  <li>security_events = analyze_security_logs(start_date, end_date)</li>
+  <li>report['summary']['security_events'] = len(security_events)</li>
+</ul>
+<ul>
+  <li># Check header compliance</li>
+  <li>headers_status = check_headers_compliance()</li>
+  <li>report['metrics']['headers_compliance'] = headers_status</li>
+</ul>
+<p># Recommendations</p>
+<p>if security_events:</p>
+<p>report['recommendations'].append("Security events detected - analysis required")</p>
+<p>if not headers_status['all_present']:</p>
+<p>report['recommendations'].append("Not all security headers are configured")</p>
+<pre class="code-block">    return report</pre>
+<pre class="code-block">def analyze_security_logs(start_date, end_date):
     """Analyze security logs for period"""
     events = []
     try:
@@ -570,248 +853,283 @@ def analyze_security_logs(start_date, end_date):
                 if 'SECURITY' in line:
                     events.append(line.strip())
     except FileNotFoundError:
-        pass
-    
-    return events
-
-def check_headers_compliance():
+        pass</pre>
+<pre class="code-block">    return events</pre>
+<pre class="code-block">def check_headers_compliance():
     """Check security header compliance"""
-    import requests
-    
-    try:
-        response = requests.get('https://example.com', timeout=10)
-        headers = response.headers
-        
-        required_headers = [
+    import requests</pre>
+<p>try:</p>
+<ul>
+  <li>response = requests.get('https://example.com', timeout=10)</li>
+  <li>headers = response.headers</li>
+</ul>
+<pre class="code-block">        required_headers = [
             'X-Content-Type-Options',
             'X-Frame-Options', 
             'Strict-Transport-Security',
             'Content-Security-Policy'
-        ]
-        
-        present = [h for h in required_headers if h in headers]
-        
-        return {
+        ]</pre>
+<pre class="code-block">        present = [h for h in required_headers if h in headers]</pre>
+<pre class="code-block">        return {
             'total_required': len(required_headers),
             'present': len(present),
             'missing': [h for h in required_headers if h not in present],
             'all_present': len(present) == len(required_headers)
         }
     except Exception as e:
-        return {'error': str(e)}
-
-if __name__ == '__main__':
-    report = generate_weekly_report()
-    
-    # Save report
-    filename = f"security_report_{datetime.datetime.now().strftime('%Y%m%d')}.json"
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(report, f, indent=2, ensure_ascii=False)
-    
-    print(f"Report saved: {filename}")
-    
-    # Send via email (optional)
-    # send_report_email(report)
-Team Collaboration and Delegation
-Responsibility Matrix (RACI)
-Task
-Backend
-Frontend
-DevOps
-QA
-Security
-Block API vulnerabilities
-R
-I
-C
-A
-C
-Implement CSP/SRI
-I
-R
-C
-A
-C
-Configure server headers
-I
-I
-R
-A
-C
-Security monitoring
-I
-I
-R
-I
-A
-Team training
-C
-C
-C
-C
-R
-Incident response
-C
-C
-C
-C
-R
-Legend:
-R (Responsible) - Responsible for execution
-A (Accountable) - Accountable for results
-C (Consulted) - Consulted
-I (Informed) - Informed
-Team Action Plans
-Backend Team (Priority 1)
-Backend Team Lead: [Name] Completion Deadline: 24-48 hours
-Tasks:
-Immediate (0-4 hours)
-Block access to /wp-json/wp/v2/users
-Audit all REST API endpoints
-Create list of all public APIs
-Short-term (1-2 days)
-Implement authentication for sensitive endpoints
-Set up rate limiting
-Add API request logging
-Medium-term (1 week)
-Conduct full API security review
-Implement input validation
-Set up automated security tests
-Resources:
-2 senior developers
-1 junior for testing
-Security team consultations
-Completion Criteria:
-☐ All vulnerable endpoints blocked
-☐ Authentication working correctly
-☐ Logging configured
-☐ Tests passing successfully
-Frontend Team (Priority 2)
-Frontend Team Lead: [Name] Completion Deadline: 48-72 hours
-Tasks:
-Immediate (0-8 hours)
-Implement basic security headers
-Add CSP in report-only mode
-Test on staging
-Short-term (1-3 days)
-Add SRI for all external resources
-Switch CSP to enforcement mode
-Update build process
-Medium-term (1 week)
-Automate SRI generation
-Set up CSP violation monitoring
-Train team on best practices
-Resources:
-2 frontend developers
-1 DevOps for CI/CD setup
-QA team support
-Completion Criteria:
-☐ CSP configured and working
-☐ SRI added for all resources
-☐ No browser violations
-☐ CI/CD checks headers
-DevOps Team (Priority 2)
-DevOps Team Lead: [Name] Completion Deadline: 72 hours
-Tasks:
-Immediate (0-4 hours)
-Apply security configurations to web servers
-Hide server software versions
-Configure forced HTTPS
-Short-term (1-3 days)
-Set up centralized logging
-Implement security monitoring
-Automate configuration checks
-Medium-term (1 week)
-Set up security event alerting
-Implement Infrastructure as Code
-Audit all servers
-Resources:
-2 DevOps engineers
-1 SRE for monitoring
-Production server access
-Completion Criteria:
-☐ Security headers configured
-☐ HTTPS enforced
-☐ Monitoring operational
-☐ Alerts configured
-Communication Plan
-Daily Standups (During Crisis)
-Time: 9:00 AM daily Participants: All team leads + Security lead Format: 15 minutes maximum
-Structure:
-Critical task status (5 min)
-New issues and blockers (5 min)
-Daily plans (3 min)
-Questions and coordination (2 min)
-Weekly Retrospectives
-Time: Friday, 4:00 PM Participants: Extended team Duration: 1 hour
-Agenda:
-What went well (15 min)
-What can be improved (20 min)
-Security lessons learned (15 min)
-Next week plans (10 min)
-Communication Channels
-Slack Channels:
-#security-incident - Emergency notifications
-#security-general - General security questions
-#security-updates - Updates and patches
-Email Lists:
-security-team@company.com - Security team
-team-leads@company.com - All team leads
-security-alerts@company.com - Critical alerts
-Conclusion and Next Steps
-Critical Actions for Next 72 Hours
-Day 1 (0-24 hours):
-✅ Backend: Block vulnerable API endpoints
-✅ DevOps: Apply basic security headers
-✅ All teams: Set up emergency communication
-Day 2 (24-48 hours):
-✅ Frontend: Implement CSP and basic headers
-✅ Backend: Complete API security audit
-✅ QA: Validate all changes
-Day 3 (48-72 hours):
-✅ DevOps: Set up monitoring and alerting
-✅ Frontend: Add SRI for external resources
-✅ All teams: Document changes
-Medium-term Goals (1-4 weeks)
-Week 1:
-Complete implementation of all basic security measures
-Set up automated monitoring
-Train teams on security procedures
-Week 2-3:
-Implement advanced monitoring tools
-Automate security checks in CI/CD
-Conduct internal penetration testing
-Week 4:
-Complete audit of implemented measures
-Document all procedures
-Plan long-term strategy
-Success Metrics
-Technical Metrics:
-Threat detection time: &lt; 1 hour
-Incident response time: &lt; 4 hours
-Security header coverage: 100%
-Vulnerability count: 90% reduction
-Process Metrics:
-Security procedure compliance: &gt; 95%
-Security task completion: within SLA
-Documentation quality: complete coverage
-Team knowledge level: regular testing
-Resources and Support
-Internal Resources:
-Security team: consultations and support
-DevOps team: infrastructure support
-QA team: testing and validation
-External Resources:
-Security consultants (if needed)
-Specialized monitoring tools
-Training materials and courses
-Emergency Contacts:
-Security Lead: [contact details]
-DevOps Lead: [contact details]
-On-call Administrator: [contact details]
-		
-This document is a living guide and should be updated as threats evolve and our security processes mature. All team leads are responsible for keeping it current in their areas of expertise.
-    </pre>
+        return {'error': str(e)}</pre>
+<pre class="code-block">if __name__ == '__main__':
+    report = generate_weekly_report()</pre>
+<ul>
+  <li># Save report</li>
+  <li>filename = f"security_report_{datetime.datetime.now().strftime('%Y%m%d')}.json"</li>
+</ul>
+<p>with open(filename, 'w', encoding='utf-8') as f:</p>
+<p>json.dump(report, f, indent=2, ensure_ascii=False)</p>
+<pre class="code-block">    print(f"Report saved: {filename}")</pre>
+<ul>
+  <li># Send via email (optional)</li>
+  <li># send_report_email(report)</li>
+  <li>Team Collaboration and Delegation</li>
+  <li>Responsibility Matrix (RACI)</li>
+  <li>Task</li>
+  <li>Backend</li>
+  <li>Frontend</li>
+  <li>DevOps</li>
+  <li>QA</li>
+  <li>Security</li>
+  <li>Block API vulnerabilities</li>
+  <li>R</li>
+  <li>I</li>
+  <li>C</li>
+  <li>A</li>
+  <li>C</li>
+  <li>Implement CSP/SRI</li>
+  <li>I</li>
+  <li>R</li>
+  <li>C</li>
+  <li>A</li>
+  <li>C</li>
+  <li>Configure server headers</li>
+  <li>I</li>
+  <li>I</li>
+  <li>R</li>
+  <li>A</li>
+  <li>C</li>
+  <li>Security monitoring</li>
+  <li>I</li>
+  <li>I</li>
+  <li>R</li>
+  <li>I</li>
+  <li>A</li>
+  <li>Team training</li>
+  <li>C</li>
+  <li>C</li>
+  <li>C</li>
+  <li>C</li>
+  <li>R</li>
+  <li>Incident response</li>
+  <li>C</li>
+  <li>C</li>
+  <li>C</li>
+  <li>C</li>
+  <li>R</li>
+</ul>
+<h3>Legend:</h3>
+<ul>
+  <li>R (Responsible) - Responsible for execution</li>
+  <li>A (Accountable) - Accountable for results</li>
+  <li>C (Consulted) - Consulted</li>
+  <li>I (Informed) - Informed</li>
+  <li>Team Action Plans</li>
+</ul>
+<h3>Backend Team (Priority 1)</h3>
+<p><strong>Backend Team Lead:</strong> [Name] Completion Deadline: 24-48 hours</p>
+<h3>Tasks:</h3>
+<ul>
+  <li>Immediate (0-4 hours)</li>
+  <li>Block access to /wp-json/wp/v2/users</li>
+  <li>Audit all REST API endpoints</li>
+  <li>Create list of all public APIs</li>
+  <li>Short-term (1-2 days)</li>
+  <li>Implement authentication for sensitive endpoints</li>
+  <li>Set up rate limiting</li>
+  <li>Add API request logging</li>
+  <li>Medium-term (1 week)</li>
+  <li>Conduct full API security review</li>
+  <li>Implement input validation</li>
+</ul>
+<h3>Set up automated security tests</h3>
+<h3>Resources:</h3>
+<ul>
+  <li>2 senior developers</li>
+  <li>1 junior for testing</li>
+  <li>Security team consultations</li>
+</ul>
+<h3>Completion Criteria:</h3>
+<ul class="checklist">
+  <li>All vulnerable endpoints blocked</li>
+  <li>Authentication working correctly</li>
+  <li>Logging configured</li>
+  <li>Tests passing successfully</li>
+</ul>
+<h3>Frontend Team (Priority 2)</h3>
+<p><strong>Frontend Team Lead:</strong> [Name] Completion Deadline: 48-72 hours</p>
+<h3>Tasks:</h3>
+<ul>
+  <li>Immediate (0-8 hours)</li>
+  <li>Implement basic security headers</li>
+  <li>Add CSP in report-only mode</li>
+  <li>Test on staging</li>
+  <li>Short-term (1-3 days)</li>
+  <li>Add SRI for all external resources</li>
+  <li>Switch CSP to enforcement mode</li>
+  <li>Update build process</li>
+  <li>Medium-term (1 week)</li>
+  <li>Automate SRI generation</li>
+  <li>Set up CSP violation monitoring</li>
+</ul>
+<h3>Train team on best practices</h3>
+<h3>Resources:</h3>
+<ul>
+  <li>2 frontend developers</li>
+  <li>1 DevOps for CI/CD setup</li>
+  <li>QA team support</li>
+</ul>
+<h3>Completion Criteria:</h3>
+<ul class="checklist">
+  <li>CSP configured and working</li>
+  <li>SRI added for all resources</li>
+  <li>No browser violations</li>
+  <li>CI/CD checks headers</li>
+</ul>
+<h3>DevOps Team (Priority 2)</h3>
+<p><strong>DevOps Team Lead:</strong> [Name] Completion Deadline: 72 hours</p>
+<h3>Tasks:</h3>
+<ul>
+  <li>Immediate (0-4 hours)</li>
+  <li>Apply security configurations to web servers</li>
+  <li>Hide server software versions</li>
+  <li>Configure forced HTTPS</li>
+  <li>Short-term (1-3 days)</li>
+  <li>Set up centralized logging</li>
+  <li>Implement security monitoring</li>
+  <li>Automate configuration checks</li>
+  <li>Medium-term (1 week)</li>
+  <li>Set up security event alerting</li>
+  <li>Implement Infrastructure as Code</li>
+</ul>
+<h3>Audit all servers</h3>
+<h3>Resources:</h3>
+<ul>
+  <li>2 DevOps engineers</li>
+  <li>1 SRE for monitoring</li>
+  <li>Production server access</li>
+</ul>
+<h3>Completion Criteria:</h3>
+<ul class="checklist">
+  <li>Security headers configured</li>
+  <li>HTTPS enforced</li>
+  <li>Monitoring operational</li>
+  <li>Alerts configured</li>
+</ul>
+</div>
+<div class="section">
+<h2>Communication Plan</h2>
+<h3>Daily Standups (During Crisis)</h3>
+<p><strong>Time:</strong> 9:00 AM daily Participants: All team leads + Security lead Format: 15 minutes maximum</p>
+<h3>Structure:</h3>
+<p>Critical task status (5 min)</p>
+<p>New issues and blockers (5 min)</p>
+<p>Daily plans (3 min)</p>
+<p>Questions and coordination (2 min)</p>
+<h3>Weekly Retrospectives</h3>
+<p><strong>Time:</strong> Friday, 4:00 PM Participants: Extended team Duration: 1 hour</p>
+<h3>Agenda:</h3>
+<p>What went well (15 min)</p>
+<p>What can be improved (20 min)</p>
+<p>Security lessons learned (15 min)</p>
+<p>Next week plans (10 min)</p>
+<h3>Communication Channels</h3>
+<h3>Slack Channels:</h3>
+<ul>
+  <li>#security-incident - Emergency notifications</li>
+  <li>#security-general - General security questions</li>
+  <li>#security-updates - Updates and patches</li>
+</ul>
+<h3>Email Lists:</h3>
+<ul>
+  <li>security-team@company.com - Security team</li>
+  <li>team-leads@company.com - All team leads</li>
+  <li>security-alerts@company.com - Critical alerts</li>
+</ul>
+</div>
+<div class="section">
+<h2>Conclusion and Next Steps</h2>
+<h3>Critical Actions for Next 72 Hours</h3>
+<h3>Day 1 (0-24 hours):</h3>
+<ul class="status-list">
+  <li class="ok">✅ Backend: Block vulnerable API endpoints</li>
+  <li class="ok">✅ DevOps: Apply basic security headers</li>
+  <li class="ok">✅ All teams: Set up emergency communication</li>
+</ul>
+<h3>Day 2 (24-48 hours):</h3>
+<ul class="status-list">
+  <li class="ok">✅ Frontend: Implement CSP and basic headers</li>
+  <li class="ok">✅ Backend: Complete API security audit</li>
+  <li class="ok">✅ QA: Validate all changes</li>
+</ul>
+<h3>Day 3 (48-72 hours):</h3>
+<ul class="status-list">
+  <li class="ok">✅ DevOps: Set up monitoring and alerting</li>
+  <li class="ok">✅ Frontend: Add SRI for external resources</li>
+  <li class="ok">✅ All teams: Document changes</li>
+</ul>
+<h3>Medium-term Goals (1-4 weeks)</h3>
+<h3>Week 1:</h3>
+<p>Complete implementation of all basic security measures</p>
+<p>Set up automated monitoring</p>
+<p>Train teams on security procedures</p>
+<h3>Week 2-3:</h3>
+<ul>
+  <li>Implement advanced monitoring tools</li>
+  <li>Automate security checks in CI/CD</li>
+  <li>Conduct internal penetration testing</li>
+</ul>
+<h3>Week 4:</h3>
+<ul>
+  <li>Complete audit of implemented measures</li>
+  <li>Document all procedures</li>
+  <li>Plan long-term strategy</li>
+  <li>Success Metrics</li>
+</ul>
+<h3>Technical Metrics:</h3>
+<p><strong>Threat detection time:</strong> &lt; 1 hour</p>
+<p><strong>Incident response time:</strong> &lt; 4 hours</p>
+<p><strong>Security header coverage:</strong> 100%</p>
+<p><strong>Vulnerability count:</strong> 90% reduction</p>
+<h3>Process Metrics:</h3>
+<p><strong>Security procedure compliance:</strong> &gt; 95%</p>
+<p><strong>Security task completion:</strong> within SLA</p>
+<p><strong>Documentation quality:</strong> complete coverage</p>
+<p><strong>Team knowledge level:</strong> regular testing</p>
+<h3>Resources and Support</h3>
+<h3>Internal Resources:</h3>
+<p><strong>Security team:</strong> consultations and support</p>
+<p><strong>DevOps team:</strong> infrastructure support</p>
+<p><strong>QA team:</strong> testing and validation</p>
+<h3>External Resources:</h3>
+<ul>
+  <li>Security consultants (if needed)</li>
+  <li>Specialized monitoring tools</li>
+  <li>Training materials and courses</li>
+</ul>
+<h3>Emergency Contacts:</h3>
+<p><strong>Security Lead:</strong> [contact details]</p>
+<p><strong>DevOps Lead:</strong> [contact details]</p>
+<p><strong>On-call Administrator:</strong> [contact details]</p>
+<p>This document is a living guide and should be updated as threats evolve and our security processes mature. All team leads are responsible for keeping it current in their areas of expertise.</p>
+</div>
   </main>
 </body>
 </html>

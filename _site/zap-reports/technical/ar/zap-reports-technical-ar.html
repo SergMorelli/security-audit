@@ -5,39 +5,288 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>تقرير ZAP التقني - عربي</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; direction: rtl; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; text-align: right; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.6; text-align: right; direction: rtl; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Arabic', 'Noto Sans', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #d5e0ef 100%);
+      color: #1a2332;
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: linear-gradient(135deg, #0d47a1 0%, #0a1628 100%);
+      color: #fff;
+      padding: 52px 48px;
+      margin-bottom: 36px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .report-header h1 {
+      font-size: 1.95em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      line-height: 1.3;
+    }
+    .report-header .subtitle {
+      font-size: 1.05em;
+      opacity: .85;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .report-header .meta {
+      font-size: .9em;
+      opacity: .65;
+      position: relative;
+    }
+    .tool-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.9);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .82em;
+      margin-top: 18px;
+      position: relative;
+      letter-spacing: .04em;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: #fff;
+      padding: 34px 40px;
+      margin-bottom: 26px;
+      border-radius: 12px;
+      box-shadow: 0 2px 18px rgba(0,0,0,.07);
+      border-top: 3px solid #0d47a1;
+    }
+
+    /* ── Headings ── */
+    h2 {
+      font-size: 1.55em;
+      color: #0d47a1;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e4e9f0;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 1.15em;
+      color: #1a2332;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      padding-left: 10px;
+      border-left: 3px solid #0d47a1;
+    }
+    h4 {
+      font-size: 1.0em;
+      color: #2c3e50;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 18px 0;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .alert-critical {
+      background: #fff0f0;
+      border-left: 5px solid #c62828;
+      color: #b71c1c;
+    }
+    .alert-warning {
+      background: #fff8e1;
+      border-left: 5px solid #f57c00;
+      color: #e65100;
+    }
+    .alert-info {
+      background: #e8f4fd;
+      border-left: 5px solid #0d47a1;
+      color: #0d47a1;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,.1);
+      font-size: .93em;
+    }
+    thead {
+      background: #0d47a1;
+      color: #fff;
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: .88em;
+      letter-spacing: .03em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #2c3e50;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:hover { background: #eef2f7; transition: background .15s; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* KV (key-value) table variant */
+    table.kv-table th {
+      background: #f0f4f8;
+      color: #1a2332;
+      width: 36%;
+    }
+    table.kv-table td { color: #37474f; }
+
+    /* ── Lists ── */
+    ul, ol { margin: 10px 0; padding-left: 22px; }
+    li { margin: 6px 0; line-height: 1.65; color: #2c3e50; }
+
+    ul.checklist { list-style: none; padding-left: 0; }
+    ul.checklist li { padding: 5px 8px 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+    ul.checklist li::before { content: "☐"; color: #0d47a1; font-size: 1.1em; flex-shrink: 0; }
+    ul.checklist li.done::before { content: "☑"; color: #2e7d32; }
+
+    ul.status-list { list-style: none; padding-left: 0; }
+    ul.status-list li { padding: 4px 0; }
+    ul.status-list li.ok   { color: #2e7d32; }
+    ul.status-list li.fail { color: #c62828; }
+    ul.status-list li.warn { color: #e65100; }
+
+    /* ── TOC ── */
+    .toc { background: #f6f9fc; border-radius: 8px; padding: 20px 26px; }
+    .toc ol { counter-reset: toc-cnt; list-style: none; padding: 0; }
+    .toc li {
+      counter-increment: toc-cnt;
+      padding: 7px 0;
+      border-bottom: 1px solid #e4e9f0;
+      color: #0d47a1;
+      font-weight: 500;
+    }
+    .toc li::before {
+      content: counter(toc-cnt) ". ";
+      font-weight: 700;
+      min-width: 26px;
+      display: inline-block;
+    }
+    .toc li:last-child { border-bottom: none; }
+
+    /* ── Code ── */
+    code {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      color: #c62828;
+      font-size: .88em;
+    }
+    pre.code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 22px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      font-size: .87em;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── Misc ── */
+    p { margin: 10px 0; color: #2c3e50; }
+    .phase-box {
+      background: #f6f9fc;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid #dce6f0;
+    }
+
+    /* ── RTL support ── */
+    [dir="rtl"] h3 { padding-left: 0; padding-right: 10px; border-left: none; border-right: 3px solid #0d47a1; }
+    [dir="rtl"] .alert { border-left: none; border-right: 5px solid; }
+    [dir="rtl"] .alert-critical { border-right-color: #c62828; }
+    [dir="rtl"] .alert-warning  { border-right-color: #f57c00; }
+    [dir="rtl"] .alert-info     { border-right-color: #0d47a1; }
+    [dir="rtl"] th { text-align: right; }
+    [dir="rtl"] ul, [dir="rtl"] ol { padding-left: 0; padding-right: 22px; }
+    [dir="rtl"] ul.checklist li { padding-right: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .section { box-shadow: none; border: 1px solid #e0e0e0; page-break-inside: avoid; }
+      .report-header { box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+
   </style>
 </head>
 <body>
   <main>
-    <h1>تقرير ZAP التقني - عربي</h1>
-    <pre>
-تقييم الامتثال الأمني التقني: تحليل البنية التحتية لموقع example.com
-كبير مهندسي الأمان
-2025-12-31
-الملخص التقني التنفيذي
-يقدم هذا التقييم التقني الشامل تحليلاً لوضعية الأمان لموقع https://example.com مقابل أطر عمل الامتثال المتعددة بما في ذلك OWASP Top 10 2021، وإطار عمل الأمن السيبراني NIST 2.0، ومتطلبات SOC 2 Type II، ومعايير ISO 27001. يستند التحليل إلى المسح الأمني الآلي المنفذ في 30 ديسمبر 2025 باستخدام OWASP ZAP 2.17.0 من Checkmarx.
-🚨 تنبيه أمني حرج: تم اكتشاف تعرض للمعلومات الشخصية (PII) - مطلوب معالجة فورية!
-النتائج التقنية الرئيسية:
-تم تحديد 29 ثغرة أمنية عبر مستويات خطورة متعددة
-ثغرة إفشاء PII حرجة بتقييم ثقة عالي
-غياب آليات الحماية الأساسية في طبقة تطبيق الويب
-عدم امتثال للمتطلبات الأساسية عبر جميع الأطر المقيمة
-جدول المحتويات
-المنهجية التقنية وسلسلة الأدوات
-تحليل هندسة البنية التحتية
-التحليل العميق للثغرات
-تقييم الامتثال متعدد الأطر
-خارطة طريق المعالجة التقنية
-استراتيجية تكامل DevSecOps
-تنفيذ المراقبة والأتمتة
-المنهجية التقنية وسلسلة الأدوات
-بنية المسح التحتية
-سلسلة الأدوات الأساسية:
-security_scanner:
+<div class="report-header">
+  <h1>تقييم الامتثال الأمني التقني: تحليل البنية التحتية لموقع example.com</h1>
+  <p class="subtitle">كبير مهندسي الأمان</p>
+  <p class="meta">2025-12-31</p>
+  <span class="tool-badge">OWASP ZAP 2.17.0 &mdash; Checkmarx Security Platform</span>
+</div>
+<div class="section">
+<p>يقدم هذا التقييم التقني الشامل تحليلاً لوضعية الأمان لموقع https://example.com مقابل أطر عمل الامتثال المتعددة بما في ذلك OWASP Top 10 2021، وإطار عمل الأمن السيبراني NIST 2.0، ومتطلبات SOC 2 Type II، ومعايير ISO 27001. يستند التحليل إلى المسح الأمني الآلي المنفذ في 30 ديسمبر 2025 باستخدام OWASP ZAP 2.17.0 من Checkmarx.</p>
+<div class="alert alert-critical">🚨 تنبيه أمني حرج: تم اكتشاف تعرض للمعلومات الشخصية (PII) - مطلوب معالجة فورية!</div>
+<h3>النتائج التقنية الرئيسية:</h3>
+<p>تم تحديد 29 ثغرة أمنية عبر مستويات خطورة متعددة</p>
+<p>ثغرة إفشاء PII حرجة بتقييم ثقة عالي</p>
+<p>غياب آليات الحماية الأساسية في طبقة تطبيق الويب</p>
+<p>عدم امتثال للمتطلبات الأساسية عبر جميع الأطر المقيمة</p>
+</div>
+<div class="section">
+<h2>جدول المحتويات</h2>
+<div class="toc"><ol>
+  <li>المنهجية التقنية وسلسلة الأدوات</li>
+  <li>تحليل هندسة البنية التحتية</li>
+  <li>التحليل العميق للثغرات</li>
+  <li>تقييم الامتثال متعدد الأطر</li>
+  <li>خارطة طريق المعالجة التقنية</li>
+  <li>استراتيجية تكامل DevSecOps</li>
+  <li>تنفيذ المراقبة والأتمتة</li>
+</ol></div>
+<ul>
+  <li>المنهجية التقنية وسلسلة الأدوات</li>
+  <li>بنية المسح التحتية</li>
+</ul>
+<h3>سلسلة الأدوات الأساسية:</h3>
+<pre class="code-block">security_scanner:
   tool: "OWASP ZAP 2.17.0"
   engine: "Checkmarx Security Platform"
   scan_date: "2025-12-30T19:00:53Z"
@@ -45,50 +294,48 @@ security_scanner:
   coverage:
     endpoints: 290
     scan_depth: "comprehensive"
-    contexts: "all_included"
-
-scan_configuration:
+    contexts: "all_included"</pre>
+<pre class="code-block">scan_configuration:
   risk_levels: ["high", "medium", "low", "informational"]
   confidence_levels: ["user_confirmed", "high", "medium", "low"]
-  excluded_levels: ["false_positive"]
-  
-  passive_rules:
+  excluded_levels: ["false_positive"]</pre>
+<pre class="code-block">  passive_rules:
     enabled: true
-    custom_rules: []
-  
-  active_rules:
+    custom_rules: []</pre>
+<pre class="code-block">  active_rules:
     enabled: true
     injection_tests: true
     xss_tests: true
-    authentication_tests: true
-مصفوفة توزيع الثغرات
-مستوى المخاطر
-العدد
-النسبة المئوية
-توزيع الثقة
-🔴 حرج
-1
-3.4%
-عالي: 1
-🟡 عالي
-3
-10.3%
-عالي: 2، متوسط: 1
-🔵 متوسط
-4
-13.8%
-عالي: 2، متوسط: 1، منخفض: 1
-ℹ️ منخفض
-21
-72.4%
-متوسط: 18، منخفض: 3
-المجموع
-29
-100%
--
-مقاييس الأداء والجودة
-تحليل أداء المسح:
-{
+    authentication_tests: true</pre>
+<table><thead><tr><th>مصفوفة توزيع الثغرات</th><th>مستوى المخاطر</th><th>العدد</th><th>النسبة المئوية</th></tr></thead><tbody><tr><td>توزيع الثقة</td><td>🔴 حرج</td><td>1</td><td>3.4%</td></tr></tbody></table>
+<p><strong>عالي:</strong> 1</p>
+<ul>
+  <li>🟡 عالي</li>
+  <li>3</li>
+  <li>10.3%</li>
+</ul>
+<p><strong>عالي:</strong> 2، متوسط: 1</p>
+<ul>
+  <li>🔵 متوسط</li>
+  <li>4</li>
+  <li>13.8%</li>
+</ul>
+<p><strong>عالي:</strong> 2، متوسط: 1، منخفض: 1</p>
+<ul>
+  <li>ℹ️ منخفض</li>
+  <li>21</li>
+  <li>72.4%</li>
+</ul>
+<p><strong>متوسط:</strong> 18، منخفض: 3</p>
+<ul>
+  <li>المجموع</li>
+  <li>29</li>
+  <li>100%</li>
+  <li>-</li>
+</ul>
+<h3>مقاييس الأداء والجودة</h3>
+<h3>تحليل أداء المسح:</h3>
+<pre class="code-block">{
   "response_metrics": {
     "slow_responses": "100%",
     "http_2xx": "43%",
@@ -102,256 +349,246 @@ scan_configuration:
     "coverage_completeness": "95%",
     "false_positive_rate": "&lt; 5%"
   }
-}
-تحليل هندسة البنية التحتية
-التحليل العميق للمكدس التقني
-الهندسة متعددة الطبقات:
-┌─────────────────────────────────────────────────────────┐
-│                طبقة CDN (Cloudflare)                   │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  • دعم HTTP/3                                   │    │
-│  │  • تحليلات Browser Insights                    │    │
-│  │  • حماية DDoS (أساسية)                         │    │
-│  │  • إنهاء SSL/TLS                               │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────┬───────────────────────────────────┘
-                      │ HTTPS/HTTP/3
-┌─────────────────────▼───────────────────────────────────┐
-│              طبقة خادم الويب (LiteSpeed)               │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  • خادم ويب LiteSpeed                          │    │
-│  │  • إضافة LiteSpeed Cache                       │    │
-│  │  • تنفيذ HSTS جزئي                             │    │
-│  │  │  • رؤوس الأمان مفقودة                        │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────┬───────────────────────────────────┘
-                      │ FastCGI/LSAPI
-┌─────────────────────▼───────────────────────────────────┐
-│            طبقة التطبيق (PHP/WordPress)                │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  • نواة WordPress CMS                          │    │
-│  │  • محرر الكتل (Gutenberg)                       │    │
-│  │  • قالب Blocksy                               │    │
-│  │  • إضافة Stackable                            │    │
-│  │  • إضافات WordPress متعددة                     │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────┬───────────────────────────────────┘
-                      │ MySQL/MariaDB
-┌─────────────────────▼───────────────────────────────────┐
-│                 طبقة قاعدة البيانات                     │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │  • قاعدة بيانات MySQL/MariaDB                   │    │
-│  │  • مخطط قاعدة بيانات WordPress                  │    │
-│  │  • تخزين بيانات المستخدم (معرض للخطر)           │    │
-│  └─────────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────────┘
-تحليل التبعيات الخارجية
-تكامل خدمات الطرف الثالث:
-external_services:
-  fonts:
-    - service: "Google Fonts API"
-      endpoint: "fonts.googleapis.com"
+}</pre>
+<ul>
+  <li>تحليل هندسة البنية التحتية</li>
+  <li>التحليل العميق للمكدس التقني</li>
+</ul>
+<h3>الهندسة متعددة الطبقات:</h3>
+<ul>
+  <li>┌─────────────────────────────────────────────────────────┐</li>
+  <li>│                طبقة CDN (Cloudflare)                   │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  • دعم HTTP/3                                   │    │</li>
+  <li>│  │  • تحليلات Browser Insights                    │    │</li>
+  <li>│  │  • حماية DDoS (أساسية)                         │    │</li>
+  <li>│  │  • إنهاء SSL/TLS                               │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│ HTTPS/HTTP/3</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│              طبقة خادم الويب (LiteSpeed)               │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  • خادم ويب LiteSpeed                          │    │</li>
+  <li>│  │  • إضافة LiteSpeed Cache                       │    │</li>
+  <li>│  │  • تنفيذ HSTS جزئي                             │    │</li>
+  <li>│  │  │  • رؤوس الأمان مفقودة                        │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│ FastCGI/LSAPI</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│            طبقة التطبيق (PHP/WordPress)                │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  • نواة WordPress CMS                          │    │</li>
+  <li>│  │  • محرر الكتل (Gutenberg)                       │    │</li>
+  <li>│  │  • قالب Blocksy                               │    │</li>
+  <li>│  │  • إضافة Stackable                            │    │</li>
+  <li>│  │  • إضافات WordPress متعددة                     │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────┬───────────────────────────────────┘</li>
+  <li>│ MySQL/MariaDB</li>
+  <li>┌─────────────────────▼───────────────────────────────────┐</li>
+  <li>│                 طبقة قاعدة البيانات                     │</li>
+  <li>│  ┌─────────────────────────────────────────────────┐    │</li>
+  <li>│  │  • قاعدة بيانات MySQL/MariaDB                   │    │</li>
+  <li>│  │  • مخطط قاعدة بيانات WordPress                  │    │</li>
+  <li>│  │  • تخزين بيانات المستخدم (معرض للخطر)           │    │</li>
+  <li>│  └─────────────────────────────────────────────────┘    │</li>
+  <li>└─────────────────────────────────────────────────────────┘</li>
+</ul>
+<h3>تحليل التبعيات الخارجية</h3>
+<h3>تكامل خدمات الطرف الثالث:</h3>
+<p>external_services:</p>
+<p>fonts:</p>
+<p><strong>- service:</strong> "Google Fonts API"</p>
+<pre class="code-block">      endpoint: "fonts.googleapis.com"
       security_status: "لا يوجد SRI"
-      risk_level: "متوسط"
-  
-  avatars:
-    - service: "Gravatar"
-      endpoint: "secure.gravatar.com"
+      risk_level: "متوسط"</pre>
+<p>avatars:</p>
+<p><strong>- service:</strong> "Gravatar"</p>
+<pre class="code-block">      endpoint: "secure.gravatar.com"
       security_status: "HTTPS فقط"
-      risk_level: "منخفض"
-  
-  cdn_resources:
-    - service: "Cloudflare CDN"
-      endpoints: ["cdnjs.cloudflare.com"]
+      risk_level: "منخفض"</pre>
+<p>cdn_resources:</p>
+<p><strong>- service:</strong> "Cloudflare CDN"</p>
+<pre class="code-block">      endpoints: ["cdnjs.cloudflare.com"]
       security_status: "لا يوجد SRI"
-      risk_level: "عالي"
-
-protocol_support:
-  http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/3"]
+      risk_level: "عالي"</pre>
+<p>protocol_support:</p>
+<pre class="code-block">  http_versions: ["HTTP/1.1", "HTTP/2", "HTTP/3"]
   tls_versions: ["TLS 1.2", "TLS 1.3"]
-  cipher_suites: "حديث (تقييم A+)"
-تحليل رؤوس الأمان
-الوضعية الأمنية الحالية:
-# الرؤوس الحرجة المفقودة
-Strict-Transport-Security: ❌ مفقود/مُكوَّن خطأ
+  cipher_suites: "حديث (تقييم A+)"</pre>
+<h3>تحليل رؤوس الأمان</h3>
+<h3>الوضعية الأمنية الحالية:</h3>
+<p># الرؤوس الحرجة المفقودة</p>
+<pre class="code-block">Strict-Transport-Security: ❌ مفقود/مُكوَّن خطأ
 Content-Security-Policy: ❌ مفقود
 X-Frame-Options: ❌ مفقود  
 X-Content-Type-Options: ❌ مفقود
 Referrer-Policy: ❌ مفقود
-Permissions-Policy: ❌ مفقود
-
-# الرؤوس الموجودة
-Server: LiteSpeed ⚠️ (إفشاء معلومات)
-X-Powered-By: ❌ موجود (يجب إزالته)
-التحليل العميق للثغرات
-🔴 الثغرات الحرجة (CVSS 9.0+)
-مكافئ CVE-2025-XXXX: إفشاء المعلومات الشخصية
-التصنيف التقني:
-vulnerability_details:
-  cwe_id: "CWE-359"
+Permissions-Policy: ❌ مفقود</pre>
+<p># الرؤوس الموجودة</p>
+<p><strong>Server:</strong> LiteSpeed ⚠️ (إفشاء معلومات)</p>
+<p><strong>X-Powered-By:</strong> ❌ موجود (يجب إزالته)</p>
+<ul>
+  <li>التحليل العميق للثغرات</li>
+  <li>🔴 الثغرات الحرجة (CVSS 9.0+)</li>
+</ul>
+<p><strong>مكافئ CVE-2025-XXXX:</strong> إفشاء المعلومات الشخصية</p>
+<h3>التصنيف التقني:</h3>
+<p>vulnerability_details:</p>
+<pre class="code-block">  cwe_id: "CWE-359"
   wasc_id: "WASC-13"
   cvss_v3_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N"
   cvss_score: 9.1
-  confidence: "عالي"
-  
-attack_vector:
-  complexity: "منخفض"
+  confidence: "عالي"</pre>
+<p>attack_vector:</p>
+<pre class="code-block">  complexity: "منخفض"
   privileges_required: "لا شيء"
   user_interaction: "لا شيء"
-  scope: "متغير"
-  
-impact:
-  confidentiality: "عالي"
+  scope: "متغير"</pre>
+<p>impact:</p>
+<pre class="code-block">  confidentiality: "عالي"
   integrity: "لا شيء"
-  availability: "لا شيء"
-تفاصيل الاستغلال التقني:
-# إثبات المفهوم (مُطهَّر)
-curl -X GET "https://example.com/wp-json/wp/v2/users" \
-     -H "Accept: application/json" \
-     -H "User-Agent: Security-Scanner/1.0"
-
-# الاستجابة تحتوي على بيانات مستخدم حساسة:
-# - عناوين البريد الإلكتروني
-# - أدوار المستخدمين والصلاحيات  
-# - طوابع زمنية للتسجيل
-# - معلومات الملف الشخصي
-المعالجة التقنية الفورية:
-// WordPress functions.php - إصلاح فوري
-add_filter('rest_endpoints', function($endpoints) {
-    if (isset($endpoints['/wp/v2/users'])) {
-        unset($endpoints['/wp/v2/users']);
-    }
-    if (isset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)'])) {
-        unset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)']);
-    }
-    return $endpoints;
-});
-
-// البديل: تقييد الوصول بالمصادقة المناسبة
-add_filter('rest_user_query', function($prepared_args, $request) {
-    if (!is_user_logged_in()) {
-        return new WP_Error('rest_user_cannot_view', 
-                           'عذراً، غير مسموح لك بعرض قائمة المستخدمين.', 
-                           array('status' =&gt; 401));
-    }
-    return $prepared_args;
-}, 10, 2);
-🟡 الثغرات عالية الخطورة
-1. غياب Subresource Integrity (SRI)
-CWE-345 | WASC-15 | الحالات: 5
-تحميل الموارد المعرض للخطر:
-&lt;!-- التنفيذ الحالي المعرض للخطر --&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
+  availability: "لا شيء"</pre>
+<h3>تفاصيل الاستغلال التقني:</h3>
+<ul>
+  <li># إثبات المفهوم (مُطهَّر)</li>
+  <li>curl -X GET "https://example.com/wp-json/wp/v2/users" \</li>
+</ul>
+<p><strong>-H "Accept:</strong> application/json" \</p>
+<p><strong>-H "User-Agent:</strong> Security-Scanner/1.0"</p>
+<h3># الاستجابة تحتوي على بيانات مستخدم حساسة:</h3>
+<p># - عناوين البريد الإلكتروني</p>
+<p># - أدوار المستخدمين والصلاحيات</p>
+<p># - طوابع زمنية للتسجيل</p>
+<p># - معلومات الملف الشخصي</p>
+<h3>المعالجة التقنية الفورية:</h3>
+<ul>
+  <li>// WordPress functions.php - إصلاح فوري</li>
+  <li>add_filter('rest_endpoints', function($endpoints) {</li>
+  <li>if (isset($endpoints['/wp/v2/users'])) {</li>
+  <li>unset($endpoints['/wp/v2/users']);</li>
+  <li>}</li>
+  <li>if (isset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)'])) {</li>
+  <li>unset($endpoints['/wp/v2/users/(?P&lt;id&gt;[\d]+)']);</li>
+  <li>}</li>
+  <li>return $endpoints;</li>
+  <li>});</li>
+</ul>
+<p><strong>// البديل:</strong> تقييد الوصول بالمصادقة المناسبة</p>
+<h3>add_filter('rest_user_query', function($prepared_args, $request) {</h3>
+<table><thead><tr><th>if (!is_user_logged_in()) {</th><th>return new WP_Error('rest_user_cannot_view',</th><th>'عذراً، غير مسموح لك بعرض قائمة المستخدمين.',</th><th>array('status' =&gt; 401));</th></tr></thead><tbody><tr><td>}</td><td>return $prepared_args;</td><td>}, 10, 2);</td><td>🟡 الثغرات عالية الخطورة</td></tr></tbody></table>
+<ol>
+  <li>غياب Subresource Integrity (SRI)</li>
+</ol>
+<p><strong>CWE-345 | WASC-15 | الحالات:</strong> 5</p>
+<h3>تحميل الموارد المعرض للخطر:</h3>
+<h3>&lt;!-- التنفيذ الحالي المعرض للخطر --&gt;</h3>
+<pre class="code-block">&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
       rel="stylesheet"&gt;
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"&gt;&lt;/script&gt;
-التنفيذ الآمن مع SRI:
-&lt;!-- التنفيذ المُقوَّى مع SRI --&gt;
-&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
+&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"&gt;&lt;/script&gt;</pre>
+<h3>التنفيذ الآمن مع SRI:</h3>
+<h3>&lt;!-- التنفيذ المُقوَّى مع SRI --&gt;</h3>
+<pre class="code-block">&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
       rel="stylesheet"
       integrity="sha384-BFAD6CLCknfkpYFOidFRlaoh581QJC4LTRxb4aHDwkN2D6AhzC4j6w2Q0+Cc7Gg"
-      crossorigin="anonymous"&gt;
-
-&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      crossorigin="anonymous"&gt;</pre>
+<pre class="code-block">&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
         integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK"
-        crossorigin="anonymous"&gt;&lt;/script&gt;
-
-&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"
+        crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+<pre class="code-block">&lt;script src="https://unpkg.com/some-library@1.0.0/dist/library.js"
         integrity="sha384-[calculated-hash]"
-        crossorigin="anonymous"&gt;&lt;/script&gt;
-سكريبت توليد SRI آلي:
-#!/usr/bin/env python3
-"""
-مولد هاش SRI للموارد الخارجية
-الاستخدام: python3 sri_generator.py &lt;url&gt;
-"""
-
-import hashlib
+        crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+<h3>سكريبت توليد SRI آلي:</h3>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li>"""</li>
+  <li>مولد هاش SRI للموارد الخارجية</li>
+</ul>
+<p><strong>الاستخدام:</strong> python3 sri_generator.py &lt;url&gt;</p>
+<h3>"""</h3>
+<pre class="code-block">import hashlib
 import base64
 import requests
-import sys
-from urllib.parse import urlparse
-
-def generate_sri_hash(url, algorithm='sha384'):
+import sys</pre>
+<h3>from urllib.parse import urlparse</h3>
+<pre class="code-block">def generate_sri_hash(url, algorithm='sha384'):
     """توليد هاش SRI لرابط معين"""
     try:
         response = requests.get(url, timeout=30)
-        response.raise_for_status()
-        
-        content = response.content
-        hash_obj = hashlib.new(algorithm)
-        hash_obj.update(content)
-        
-        hash_digest = hash_obj.digest()
-        sri_hash = base64.b64encode(hash_digest).decode('ascii')
-        
-        return f"{algorithm}-{sri_hash}"
-    
-    except requests.RequestException as e:
+        response.raise_for_status()</pre>
+<ul>
+  <li>content = response.content</li>
+  <li>hash_obj = hashlib.new(algorithm)</li>
+  <li>hash_obj.update(content)</li>
+</ul>
+<ul>
+  <li>hash_digest = hash_obj.digest()</li>
+  <li>sri_hash = base64.b64encode(hash_digest).decode('ascii')</li>
+</ul>
+<pre class="code-block">        return f"{algorithm}-{sri_hash}"</pre>
+<pre class="code-block">    except requests.RequestException as e:
         print(f"خطأ في جلب {url}: {e}")
-        return None
-
-def process_html_file(file_path):
+        return None</pre>
+<pre class="code-block">def process_html_file(file_path):
     """معالجة ملف HTML وإضافة SRI للموارد الخارجية"""
-    from bs4 import BeautifulSoup
-    
-    with open(file_path, 'r', encoding='utf-8') as f:
-        soup = BeautifulSoup(f.read(), 'html.parser')
-    
-    # معالجة علامات script
-    for script in soup.find_all('script', src=True):
+    from bs4 import BeautifulSoup</pre>
+<p>with open(file_path, 'r', encoding='utf-8') as f:</p>
+<p>soup = BeautifulSoup(f.read(), 'html.parser')</p>
+<p># معالجة علامات script</p>
+<pre class="code-block">    for script in soup.find_all('script', src=True):
         src = script['src']
         if src.startswith(('http://', 'https://')) and 'integrity' not in script.attrs:
             sri_hash = generate_sri_hash(src)
             if sri_hash:
                 script['integrity'] = sri_hash
                 script['crossorigin'] = 'anonymous'
-                print(f"تم إضافة SRI للسكريبت: {src}")
-    
-    # معالجة علامات link (CSS)
-    for link in soup.find_all('link', href=True, rel='stylesheet'):
+                print(f"تم إضافة SRI للسكريبت: {src}")</pre>
+<p># معالجة علامات link (CSS)</p>
+<pre class="code-block">    for link in soup.find_all('link', href=True, rel='stylesheet'):
         href = link['href']
         if href.startswith(('http://', 'https://')) and 'integrity' not in link.attrs:
             sri_hash = generate_sri_hash(href)
             if sri_hash:
                 link['integrity'] = sri_hash
                 link['crossorigin'] = 'anonymous'
-                print(f"تم إضافة SRI لورقة الأنماط: {href}")
-    
-    # كتابة HTML المحدث
-    with open(f"{file_path}.sri", 'w', encoding='utf-8') as f:
-        f.write(str(soup))
-    
-    print(f"تم حفظ الملف المحدث باسم: {file_path}.sri")
-
-if __name__ == "__main__":
+                print(f"تم إضافة SRI لورقة الأنماط: {href}")</pre>
+<p># كتابة HTML المحدث</p>
+<p>with open(f"{file_path}.sri", 'w', encoding='utf-8') as f:</p>
+<p>f.write(str(soup))</p>
+<pre class="code-block">    print(f"تم حفظ الملف المحدث باسم: {file_path}.sri")</pre>
+<pre class="code-block">if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("الاستخدام: python3 sri_generator.py &lt;url_or_file&gt;")
-        sys.exit(1)
-    
-    target = sys.argv[1]
-    
-    if target.startswith(('http://', 'https://')):
-        # توليد SRI لرابط واحد
-        sri_hash = generate_sri_hash(target)
-        if sri_hash:
-            print(f"هاش SRI لـ {target}:")
+        sys.exit(1)</pre>
+<h3>target = sys.argv[1]</h3>
+<p>if target.startswith(('http://', 'https://')):</p>
+<ul>
+  <li># توليد SRI لرابط واحد</li>
+  <li>sri_hash = generate_sri_hash(target)</li>
+</ul>
+<p>if sri_hash:</p>
+<pre class="code-block">            print(f"هاش SRI لـ {target}:")
             print(f'integrity="{sri_hash}"')
     else:
         # معالجة ملف HTML
-        process_html_file(target)
-2. غياب Content Security Policy (CSP)
-CWE-693 | WASC-15 | الحالات: 5
-استراتيجية التنفيذ التدريجي لـ CSP:
-المرحلة 1: وضع التقرير فقط
-Content-Security-Policy-Report-Only: default-src 'self'; report-uri /csp-violations
-المرحلة 2: الإنفاذ الأساسي
-Content-Security-Policy: default-src 'self'; 
+        process_html_file(target)</pre>
+<ol>
+  <li>غياب Content Security Policy (CSP)</li>
+</ol>
+<p><strong>CWE-693 | WASC-15 | الحالات:</strong> 5</p>
+<h3>استراتيجية التنفيذ التدريجي لـ CSP:</h3>
+<p><strong>المرحلة 1:</strong> وضع التقرير فقط</p>
+<p><strong>Content-Security-Policy-Report-Only:</strong> default-src 'self'; report-uri /csp-violations</p>
+<p><strong>المرحلة 2:</strong> الإنفاذ الأساسي</p>
+<pre class="code-block">Content-Security-Policy: default-src 'self'; 
                          script-src 'self' 'unsafe-inline'; 
                          style-src 'self' 'unsafe-inline';
-                         img-src 'self' data: https:;
-المرحلة 3: السياسة الصارمة مع Nonces
-Content-Security-Policy: default-src 'self';
+                         img-src 'self' data: https:;</pre>
+<p><strong>المرحلة 3:</strong> السياسة الصارمة مع Nonces</p>
+<pre class="code-block">Content-Security-Policy: default-src 'self';
                          script-src 'self' 'nonce-{RANDOM_NONCE}';
                          style-src 'self' 'nonce-{RANDOM_NONCE}';
                          img-src 'self' data: https:;
@@ -360,341 +597,359 @@ Content-Security-Policy: default-src 'self';
                          frame-ancestors 'none';
                          base-uri 'self';
                          form-action 'self';
-                         upgrade-insecure-requests;
-تنفيذ CSP للمنصات المختلفة:
-Apache (.htaccess):
-# تنفيذ CSP لـ Apache
-&lt;IfModule mod_headers.c&gt;
-    # المرحلة 1: التقرير فقط
-    # Header always set Content-Security-Policy-Report-Only "default-src 'self'; report-uri /csp-report"
-    
-    # المرحلة 2: الإنفاذ الأساسي
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
-&lt;/IfModule&gt;
-Nginx:
-# تنفيذ CSP لـ Nginx
-server {
-    # المرحلة 2: الإنفاذ الأساسي
-    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;
-    
-    # نقطة نهاية تقرير انتهاكات CSP
-    location /csp-report {
-        access_log /var/log/nginx/csp-violations.log;
-        return 204;
-    }
-}
-تنفيذ إضافة WordPress:
-&lt;?php
-/**
- * تنفيذ WordPress CSP
- * اسم الإضافة: Security Headers Pro
- */
-
-class SecurityHeadersCSP {
-    private $nonce;
-    
-    public function __construct() {
-        add_action('init', [$this, 'generate_nonce']);
-        add_action('wp_head', [$this, 'add_csp_header'], 1);
-        add_action('script_loader_tag', [$this, 'add_nonce_to_scripts'], 10, 2);
-        add_action('style_loader_tag', [$this, 'add_nonce_to_styles'], 10, 2);
-    }
-    
-    public function generate_nonce() {
-        $this-&gt;nonce = base64_encode(random_bytes(16));
-    }
-    
-    public function add_csp_header() {
-        $csp_policy = sprintf(
-            "default-src 'self'; " .
-            "script-src 'self' 'nonce-%s' https://cdnjs.cloudflare.com; " .
-            "style-src 'self' 'nonce-%s' https://fonts.googleapis.com; " .
-            "img-src 'self' data: https: https://secure.gravatar.com; " .
-            "font-src 'self' https://fonts.gstatic.com; " .
-            "connect-src 'self'; " .
-            "frame-ancestors 'none'; " .
-            "base-uri 'self'; " .
-            "form-action 'self'",
-            $this-&gt;nonce,
-            $this-&gt;nonce
-        );
-        
-        header("Content-Security-Policy: " . $csp_policy);
-    }
-    
-    public function add_nonce_to_scripts($tag, $handle) {
-        return str_replace('&lt;script ', '&lt;script nonce="' . $this-&gt;nonce . '" ', $tag);
-    }
-    
-    public function add_nonce_to_styles($tag, $handle) {
-        return str_replace('&lt;link ', '&lt;link nonce="' . $this-&gt;nonce . '" ', $tag);
-    }
-}
-
-new SecurityHeadersCSP();
-?&gt;
-تقييم الامتثال متعدد الأطر
-الامتثال التقني لـ OWASP Top 10 2021
-A01:2021 – كسر التحكم في الوصول
-حالة الامتثال: ❌ فشل حرج
-الانتهاكات التقنية:
-access_control_failures:
-  pii_exposure:
-    severity: "حرج"
+                         upgrade-insecure-requests;</pre>
+<h3>تنفيذ CSP للمنصات المختلفة:</h3>
+<h3>Apache (.htaccess):</h3>
+<ul>
+  <li># تنفيذ CSP لـ Apache</li>
+  <li>&lt;IfModule mod_headers.c&gt;</li>
+</ul>
+<p><strong># المرحلة 1:</strong> التقرير فقط</p>
+<p># Header always set Content-Security-Policy-Report-Only "default-src 'self'; report-uri /csp-report"</p>
+<p><strong># المرحلة 2:</strong> الإنفاذ الأساسي</p>
+<pre class="code-block">    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"</pre>
+<p>&lt;/IfModule&gt;</p>
+<h3>Nginx:</h3>
+<ul>
+  <li># تنفيذ CSP لـ Nginx</li>
+  <li>server {</li>
+</ul>
+<p><strong># المرحلة 2:</strong> الإنفاذ الأساسي</p>
+<pre class="code-block">    add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: https://secure.gravatar.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'" always;</pre>
+<ul>
+  <li># نقطة نهاية تقرير انتهاكات CSP</li>
+  <li>location /csp-report {</li>
+  <li>access_log /var/log/nginx/csp-violations.log;</li>
+  <li>return 204;</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<h3>تنفيذ إضافة WordPress:</h3>
+<ul>
+  <li>&lt;?php</li>
+  <li>/**</li>
+  <li>* تنفيذ WordPress CSP</li>
+</ul>
+<p><strong>* اسم الإضافة:</strong> Security Headers Pro</p>
+<p>*/</p>
+<pre class="code-block">class SecurityHeadersCSP {
+    private $nonce;</pre>
+<ul>
+  <li>public function __construct() {</li>
+  <li>add_action('init', [$this, 'generate_nonce']);</li>
+  <li>add_action('wp_head', [$this, 'add_csp_header'], 1);</li>
+  <li>add_action('script_loader_tag', [$this, 'add_nonce_to_scripts'], 10, 2);</li>
+  <li>add_action('style_loader_tag', [$this, 'add_nonce_to_styles'], 10, 2);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>public function generate_nonce() {</li>
+  <li>$this-&gt;nonce = base64_encode(random_bytes(16));</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>public function add_csp_header() {</li>
+  <li>$csp_policy = sprintf(</li>
+  <li>"default-src 'self'; " .</li>
+  <li>"script-src 'self' 'nonce-%s' https://cdnjs.cloudflare.com; " .</li>
+</ul>
+<h3>"style-src 'self' 'nonce-%s' https://fonts.googleapis.com; " .</h3>
+<p><strong>"img-src 'self' data:</strong> https: https://secure.gravatar.com; " .</p>
+<ul>
+  <li>"font-src 'self' https://fonts.gstatic.com; " .</li>
+  <li>"connect-src 'self'; " .</li>
+  <li>"frame-ancestors 'none'; " .</li>
+  <li>"base-uri 'self'; " .</li>
+  <li>"form-action 'self'",</li>
+  <li>$this-&gt;nonce,</li>
+  <li>$this-&gt;nonce</li>
+  <li>);</li>
+</ul>
+<p><strong>header("Content-Security-Policy:</strong> " . $csp_policy);</p>
+<pre class="code-block">    }</pre>
+<p>public function add_nonce_to_scripts($tag, $handle) {</p>
+<p>return str_replace('&lt;script ', '&lt;script nonce="' . $this-&gt;nonce . '" ', $tag);</p>
+<p>}</p>
+<ul>
+  <li>public function add_nonce_to_styles($tag, $handle) {</li>
+  <li>return str_replace('&lt;link ', '&lt;link nonce="' . $this-&gt;nonce . '" ', $tag);</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>new SecurityHeadersCSP();</li>
+  <li>?&gt;</li>
+  <li>تقييم الامتثال متعدد الأطر</li>
+  <li>الامتثال التقني لـ OWASP Top 10 2021</li>
+</ul>
+<h3>A01:2021 – كسر التحكم في الوصول</h3>
+<p><strong>حالة الامتثال:</strong> ❌ فشل حرج</p>
+<h3>الانتهاكات التقنية:</h3>
+<p>access_control_failures:</p>
+<p>pii_exposure:</p>
+<pre class="code-block">    severity: "حرج"
     cwe: "CWE-359"
     technical_impact: "تعرض كامل لبيانات المستخدم"
-    business_impact: "انتهاكات GDPR/CCPA، غرامات تنظيمية"
-    
-  missing_authorization:
-    endpoints: ["/wp-json/wp/v2/users", "/api/user-data"]
+    business_impact: "انتهاكات GDPR/CCPA، غرامات تنظيمية"</pre>
+<p>missing_authorization:</p>
+<pre class="code-block">    endpoints: ["/wp-json/wp/v2/users", "/api/user-data"]
     authentication_required: false
-    authorization_checks: false
-    
-  privilege_escalation_risk:
-    horizontal: "ممكن"
+    authorization_checks: false</pre>
+<p>privilege_escalation_risk:</p>
+<pre class="code-block">    horizontal: "ممكن"
     vertical: "ممكن"
-    session_management: "ضعيف"
-المعالجة التقنية:
-// تقوية أمان WordPress REST API
-class RestAPISecurityHardening {
-    public function __construct() {
-        add_filter('rest_authentication_errors', [$this, 'restrict_rest_api']);
-        add_filter('rest_pre_dispatch', [$this, 'validate_rest_request'], 10, 3);
+    session_management: "ضعيف"</pre>
+<h3>المعالجة التقنية:</h3>
+<ul>
+  <li>// تقوية أمان WordPress REST API</li>
+  <li>class RestAPISecurityHardening {</li>
+  <li>public function __construct() {</li>
+  <li>add_filter('rest_authentication_errors', [$this, 'restrict_rest_api']);</li>
+  <li>add_filter('rest_pre_dispatch', [$this, 'validate_rest_request'], 10, 3);</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>public function restrict_rest_api($result) {</li>
+  <li>if (!is_user_logged_in() &amp;&amp; !$this-&gt;is_allowed_endpoint()) {</li>
+  <li>return new WP_Error(</li>
+  <li>'rest_not_logged_in',</li>
+  <li>'أنت غير مسجل دخول حالياً.',</li>
+  <li>array('status' =&gt; 401)</li>
+  <li>);</li>
+  <li>}</li>
+  <li>return $result;</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>private function is_allowed_endpoint() {</li>
+  <li>$allowed_endpoints = [</li>
+  <li>'/wp/v2/posts',</li>
+  <li>'/wp/v2/pages',</li>
+  <li>'/wp/v2/media'</li>
+  <li>];</li>
+</ul>
+<h3>$current_route = $GLOBALS['wp']-&gt;query_vars['rest_route'] ?? '';</h3>
+<ul>
+  <li>foreach ($allowed_endpoints as $endpoint) {</li>
+  <li>if (strpos($current_route, $endpoint) === 0) {</li>
+  <li>return true;</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">        return false;
+    }</pre>
+<ul>
+  <li>public function validate_rest_request($result, $server, $request) {</li>
+  <li>$route = $request-&gt;get_route();</li>
+</ul>
+<ul>
+  <li>// حجب نقاط نهاية المستخدمين الحساسة</li>
+  <li>if (preg_match('/\/wp\/v2\/users/', $route)) {</li>
+  <li>if (!current_user_can('list_users')) {</li>
+  <li>return new WP_Error(</li>
+  <li>'rest_forbidden',</li>
+  <li>'ليس لديك صلاحية للوصول إلى هذا المورد.',</li>
+  <li>array('status' =&gt; 403)</li>
+  <li>);</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<pre class="code-block">        return $result;
     }
-    
-    public function restrict_rest_api($result) {
-        if (!is_user_logged_in() &amp;&amp; !$this-&gt;is_allowed_endpoint()) {
-            return new WP_Error(
-                'rest_not_logged_in',
-                'أنت غير مسجل دخول حالياً.',
-                array('status' =&gt; 401)
-            );
-        }
-        return $result;
-    }
-    
-    private function is_allowed_endpoint() {
-        $allowed_endpoints = [
-            '/wp/v2/posts',
-            '/wp/v2/pages',
-            '/wp/v2/media'
-        ];
-        
-        $current_route = $GLOBALS['wp']-&gt;query_vars['rest_route'] ?? '';
-        
-        foreach ($allowed_endpoints as $endpoint) {
-            if (strpos($current_route, $endpoint) === 0) {
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    
-    public function validate_rest_request($result, $server, $request) {
-        $route = $request-&gt;get_route();
-        
-        // حجب نقاط نهاية المستخدمين الحساسة
-        if (preg_match('/\/wp\/v2\/users/', $route)) {
-            if (!current_user_can('list_users')) {
-                return new WP_Error(
-                    'rest_forbidden',
-                    'ليس لديك صلاحية للوصول إلى هذا المورد.',
-                    array('status' =&gt; 403)
-                );
-            }
-        }
-        
-        return $result;
-    }
-}
-
-new RestAPISecurityHardening();
-استراتيجية تكامل DevSecOps
-خط أنابيب الأمان CI/CD
-خط أنابيب أمان GitLab CI:
-# .gitlab-ci.yml - خط أنابيب أمان شامل
-
-stages:
-  - security-scan
-  - build
-  - security-test
-  - deploy
-  - post-deploy-security
-
-variables:
-  DOCKER_DRIVER: overlay2
-  SECURE_ANALYZERS_PREFIX: "registry.gitlab.com/gitlab-org/security-products/analyzers"
-
-# مرحلة المسح الأمني
-sast:
-  stage: security-scan
-  image: $SECURE_ANALYZERS_PREFIX/semgrep:latest
-  script:
-    - semgrep --config=auto --json --output=sast-report.json .
-  artifacts:
-    reports:
-      sast: sast-report.json
-    paths:
-      - sast-report.json
-    expire_in: 1 week
+}</pre>
+<ul>
+  <li>new RestAPISecurityHardening();</li>
+  <li>استراتيجية تكامل DevSecOps</li>
+  <li>خط أنابيب الأمان CI/CD</li>
+</ul>
+<h3>خط أنابيب أمان GitLab CI:</h3>
+<pre class="code-block"># .gitlab-ci.yml - خط أنابيب أمان شامل</pre>
+<p>stages:</p>
+<ul>
+  <li>- security-scan</li>
+  <li>- build</li>
+  <li>- security-test</li>
+  <li>- deploy</li>
+  <li>- post-deploy-security</li>
+</ul>
+<p>variables:</p>
+<p><strong>DOCKER_DRIVER:</strong> overlay2</p>
+<p><strong>SECURE_ANALYZERS_PREFIX:</strong> "registry.gitlab.com/gitlab-org/security-products/analyzers"</p>
+<p># مرحلة المسح الأمني</p>
+<p>sast:</p>
+<p><strong>stage:</strong> security-scan</p>
+<p><strong>image:</strong> $SECURE_ANALYZERS_PREFIX/semgrep:latest</p>
+<p>script:</p>
+<p>- semgrep --config=auto --json --output=sast-report.json .</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>sast:</strong> sast-report.json</p>
+<p>paths:</p>
+<p>- sast-report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>- merge_requests</li>
+</ul>
+<p>dependency_scanning:</p>
+<p><strong>stage:</strong> security-scan</p>
+<p><strong>image:</strong> $SECURE_ANALYZERS_PREFIX/gemnasium:latest</p>
+<p>script:</p>
+<p>- gemnasium-dependency_scanning</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>dependency_scanning:</strong> dependency-scanning-report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>- merge_requests</li>
+</ul>
+<p>secret_detection:</p>
+<p><strong>stage:</strong> security-scan</p>
+<p><strong>image:</strong> $SECURE_ANALYZERS_PREFIX/secrets:latest</p>
+<p>script:</p>
+<p>- secrets-analyzer</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>secret_detection:</strong> secret-detection-report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>- merge_requests</li>
+</ul>
+<p># مرحلة البناء مع التقوية الأمنية</p>
+<p>build_secure:</p>
+<p><strong>stage:</strong> build</p>
+<p><strong>image:</strong> docker:latest</p>
+<p>services:</p>
+<p>- docker:dind</p>
+<p>before_script:</p>
+<p>- docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY</p>
+<p>script:</p>
+<p># البناء مع المسح الأمني</p>
+<p>- docker build --target security-scan -t $CI_REGISTRY_IMAGE/security-scan:$CI_COMMIT_SHA .</p>
+<p>- docker run --rm -v $(pwd):/workspace $CI_REGISTRY_IMAGE/security-scan:$CI_COMMIT_SHA</p>
+<ul>
+  <li># بناء صورة الإنتاج</li>
+  <li>- docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .</li>
+  <li>- docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA</li>
+</ul>
+<p>only:</p>
+<p>- main</p>
+<p># مرحلة الاختبار الأمني</p>
+<p>zap_baseline:</p>
+<p><strong>stage:</strong> security-test</p>
+<p><strong>image:</strong> owasp/zap2docker-stable:latest</p>
+<p>script:</p>
+<p>- mkdir -p /zap/wrk</p>
+<p>- zap-baseline.py -t $TEST_URL -r zap-baseline-report.html -x zap-baseline-report.xml</p>
+<p>artifacts:</p>
+<p>reports:</p>
+<p><strong>junit:</strong> zap-baseline-report.xml</p>
+<p>paths:</p>
+<p>- zap-baseline-report.html</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<pre class="code-block">  allow_failure: true
   only:
-    - main
-    - merge_requests
-
-dependency_scanning:
-  stage: security-scan
-  image: $SECURE_ANALYZERS_PREFIX/gemnasium:latest
-  script:
-    - gemnasium-dependency_scanning
-  artifacts:
-    reports:
-      dependency_scanning: dependency-scanning-report.json
-    expire_in: 1 week
-  only:
-    - main
-    - merge_requests
-
-secret_detection:
-  stage: security-scan
-  image: $SECURE_ANALYZERS_PREFIX/secrets:latest
-  script:
-    - secrets-analyzer
-  artifacts:
-    reports:
-      secret_detection: secret-detection-report.json
-    expire_in: 1 week
-  only:
-    - main
-    - merge_requests
-
-# مرحلة البناء مع التقوية الأمنية
-build_secure:
-  stage: build
-  image: docker:latest
-  services:
-    - docker:dind
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    # البناء مع المسح الأمني
-    - docker build --target security-scan -t $CI_REGISTRY_IMAGE/security-scan:$CI_COMMIT_SHA .
-    - docker run --rm -v $(pwd):/workspace $CI_REGISTRY_IMAGE/security-scan:$CI_COMMIT_SHA
-    
-    # بناء صورة الإنتاج
-    - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-  only:
-    - main
-
-# مرحلة الاختبار الأمني
-zap_baseline:
-  stage: security-test
-  image: owasp/zap2docker-stable:latest
-  script:
-    - mkdir -p /zap/wrk
-    - zap-baseline.py -t $TEST_URL -r zap-baseline-report.html -x zap-baseline-report.xml
-  artifacts:
-    reports:
-      junit: zap-baseline-report.xml
-    paths:
-      - zap-baseline-report.html
-    expire_in: 1 week
-  allow_failure: true
-  only:
-    - main
-
-security_headers_test:
-  stage: security-test
-  image: alpine:latest
-  before_script:
-    - apk add --no-cache curl jq
-  script:
-    - |
-      # اختبار رؤوس الأمان
-      HEADERS_RESPONSE=$(curl -s -I $TEST_URL)
-      
-      # فحص الرؤوس المطلوبة
-      echo "اختبار رؤوس الأمان لـ $TEST_URL"
-      
-      # X-Content-Type-Options
-      if echo "$HEADERS_RESPONSE" | grep -qi "x-content-type-options: nosniff"; then
-        echo "✅ X-Content-Type-Options: نجح"
-      else
-        echo "❌ X-Content-Type-Options: فشل"
-        exit 1
-      fi
-      
-      # X-Frame-Options
-      if echo "$HEADERS_RESPONSE" | grep -qi "x-frame-options: deny"; then
-        echo "✅ X-Frame-Options: نجح"
-      else
-        echo "❌ X-Frame-Options: فشل"
-        exit 1
-      fi
-      
-      # Strict-Transport-Security
-      if echo "$HEADERS_RESPONSE" | grep -qi "strict-transport-security"; then
-        echo "✅ Strict-Transport-Security: نجح"
-      else
-        echo "❌ Strict-Transport-Security: فشل"
-        exit 1
-      fi
-      
-      # Content-Security-Policy
-      if echo "$HEADERS_RESPONSE" | grep -qi "content-security-policy"; then
-        echo "✅ Content-Security-Policy: نجح"
-      else
-        echo "❌ Content-Security-Policy: فشل"
-        exit 1
-      fi
-      
-      echo "نجحت جميع اختبارات رؤوس الأمان!"
-  only:
-    - main
-
-# النشر مع التحقق الأمني
-deploy_production:
-  stage: deploy
-  image: alpine:latest
-  before_script:
-    - apk add --no-cache openssh-client rsync
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - ssh-keyscan $DEPLOY_HOST &gt;&gt; ~/.ssh/known_hosts
-  script:
-    # نشر التطبيق
-    - rsync -avz --delete ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/
-    
-    # تطبيق تكوينات الأمان
-    - ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH &amp;&amp; ./scripts/apply_security_config.sh"
-    
-    # إعادة تشغيل الخدمات
-    - ssh $DEPLOY_USER@$DEPLOY_HOST "sudo systemctl reload apache2 || sudo systemctl reload nginx"
-  only:
-    - main
-  when: manual
-
-# التحقق الأمني بعد النشر
-post_deploy_security_check:
-  stage: post-deploy-security
-  image: python:3.9-alpine
-  before_script:
-    - pip install requests beautifulsoup4
-  script:
-    - python3 scripts/security_validator.py $PRODUCTION_URL
-  artifacts:
-    paths:
-      - security_validation_report.json
-    expire_in: 1 week
-  only:
-    - main
-تنفيذ المراقبة والأتمتة
-مراقبة الأمان ELK Stack
-قالب فهرس Elasticsearch:
-{
+    - main</pre>
+<p>security_headers_test:</p>
+<p><strong>stage:</strong> security-test</p>
+<p><strong>image:</strong> alpine:latest</p>
+<p>before_script:</p>
+<p>- apk add --no-cache curl jq</p>
+<p>script:</p>
+<ul>
+  <li>- |</li>
+  <li># اختبار رؤوس الأمان</li>
+  <li>HEADERS_RESPONSE=$(curl -s -I $TEST_URL)</li>
+</ul>
+<p># فحص الرؤوس المطلوبة</p>
+<p>echo "اختبار رؤوس الأمان لـ $TEST_URL"</p>
+<p># X-Content-Type-Options</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "x-content-type-options: nosniff"; then</p>
+<p><strong>echo "✅ X-Content-Type-Options:</strong> نجح"</p>
+<p>else</p>
+<p><strong>echo "❌ X-Content-Type-Options:</strong> فشل"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<p># X-Frame-Options</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "x-frame-options: deny"; then</p>
+<p><strong>echo "✅ X-Frame-Options:</strong> نجح"</p>
+<p>else</p>
+<p><strong>echo "❌ X-Frame-Options:</strong> فشل"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<p># Strict-Transport-Security</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "strict-transport-security"; then</p>
+<p><strong>echo "✅ Strict-Transport-Security:</strong> نجح"</p>
+<p>else</p>
+<p><strong>echo "❌ Strict-Transport-Security:</strong> فشل"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<p># Content-Security-Policy</p>
+<p>if echo "$HEADERS_RESPONSE" | grep -qi "content-security-policy"; then</p>
+<p><strong>echo "✅ Content-Security-Policy:</strong> نجح"</p>
+<p>else</p>
+<p><strong>echo "❌ Content-Security-Policy:</strong> فشل"</p>
+<ul>
+  <li>exit 1</li>
+  <li>fi</li>
+</ul>
+<h3>echo "نجحت جميع اختبارات رؤوس الأمان!"</h3>
+<p>only:</p>
+<p>- main</p>
+<p># النشر مع التحقق الأمني</p>
+<p>deploy_production:</p>
+<p><strong>stage:</strong> deploy</p>
+<p><strong>image:</strong> alpine:latest</p>
+<p>before_script:</p>
+<p>- apk add --no-cache openssh-client rsync</p>
+<p>- eval $(ssh-agent -s)</p>
+<p>- echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -</p>
+<p>- mkdir -p ~/.ssh</p>
+<p>- chmod 700 ~/.ssh</p>
+<p>- ssh-keyscan $DEPLOY_HOST &gt;&gt; ~/.ssh/known_hosts</p>
+<p>script:</p>
+<ul>
+  <li># نشر التطبيق</li>
+  <li>- rsync -avz --delete ./ $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH/</li>
+</ul>
+<p># تطبيق تكوينات الأمان</p>
+<p>- ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH &amp;&amp; ./scripts/apply_security_config.sh"</p>
+<p># إعادة تشغيل الخدمات</p>
+<p>- ssh $DEPLOY_USER@$DEPLOY_HOST "sudo systemctl reload apache2 || sudo systemctl reload nginx"</p>
+<p>only:</p>
+<p>- main</p>
+<p><strong>when:</strong> manual</p>
+<p># التحقق الأمني بعد النشر</p>
+<p>post_deploy_security_check:</p>
+<p><strong>stage:</strong> post-deploy-security</p>
+<p><strong>image:</strong> python:3.9-alpine</p>
+<p>before_script:</p>
+<p>- pip install requests beautifulsoup4</p>
+<p>script:</p>
+<p>- python3 scripts/security_validator.py $PRODUCTION_URL</p>
+<p>artifacts:</p>
+<p>paths:</p>
+<p>- security_validation_report.json</p>
+<p><strong>expire_in:</strong> 1 week</p>
+<p>only:</p>
+<ul>
+  <li>- main</li>
+  <li>تنفيذ المراقبة والأتمتة</li>
+  <li>مراقبة الأمان ELK Stack</li>
+</ul>
+<h3>قالب فهرس Elasticsearch:</h3>
+<pre class="code-block">{
   "index_patterns": ["security-logs-*"],
   "template": {
     "settings": {
@@ -744,134 +999,150 @@ post_deploy_security_check:
       }
     }
   }
-}
-تكوين أمان Logstash:
-# logstash-security.conf
-input {
-  file {
-    path =&gt; "/var/log/apache2/access.log"
-    type =&gt; "apache_access"
-    start_position =&gt; "beginning"
+}</pre>
+<h3>تكوين أمان Logstash:</h3>
+<ul>
+  <li># logstash-security.conf</li>
+  <li>input {</li>
+  <li>file {</li>
+  <li>path =&gt; "/var/log/apache2/access.log"</li>
+  <li>type =&gt; "apache_access"</li>
+  <li>start_position =&gt; "beginning"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>file {</li>
+  <li>path =&gt; "/var/log/apache2/error.log"</li>
+  <li>type =&gt; "apache_error"</li>
+  <li>start_position =&gt; "beginning"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>file {</li>
+  <li>path =&gt; "/var/www/html/wp-content/security.log"</li>
+  <li>type =&gt; "wordpress_security"</li>
+  <li>start_position =&gt; "beginning"</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>filter {</li>
+  <li>if [type] == "apache_access" {</li>
+  <li>grok {</li>
+  <li>match =&gt; {</li>
+  <li>"message" =&gt; "%{COMBINEDAPACHELOG}"</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<p># اكتشاف الأنماط المشبوهة</p>
+<p>if [request] =~ /(\.\./|&lt;script|javascript:|eval\(|union.*select|drop.*table|insert.*into|update.*set|delete.*from)/i {</p>
+<ul>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["suspicious_request", "potential_attack"]</li>
+  <li>add_field =&gt; { "attack_type" =&gt; "injection_attempt" }</li>
+  <li>add_field =&gt; { "severity" =&gt; "high" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># اكتشاف محاولات XSS</li>
+  <li>if [request] =~ /(&lt;script|javascript:|onload=|onerror=|onclick=)/i {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["xss_attempt"]</li>
+  <li>add_field =&gt; { "attack_type" =&gt; "xss" }</li>
+  <li>add_field =&gt; { "severity" =&gt; "high" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># اكتشاف اجتياز المجلدات</li>
+  <li>if [request] =~ /(\.\./|\.\.\\|%2e%2e%2f|%2e%2e\\)/i {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["directory_traversal"]</li>
+  <li>add_field =&gt; { "attack_type" =&gt; "path_traversal" }</li>
+  <li>add_field =&gt; { "severity" =&gt; "medium" }</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># اكتشاف سلوك المسح</li>
+  <li>if [response] == "404" {</li>
+  <li>mutate {</li>
+  <li>add_tag =&gt; ["not_found"]</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># إثراء GeoIP</li>
+  <li>geoip {</li>
+  <li>source =&gt; "clientip"</li>
+  <li>target =&gt; "geoip"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># تحويل الاستجابة إلى عدد صحيح</li>
+  <li>mutate {</li>
+  <li>convert =&gt; { "response" =&gt; "integer" }</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># إضافة الطابع الزمني</li>
+  <li>date {</li>
+  <li>match =&gt; [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]</li>
+  <li>}</li>
+  <li>}</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li>output {</li>
+  <li>elasticsearch {</li>
+  <li>hosts =&gt; ["localhost:9200"]</li>
+  <li>index =&gt; "security-logs-%{+YYYY.MM.dd}"</li>
+  <li>}</li>
+</ul>
+<ul>
+  <li># إرسال الأحداث عالية الخطورة إلى Slack</li>
+  <li>if [severity] == "high" {</li>
+  <li>http {</li>
+  <li>url =&gt; "${SLACK_WEBHOOK_URL}"</li>
+  <li>http_method =&gt; "post"</li>
+  <li>format =&gt; "json"</li>
+</ul>
+<h3>mapping =&gt; {</h3>
+<p><strong>"text" =&gt; "🚨 تنبيه أمني:</strong> تم اكتشاف %{attack_type} من %{source_ip} - %{request}"</p>
+<pre class="code-block">      }
+    }
   }
-  
-  file {
-    path =&gt; "/var/log/apache2/error.log"
-    type =&gt; "apache_error"
-    start_position =&gt; "beginning"
-  }
-  
-  file {
-    path =&gt; "/var/www/html/wp-content/security.log"
-    type =&gt; "wordpress_security"
-    start_position =&gt; "beginning"
-  }
-}
-
-filter {
-  if [type] == "apache_access" {
-    grok {
-      match =&gt; { 
-        "message" =&gt; "%{COMBINEDAPACHELOG}" 
-      }
-    }
-    
-    # اكتشاف الأنماط المشبوهة
-    if [request] =~ /(\.\./|&lt;script|javascript:|eval\(|union.*select|drop.*table|insert.*into|update.*set|delete.*from)/i {
-      mutate {
-        add_tag =&gt; ["suspicious_request", "potential_attack"]
-        add_field =&gt; { "attack_type" =&gt; "injection_attempt" }
-        add_field =&gt; { "severity" =&gt; "high" }
-      }
-    }
-    
-    # اكتشاف محاولات XSS
-    if [request] =~ /(&lt;script|javascript:|onload=|onerror=|onclick=)/i {
-      mutate {
-        add_tag =&gt; ["xss_attempt"]
-        add_field =&gt; { "attack_type" =&gt; "xss" }
-        add_field =&gt; { "severity" =&gt; "high" }
-      }
-    }
-    
-    # اكتشاف اجتياز المجلدات
-    if [request] =~ /(\.\./|\.\.\\|%2e%2e%2f|%2e%2e\\)/i {
-      mutate {
-        add_tag =&gt; ["directory_traversal"]
-        add_field =&gt; { "attack_type" =&gt; "path_traversal" }
-        add_field =&gt; { "severity" =&gt; "medium" }
-      }
-    }
-    
-    # اكتشاف سلوك المسح
-    if [response] == "404" {
-      mutate {
-        add_tag =&gt; ["not_found"]
-      }
-    }
-    
-    # إثراء GeoIP
-    geoip {
-      source =&gt; "clientip"
-      target =&gt; "geoip"
-    }
-    
-    # تحويل الاستجابة إلى عدد صحيح
-    mutate {
-      convert =&gt; { "response" =&gt; "integer" }
-    }
-    
-    # إضافة الطابع الزمني
-    date {
-      match =&gt; [ "timestamp", "dd/MMM/yyyy:HH:mm:ss Z" ]
-    }
-  }
-}
-
-output {
-  elasticsearch {
-    hosts =&gt; ["localhost:9200"]
-    index =&gt; "security-logs-%{+YYYY.MM.dd}"
-  }
-  
-  # إرسال الأحداث عالية الخطورة إلى Slack
-  if [severity] == "high" {
-    http {
-      url =&gt; "${SLACK_WEBHOOK_URL}"
-      http_method =&gt; "post"
-      format =&gt; "json"
-      mapping =&gt; {
-        "text" =&gt; "🚨 تنبيه أمني: تم اكتشاف %{attack_type} من %{source_ip} - %{request}"
-      }
-    }
-  }
-}
-الاستجابة الآلية للحوادث
-بوت الاستجابة للحوادث بـ Python:
-#!/usr/bin/env python3
-"""
-نظام الاستجابة الآلية للحوادث الأمنية
-يراقب سجلات الأمان ويستجيب للتهديدات تلقائياً
-"""
-
-import json
+}</pre>
+<h3>الاستجابة الآلية للحوادث</h3>
+<h3>بوت الاستجابة للحوادث بـ Python:</h3>
+<ul>
+  <li>#!/usr/bin/env python3</li>
+  <li>"""</li>
+  <li>نظام الاستجابة الآلية للحوادث الأمنية</li>
+  <li>يراقب سجلات الأمان ويستجيب للتهديدات تلقائياً</li>
+  <li>"""</li>
+</ul>
+<pre class="code-block">import json
 import time
 import requests
 import subprocess
 from datetime import datetime, timedelta
 from elasticsearch import Elasticsearch
-import smtplib
-from email.mime.text import MimeText
-from email.mime.multipart import MimeMultipart
-
-class SecurityIncidentResponder:
+import smtplib</pre>
+<ul>
+  <li>from email.mime.text import MimeText</li>
+  <li>from email.mime.multipart import MimeMultipart</li>
+</ul>
+<pre class="code-block">class SecurityIncidentResponder:
     def __init__(self, config_file='security_config.json'):
         with open(config_file, 'r', encoding='utf-8') as f:
-            self.config = json.load(f)
-        
-        self.es = Elasticsearch([self.config['elasticsearch']['host']])
-        self.blocked_ips = set()
-        
-    def monitor_security_events(self):
+            self.config = json.load(f)</pre>
+<ul>
+  <li>self.es = Elasticsearch([self.config['elasticsearch']['host']])</li>
+  <li>self.blocked_ips = set()</li>
+</ul>
+<pre class="code-block">    def monitor_security_events(self):
         """مراقبة مستمرة لأحداث الأمان"""
         while True:
             try:
@@ -886,50 +1157,43 @@ class SecurityIncidentResponder:
                         }
                     },
                     "sort": [{"@timestamp": {"order": "desc"}}]
-                }
-                
-                response = self.es.search(
-                    index="security-logs-*",
-                    body=query,
-                    size=100
-                )
-                
-                for hit in response['hits']['hits']:
-                    self.process_security_event(hit['_source'])
-                
-                time.sleep(60)  # فحص كل دقيقة
-                
-            except Exception as e:
+                }</pre>
+<ul>
+  <li>response = self.es.search(</li>
+  <li>index="security-logs-*",</li>
+  <li>body=query,</li>
+  <li>size=100</li>
+  <li>)</li>
+</ul>
+<pre class="code-block">                for hit in response['hits']['hits']:
+                    self.process_security_event(hit['_source'])</pre>
+<p>time.sleep(60)  # فحص كل دقيقة</p>
+<pre class="code-block">            except Exception as e:
                 print(f"خطأ في مراقبة أحداث الأمان: {e}")
-                time.sleep(60)
-    
-    def process_security_event(self, event):
+                time.sleep(60)</pre>
+<pre class="code-block">    def process_security_event(self, event):
         """معالجة أحداث الأمان الفردية"""
         source_ip = event.get('source_ip')
         attack_type = event.get('attack_type')
-        severity = event.get('severity')
-        
-        print(f"معالجة حدث أمني: {attack_type} من {source_ip}")
-        
-        # حجب IP تلقائي للهجمات المتكررة
-        if self.should_block_ip(source_ip, attack_type):
-            self.block_ip(source_ip, attack_type)
-        
-        # إرسال إشعارات للأحداث الحرجة
-        if severity == 'high':
-            self.send_security_alert(event)
-        
-        # تسجيل الحادث للتتبع
-        self.log_incident(event)
-    
-    def should_block_ip(self, ip, attack_type):
+        severity = event.get('severity')</pre>
+<pre class="code-block">        print(f"معالجة حدث أمني: {attack_type} من {source_ip}")</pre>
+<p># حجب IP تلقائي للهجمات المتكررة</p>
+<p>if self.should_block_ip(source_ip, attack_type):</p>
+<p>self.block_ip(source_ip, attack_type)</p>
+<p># إرسال إشعارات للأحداث الحرجة</p>
+<p>if severity == 'high':</p>
+<p>self.send_security_alert(event)</p>
+<ul>
+  <li># تسجيل الحادث للتتبع</li>
+  <li>self.log_incident(event)</li>
+</ul>
+<pre class="code-block">    def should_block_ip(self, ip, attack_type):
         """تحديد ما إذا كان يجب حجب IP"""
         if ip in self.blocked_ips:
-            return False
-        
-        # فحص تكرار الهجمات في الساعة الماضية
-        query = {
-            "query": {
+            return False</pre>
+<p># فحص تكرار الهجمات في الساعة الماضية</p>
+<p>query = {</p>
+<pre class="code-block">            "query": {
                 "bool": {
                     "must": [
                         {"term": {"source_ip": ip}},
@@ -938,49 +1202,45 @@ class SecurityIncidentResponder:
                     ]
                 }
             }
-        }
-        
-        response = self.es.count(index="security-logs-*", body=query)
-        attack_count = response['count']
-        
-        # حجب إذا كان أكثر من 5 هجمات في الساعة الماضية
-        return attack_count &gt;= 5
-    
-    def block_ip(self, ip, attack_type):
+        }</pre>
+<ul>
+  <li>response = self.es.count(index="security-logs-*", body=query)</li>
+  <li>attack_count = response['count']</li>
+</ul>
+<p># حجب إذا كان أكثر من 5 هجمات في الساعة الماضية</p>
+<p>return attack_count &gt;= 5</p>
+<pre class="code-block">    def block_ip(self, ip, attack_type):
         """حجب عنوان IP الضار"""
         try:
             # إضافة إلى iptables
             subprocess.run([
                 'sudo', 'iptables', '-A', 'INPUT', 
                 '-s', ip, '-j', 'DROP'
-            ], check=True)
-            
-            # إضافة إلى قائمة حجب خادم الويب
-            self.add_to_web_server_block_list(ip)
-            
-            self.blocked_ips.add(ip)
-            
-            print(f"تم حجب IP {ip} بسبب {attack_type}")
-            
-            # تسجيل إجراء الحجب
-            self.log_ip_block(ip, attack_type)
-            
-        except subprocess.CalledProcessError as e:
-            print(f"خطأ في حجب IP {ip}: {e}")
-    
-    def send_security_alert(self, event):
+            ], check=True)</pre>
+<ul>
+  <li># إضافة إلى قائمة حجب خادم الويب</li>
+  <li>self.add_to_web_server_block_list(ip)</li>
+</ul>
+<p>self.blocked_ips.add(ip)</p>
+<pre class="code-block">            print(f"تم حجب IP {ip} بسبب {attack_type}")</pre>
+<ul>
+  <li># تسجيل إجراء الحجب</li>
+  <li>self.log_ip_block(ip, attack_type)</li>
+</ul>
+<pre class="code-block">        except subprocess.CalledProcessError as e:
+            print(f"خطأ في حجب IP {ip}: {e}")</pre>
+<pre class="code-block">    def send_security_alert(self, event):
         """إرسال تنبيهات الأمان"""
         # إشعار Slack
-        self.send_slack_alert(event)
-        
-        # إشعار البريد الإلكتروني
-        self.send_email_alert(event)
-    
-    def send_slack_alert(self, event):
+        self.send_slack_alert(event)</pre>
+<ul>
+  <li># إشعار البريد الإلكتروني</li>
+  <li>self.send_email_alert(event)</li>
+</ul>
+<pre class="code-block">    def send_slack_alert(self, event):
         """إرسال تنبيه إلى Slack"""
-        webhook_url = self.config['notifications']['slack_webhook']
-        
-        message = {
+        webhook_url = self.config['notifications']['slack_webhook']</pre>
+<pre class="code-block">        message = {
             "text": f"🚨 تنبيه أمني",
             "attachments": [
                 {
@@ -1009,14 +1269,12 @@ class SecurityIncidentResponder:
                     ]
                 }
             ]
-        }
-        
-        try:
-            requests.post(webhook_url, json=message, timeout=10)
-        except Exception as e:
-            print(f"خطأ في إرسال تنبيه Slack: {e}")
-
-if __name__ == "__main__":
+        }</pre>
+<p>try:</p>
+<p>requests.post(webhook_url, json=message, timeout=10)</p>
+<pre class="code-block">        except Exception as e:
+            print(f"خطأ في إرسال تنبيه Slack: {e}")</pre>
+<pre class="code-block">if __name__ == "__main__":
     # ملف التكوين المثال
     config = {
         "elasticsearch": {
@@ -1033,39 +1291,42 @@ if __name__ == "__main__":
                 "to": "admin@example.com"
             }
         }
-    }
-    
-    # حفظ التكوين
-    with open('security_config.json', 'w', encoding='utf-8') as f:
-        json.dump(config, f, indent=2, ensure_ascii=False)
-    
-    # بدء المراقبة
-    responder = SecurityIncidentResponder()
-    responder.monitor_security_events()
-الخلاصة
-يكشف هذا التقييم الأمني التقني الشامل عن ثغرات حرجة في البنية التحتية لموقع example.com تتطلب اهتماماً فورياً. تشكل ثغرة إفشاء PII المحددة مخاطر تنظيمية وتجارية كبيرة، بينما يترك غياب آليات الحماية الأساسية التطبيق عرضة للهجمات الشائعة على الويب.
-ملخص المقاييس الحرجة
-الوضعية الأمنية الحالية:
-مستوى المخاطر: 🔴 حرج
-امتثال OWASP Top 10 2021: 25%
-نضج NIST CSF 2.0: 19%
-جاهزية SOC 2: 15%
-الجدول الزمني للتنفيذ:
-المرحلة 1 (0-72 ساعة): معالجة الثغرات الحرجة
-المرحلة 2 (3-14 يوماً): آليات الحماية المحسنة
-المرحلة 3 (15-90 يوماً): برنامج أمان شامل
-النتائج المتوقعة:
-بعد المرحلة 1: تقليل المخاطر إلى مستوى 🟡 متوسط
-بعد المرحلة 2: تحقيق حالة مخاطر 🔵 منخفضة
-بعد المرحلة 3: الوصول إلى وضعية أمان 🟢 مقبولة
-توفر الحلول التقنية المقدمة وسكريبتات الأتمتة وأنظمة المراقبة خارطة طريق كاملة لتحويل الحالة الأمنية الحرجة الحالية إلى بنية تحتية أمنية قوية ومتوافقة ومراقبة باستمرار. سيضمن تنفيذ هذه التدابير الامتثال للمعايير الأمنية الدولية وتوفير الحماية المستمرة ضد التهديدات المتطورة.
-المراجع
-[1] مؤسسة OWASP. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
+    }</pre>
+<p># حفظ التكوين</p>
+<p>with open('security_config.json', 'w', encoding='utf-8') as f:</p>
+<p>json.dump(config, f, indent=2, ensure_ascii=False)</p>
+<ul>
+  <li># بدء المراقبة</li>
+  <li>responder = SecurityIncidentResponder()</li>
+  <li>responder.monitor_security_events()</li>
+</ul>
+</div>
+<div class="section">
+<h2>الخلاصة</h2>
+<p>يكشف هذا التقييم الأمني التقني الشامل عن ثغرات حرجة في البنية التحتية لموقع example.com تتطلب اهتماماً فورياً. تشكل ثغرة إفشاء PII المحددة مخاطر تنظيمية وتجارية كبيرة، بينما يترك غياب آليات الحماية الأساسية التطبيق عرضة للهجمات الشائعة على الويب.</p>
+<h3>ملخص المقاييس الحرجة</h3>
+<h3>الوضعية الأمنية الحالية:</h3>
+<p><strong>مستوى المخاطر:</strong> 🔴 حرج</p>
+<p><strong>امتثال OWASP Top 10 2021:</strong> 25%</p>
+<p><strong>نضج NIST CSF 2.0:</strong> 19%</p>
+<p><strong>جاهزية SOC 2:</strong> 15%</p>
+<h3>الجدول الزمني للتنفيذ:</h3>
+<p><strong>المرحلة 1 (0-72 ساعة):</strong> معالجة الثغرات الحرجة</p>
+<p><strong>المرحلة 2 (3-14 يوماً):</strong> آليات الحماية المحسنة</p>
+<p><strong>المرحلة 3 (15-90 يوماً):</strong> برنامج أمان شامل</p>
+<h3>النتائج المتوقعة:</h3>
+<p><strong>بعد المرحلة 1:</strong> تقليل المخاطر إلى مستوى 🟡 متوسط</p>
+<p><strong>بعد المرحلة 2:</strong> تحقيق حالة مخاطر 🔵 منخفضة</p>
+<p><strong>بعد المرحلة 3:</strong> الوصول إلى وضعية أمان 🟢 مقبولة</p>
+<p>توفر الحلول التقنية المقدمة وسكريبتات الأتمتة وأنظمة المراقبة خارطة طريق كاملة لتحويل الحالة الأمنية الحرجة الحالية إلى بنية تحتية أمنية قوية ومتوافقة ومراقبة باستمرار. سيضمن تنفيذ هذه التدابير الامتثال للمعايير الأمنية الدولية وتوفير الحماية المستمرة ضد التهديدات المتطورة.</p>
+</div>
+<div class="section">
+<h2>المراجع</h2>
+<pre class="code-block">[1] مؤسسة OWASP. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
 [2] مؤسسة OWASP. (2021). OWASP Top 10:2021. https://owasp.org/Top10/2021/
 [3] NIST. (2024). إطار عمل الأمن السيبراني NIST (CSF) 2.0. https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
-[4] AICPA. (2023). دليل فحص SOC 2 Type II. https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome.html
-
-    </pre>
+[4] AICPA. (2023). دليل فحص SOC 2 Type II. https://www.aicpa.org/interestareas/frc/assuranceadvisoryservices/sorhome.html</pre>
+</div>
   </main>
 </body>
 </html>

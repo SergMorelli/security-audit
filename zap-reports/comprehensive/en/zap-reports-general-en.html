@@ -5,320 +5,667 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZAP Comprehensive Report - English</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; direction: ltr; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; text-align: left; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.6; text-align: left; direction: ltr; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', 'Noto Sans', 'DejaVu Sans', sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #d5e0ef 100%);
+      color: #1a2332;
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: linear-gradient(135deg, #1565c0 0%, #0a1628 100%);
+      color: #fff;
+      padding: 52px 48px;
+      margin-bottom: 36px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .report-header h1 {
+      font-size: 1.95em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      line-height: 1.3;
+    }
+    .report-header .subtitle {
+      font-size: 1.05em;
+      opacity: .85;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .report-header .meta {
+      font-size: .9em;
+      opacity: .65;
+      position: relative;
+    }
+    .tool-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.9);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .82em;
+      margin-top: 18px;
+      position: relative;
+      letter-spacing: .04em;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: #fff;
+      padding: 34px 40px;
+      margin-bottom: 26px;
+      border-radius: 12px;
+      box-shadow: 0 2px 18px rgba(0,0,0,.07);
+      border-top: 3px solid #1565c0;
+    }
+
+    /* ── Headings ── */
+    h2 {
+      font-size: 1.55em;
+      color: #1565c0;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e4e9f0;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 1.15em;
+      color: #1a2332;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      padding-left: 10px;
+      border-left: 3px solid #1565c0;
+    }
+    h4 {
+      font-size: 1.0em;
+      color: #2c3e50;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 18px 0;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .alert-critical {
+      background: #fff0f0;
+      border-left: 5px solid #c62828;
+      color: #b71c1c;
+    }
+    .alert-warning {
+      background: #fff8e1;
+      border-left: 5px solid #f57c00;
+      color: #e65100;
+    }
+    .alert-info {
+      background: #e8f4fd;
+      border-left: 5px solid #1565c0;
+      color: #0d47a1;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,.1);
+      font-size: .93em;
+    }
+    thead {
+      background: #1565c0;
+      color: #fff;
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: .88em;
+      letter-spacing: .03em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #2c3e50;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:hover { background: #eef2f7; transition: background .15s; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* KV (key-value) table variant */
+    table.kv-table th {
+      background: #f0f4f8;
+      color: #1a2332;
+      width: 36%;
+    }
+    table.kv-table td { color: #37474f; }
+
+    /* ── Lists ── */
+    ul, ol { margin: 10px 0; padding-left: 22px; }
+    li { margin: 6px 0; line-height: 1.65; color: #2c3e50; }
+
+    ul.checklist { list-style: none; padding-left: 0; }
+    ul.checklist li { padding: 5px 8px 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+    ul.checklist li::before { content: "☐"; color: #1565c0; font-size: 1.1em; flex-shrink: 0; }
+    ul.checklist li.done::before { content: "☑"; color: #2e7d32; }
+
+    ul.status-list { list-style: none; padding-left: 0; }
+    ul.status-list li { padding: 4px 0; }
+    ul.status-list li.ok   { color: #2e7d32; }
+    ul.status-list li.fail { color: #c62828; }
+    ul.status-list li.warn { color: #e65100; }
+
+    /* ── TOC ── */
+    .toc { background: #f6f9fc; border-radius: 8px; padding: 20px 26px; }
+    .toc ol { counter-reset: toc-cnt; list-style: none; padding: 0; }
+    .toc li {
+      counter-increment: toc-cnt;
+      padding: 7px 0;
+      border-bottom: 1px solid #e4e9f0;
+      color: #1565c0;
+      font-weight: 500;
+    }
+    .toc li::before {
+      content: counter(toc-cnt) ". ";
+      font-weight: 700;
+      min-width: 26px;
+      display: inline-block;
+    }
+    .toc li:last-child { border-bottom: none; }
+
+    /* ── Code ── */
+    code {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      color: #c62828;
+      font-size: .88em;
+    }
+    pre.code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 22px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      font-size: .87em;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── Misc ── */
+    p { margin: 10px 0; color: #2c3e50; }
+    .phase-box {
+      background: #f6f9fc;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid #dce6f0;
+    }
+
+    /* ── RTL support ── */
+    [dir="rtl"] h3 { padding-left: 0; padding-right: 10px; border-left: none; border-right: 3px solid #1565c0; }
+    [dir="rtl"] .alert { border-left: none; border-right: 5px solid; }
+    [dir="rtl"] .alert-critical { border-right-color: #c62828; }
+    [dir="rtl"] .alert-warning  { border-right-color: #f57c00; }
+    [dir="rtl"] .alert-info     { border-right-color: #1565c0; }
+    [dir="rtl"] th { text-align: right; }
+    [dir="rtl"] ul, [dir="rtl"] ol { padding-left: 0; padding-right: 22px; }
+    [dir="rtl"] ul.checklist li { padding-right: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .section { box-shadow: none; border: 1px solid #e0e0e0; page-break-inside: avoid; }
+      .report-header { box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+
   </style>
 </head>
 <body>
   <main>
-    <h1>ZAP Comprehensive Report - English</h1>
-    <pre>
-Security Compliance Report: Analysis of example.com Website
-Information Security Specialist
-2025-12-31
-Executive Summary
-This report presents a comprehensive compliance analysis of the website https://example.com against international security standards including OWASP Top 10 2021, NIST Cybersecurity Framework 2.0, and Microsoft Security Baseline recommendations. The analysis is based on automated security scanning results performed on December 30, 2025, using OWASP ZAP (Zed Attack Proxy) version 2.17.0 by Checkmarx.
-CRITICAL WARNING: Personal Identifiable Information (PII) disclosure detected - immediate intervention required!
-Key Findings:
-29 security alerts identified across various criticality levels
-Critical vulnerability of PII disclosure detected
-Absence of basic security controls for web application protection
-Website does not comply with fundamental requirements of international security standards
-Table of Contents
-Analysis Methodology
-Detailed Vulnerability Analysis
-OWASP Top 10 2021 Compliance Analysis
-NIST Cybersecurity Framework 2.0 Compliance
-Microsoft Security Baseline Compliance
-Vulnerability Remediation Plan
-Conclusion
-Analysis Methodology
-Scanning Parameters
-Tool: OWASP ZAP 2.17.0 by Checkmarx [1]
-Scan Date and Time: December 30, 2025, 19:00:53
-Target Resource: https://example.com
-Total Endpoints: 290
-Contexts: All contexts included by default
-Risk Levels: High, Medium, Low, Informational
-Confidence Levels: User Confirmed, High, Medium, Low
-Scan Results Statistics
-Risk Level
-Count
-Percentage
-Confidence
-🔴 High
-1
-3.4%
-High
-🟡 Medium
-3
-10.3%
-High/Medium
-🔵 Low
-4
-13.8%
-High/Medium/Low
-ℹ️ Informational
-21
-72.4%
-Medium/Low
-Total
-29
-100%
--
-Technology Stack
-Identified technologies on the website:
-CMS: WordPress with Block Editor
-Web Server: LiteSpeed with LiteSpeed Cache
-CDN: Cloudflare with Browser Insights
-Programming Language: PHP
-Additional Components:
-Blocksy (WordPress theme)
-Stackable (WordPress plugin)
-Gravatar (avatar service)
-Google Font API
-Protocols: HTTP/3, HSTS, RSS, Priority Hints
-Detailed Vulnerability Analysis
-🔴 Critical Vulnerabilities (High Risk)
-1. Personal Identifiable Information (PII) Disclosure
-CWE-359 | WASC-13 | Confidence: High
-CRITICAL VIOLATION: Personal user data disclosure detected
-Technical Description:
-Personal user information accessible without authorization
-Violation of data confidentiality principles
-Direct violation of GDPR requirements
-Business Impact:
-Regulatory Risks: GDPR fines up to 4% of annual company revenue
-Reputational Damage: Severe damage to customer trust
-Legal Consequences: Potential lawsuits from affected individuals
-Operational Risks: Mandatory regulator notification within 72 hours
-🟡 Medium Risk Vulnerabilities
-2. Missing Subresource Integrity (SRI)
-CWE-345 | WASC-15 | Count: 5 instances | Confidence: High
-Description: External resources loaded without integrity verification, creating supply chain attack risks.
-Affected Resources:
-Google Font API
-Cloudflare CDN resources
-External JavaScript libraries
-3. Missing Content Security Policy (CSP)
-CWE-693 | WASC-15 | Count: 5 instances | Confidence: High
-Description: Absence of content security policy makes the site vulnerable to XSS attacks and other injections.
-4. Missing Clickjacking Protection
-CWE-1021 | WASC-15 | Count: 5 instances | Confidence: Medium
-Description: Absence of X-Frame-Options or CSP frame-ancestors headers allows iframe embedding for clickjacking attacks.
-🔵 Low Risk Vulnerabilities
-5. Transport Security Issues
-Strict-Transport-Security Header Not Set (CWE-319, 1 instance)
-Strict Transport Security Disabled (CWE-319, 5 instances)
-6. Missing X-Content-Type-Options
-CWE-693 | WASC-15 | Confidence: Medium
-Description: Missing protection against MIME-sniffing attacks.
-7. Unix Timestamp Disclosure
-CWE-497 | WASC-13 | Count: 4 instances | Confidence: Low
-Description: Timestamp disclosure detected, potentially revealing content creation timing information.
-ℹ️ Informational Alerts
-21 informational alerts identified, including:
-Technology detection (WordPress, PHP, Cloudflare, etc.)
-Caching issues (5 instances)
-Charset mismatch
-Suspicious comments in code (58 instances)
-OWASP Top 10 2021 Compliance Analysis
-A01:2021 – Broken Access Control
-Status: ❌ CRITICAL NON-COMPLIANCE
-Identified Issues:
-PII Disclosure - direct violation of access control principles
-Absence of sensitive information protection mechanisms
-Violation of "deny by default" principle
-OWASP Recommendations:
-Implement strict access controls
-Log access failures
-Rate limit API requests
-Regular access rights auditing
-A03:2021 – Injection
-Status: ✅ COMPLIANT (based on scan results)
-Result: No SQL, NoSQL, or OS command injection vulnerabilities detected.
-A05:2021 – Security Misconfiguration
-Status: ❌ CRITICAL NON-COMPLIANCE
-Identified Issues:
-Missing CSP (5 instances)
-Missing clickjacking protection (5 instances)
-Improper security header configuration
-Missing X-Content-Type-Options
-HSTS configuration issues
-A06:2021 – Vulnerable and Outdated Components
-Status: ⚠️ REQUIRES VERIFICATION
-Identified Components:
-WordPress (version not determined)
-PHP (version not determined)
-LiteSpeed web server
-Multiple plugins: Blocksy, Stackable, LiteSpeed Cache
-Recommendations: Detailed version audit of all components required.
-A08:2021 – Software and Data Integrity Failures
-Status: ❌ NON-COMPLIANT
-Issues:
-Missing Subresource Integrity for external resources (5 instances)
-Risk of compromise through CDN and external libraries
-Absence of update integrity verification
-A09:2021 – Security Logging and Monitoring Failures
-Status: ❌ NON-COMPLIANT
-Issues:
-No information about logging systems
-Unknown security monitoring status
-Absence of anomaly detection systems
-NIST Cybersecurity Framework 2.0 Compliance
-GOVERN (Governance) - 20% Compliance
-GV.OC-01: Organizational Cybersecurity
-❌ No evidence of formalized security policy
-GV.RM-01: Risk Management
-❌ No cybersecurity risk management procedures implemented
-GV.SC-01: Supply Chain Management
-❌ No external resource integrity controls
-IDENTIFY (Identification) - 60% Compliance
-ID.AM-02: Software Asset Inventory
-✅ Partially completed - main components identified
-ID.RA-01: Vulnerability Assessment
-✅ Completed - security scanning performed
-ID.RA-02: Threat Analysis
-❌ No systematic threat analysis
-PROTECT (Protection) - 15% Compliance
-PR.AC-01: Identity and Authentication Management
-❌ Insufficient data for assessment
-PR.DS-01: Data at Rest Protection
-❌ PII disclosure detected
-PR.DS-02: Data in Transit Protection
-⚠️ Partially implemented (HTTPS, but HSTS issues)
-PR.PT-01: Audit/Logging
-❌ Insufficient information about audit systems
-DETECT (Detection) - 0% Compliance
-DE.CM-01: Network Monitoring
-❌ No evidence of monitoring
-DE.AE-01: Anomaly Detection
-❌ No anomaly detection systems
-RESPOND (Response) - 0% Compliance
-RS.RP-01: Response Planning
-❌ No evidence of response plan
-RS.CO-01: Communications
-❌ No incident notification procedures
-RECOVER (Recovery) - 0% Compliance
-RC.RP-01: Recovery Planning
-❌ No evidence of recovery plan
-RC.CO-01: Recovery Communications
-❌ No recovery communication procedures
-Microsoft Security Baseline Compliance
-Transport Security
-❌ CRITICAL DEFICIENCIES:
-Strict-Transport-Security header not set (1 instance)
-Strict transport security disabled (5 instances)
-No mandatory HTTPS enforcement for all resources
-Content Protection
-❌ CRITICAL DEFICIENCIES:
-X-Content-Type-Options header missing
-Content Security Policy missing (5 instances)
-No MIME-sniffing attack protection
-Missing clickjacking protection
-Resource Integrity
-❌ MEDIUM RISK:
-Missing Subresource Integrity attribute for external resources (5 instances)
-Risk of external library compromise from Google Font API, Cloudflare, and other CDNs
-No resource loading integrity verification
-Data Management
-❌ CRITICAL RISK:
-Personal data disclosure detected
-No data classification
-No access control for sensitive information
-Vulnerability Remediation Plan
-Phase 1: Critical Fixes (0-7 days)
-🚨 PRIORITY 1: PII Disclosure Remediation (0-3 days)
-☐ Day 1: Immediate identification and blocking of PII disclosure sources
-☐ Day 2: Implement masking/encryption of sensitive data
-☐ Day 3: Deploy strict access controls for personal data
-☐ Day 3: Notify regulators per GDPR requirements (72 hours)
-🔧 PRIORITY 2: Basic Security Headers (4-7 days)
-☐ Day 4-5: Implement Content Security Policy
-Content-Security-Policy: default-src 'self'; 
-script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; 
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-img-src 'self' data: https: https://secure.gravatar.com;
-frame-ancestors 'none';
-base-uri 'self';
-☐ Day 6: Configure clickjacking protection
-X-Frame-Options: DENY
-☐ Day 6: Configure HSTS
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-☐ Day 7: Testing and validation of changes
-Phase 2: Medium Priority Fixes (8-30 days)
-Week 2: Subresource Integrity
-☐ Implement SRI for all external resources
-&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
+<div class="report-header">
+  <h1>Security Compliance Report: Analysis of example.com Website</h1>
+  <p class="subtitle">Information Security Specialist</p>
+  <p class="meta">2025-12-31</p>
+  <span class="tool-badge">OWASP ZAP 2.17.0 &mdash; Checkmarx Security Platform</span>
+</div>
+<div class="section">
+<h2>Executive Summary</h2>
+<p>This report presents a comprehensive compliance analysis of the website https://example.com against international security standards including OWASP Top 10 2021, NIST Cybersecurity Framework 2.0, and Microsoft Security Baseline recommendations. The analysis is based on automated security scanning results performed on December 30, 2025, using OWASP ZAP (Zed Attack Proxy) version 2.17.0 by Checkmarx.</p>
+<div class="alert alert-critical">CRITICAL WARNING: Personal Identifiable Information (PII) disclosure detected - immediate intervention required!</div>
+<h3>Key Findings:</h3>
+<p>29 security alerts identified across various criticality levels</p>
+<p>Critical vulnerability of PII disclosure detected</p>
+<p>Absence of basic security controls for web application protection</p>
+<p>Website does not comply with fundamental requirements of international security standards</p>
+</div>
+<div class="section">
+<h2>Table of Contents</h2>
+<div class="toc"><ol>
+  <li>Analysis Methodology</li>
+  <li>Detailed Vulnerability Analysis</li>
+  <li>OWASP Top 10 2021 Compliance Analysis</li>
+  <li>NIST Cybersecurity Framework 2.0 Compliance</li>
+  <li>Microsoft Security Baseline Compliance</li>
+  <li>Vulnerability Remediation Plan</li>
+  <li>Conclusion</li>
+</ol></div>
+</div>
+<div class="section">
+<h2>Analysis Methodology</h2>
+<h3>Scanning Parameters</h3>
+<p><strong>Tool:</strong> OWASP ZAP 2.17.0 by Checkmarx [1]</p>
+<p><strong>Scan Date and Time:</strong> December 30, 2025, 19:00:53</p>
+<p><strong>Target Resource:</strong> https://example.com</p>
+<p><strong>Total Endpoints:</strong> 290</p>
+<p><strong>Contexts:</strong> All contexts included by default</p>
+<p><strong>Risk Levels:</strong> High, Medium, Low, Informational</p>
+<p><strong>Confidence Levels:</strong> User Confirmed, High, Medium, Low</p>
+<h3>Scan Results Statistics</h3>
+<table><thead><tr><th>Risk Level</th><th>Count</th><th>Percentage</th><th>Confidence</th></tr></thead><tbody><tr><td>🔴 High</td><td>1</td><td>3.4%</td><td>High</td></tr><tr><td>🟡 Medium</td><td>3</td><td>10.3%</td><td>High/Medium</td></tr><tr><td>🔵 Low</td><td>4</td><td>13.8%</td><td>High/Medium/Low</td></tr><tr><td>ℹ️ Informational</td><td>21</td><td>72.4%</td><td>Medium/Low</td></tr><tr><td>Total</td><td>29</td><td>100%</td><td>-</td></tr></tbody></table>
+<h3>Technology Stack</h3>
+<h3>Identified technologies on the website:</h3>
+<p><strong>CMS:</strong> WordPress with Block Editor</p>
+<p><strong>Web Server:</strong> LiteSpeed with LiteSpeed Cache</p>
+<p><strong>CDN:</strong> Cloudflare with Browser Insights</p>
+<p><strong>Programming Language:</strong> PHP</p>
+<h3>Additional Components:</h3>
+<ul>
+  <li>Blocksy (WordPress theme)</li>
+  <li>Stackable (WordPress plugin)</li>
+  <li>Gravatar (avatar service)</li>
+  <li>Google Font API</li>
+</ul>
+<p><strong>Protocols:</strong> HTTP/3, HSTS, RSS, Priority Hints</p>
+</div>
+<div class="section">
+<h2>Detailed Vulnerability Analysis</h2>
+<h3>🔴 Critical Vulnerabilities (High Risk)</h3>
+<ol>
+  <li>Personal Identifiable Information (PII) Disclosure</li>
+</ol>
+<p><strong>CWE-359 | WASC-13 | Confidence:</strong> High</p>
+<div class="alert alert-critical">CRITICAL VIOLATION: Personal user data disclosure detected</div>
+<h3>Technical Description:</h3>
+<p>Personal user information accessible without authorization</p>
+<p>Violation of data confidentiality principles</p>
+<p>Direct violation of GDPR requirements</p>
+<h3>Business Impact:</h3>
+<p><strong>Regulatory Risks:</strong> GDPR fines up to 4% of annual company revenue</p>
+<p><strong>Reputational Damage:</strong> Severe damage to customer trust</p>
+<p><strong>Legal Consequences:</strong> Potential lawsuits from affected individuals</p>
+<p><strong>Operational Risks:</strong> Mandatory regulator notification within 72 hours</p>
+<h3>🟡 Medium Risk Vulnerabilities</h3>
+<ol>
+  <li>Missing Subresource Integrity (SRI)</li>
+</ol>
+<p><strong>CWE-345 | WASC-15 | Count:</strong> 5 instances | Confidence: High</p>
+<p><strong>Description:</strong> External resources loaded without integrity verification, creating supply chain attack risks.</p>
+<h3>Affected Resources:</h3>
+<ul>
+  <li>Google Font API</li>
+  <li>Cloudflare CDN resources</li>
+  <li>External JavaScript libraries</li>
+</ul>
+<ol>
+  <li>Missing Content Security Policy (CSP)</li>
+</ol>
+<p><strong>CWE-693 | WASC-15 | Count:</strong> 5 instances | Confidence: High</p>
+<p><strong>Description:</strong> Absence of content security policy makes the site vulnerable to XSS attacks and other injections.</p>
+<ol>
+  <li>Missing Clickjacking Protection</li>
+</ol>
+<p><strong>CWE-1021 | WASC-15 | Count:</strong> 5 instances | Confidence: Medium</p>
+<p><strong>Description:</strong> Absence of X-Frame-Options or CSP frame-ancestors headers allows iframe embedding for clickjacking attacks.</p>
+<h3>🔵 Low Risk Vulnerabilities</h3>
+<ol>
+  <li>Transport Security Issues</li>
+</ol>
+<p>Strict-Transport-Security Header Not Set (CWE-319, 1 instance)</p>
+<p>Strict Transport Security Disabled (CWE-319, 5 instances)</p>
+<ol>
+  <li>Missing X-Content-Type-Options</li>
+</ol>
+<p><strong>CWE-693 | WASC-15 | Confidence:</strong> Medium</p>
+<p><strong>Description:</strong> Missing protection against MIME-sniffing attacks.</p>
+<ol>
+  <li>Unix Timestamp Disclosure</li>
+</ol>
+<p><strong>CWE-497 | WASC-13 | Count:</strong> 4 instances | Confidence: Low</p>
+<p><strong>Description:</strong> Timestamp disclosure detected, potentially revealing content creation timing information.</p>
+<h3>ℹ️ Informational Alerts</h3>
+<h3>21 informational alerts identified, including:</h3>
+<ul>
+  <li>Technology detection (WordPress, PHP, Cloudflare, etc.)</li>
+  <li>Caching issues (5 instances)</li>
+  <li>Charset mismatch</li>
+  <li>Suspicious comments in code (58 instances)</li>
+</ul>
+</div>
+<div class="section">
+<h2>OWASP Top 10 2021 Compliance Analysis</h2>
+<h3>A01:2021 – Broken Access Control</h3>
+<p><strong>Status:</strong> ❌ CRITICAL NON-COMPLIANCE</p>
+<h3>Identified Issues:</h3>
+<p>PII Disclosure - direct violation of access control principles</p>
+<p>Absence of sensitive information protection mechanisms</p>
+<p>Violation of "deny by default" principle</p>
+<h3>OWASP Recommendations:</h3>
+<ul>
+  <li>Implement strict access controls</li>
+  <li>Log access failures</li>
+  <li>Rate limit API requests</li>
+  <li>Regular access rights auditing</li>
+</ul>
+<h3>A03:2021 – Injection</h3>
+<p><strong>Status:</strong> ✅ COMPLIANT (based on scan results)</p>
+<p><strong>Result:</strong> No SQL, NoSQL, or OS command injection vulnerabilities detected.</p>
+<h3>A05:2021 – Security Misconfiguration</h3>
+<p><strong>Status:</strong> ❌ CRITICAL NON-COMPLIANCE</p>
+<h3>Identified Issues:</h3>
+<ul>
+  <li>Missing CSP (5 instances)</li>
+  <li>Missing clickjacking protection (5 instances)</li>
+  <li>Improper security header configuration</li>
+  <li>Missing X-Content-Type-Options</li>
+  <li>HSTS configuration issues</li>
+</ul>
+<h3>A06:2021 – Vulnerable and Outdated Components</h3>
+<p><strong>Status:</strong> ⚠️ REQUIRES VERIFICATION</p>
+<h3>Identified Components:</h3>
+<ul>
+  <li>WordPress (version not determined)</li>
+  <li>PHP (version not determined)</li>
+  <li>LiteSpeed web server</li>
+</ul>
+<p><strong>Multiple plugins:</strong> Blocksy, Stackable, LiteSpeed Cache</p>
+<p><strong>Recommendations:</strong> Detailed version audit of all components required.</p>
+<h3>A08:2021 – Software and Data Integrity Failures</h3>
+<p><strong>Status:</strong> ❌ NON-COMPLIANT</p>
+<h3>Issues:</h3>
+<p>Missing Subresource Integrity for external resources (5 instances)</p>
+<p>Risk of compromise through CDN and external libraries</p>
+<p>Absence of update integrity verification</p>
+<p>A09:2021 – Security Logging and Monitoring Failures</p>
+<p><strong>Status:</strong> ❌ NON-COMPLIANT</p>
+<h3>Issues:</h3>
+<ul>
+  <li>No information about logging systems</li>
+  <li>Unknown security monitoring status</li>
+  <li>Absence of anomaly detection systems</li>
+</ul>
+</div>
+<div class="section">
+<h2>NIST Cybersecurity Framework 2.0 Compliance</h2>
+<h3>GOVERN (Governance) - 20% Compliance</h3>
+<p><strong>GV.OC-01:</strong> Organizational Cybersecurity</p>
+<ul class="status-list">
+  <li class="fail">❌ No evidence of formalized security policy</li>
+</ul>
+<p><strong>GV.RM-01:</strong> Risk Management</p>
+<ul class="status-list">
+  <li class="fail">❌ No cybersecurity risk management procedures implemented</li>
+</ul>
+<p><strong>GV.SC-01:</strong> Supply Chain Management</p>
+<ul class="status-list">
+  <li class="fail">❌ No external resource integrity controls</li>
+</ul>
+<h3>IDENTIFY (Identification) - 60% Compliance</h3>
+<p><strong>ID.AM-02:</strong> Software Asset Inventory</p>
+<ul class="status-list">
+  <li class="ok">✅ Partially completed - main components identified</li>
+</ul>
+<p><strong>ID.RA-01:</strong> Vulnerability Assessment</p>
+<ul class="status-list">
+  <li class="ok">✅ Completed - security scanning performed</li>
+</ul>
+<p><strong>ID.RA-02:</strong> Threat Analysis</p>
+<ul class="status-list">
+  <li class="fail">❌ No systematic threat analysis</li>
+</ul>
+<h3>PROTECT (Protection) - 15% Compliance</h3>
+<p><strong>PR.AC-01:</strong> Identity and Authentication Management</p>
+<ul class="status-list">
+  <li class="fail">❌ Insufficient data for assessment</li>
+</ul>
+<p><strong>PR.DS-01:</strong> Data at Rest Protection</p>
+<ul class="status-list">
+  <li class="fail">❌ PII disclosure detected</li>
+</ul>
+<p><strong>PR.DS-02:</strong> Data in Transit Protection</p>
+<div class="alert alert-warning">⚠️ Partially implemented (HTTPS, but HSTS issues)</div>
+<p><strong>PR.PT-01:</strong> Audit/Logging</p>
+<ul class="status-list">
+  <li class="fail">❌ Insufficient information about audit systems</li>
+</ul>
+<h3>DETECT (Detection) - 0% Compliance</h3>
+<p><strong>DE.CM-01:</strong> Network Monitoring</p>
+<ul class="status-list">
+  <li class="fail">❌ No evidence of monitoring</li>
+</ul>
+<p><strong>DE.AE-01:</strong> Anomaly Detection</p>
+<ul class="status-list">
+  <li class="fail">❌ No anomaly detection systems</li>
+</ul>
+<h3>RESPOND (Response) - 0% Compliance</h3>
+<p><strong>RS.RP-01:</strong> Response Planning</p>
+<ul class="status-list">
+  <li class="fail">❌ No evidence of response plan</li>
+</ul>
+<p><strong>RS.CO-01:</strong> Communications</p>
+<ul class="status-list">
+  <li class="fail">❌ No incident notification procedures</li>
+</ul>
+<h3>RECOVER (Recovery) - 0% Compliance</h3>
+<p><strong>RC.RP-01:</strong> Recovery Planning</p>
+<ul class="status-list">
+  <li class="fail">❌ No evidence of recovery plan</li>
+</ul>
+<p><strong>RC.CO-01:</strong> Recovery Communications</p>
+<ul class="status-list">
+  <li class="fail">❌ No recovery communication procedures</li>
+</ul>
+</div>
+<div class="section">
+<h2>Microsoft Security Baseline Compliance</h2>
+<h3>Transport Security</h3>
+<ul class="status-list">
+  <li class="fail">❌ CRITICAL DEFICIENCIES:</li>
+</ul>
+<p>Strict-Transport-Security header not set (1 instance)</p>
+<p>Strict transport security disabled (5 instances)</p>
+<p>No mandatory HTTPS enforcement for all resources</p>
+<p>Content Protection</p>
+<ul class="status-list">
+  <li class="fail">❌ CRITICAL DEFICIENCIES:</li>
+</ul>
+<ul>
+  <li>X-Content-Type-Options header missing</li>
+  <li>Content Security Policy missing (5 instances)</li>
+  <li>No MIME-sniffing attack protection</li>
+  <li>Missing clickjacking protection</li>
+</ul>
+<h3>Resource Integrity</h3>
+<ul class="status-list">
+  <li class="fail">❌ MEDIUM RISK:</li>
+</ul>
+<h3>Missing Subresource Integrity attribute for external resources (5 instances)</h3>
+<p>Risk of external library compromise from Google Font API, Cloudflare, and other CDNs</p>
+<ul>
+  <li>No resource loading integrity verification</li>
+  <li>Data Management</li>
+</ul>
+<ul class="status-list">
+  <li class="fail">❌ CRITICAL RISK:</li>
+</ul>
+<ul>
+  <li>Personal data disclosure detected</li>
+  <li>No data classification</li>
+  <li>No access control for sensitive information</li>
+</ul>
+</div>
+<div class="section">
+<h2>Vulnerability Remediation Plan</h2>
+<p><strong>Phase 1:</strong> Critical Fixes (0-7 days)</p>
+<div class="alert alert-critical">🚨 PRIORITY 1: PII Disclosure Remediation (0-3 days)</div>
+<ul class="checklist">
+  <li>Day 1: Immediate identification and blocking of PII disclosure sources</li>
+  <li>Day 2: Implement masking/encryption of sensitive data</li>
+  <li>Day 3: Deploy strict access controls for personal data</li>
+  <li>Day 3: Notify regulators per GDPR requirements (72 hours)</li>
+</ul>
+<p><strong>🔧 PRIORITY 2:</strong> Basic Security Headers (4-7 days)</p>
+<ul class="checklist">
+  <li>Day 4-5: Implement Content Security Policy</li>
+</ul>
+<pre class="code-block">Content-Security-Policy: default-src 'self'; </pre>
+<p>script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;</p>
+<h3>style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;</h3>
+<p><strong>img-src 'self' data:</strong> https: https://secure.gravatar.com;</p>
+<ul>
+  <li>frame-ancestors 'none';</li>
+  <li>base-uri 'self';</li>
+</ul>
+<ul class="checklist">
+  <li>Day 6: Configure clickjacking protection</li>
+</ul>
+<pre class="code-block">X-Frame-Options: DENY</pre>
+<ul class="checklist">
+  <li>Day 6: Configure HSTS</li>
+</ul>
+<pre class="code-block">Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</pre>
+<ul class="checklist">
+  <li>Day 7: Testing and validation of changes</li>
+</ul>
+<p><strong>Phase 2:</strong> Medium Priority Fixes (8-30 days)</p>
+<p><strong>Week 2:</strong> Subresource Integrity</p>
+<ul class="checklist">
+  <li>Implement SRI for all external resources</li>
+</ul>
+<pre class="code-block">&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
       rel="stylesheet" 
       integrity="sha384-hash" 
       crossorigin="anonymous"&gt;
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" 
         integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" 
-        crossorigin="anonymous"&gt;&lt;/script&gt;
-Week 3: Additional Security Headers
-☐ Implement X-Content-Type-Options
-X-Content-Type-Options: nosniff
-☐ Configure additional headers
-X-XSS-Protection: 1; mode=block
+        crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+<p><strong>Week 3:</strong> Additional Security Headers</p>
+<ul class="checklist">
+  <li>Implement X-Content-Type-Options</li>
+</ul>
+<pre class="code-block">X-Content-Type-Options: nosniff</pre>
+<ul class="checklist">
+  <li>Configure additional headers</li>
+</ul>
+<pre class="code-block">X-XSS-Protection: 1; mode=block
 Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: geolocation=(), microphone=(), camera=()
-Week 4: Component Audit
-☐ Verify WordPress, PHP, and all plugin versions
-☐ Update outdated components
-☐ Remove unused plugins and themes
-☐ Configure automatic security updates
-Phase 3: Long-term Improvements (31-90 days)
-Month 2: Monitoring and Logging
-☐ Implement security monitoring system (SIEM)
-☐ Configure centralized logging
-☐ Create security dashboards
-☐ Set up suspicious activity alerts
-Month 3: Procedures and Policies
-☐ Develop information security policy
-☐ Create incident response procedures
-☐ Develop post-incident recovery plan
-☐ Train staff on cybersecurity fundamentals
-☐ Regular penetration testing
-Conclusion
-The security analysis of website https://example.com revealed critical deficiencies in information protection. The site does not comply with fundamental requirements of international security standards OWASP Top 10 2021, NIST CSF 2.0, and Microsoft Security Baseline.
-Critical Risk Assessment:
-Current Risk Level: 🔴 CRITICAL
-Primary Threat: Personal user data disclosure
-Regulatory Risks: High GDPR fines (up to 4% of annual revenue)
-Reputational Risks: Severe customer trust loss
-Operational Risks: Potential business suspension
-Standards Compliance:
-Standard
-Compliance Level
-Critical Issues
-OWASP Top 10 2021
-20%
-A01, A05, A08, A09
-NIST CSF 2.0
-19%
-All functions except partial identification
-Microsoft Security Baseline
-15%
-Transport, content, data
-Key Recommendations:
-Immediate remediation of personal data disclosure (0-3 days)
-Implementation of basic protection mechanisms for web application (4-7 days)
-Regular updates of all system components
-Establishment of procedures for monitoring and incident response
-Staff training on information security fundamentals
-Improvement Forecast:
-After Phase 1: Risk reduction to 🟡 MEDIUM (critical vulnerability elimination)
-After Phase 2: Risk reduction to 🔵 LOW (basic protection)
-After Phase 3: Achievement of 🟢 ACCEPTABLE security level (standards compliance)
-Next Steps: It is recommended to immediately begin implementation of Phase 1 of the vulnerability remediation plan, with special attention to eliminating personal data disclosure and notifying regulators in accordance with GDPR requirements.
-References
-[1] OWASP Foundation. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
+Permissions-Policy: geolocation=(), microphone=(), camera=()</pre>
+<p><strong>Week 4:</strong> Component Audit</p>
+<ul class="checklist">
+  <li>Verify WordPress, PHP, and all plugin versions</li>
+  <li>Update outdated components</li>
+  <li>Remove unused plugins and themes</li>
+  <li>Configure automatic security updates</li>
+</ul>
+<p><strong>Phase 3:</strong> Long-term Improvements (31-90 days)</p>
+<p><strong>Month 2:</strong> Monitoring and Logging</p>
+<ul class="checklist">
+  <li>Implement security monitoring system (SIEM)</li>
+  <li>Configure centralized logging</li>
+  <li>Create security dashboards</li>
+  <li>Set up suspicious activity alerts</li>
+</ul>
+<p><strong>Month 3:</strong> Procedures and Policies</p>
+<ul class="checklist">
+  <li>Develop information security policy</li>
+  <li>Create incident response procedures</li>
+  <li>Develop post-incident recovery plan</li>
+  <li>Train staff on cybersecurity fundamentals</li>
+  <li>Regular penetration testing</li>
+</ul>
+</div>
+<div class="section">
+<h2>Conclusion</h2>
+<p>The security analysis of website https://example.com revealed critical deficiencies in information protection. The site does not comply with fundamental requirements of international security standards OWASP Top 10 2021, NIST CSF 2.0, and Microsoft Security Baseline.</p>
+<div class="alert alert-critical">Critical Risk Assessment:</div>
+<p><strong>Current Risk Level:</strong> 🔴 CRITICAL</p>
+<p><strong>Primary Threat:</strong> Personal user data disclosure</p>
+<p><strong>Regulatory Risks:</strong> High GDPR fines (up to 4% of annual revenue)</p>
+<p><strong>Reputational Risks:</strong> Severe customer trust loss</p>
+<p><strong>Operational Risks:</strong> Potential business suspension</p>
+<h3>Standards Compliance:</h3>
+<ul>
+  <li>Standard</li>
+  <li>Compliance Level</li>
+  <li>Critical Issues</li>
+</ul>
+</div>
+<div class="section">
+<h2>OWASP Top 10 2021</h2>
+<ul>
+  <li>20%</li>
+  <li>A01, A05, A08, A09</li>
+  <li>NIST CSF 2.0</li>
+  <li>19%</li>
+  <li>All functions except partial identification</li>
+</ul>
+</div>
+<div class="section">
+<h2>Microsoft Security Baseline</h2>
+<ul>
+  <li>15%</li>
+  <li>Transport, content, data</li>
+</ul>
+<h3>Key Recommendations:</h3>
+<p>Immediate remediation of personal data disclosure (0-3 days)</p>
+<p>Implementation of basic protection mechanisms for web application (4-7 days)</p>
+<p>Regular updates of all system components</p>
+<p>Establishment of procedures for monitoring and incident response</p>
+<h3>Staff training on information security fundamentals</h3>
+<h3>Improvement Forecast:</h3>
+<p><strong>After Phase 1:</strong> Risk reduction to 🟡 MEDIUM (critical vulnerability elimination)</p>
+<p><strong>After Phase 2:</strong> Risk reduction to 🔵 LOW (basic protection)</p>
+<p><strong>After Phase 3:</strong> Achievement of 🟢 ACCEPTABLE security level (standards compliance)</p>
+<p><strong>Next Steps:</strong> It is recommended to immediately begin implementation of Phase 1 of the vulnerability remediation plan, with special attention to eliminating personal data disclosure and notifying regulators in accordance with GDPR requirements.</p>
+</div>
+<div class="section">
+<h2>References</h2>
+<pre class="code-block">[1] OWASP Foundation. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
 [2] OWASP Foundation. (2021). OWASP Top 10:2021. https://owasp.org/Top10/2021/
-[3] NIST. (2024). The NIST Cybersecurity Framework (CSF) 2.0. https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
-    </pre>
+[3] NIST. (2024). The NIST Cybersecurity Framework (CSF) 2.0. https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20</pre>
+</div>
   </main>
 </body>
 </html>

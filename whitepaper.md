@@ -29,9 +29,9 @@ These documents help auditors understand the system, responsibilities, and const
 
 | Language | .PDF | .HTML |
 |----------|------|-------|
-| 🇷🇺 Русский | [whitepaper-ru.pdf](/whitepaper/ru/whitepaper-ru.pdf) | [whitepaper-ru.html](/whitepaper/ru/whitepaper-ru.html) |
-| 🇬🇧 English | [whitepaper-en.pdf](/whitepaper/en/whitepaper-en.pdf) | [whitepaper-en.html](/whitepaper/en/whitepaper-en.html) |
-| 🇸🇦 العربية | [whitepaper-ar.pdf](/whitepaper/ar/whitepaper-ar.pdf) | [whitepaper-ar.html](/whitepaper/ar/whitepaper-ar.html) |
+| 🇷🇺 Русский | [whitepaper-ru.pdf](ru/whitepaper-ru.pdf) | [whitepaper-ru.html](ru/whitepaper-ru.html) |
+| 🇬🇧 English | [whitepaper-en.pdf](en/whitepaper-en.pdf) | [whitepaper-en.html](en/whitepaper-en.html) |
+| 🇸🇦 العربية | [whitepaper-ar.pdf](ar/whitepaper-ar.pdf) | [whitepaper-ar.html](ar/whitepaper-ar.html) |
 
 ---
 

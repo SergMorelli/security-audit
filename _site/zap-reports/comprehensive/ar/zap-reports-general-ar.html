@@ -5,320 +5,661 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>تقرير ZAP الشامل - عربي</title>
   <style>
-    body { margin: 0; font-family: "Noto Sans Arabic", "Noto Sans", "DejaVu Sans", sans-serif; background: #f7f7f8; color: #111; direction: rtl; }
-    main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 48px; }
-    h1 { font-size: 1.5rem; margin: 0 0 16px; text-align: right; }
-    pre { white-space: pre-wrap; word-wrap: break-word; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 16px; line-height: 1.6; text-align: right; direction: rtl; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Noto Sans Arabic', 'Noto Sans', 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #eef2f7 0%, #d5e0ef 100%);
+      color: #1a2332;
+      line-height: 1.75;
+      font-size: 15.5px;
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 70px;
+    }
+
+    /* ── Header ── */
+    .report-header {
+      background: linear-gradient(135deg, #1565c0 0%, #0a1628 100%);
+      color: #fff;
+      padding: 52px 48px;
+      margin-bottom: 36px;
+      border-radius: 14px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.22);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .report-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .report-header h1 {
+      font-size: 1.95em;
+      font-weight: 700;
+      margin-bottom: 12px;
+      position: relative;
+      line-height: 1.3;
+    }
+    .report-header .subtitle {
+      font-size: 1.05em;
+      opacity: .85;
+      margin-bottom: 6px;
+      position: relative;
+    }
+    .report-header .meta {
+      font-size: .9em;
+      opacity: .65;
+      position: relative;
+    }
+    .tool-badge {
+      display: inline-block;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      color: rgba(255,255,255,.9);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .82em;
+      margin-top: 18px;
+      position: relative;
+      letter-spacing: .04em;
+    }
+
+    /* ── Sections ── */
+    .section {
+      background: #fff;
+      padding: 34px 40px;
+      margin-bottom: 26px;
+      border-radius: 12px;
+      box-shadow: 0 2px 18px rgba(0,0,0,.07);
+      border-top: 3px solid #1565c0;
+    }
+
+    /* ── Headings ── */
+    h2 {
+      font-size: 1.55em;
+      color: #1565c0;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e4e9f0;
+      font-weight: 700;
+    }
+    h3 {
+      font-size: 1.15em;
+      color: #1a2332;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      padding-left: 10px;
+      border-left: 3px solid #1565c0;
+    }
+    h4 {
+      font-size: 1.0em;
+      color: #2c3e50;
+      margin-top: 14px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* ── Alerts ── */
+    .alert {
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 18px 0;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .alert-critical {
+      background: #fff0f0;
+      border-left: 5px solid #c62828;
+      color: #b71c1c;
+    }
+    .alert-warning {
+      background: #fff8e1;
+      border-left: 5px solid #f57c00;
+      color: #e65100;
+    }
+    .alert-info {
+      background: #e8f4fd;
+      border-left: 5px solid #1565c0;
+      color: #0d47a1;
+    }
+
+    /* ── Tables ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 22px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 8px rgba(0,0,0,.1);
+      font-size: .93em;
+    }
+    thead {
+      background: #1565c0;
+      color: #fff;
+    }
+    th {
+      padding: 12px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: .88em;
+      letter-spacing: .03em;
+    }
+    td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #2c3e50;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) { background: #fafbfc; }
+    tbody tr:hover { background: #eef2f7; transition: background .15s; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    /* KV (key-value) table variant */
+    table.kv-table th {
+      background: #f0f4f8;
+      color: #1a2332;
+      width: 36%;
+    }
+    table.kv-table td { color: #37474f; }
+
+    /* ── Lists ── */
+    ul, ol { margin: 10px 0; padding-left: 22px; }
+    li { margin: 6px 0; line-height: 1.65; color: #2c3e50; }
+
+    ul.checklist { list-style: none; padding-left: 0; }
+    ul.checklist li { padding: 5px 8px 5px 0; display: flex; align-items: flex-start; gap: 8px; }
+    ul.checklist li::before { content: "☐"; color: #1565c0; font-size: 1.1em; flex-shrink: 0; }
+    ul.checklist li.done::before { content: "☑"; color: #2e7d32; }
+
+    ul.status-list { list-style: none; padding-left: 0; }
+    ul.status-list li { padding: 4px 0; }
+    ul.status-list li.ok   { color: #2e7d32; }
+    ul.status-list li.fail { color: #c62828; }
+    ul.status-list li.warn { color: #e65100; }
+
+    /* ── TOC ── */
+    .toc { background: #f6f9fc; border-radius: 8px; padding: 20px 26px; }
+    .toc ol { counter-reset: toc-cnt; list-style: none; padding: 0; }
+    .toc li {
+      counter-increment: toc-cnt;
+      padding: 7px 0;
+      border-bottom: 1px solid #e4e9f0;
+      color: #1565c0;
+      font-weight: 500;
+    }
+    .toc li::before {
+      content: counter(toc-cnt) ". ";
+      font-weight: 700;
+      min-width: 26px;
+      display: inline-block;
+    }
+    .toc li:last-child { border-bottom: none; }
+
+    /* ── Code ── */
+    code {
+      background: #f4f4f4;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      color: #c62828;
+      font-size: .88em;
+    }
+    pre.code-block {
+      background: #1e1e2e;
+      color: #cdd6f4;
+      padding: 20px 22px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-family: 'Cascadia Code', 'Courier New', monospace;
+      font-size: .87em;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ── Misc ── */
+    p { margin: 10px 0; color: #2c3e50; }
+    .phase-box {
+      background: #f6f9fc;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      border: 1px solid #dce6f0;
+    }
+
+    /* ── RTL support ── */
+    [dir="rtl"] h3 { padding-left: 0; padding-right: 10px; border-left: none; border-right: 3px solid #1565c0; }
+    [dir="rtl"] .alert { border-left: none; border-right: 5px solid; }
+    [dir="rtl"] .alert-critical { border-right-color: #c62828; }
+    [dir="rtl"] .alert-warning  { border-right-color: #f57c00; }
+    [dir="rtl"] .alert-info     { border-right-color: #1565c0; }
+    [dir="rtl"] th { text-align: right; }
+    [dir="rtl"] ul, [dir="rtl"] ol { padding-left: 0; padding-right: 22px; }
+    [dir="rtl"] ul.checklist li { padding-right: 0; }
+
+    @media print {
+      body { background: #fff; }
+      .section { box-shadow: none; border: 1px solid #e0e0e0; page-break-inside: avoid; }
+      .report-header { box-shadow: none; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    }
+
   </style>
 </head>
 <body>
   <main>
-    <h1>تقرير ZAP الشامل - عربي</h1>
-    <pre>
-تقرير الامتثال لمعايير الأمان: تحليل موقع example.com
-أخصائي أمن المعلومات
-2025-12-31
-الملخص التنفيذي
-يقدم هذا التقرير تحليلاً شاملاً لامتثال موقع https://example.com للمعايير الدولية للأمان بما في ذلك OWASP Top 10 2021، وإطار عمل الأمن السيبراني NIST 2.0، وتوصيات Microsoft Security Baseline. يستند التحليل إلى نتائج المسح الأمني الآلي الذي تم تنفيذه في 30 ديسمبر 2025 باستخدام OWASP ZAP (Zed Attack Proxy) الإصدار 2.17.0 من Checkmarx.
-تحذير حرج: تم اكتشاف تسريب للمعلومات الشخصية (PII) - يتطلب تدخلاً فورياً!
-النتائج الرئيسية:
-تم تحديد 29 تنبيهاً أمنياً عبر مستويات خطورة مختلفة
-تم اكتشاف ثغرة أمنية حرجة في تسريب المعلومات الشخصية (PII)
-غياب آليات الحماية الأساسية لتطبيق الويب
-الموقع غير متوافق مع المتطلبات الأساسية للمعايير الدولية للأمان
-جدول المحتويات
-منهجية التحليل
-التحليل التفصيلي للثغرات الأمنية
-تحليل الامتثال لـ OWASP Top 10 2021
-الامتثال لإطار عمل NIST للأمن السيبراني 2.0
-الامتثال لمعايير Microsoft Security Baseline
-خطة معالجة الثغرات الأمنية
-الخلاصة
-منهجية التحليل
-معاملات المسح
-الأداة: OWASP ZAP 2.17.0 من Checkmarx [1]
-تاريخ ووقت المسح: 30 ديسمبر 2025، 19:00:53
-المورد المستهدف: https://example.com
-إجمالي نقاط النهاية: 290
-السياقات: جميع السياقات مشمولة افتراضياً
-مستويات المخاطر: عالي، متوسط، منخفض، معلوماتي
-مستويات الثقة: مؤكد من المستخدم، عالي، متوسط، منخفض
-إحصائيات نتائج المسح
-مستوى المخاطر
-العدد
-النسبة المئوية
-مستوى الثقة
-🔴 عالي
-1
-3.4%
-عالي
-🟡 متوسط
-3
-10.3%
-عالي/متوسط
-🔵 منخفض
-4
-13.8%
-عالي/متوسط/منخفض
-ℹ️ معلوماتي
-21
-72.4%
-متوسط/منخفض
-المجموع
-29
-100%
--
-المكدس التقني
-التقنيات المكتشفة على الموقع:
-نظام إدارة المحتوى: WordPress مع Block Editor
-خادم الويب: LiteSpeed مع LiteSpeed Cache
-شبكة توصيل المحتوى: Cloudflare مع Browser Insights
-لغة البرمجة: PHP
-المكونات الإضافية:
-Blocksy (قالب WordPress)
-Stackable (إضافة WordPress)
-Gravatar (خدمة الصور الرمزية)
-Google Font API
-البروتوكولات: HTTP/3، HSTS، RSS، Priority Hints
-التحليل التفصيلي للثغرات الأمنية
-🔴 الثغرات الحرجة (مخاطر عالية)
-1. تسريب المعلومات الشخصية (PII)
-CWE-359 | WASC-13 | مستوى الثقة: عالي
-انتهاك حرج: تم اكتشاف تسريب للبيانات الشخصية للمستخدمين
-الوصف التقني:
-المعلومات الشخصية للمستخدمين متاحة دون تفويض
-انتهاك لمبادئ سرية البيانات
-انتهاك مباشر لمتطلبات GDPR
-التأثير على الأعمال:
-المخاطر التنظيمية: غرامات GDPR تصل إلى 4% من الإيرادات السنوية للشركة
-الأضرار السمعية: ضرر جسيم لثقة العملاء
-العواقب القانونية: دعاوى قضائية محتملة من المتضررين
-المخاطر التشغيلية: ضرورة إخطار الجهات التنظيمية خلال 72 ساعة
-🟡 الثغرات متوسطة المخاطر
-2. غياب Subresource Integrity (SRI)
-CWE-345 | WASC-15 | العدد: 5 حالات | مستوى الثقة: عالي
-الوصف: تحميل الموارد الخارجية دون التحقق من سلامتها، مما يخلق مخاطر هجمات سلسلة التوريد.
-الموارد المتأثرة:
-Google Font API
-موارد Cloudflare CDN
-مكتبات JavaScript الخارجية
-3. غياب Content Security Policy (CSP)
-CWE-693 | WASC-15 | العدد: 5 حالات | مستوى الثقة: عالي
-الوصف: غياب سياسة أمان المحتوى يجعل الموقع عرضة لهجمات XSS وحقن أخرى.
-4. غياب الحماية من Clickjacking
-CWE-1021 | WASC-15 | العدد: 5 حالات | مستوى الثقة: متوسط
-الوصف: غياب رؤوس X-Frame-Options أو CSP frame-ancestors يسمح بتضمين الموقع في iframe لتنفيذ هجمات clickjacking.
-🔵 الثغرات منخفضة المخاطر
-5. مشاكل أمان النقل
-رأس Strict-Transport-Security غير مُعيَّن (CWE-319، حالة واحدة)
-أمان النقل الصارم معطل (CWE-319، 5 حالات)
-6. غياب X-Content-Type-Options
-CWE-693 | WASC-15 | مستوى الثقة: متوسط
-الوصف: غياب الحماية من هجمات MIME-sniffing.
-7. تسريب Unix timestamp
-CWE-497 | WASC-13 | العدد: 4 حالات | مستوى الثقة: منخفض
-الوصف: تم اكتشاف تسريب للطوابع الزمنية، مما قد يكشف معلومات عن توقيت إنشاء المحتوى.
-ℹ️ التنبيهات المعلوماتية
-تم تحديد 21 تنبيهاً معلوماتياً، بما في ذلك:
-اكتشاف التقنيات (WordPress، PHP، Cloudflare، إلخ)
-مشاكل التخزين المؤقت (5 حالات)
-عدم تطابق ترميز الأحرف
-تعليقات مشبوهة في الكود (58 حالة)
-تحليل الامتثال لـ OWASP Top 10 2021
-A01:2021 – كسر التحكم في الوصول
-الحالة: ❌ عدم امتثال حرج
-المشاكل المحددة:
-تسريب PII - انتهاك مباشر لمبادئ التحكم في الوصول
-غياب آليات حماية المعلومات الحساسة
-انتهاك مبدأ "الرفض افتراضياً"
-توصيات OWASP:
-تنفيذ ضوابط وصول صارمة
-تسجيل محاولات الوصول الفاشلة
-تحديد معدل طلبات API
-مراجعة دورية لحقوق الوصول
-A03:2021 – الحقن
-الحالة: ✅ متوافق (بناءً على نتائج المسح)
-النتيجة: لم يتم اكتشاف ثغرات من نوع SQL أو NoSQL أو حقن أوامر نظام التشغيل.
-A05:2021 – سوء تكوين الأمان
-الحالة: ❌ عدم امتثال حرج
-المشاكل المحددة:
-غياب CSP (5 حالات)
-غياب الحماية من clickjacking (5 حالات)
-تكوين خاطئ لرؤوس الأمان
-غياب X-Content-Type-Options
-مشاكل في تكوين HSTS
-A06:2021 – المكونات الضعيفة والقديمة
-الحالة: ⚠️ يتطلب التحقق
-المكونات المحددة:
-WordPress (الإصدار غير محدد)
-PHP (الإصدار غير محدد)
-خادم ويب LiteSpeed
-إضافات متعددة: Blocksy، Stackable، LiteSpeed Cache
-التوصيات: مطلوب مراجعة تفصيلية لإصدارات جميع المكونات.
-A08:2021 – فشل سلامة البرمجيات والبيانات
-الحالة: ❌ غير متوافق
-المشاكل:
-غياب Subresource Integrity للموارد الخارجية (5 حالات)
-مخاطر الاختراق عبر CDN والمكتبات الخارجية
-غياب التحقق من سلامة التحديثات
-A09:2021 – فشل التسجيل والمراقبة الأمنية
-الحالة: ❌ غير متوافق
-المشاكل:
-لا توجد معلومات عن أنظمة التسجيل
-حالة مراقبة الأمان غير معروفة
-غياب أنظمة اكتشاف الشذوذ
-الامتثال لإطار عمل NIST للأمن السيبراني 2.0
-GOVERN (الحوكمة) - 20% امتثال
-GV.OC-01: الأمن السيبراني التنظيمي
-❌ لا توجد أدلة على سياسة أمان رسمية
-GV.RM-01: إدارة المخاطر
-❌ لم يتم تنفيذ إجراءات إدارة مخاطر الأمن السيبراني
-GV.SC-01: إدارة سلسلة التوريد
-❌ غياب ضوابط سلامة الموارد الخارجية
-IDENTIFY (التحديد) - 60% امتثال
-ID.AM-02: جرد أصول البرمجيات
-✅ مكتمل جزئياً - تم تحديد المكونات الرئيسية
-ID.RA-01: تقييم الثغرات
-✅ مكتمل - تم إجراء مسح أمني
-ID.RA-02: تحليل التهديدات
-❌ غياب تحليل منهجي للتهديدات
-PROTECT (الحماية) - 15% امتثال
-PR.AC-01: إدارة الهوية والمصادقة
-❌ بيانات غير كافية للتقييم
-PR.DS-01: حماية البيانات في حالة السكون
-❌ تم اكتشاف تسريب PII
-PR.DS-02: حماية البيانات أثناء النقل
-⚠️ منفذ جزئياً (HTTPS، لكن مشاكل في HSTS)
-PR.PT-01: المراجعة/التسجيل
-❌ معلومات غير كافية عن أنظمة المراجعة
-DETECT (الاكتشاف) - 0% امتثال
-DE.CM-01: مراقبة الشبكة
-❌ لا توجد أدلة على المراقبة
-DE.AE-01: اكتشاف الشذوذ
-❌ غياب أنظمة اكتشاف الشذوذ
-RESPOND (الاستجابة) - 0% امتثال
-RS.RP-01: تخطيط الاستجابة
-❌ لا توجد أدلة على خطة استجابة
-RS.CO-01: الاتصالات
-❌ غياب إجراءات إخطار الحوادث
-RECOVER (الاستعادة) - 0% امتثال
-RC.RP-01: تخطيط الاستعادة
-❌ لا توجد أدلة على خطة استعادة
-RC.CO-01: اتصالات الاستعادة
-❌ غياب إجراءات الاتصال أثناء الاستعادة
-الامتثال لمعايير Microsoft Security Baseline
-أمان النقل
-❌ أوجه قصور حرجة:
-رأس Strict-Transport-Security غير مُعيَّن (حالة واحدة)
-أمان النقل الصارم معطل (5 حالات)
-غياب فرض HTTPS الإجباري لجميع الموارد
-حماية المحتوى
-❌ أوجه قصور حرجة:
-رأس X-Content-Type-Options مفقود
-Content Security Policy مفقود (5 حالات)
-لا توجد حماية من هجمات MIME-sniffing
-غياب الحماية من clickjacking
-سلامة الموارد
-❌ مخاطر متوسطة:
-غياب خاصية Subresource Integrity للموارد الخارجية (5 حالات)
-مخاطر اختراق المكتبات الخارجية من Google Font API وCloudflare وCDN أخرى
-غياب التحقق من سلامة تحميل الموارد
-إدارة البيانات
-❌ مخاطر حرجة:
-تم اكتشاف تسريب للبيانات الشخصية
-غياب تصنيف البيانات
-لا توجد ضوابط وصول للمعلومات الحساسة
-خطة معالجة الثغرات الأمنية
-المرحلة الأولى: الإصلاحات الحرجة (0-7 أيام)
-🚨 الأولوية الأولى: معالجة تسريب PII (0-3 أيام)
-☐ اليوم الأول: التحديد الفوري وحجب مصادر تسريب PII
-☐ اليوم الثاني: تنفيذ إخفاء/تشفير البيانات الحساسة
-☐ اليوم الثالث: نشر ضوابط وصول صارمة للبيانات الشخصية
-☐ اليوم الثالث: إخطار الجهات التنظيمية وفقاً لمتطلبات GDPR (72 ساعة)
-🔧 الأولوية الثانية: رؤوس الأمان الأساسية (4-7 أيام)
-☐ اليوم 4-5: تنفيذ Content Security Policy
-Content-Security-Policy: default-src 'self'; 
-script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; 
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-img-src 'self' data: https: https://secure.gravatar.com;
-frame-ancestors 'none';
-base-uri 'self';
-☐ اليوم السادس: تكوين الحماية من clickjacking
-X-Frame-Options: DENY
-☐ اليوم السادس: تكوين HSTS
-Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-☐ اليوم السابع: اختبار والتحقق من التغييرات
-المرحلة الثانية: الإصلاحات متوسطة الأولوية (8-30 يوماً)
-الأسبوع الثاني: Subresource Integrity
-☐ تنفيذ SRI لجميع الموارد الخارجية
-&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
+<div class="report-header">
+  <h1>تقرير الامتثال لمعايير الأمان: تحليل موقع example.com</h1>
+  <p class="subtitle">أخصائي أمن المعلومات</p>
+  <p class="meta">2025-12-31</p>
+  <span class="tool-badge">OWASP ZAP 2.17.0 &mdash; Checkmarx Security Platform</span>
+</div>
+<div class="section">
+<h2>الملخص التنفيذي</h2>
+<p>يقدم هذا التقرير تحليلاً شاملاً لامتثال موقع https://example.com للمعايير الدولية للأمان بما في ذلك OWASP Top 10 2021، وإطار عمل الأمن السيبراني NIST 2.0، وتوصيات Microsoft Security Baseline. يستند التحليل إلى نتائج المسح الأمني الآلي الذي تم تنفيذه في 30 ديسمبر 2025 باستخدام OWASP ZAP (Zed Attack Proxy) الإصدار 2.17.0 من Checkmarx.</p>
+<div class="alert alert-critical">تحذير حرج: تم اكتشاف تسريب للمعلومات الشخصية (PII) - يتطلب تدخلاً فورياً!</div>
+<h3>النتائج الرئيسية:</h3>
+<p>تم تحديد 29 تنبيهاً أمنياً عبر مستويات خطورة مختلفة</p>
+<p>تم اكتشاف ثغرة أمنية حرجة في تسريب المعلومات الشخصية (PII)</p>
+<p>غياب آليات الحماية الأساسية لتطبيق الويب</p>
+<p>الموقع غير متوافق مع المتطلبات الأساسية للمعايير الدولية للأمان</p>
+</div>
+<div class="section">
+<h2>جدول المحتويات</h2>
+<div class="toc"><ol>
+  <li>منهجية التحليل</li>
+  <li>التحليل التفصيلي للثغرات الأمنية</li>
+  <li>تحليل الامتثال لـ OWASP Top 10 2021</li>
+  <li>الامتثال لإطار عمل NIST للأمن السيبراني 2.0</li>
+  <li>الامتثال لمعايير Microsoft Security Baseline</li>
+  <li>خطة معالجة الثغرات الأمنية</li>
+  <li>الخلاصة</li>
+</ol></div>
+</div>
+<div class="section">
+<h2>منهجية التحليل</h2>
+<h3>معاملات المسح</h3>
+<p><strong>الأداة:</strong> OWASP ZAP 2.17.0 من Checkmarx [1]</p>
+<p><strong>تاريخ ووقت المسح:</strong> 30 ديسمبر 2025، 19:00:53</p>
+<p><strong>المورد المستهدف:</strong> https://example.com</p>
+<p><strong>إجمالي نقاط النهاية:</strong> 290</p>
+<p><strong>السياقات:</strong> جميع السياقات مشمولة افتراضياً</p>
+<p><strong>مستويات المخاطر:</strong> عالي، متوسط، منخفض، معلوماتي</p>
+<p><strong>مستويات الثقة:</strong> مؤكد من المستخدم، عالي، متوسط، منخفض</p>
+<h3>إحصائيات نتائج المسح</h3>
+<table><thead><tr><th>مستوى المخاطر</th><th>العدد</th><th>النسبة المئوية</th><th>مستوى الثقة</th></tr></thead><tbody><tr><td>🔴 عالي</td><td>1</td><td>3.4%</td><td>عالي</td></tr><tr><td>🟡 متوسط</td><td>3</td><td>10.3%</td><td>عالي/متوسط</td></tr><tr><td>🔵 منخفض</td><td>4</td><td>13.8%</td><td>عالي/متوسط/منخفض</td></tr><tr><td>ℹ️ معلوماتي</td><td>21</td><td>72.4%</td><td>متوسط/منخفض</td></tr><tr><td>المجموع</td><td>29</td><td>100%</td><td>-</td></tr></tbody></table>
+<h3>المكدس التقني</h3>
+<h3>التقنيات المكتشفة على الموقع:</h3>
+<p><strong>نظام إدارة المحتوى:</strong> WordPress مع Block Editor</p>
+<p><strong>خادم الويب:</strong> LiteSpeed مع LiteSpeed Cache</p>
+<p><strong>شبكة توصيل المحتوى:</strong> Cloudflare مع Browser Insights</p>
+<p><strong>لغة البرمجة:</strong> PHP</p>
+<h3>المكونات الإضافية:</h3>
+<ul>
+  <li>Blocksy (قالب WordPress)</li>
+  <li>Stackable (إضافة WordPress)</li>
+  <li>Gravatar (خدمة الصور الرمزية)</li>
+  <li>Google Font API</li>
+</ul>
+<p><strong>البروتوكولات:</strong> HTTP/3، HSTS، RSS، Priority Hints</p>
+</div>
+<div class="section">
+<h2>التحليل التفصيلي للثغرات الأمنية</h2>
+<h3>🔴 الثغرات الحرجة (مخاطر عالية)</h3>
+<ol>
+  <li>تسريب المعلومات الشخصية (PII)</li>
+</ol>
+<p><strong>CWE-359 | WASC-13 | مستوى الثقة:</strong> عالي</p>
+<p><strong>انتهاك حرج:</strong> تم اكتشاف تسريب للبيانات الشخصية للمستخدمين</p>
+<h3>الوصف التقني:</h3>
+<ul>
+  <li>المعلومات الشخصية للمستخدمين متاحة دون تفويض</li>
+  <li>انتهاك لمبادئ سرية البيانات</li>
+  <li>انتهاك مباشر لمتطلبات GDPR</li>
+</ul>
+<h3>التأثير على الأعمال:</h3>
+<p><strong>المخاطر التنظيمية:</strong> غرامات GDPR تصل إلى 4% من الإيرادات السنوية للشركة</p>
+<p><strong>الأضرار السمعية:</strong> ضرر جسيم لثقة العملاء</p>
+<p><strong>العواقب القانونية:</strong> دعاوى قضائية محتملة من المتضررين</p>
+<p><strong>المخاطر التشغيلية:</strong> ضرورة إخطار الجهات التنظيمية خلال 72 ساعة</p>
+<h3>🟡 الثغرات متوسطة المخاطر</h3>
+<ol>
+  <li>غياب Subresource Integrity (SRI)</li>
+</ol>
+<p><strong>CWE-345 | WASC-15 | العدد:</strong> 5 حالات | مستوى الثقة: عالي</p>
+<p><strong>الوصف:</strong> تحميل الموارد الخارجية دون التحقق من سلامتها، مما يخلق مخاطر هجمات سلسلة التوريد.</p>
+<h3>الموارد المتأثرة:</h3>
+<ul>
+  <li>Google Font API</li>
+  <li>موارد Cloudflare CDN</li>
+  <li>مكتبات JavaScript الخارجية</li>
+</ul>
+<ol>
+  <li>غياب Content Security Policy (CSP)</li>
+</ol>
+<p><strong>CWE-693 | WASC-15 | العدد:</strong> 5 حالات | مستوى الثقة: عالي</p>
+<p><strong>الوصف:</strong> غياب سياسة أمان المحتوى يجعل الموقع عرضة لهجمات XSS وحقن أخرى.</p>
+<ol>
+  <li>غياب الحماية من Clickjacking</li>
+</ol>
+<p><strong>CWE-1021 | WASC-15 | العدد:</strong> 5 حالات | مستوى الثقة: متوسط</p>
+<p><strong>الوصف:</strong> غياب رؤوس X-Frame-Options أو CSP frame-ancestors يسمح بتضمين الموقع في iframe لتنفيذ هجمات clickjacking.</p>
+<h3>🔵 الثغرات منخفضة المخاطر</h3>
+<ol>
+  <li>مشاكل أمان النقل</li>
+</ol>
+<p>رأس Strict-Transport-Security غير مُعيَّن (CWE-319، حالة واحدة)</p>
+<p>أمان النقل الصارم معطل (CWE-319، 5 حالات)</p>
+<ol>
+  <li>غياب X-Content-Type-Options</li>
+</ol>
+<p><strong>CWE-693 | WASC-15 | مستوى الثقة:</strong> متوسط</p>
+<p><strong>الوصف:</strong> غياب الحماية من هجمات MIME-sniffing.</p>
+<ol>
+  <li>تسريب Unix timestamp</li>
+</ol>
+<p><strong>CWE-497 | WASC-13 | العدد:</strong> 4 حالات | مستوى الثقة: منخفض</p>
+<p><strong>الوصف:</strong> تم اكتشاف تسريب للطوابع الزمنية، مما قد يكشف معلومات عن توقيت إنشاء المحتوى.</p>
+<h3>ℹ️ التنبيهات المعلوماتية</h3>
+<h3>تم تحديد 21 تنبيهاً معلوماتياً، بما في ذلك:</h3>
+<p>اكتشاف التقنيات (WordPress، PHP، Cloudflare، إلخ)</p>
+<p>مشاكل التخزين المؤقت (5 حالات)</p>
+<p>عدم تطابق ترميز الأحرف</p>
+<p>تعليقات مشبوهة في الكود (58 حالة)</p>
+</div>
+<div class="section">
+<h2>تحليل الامتثال لـ OWASP Top 10 2021</h2>
+<h3>A01:2021 – كسر التحكم في الوصول</h3>
+<p><strong>الحالة:</strong> ❌ عدم امتثال حرج</p>
+<h3>المشاكل المحددة:</h3>
+<p>تسريب PII - انتهاك مباشر لمبادئ التحكم في الوصول</p>
+<p>غياب آليات حماية المعلومات الحساسة</p>
+<p>انتهاك مبدأ "الرفض افتراضياً"</p>
+<h3>توصيات OWASP:</h3>
+<ul>
+  <li>تنفيذ ضوابط وصول صارمة</li>
+  <li>تسجيل محاولات الوصول الفاشلة</li>
+  <li>تحديد معدل طلبات API</li>
+  <li>مراجعة دورية لحقوق الوصول</li>
+</ul>
+<h3>A03:2021 – الحقن</h3>
+<p><strong>الحالة:</strong> ✅ متوافق (بناءً على نتائج المسح)</p>
+<p><strong>النتيجة:</strong> لم يتم اكتشاف ثغرات من نوع SQL أو NoSQL أو حقن أوامر نظام التشغيل.</p>
+<h3>A05:2021 – سوء تكوين الأمان</h3>
+<p><strong>الحالة:</strong> ❌ عدم امتثال حرج</p>
+<h3>المشاكل المحددة:</h3>
+<ul>
+  <li>غياب CSP (5 حالات)</li>
+  <li>غياب الحماية من clickjacking (5 حالات)</li>
+  <li>تكوين خاطئ لرؤوس الأمان</li>
+  <li>غياب X-Content-Type-Options</li>
+  <li>مشاكل في تكوين HSTS</li>
+</ul>
+<h3>A06:2021 – المكونات الضعيفة والقديمة</h3>
+<p><strong>الحالة:</strong> ⚠️ يتطلب التحقق</p>
+<h3>المكونات المحددة:</h3>
+<ul>
+  <li>WordPress (الإصدار غير محدد)</li>
+  <li>PHP (الإصدار غير محدد)</li>
+  <li>خادم ويب LiteSpeed</li>
+</ul>
+<p><strong>إضافات متعددة:</strong> Blocksy، Stackable، LiteSpeed Cache</p>
+<p><strong>التوصيات:</strong> مطلوب مراجعة تفصيلية لإصدارات جميع المكونات.</p>
+<h3>A08:2021 – فشل سلامة البرمجيات والبيانات</h3>
+<p><strong>الحالة:</strong> ❌ غير متوافق</p>
+<h3>المشاكل:</h3>
+<p>غياب Subresource Integrity للموارد الخارجية (5 حالات)</p>
+<p>مخاطر الاختراق عبر CDN والمكتبات الخارجية</p>
+<p>غياب التحقق من سلامة التحديثات</p>
+<p>A09:2021 – فشل التسجيل والمراقبة الأمنية</p>
+<p><strong>الحالة:</strong> ❌ غير متوافق</p>
+<h3>المشاكل:</h3>
+<p>لا توجد معلومات عن أنظمة التسجيل</p>
+<p>حالة مراقبة الأمان غير معروفة</p>
+<p>غياب أنظمة اكتشاف الشذوذ</p>
+<p>الامتثال لإطار عمل NIST للأمن السيبراني 2.0</p>
+<h3>GOVERN (الحوكمة) - 20% امتثال</h3>
+<p><strong>GV.OC-01:</strong> الأمن السيبراني التنظيمي</p>
+<ul class="status-list">
+  <li class="fail">❌ لا توجد أدلة على سياسة أمان رسمية</li>
+</ul>
+<p><strong>GV.RM-01:</strong> إدارة المخاطر</p>
+<ul class="status-list">
+  <li class="fail">❌ لم يتم تنفيذ إجراءات إدارة مخاطر الأمن السيبراني</li>
+</ul>
+<p><strong>GV.SC-01:</strong> إدارة سلسلة التوريد</p>
+<ul class="status-list">
+  <li class="fail">❌ غياب ضوابط سلامة الموارد الخارجية</li>
+</ul>
+<h3>IDENTIFY (التحديد) - 60% امتثال</h3>
+<p><strong>ID.AM-02:</strong> جرد أصول البرمجيات</p>
+<ul class="status-list">
+  <li class="ok">✅ مكتمل جزئياً - تم تحديد المكونات الرئيسية</li>
+</ul>
+<p><strong>ID.RA-01:</strong> تقييم الثغرات</p>
+<ul class="status-list">
+  <li class="ok">✅ مكتمل - تم إجراء مسح أمني</li>
+</ul>
+<p><strong>ID.RA-02:</strong> تحليل التهديدات</p>
+<ul class="status-list">
+  <li class="fail">❌ غياب تحليل منهجي للتهديدات</li>
+</ul>
+<h3>PROTECT (الحماية) - 15% امتثال</h3>
+<p><strong>PR.AC-01:</strong> إدارة الهوية والمصادقة</p>
+<ul class="status-list">
+  <li class="fail">❌ بيانات غير كافية للتقييم</li>
+</ul>
+<p><strong>PR.DS-01:</strong> حماية البيانات في حالة السكون</p>
+<ul class="status-list">
+  <li class="fail">❌ تم اكتشاف تسريب PII</li>
+</ul>
+<p><strong>PR.DS-02:</strong> حماية البيانات أثناء النقل</p>
+<div class="alert alert-warning">⚠️ منفذ جزئياً (HTTPS، لكن مشاكل في HSTS)</div>
+<p><strong>PR.PT-01:</strong> المراجعة/التسجيل</p>
+<ul class="status-list">
+  <li class="fail">❌ معلومات غير كافية عن أنظمة المراجعة</li>
+</ul>
+<h3>DETECT (الاكتشاف) - 0% امتثال</h3>
+<p><strong>DE.CM-01:</strong> مراقبة الشبكة</p>
+<ul class="status-list">
+  <li class="fail">❌ لا توجد أدلة على المراقبة</li>
+</ul>
+<p><strong>DE.AE-01:</strong> اكتشاف الشذوذ</p>
+<ul class="status-list">
+  <li class="fail">❌ غياب أنظمة اكتشاف الشذوذ</li>
+</ul>
+<h3>RESPOND (الاستجابة) - 0% امتثال</h3>
+<p><strong>RS.RP-01:</strong> تخطيط الاستجابة</p>
+<ul class="status-list">
+  <li class="fail">❌ لا توجد أدلة على خطة استجابة</li>
+</ul>
+<p><strong>RS.CO-01:</strong> الاتصالات</p>
+<ul class="status-list">
+  <li class="fail">❌ غياب إجراءات إخطار الحوادث</li>
+</ul>
+<h3>RECOVER (الاستعادة) - 0% امتثال</h3>
+<p><strong>RC.RP-01:</strong> تخطيط الاستعادة</p>
+<ul class="status-list">
+  <li class="fail">❌ لا توجد أدلة على خطة استعادة</li>
+</ul>
+<p><strong>RC.CO-01:</strong> اتصالات الاستعادة</p>
+<ul class="status-list">
+  <li class="fail">❌ غياب إجراءات الاتصال أثناء الاستعادة</li>
+</ul>
+<ul>
+  <li>الامتثال لمعايير Microsoft Security Baseline</li>
+  <li>أمان النقل</li>
+</ul>
+<ul class="status-list">
+  <li class="fail">❌ أوجه قصور حرجة:</li>
+</ul>
+<p>رأس Strict-Transport-Security غير مُعيَّن (حالة واحدة)</p>
+<p>أمان النقل الصارم معطل (5 حالات)</p>
+<p>غياب فرض HTTPS الإجباري لجميع الموارد</p>
+<p>حماية المحتوى</p>
+<ul class="status-list">
+  <li class="fail">❌ أوجه قصور حرجة:</li>
+</ul>
+<ul>
+  <li>رأس X-Content-Type-Options مفقود</li>
+  <li>Content Security Policy مفقود (5 حالات)</li>
+  <li>لا توجد حماية من هجمات MIME-sniffing</li>
+  <li>غياب الحماية من clickjacking</li>
+</ul>
+<h3>سلامة الموارد</h3>
+<ul class="status-list">
+  <li class="fail">❌ مخاطر متوسطة:</li>
+</ul>
+<p>غياب خاصية Subresource Integrity للموارد الخارجية (5 حالات)</p>
+<p>مخاطر اختراق المكتبات الخارجية من Google Font API وCloudflare وCDN أخرى</p>
+<p>غياب التحقق من سلامة تحميل الموارد</p>
+<p>إدارة البيانات</p>
+<ul class="status-list">
+  <li class="fail">❌ مخاطر حرجة:</li>
+</ul>
+<ul>
+  <li>تم اكتشاف تسريب للبيانات الشخصية</li>
+  <li>غياب تصنيف البيانات</li>
+  <li>لا توجد ضوابط وصول للمعلومات الحساسة</li>
+</ul>
+</div>
+<div class="section">
+<h2>خطة معالجة الثغرات الأمنية</h2>
+<p><strong>المرحلة الأولى:</strong> الإصلاحات الحرجة (0-7 أيام)</p>
+<div class="alert alert-critical">🚨 الأولوية الأولى: معالجة تسريب PII (0-3 أيام)</div>
+<ul class="checklist">
+  <li>اليوم الأول: التحديد الفوري وحجب مصادر تسريب PII</li>
+  <li>اليوم الثاني: تنفيذ إخفاء/تشفير البيانات الحساسة</li>
+  <li>اليوم الثالث: نشر ضوابط وصول صارمة للبيانات الشخصية</li>
+  <li>اليوم الثالث: إخطار الجهات التنظيمية وفقاً لمتطلبات GDPR (72 ساعة)</li>
+</ul>
+<p><strong>🔧 الأولوية الثانية:</strong> رؤوس الأمان الأساسية (4-7 أيام)</p>
+<ul class="checklist">
+  <li>اليوم 4-5: تنفيذ Content Security Policy</li>
+</ul>
+<pre class="code-block">Content-Security-Policy: default-src 'self'; </pre>
+<p>script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com;</p>
+<h3>style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;</h3>
+<p><strong>img-src 'self' data:</strong> https: https://secure.gravatar.com;</p>
+<ul>
+  <li>frame-ancestors 'none';</li>
+  <li>base-uri 'self';</li>
+</ul>
+<ul class="checklist">
+  <li>اليوم السادس: تكوين الحماية من clickjacking</li>
+</ul>
+<pre class="code-block">X-Frame-Options: DENY</pre>
+<ul class="checklist">
+  <li>اليوم السادس: تكوين HSTS</li>
+</ul>
+<pre class="code-block">Strict-Transport-Security: max-age=31536000; includeSubDomains; preload</pre>
+<ul class="checklist">
+  <li>اليوم السابع: اختبار والتحقق من التغييرات</li>
+</ul>
+<p><strong>المرحلة الثانية:</strong> الإصلاحات متوسطة الأولوية (8-30 يوماً)</p>
+<p><strong>الأسبوع الثاني:</strong> Subresource Integrity</p>
+<ul class="checklist">
+  <li>تنفيذ SRI لجميع الموارد الخارجية</li>
+</ul>
+<pre class="code-block">&lt;link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&amp;display=swap" 
       rel="stylesheet" 
       integrity="sha384-hash" 
       crossorigin="anonymous"&gt;
 &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" 
         integrity="sha384-vtXRMe3mGCbOeY7l30aIg8H9p3GdeSe4IFlP6G8JMa7o7lXvnz3GFKzPxzJdPfGK" 
-        crossorigin="anonymous"&gt;&lt;/script&gt;
-الأسبوع الثالث: رؤوس أمان إضافية
-☐ تنفيذ X-Content-Type-Options
-X-Content-Type-Options: nosniff
-☐ تكوين رؤوس إضافية
-X-XSS-Protection: 1; mode=block
+        crossorigin="anonymous"&gt;&lt;/script&gt;</pre>
+<p><strong>الأسبوع الثالث:</strong> رؤوس أمان إضافية</p>
+<ul class="checklist">
+  <li>تنفيذ X-Content-Type-Options</li>
+</ul>
+<pre class="code-block">X-Content-Type-Options: nosniff</pre>
+<ul class="checklist">
+  <li>تكوين رؤوس إضافية</li>
+</ul>
+<pre class="code-block">X-XSS-Protection: 1; mode=block
 Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: geolocation=(), microphone=(), camera=()
-الأسبوع الرابع: مراجعة المكونات
-☐ التحقق من إصدارات WordPress وPHP وجميع الإضافات
-☐ تحديث المكونات القديمة
-☐ إزالة الإضافات والقوالب غير المستخدمة
-☐ تكوين التحديثات الأمنية التلقائية
-المرحلة الثالثة: التحسينات طويلة المدى (31-90 يوماً)
-الشهر الثاني: المراقبة والتسجيل
-☐ تنفيذ نظام مراقبة أمنية (SIEM)
-☐ تكوين التسجيل المركزي
-☐ إنشاء لوحات معلومات أمنية
-☐ إعداد تنبيهات للأنشطة المشبوهة
-الشهر الثالث: الإجراءات والسياسات
-☐ تطوير سياسة أمن المعلومات
-☐ إنشاء إجراءات الاستجابة للحوادث
-☐ تطوير خطة الاستعادة بعد الحوادث
-☐ تدريب الموظفين على أساسيات الأمن السيبراني
-☐ اختبارات اختراق دورية
-الخلاصة
-كشف تحليل أمان موقع https://example.com عن أوجه قصور حرجة في حماية المعلومات. الموقع غير متوافق مع المتطلبات الأساسية للمعايير الدولية للأمان OWASP Top 10 2021 وNIST CSF 2.0 ومعايير Microsoft Security Baseline.
-تقييم المخاطر الحرج:
-مستوى المخاطر الحالي: 🔴 حرج
-التهديد الأساسي: تسريب البيانات الشخصية للمستخدمين
-المخاطر التنظيمية: غرامات GDPR عالية (تصل إلى 4% من الإيرادات السنوية)
-المخاطر السمعية: فقدان جسيم لثقة العملاء
-المخاطر التشغيلية: إمكانية تعليق الأعمال
-الامتثال للمعايير:
-المعيار
-مستوى الامتثال
-المشاكل الحرجة
-OWASP Top 10 2021
-20%
-A01, A05, A08, A09
-NIST CSF 2.0
-19%
-جميع الوظائف عدا التحديد الجزئي
-Microsoft Security Baseline
-15%
-النقل، المحتوى، البيانات
-التوصيات الرئيسية:
-المعالجة الفورية لتسريب البيانات الشخصية (0-3 أيام)
-تنفيذ آليات الحماية الأساسية لتطبيق الويب (4-7 أيام)
-التحديث المنتظم لجميع مكونات النظام
-إنشاء إجراءات للمراقبة والاستجابة للحوادث
-تدريب الموظفين على أساسيات أمن المعلومات
-توقعات التحسن:
-بعد المرحلة الأولى: تقليل المخاطر إلى 🟡 متوسط (إزالة الثغرات الحرجة)
-بعد المرحلة الثانية: تقليل المخاطر إلى 🔵 منخفض (الحماية الأساسية)
-بعد المرحلة الثالثة: تحقيق مستوى أمان 🟢 مقبول (امتثال للمعايير)
-الخطوات التالية: يُوصى بالبدء فوراً في تنفيذ المرحلة الأولى من خطة معالجة الثغرات، مع إيلاء اهتمام خاص لإزالة تسريب البيانات الشخصية وإخطار الجهات التنظيمية وفقاً لمتطلبات GDPR.
-المراجع
-[1] مؤسسة OWASP. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
+Permissions-Policy: geolocation=(), microphone=(), camera=()</pre>
+<p><strong>الأسبوع الرابع:</strong> مراجعة المكونات</p>
+<ul class="checklist">
+  <li>التحقق من إصدارات WordPress وPHP وجميع الإضافات</li>
+  <li>تحديث المكونات القديمة</li>
+  <li>إزالة الإضافات والقوالب غير المستخدمة</li>
+  <li>تكوين التحديثات الأمنية التلقائية</li>
+</ul>
+<p><strong>المرحلة الثالثة:</strong> التحسينات طويلة المدى (31-90 يوماً)</p>
+<p><strong>الشهر الثاني:</strong> المراقبة والتسجيل</p>
+<ul class="checklist">
+  <li>تنفيذ نظام مراقبة أمنية (SIEM)</li>
+  <li>تكوين التسجيل المركزي</li>
+  <li>إنشاء لوحات معلومات أمنية</li>
+  <li>إعداد تنبيهات للأنشطة المشبوهة</li>
+</ul>
+<p><strong>الشهر الثالث:</strong> الإجراءات والسياسات</p>
+<ul class="checklist">
+  <li>تطوير سياسة أمن المعلومات</li>
+  <li>إنشاء إجراءات الاستجابة للحوادث</li>
+  <li>تطوير خطة الاستعادة بعد الحوادث</li>
+  <li>تدريب الموظفين على أساسيات الأمن السيبراني</li>
+  <li>اختبارات اختراق دورية</li>
+</ul>
+</div>
+<div class="section">
+<h2>الخلاصة</h2>
+<p>كشف تحليل أمان موقع https://example.com عن أوجه قصور حرجة في حماية المعلومات. الموقع غير متوافق مع المتطلبات الأساسية للمعايير الدولية للأمان OWASP Top 10 2021 وNIST CSF 2.0 ومعايير Microsoft Security Baseline.</p>
+<h3>تقييم المخاطر الحرج:</h3>
+<p><strong>مستوى المخاطر الحالي:</strong> 🔴 حرج</p>
+<p><strong>التهديد الأساسي:</strong> تسريب البيانات الشخصية للمستخدمين</p>
+<p><strong>المخاطر التنظيمية:</strong> غرامات GDPR عالية (تصل إلى 4% من الإيرادات السنوية)</p>
+<p><strong>المخاطر السمعية:</strong> فقدان جسيم لثقة العملاء</p>
+<p><strong>المخاطر التشغيلية:</strong> إمكانية تعليق الأعمال</p>
+<h3>الامتثال للمعايير:</h3>
+<ul>
+  <li>المعيار</li>
+  <li>مستوى الامتثال</li>
+  <li>المشاكل الحرجة</li>
+</ul>
+</div>
+<div class="section">
+<h2>OWASP Top 10 2021</h2>
+<ul>
+  <li>20%</li>
+  <li>A01, A05, A08, A09</li>
+  <li>NIST CSF 2.0</li>
+  <li>19%</li>
+  <li>جميع الوظائف عدا التحديد الجزئي</li>
+</ul>
+</div>
+<div class="section">
+<h2>Microsoft Security Baseline</h2>
+<ul>
+  <li>15%</li>
+  <li>النقل، المحتوى، البيانات</li>
+</ul>
+<h3>التوصيات الرئيسية:</h3>
+<p>المعالجة الفورية لتسريب البيانات الشخصية (0-3 أيام)</p>
+<p>تنفيذ آليات الحماية الأساسية لتطبيق الويب (4-7 أيام)</p>
+<p>التحديث المنتظم لجميع مكونات النظام</p>
+<p>إنشاء إجراءات للمراقبة والاستجابة للحوادث</p>
+<h3>تدريب الموظفين على أساسيات أمن المعلومات</h3>
+<h3>توقعات التحسن:</h3>
+<p><strong>بعد المرحلة الأولى:</strong> تقليل المخاطر إلى 🟡 متوسط (إزالة الثغرات الحرجة)</p>
+<p><strong>بعد المرحلة الثانية:</strong> تقليل المخاطر إلى 🔵 منخفض (الحماية الأساسية)</p>
+<p><strong>بعد المرحلة الثالثة:</strong> تحقيق مستوى أمان 🟢 مقبول (امتثال للمعايير)</p>
+<p><strong>الخطوات التالية:</strong> يُوصى بالبدء فوراً في تنفيذ المرحلة الأولى من خطة معالجة الثغرات، مع إيلاء اهتمام خاص لإزالة تسريب البيانات الشخصية وإخطار الجهات التنظيمية وفقاً لمتطلبات GDPR.</p>
+</div>
+<div class="section">
+<h2>المراجع</h2>
+<pre class="code-block">[1] مؤسسة OWASP. (2024). OWASP Zed Attack Proxy (ZAP). https://zaproxy.org
 [2] مؤسسة OWASP. (2021). OWASP Top 10:2021. https://owasp.org/Top10/2021/
-[3] NIST. (2024). إطار عمل NIST للأمن السيبراني (CSF) 2.0. https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20
-    </pre>
+[3] NIST. (2024). إطار عمل NIST للأمن السيبراني (CSF) 2.0. https://www.nist.gov/publications/nist-cybersecurity-framework-csf-20</pre>
+</div>
   </main>
 </body>
 </html>
