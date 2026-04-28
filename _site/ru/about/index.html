@@ -12,7 +12,7 @@
 <html lang="ru" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>О проекте</title>
+  <title>Обо мне</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
@@ -98,7 +98,7 @@
             <a href="/ru/reports/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Отчеты</a>
             <a href="/ru/lab/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Лаборатория</a>
             <a href="/ru/documents/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition ">Документы</a>
-            <a href="/ru/about/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]">О проекте</a>
+            <a href="/ru/about/" class="px-4 py-2 rounded-lg hover:bg-blue-900/30 hover:text-sky-300 hover:shadow-[0_0_14px_rgba(59,130,246,0.55)] transition text-sky-300 bg-blue-900/25 shadow-[0_0_14px_rgba(59,130,246,0.45)]">Обо мне</a>
           </nav>
 
           <div class="flex items-center justify-center gap-10 px-4 py-2 rounded-lg bg-black/40 ml-6 pl-6" aria-label="Выбор языка">
@@ -127,7 +127,7 @@
         <a href="/ru/reports/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">Отчеты</a>
         <a href="/ru/lab/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">Лаборатория</a>
         <a href="/ru/documents/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 ">Документы</a>
-        <a href="/ru/about/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 text-cyan-400">О проекте</a>
+        <a href="/ru/about/" class="px-3 py-3 rounded hover:bg-cyan-500/10 hover:text-cyan-400 text-cyan-400">Обо мне</a>
       </nav>
 
       <div class="mt-3 pt-3 border-t border-gray-800 flex items-center justify-center gap-7" aria-label="Выбор языка">
@@ -140,9 +140,12 @@
 </header>
 
 <main class="pt-24 md:pt-28">
-  <section class="pt-32 pb-20 text-center">
-  <h1 class="text-4xl text-cyan-400 mb-6">О проекте</h1>
-  <p class="text-gray-400">Специалист по безопасности с фокусом на пентест и защиту инфраструктуры.</p>
+  <section class="max-w-6xl mx-auto px-4 pt-32 pb-20">
+  <div class="max-w-4xl relative overflow-hidden rounded-2xl border border-cyan-400/15 bg-gradient-to-br from-slate-950/70 via-slate-950/45 to-cyan-950/20 px-6 py-6 shadow-[0_0_30px_rgba(34,211,238,0.08)] backdrop-blur-sm">
+    <div class="absolute inset-y-5 left-0 w-px bg-gradient-to-b from-transparent via-cyan-300/90 to-transparent shadow-[0_0_14px_rgba(34,211,238,0.4)]"></div>
+    <div class="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-cyan-400/8 blur-3xl"></div>
+    <p class="text-left text-gray-300 text-base sm:text-lg leading-8">Проектирую и внедряю решения по информационной безопасности, которые соответствуют реальным бизнес-процессам, а не абстрактным моделям.</p>
+  </div>
 </section>
 
 <section class="max-w-6xl mx-auto px-4 pb-8" data-about-filter="">
@@ -175,6 +178,76 @@
     transition: color 0.2s ease, text-shadow 0.2s ease;
   }
 
+  .about-lead {
+    position: relative;
+    padding-left: 1.25rem;
+  }
+
+  .about-lead::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.15rem;
+    bottom: 0.15rem;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, rgba(34, 211, 238, 0.95), rgba(168, 85, 247, 0.55));
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.3);
+  }
+
+  .about-panel {
+    border: 1px solid rgba(34, 211, 238, 0.12);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.72), rgba(2, 6, 23, 0.4));
+    border-radius: 1rem;
+    padding: 1.15rem 1.1rem 1.2rem;
+  }
+
+  .about-section-heading {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .about-section-heading::before {
+    content: '';
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.95) 0%, rgba(34, 211, 238, 0.15) 70%);
+    box-shadow: 0 0 16px rgba(34, 211, 238, 0.35);
+  }
+
+  .about-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .about-list li {
+    position: relative;
+    padding-left: 1.35rem;
+  }
+
+  .about-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.8rem;
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: rgba(34, 211, 238, 0.9);
+    box-shadow: 0 0 12px rgba(34, 211, 238, 0.28);
+  }
+
+  .about-link-block {
+    padding-left: 0.95rem;
+    border-left: 1px solid rgba(148, 163, 184, 0.24);
+  }
+
+  .about-body {
+    gap: 1.9rem;
+  }
+
   @media (hover: hover) {
     .about-card:hover {
       transform: translateY(-6px);
@@ -192,13 +265,51 @@
 <section class="max-w-6xl mx-auto px-4 pb-20">
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-8">
     <article class="about-filter-item about-card rounded-xl flex flex-col gap-4" data-about-category="page">
-      <h3 class="about-title text-xl font-semibold text-slate-100 leading-tight">О странице</h3>
       <p class="text-sm text-slate-400">Назначение и содержание этого раздела в портфолио по аудиту безопасности.</p>
     </article>
 
-    <article class="about-filter-item about-card rounded-xl flex flex-col gap-4" data-about-category="me">
-      <h3 class="about-title text-xl font-semibold text-slate-100 leading-tight">Обо мне</h3>
-      <p class="text-sm text-slate-400">Короткий профиль, ключевые компетенции и опыт в кибербезопасности.</p>
+    <article class="about-filter-item about-card rounded-xl flex flex-col about-body" data-about-category="me">
+      <div class="about-lead space-y-5 text-sm leading-8 text-slate-300">
+        <p>Проектирую и внедряю решения по информационной безопасности, которые соответствуют реальным бизнес-процессам, а не абстрактным моделям.</p>
+        <p>Моя задача не закрывать уязвимости, а выстраивать устойчивые системы. Комбинирую технические меры с управленческими практиками так, чтобы решения масштабировались, были прозрачны для руководства и выдерживали проверку на практике.</p>
+        <p>Имею опыт работы с промышленной инфраструктурой, где сбои напрямую приводят к финансовым и операционным потерям. Это сформировало прагматичный подход: каждая мера безопасности должна быть обоснована, каждая архитектура готова к отказам.</p>
+        <p>Я не стремлюсь к идеальной защите. Я строю системы, которые продолжают работать под нагрузкой и в условиях инцидентов.</p>
+      </div>
+
+      <div class="about-panel space-y-4">
+        <h4 class="about-section-heading text-sm font-semibold uppercase tracking-[0.12em] text-cyan-300">Подход</h4>
+        <ul class="about-list space-y-4 text-sm leading-8 text-slate-300">
+          <li>Безопасность это итеративный процесс. Неэффективные решения пересматриваются, а не оправдываются.</li>
+          <li>ИИ использую как инструмент усиления, а не замены инженерного мышления.</li>
+          <li>В приоритете наблюдаемость, проверяемость и отказоустойчивость, а не формальное соответствие требованиям.</li>
+        </ul>
+      </div>
+
+      <div class="about-panel space-y-4">
+        <h4 class="about-section-heading text-sm font-semibold uppercase tracking-[0.12em] text-cyan-300">Практика</h4>
+        <div class="space-y-6 text-sm leading-8 text-slate-300">
+          <div class="about-link-block">
+            <p class="font-medium text-slate-100">Примеры отчетов:</p>
+            <a class="text-cyan-300 hover:text-cyan-200 underline underline-offset-4 break-all" href="/ru/reports/">/ru/reports/</a>
+          </div>
+          <div class="about-link-block">
+            <p class="font-medium text-slate-100">Разработка и вывод мобильного приложения за 3 месяца (от идеи до продакшена):</p>
+            <p>Kotlin / Jetpack / Snyk / SonarCloud</p>
+            <a class="text-cyan-300 hover:text-cyan-200 underline underline-offset-4 break-all" href="https://www.rustore.ru/catalog/app/ru.datadef.tenarhiva" target="_blank" rel="noopener noreferrer">https://www.rustore.ru/catalog/app/ru.datadef.tenarhiva</a>
+            <p class="text-slate-400">Релиз в Google Play в процессе.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-panel space-y-4">
+        <h4 class="about-section-heading text-sm font-semibold uppercase tracking-[0.12em] text-cyan-300">Ключевые направления</h4>
+        <ul class="about-list space-y-4 text-sm leading-8 text-slate-300">
+          <li>Архитектура ИБ</li>
+          <li>Аудит и оценка рисков</li>
+          <li>Безопасная разработка</li>
+          <li>Цифровая криминалистика и криптография (в развитии)</li>
+        </ul>
+      </div>
     </article>
   </div>
 </section>
@@ -218,12 +329,12 @@
 
     var descriptions = {
       page: {
-        title: 'О странице',
+        title: '',
         audience: 'Для посетителей, которым нужен контекст раздела.',
         focus: 'Фокус: что содержит эта страница и зачем она создана.'
       },
       me: {
-        title: 'Обо мне',
+        title: '',
         audience: 'Для команд и стейкхолдеров, которые знакомятся с профилем.',
         focus: 'Фокус: экспертиза, специализация и опыт в кибербезопасности.'
       }
@@ -248,6 +359,7 @@
 
       if (descriptionTitle && descriptionAudience && descriptionFocus && descriptions[category]) {
         descriptionTitle.textContent = descriptions[category].title;
+        descriptionTitle.style.display = descriptions[category].title ? '' : 'none';
         descriptionAudience.textContent = descriptions[category].audience;
         descriptionFocus.textContent = descriptions[category].focus;
       }
@@ -259,7 +371,7 @@
       });
     });
 
-    setFilter('page');
+    setFilter('me');
   });
 </script>
 

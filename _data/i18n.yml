@@ -25,7 +25,7 @@ ru:
     lab: Лаборатория
     documents: Документы
     certificates: Сертификаты
-    about: О проекте
+    about: Обо мне
   attack:
     heading: Обзор активности атак
     chart_live_label: "Cloudflare Radar: Обнаруженные атаки"
