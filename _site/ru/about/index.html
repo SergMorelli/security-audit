@@ -153,6 +153,7 @@
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
       <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="page">📘 О странице</button>
       <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="me">👤 Обо мне</button>
+      <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="links">🔗 Ссылки / соцсети</button>
     </div>
   </div>
   <div id="aboutFilterDescription" class="mt-4 rounded-lg bg-slate-900/40 ring-1 ring-cyan-400/20 px-4 py-3">
@@ -206,15 +207,18 @@
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
+    width: fit-content;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid rgba(34, 211, 238, 0.28);
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(8, 47, 73, 0.9), rgba(30, 41, 59, 0.78));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 0 20px rgba(34, 211, 238, 0.12);
+    color: rgb(165, 243, 252);
+    letter-spacing: 0.16em;
   }
 
   .about-section-heading::before {
-    content: '';
-    width: 0.7rem;
-    height: 0.7rem;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.95) 0%, rgba(34, 211, 238, 0.15) 70%);
-    box-shadow: 0 0 16px rgba(34, 211, 238, 0.35);
+    content: none;
   }
 
   .about-list {
@@ -242,6 +246,72 @@
   .about-link-block {
     padding-left: 0.95rem;
     border-left: 1px solid rgba(148, 163, 184, 0.24);
+  }
+
+  .about-social-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .about-social-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: rgb(241, 245, 249);
+    font-weight: 600;
+  }
+
+  .about-social-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.45rem;
+    border-radius: 0.6rem;
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(15, 23, 42, 0.78);
+    color: rgb(226, 232, 240);
+  }
+
+  .about-social-badge--vk {
+    background: rgba(0, 119, 255, 0.16);
+    border-color: rgba(0, 119, 255, 0.32);
+    color: rgb(147, 197, 253);
+  }
+
+  .about-social-badge--tg {
+    background: rgba(34, 211, 238, 0.14);
+    border-color: rgba(34, 211, 238, 0.3);
+    color: rgb(165, 243, 252);
+  }
+
+  .about-social-badge--rs {
+    background: rgba(249, 115, 22, 0.14);
+    border-color: rgba(249, 115, 22, 0.3);
+    color: rgb(253, 186, 116);
+  }
+
+  .about-social-badge--gh {
+    background: rgba(148, 163, 184, 0.14);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: rgb(226, 232, 240);
+  }
+
+  .about-social-link {
+    color: rgb(103, 232, 249);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .about-social-link:hover {
+    color: rgb(165, 243, 252);
   }
 
   .about-body {
@@ -279,6 +349,8 @@
       <div class="about-panel space-y-4">
         <h4 class="about-section-heading text-sm font-semibold uppercase tracking-[0.12em] text-cyan-300">Подход</h4>
         <ul class="about-list space-y-4 text-sm leading-8 text-slate-300">
+          <li>Ищу нестандартные точки уязвимости в системе и бизнесе, чтобы обнаруживать риски до того, как они проявятся в инцидентах и потерях.</li>
+          <li>Руководствуюсь теорией вероятного риска и оцениваю угрозы через вероятность реализации, масштаб последствий и устойчивость системы к отказам.</li>
           <li>Безопасность это итеративный процесс. Неэффективные решения пересматриваются, а не оправдываются.</li>
           <li>ИИ использую как инструмент усиления, а не замены инженерного мышления.</li>
           <li>В приоритете наблюдаемость, проверяемость и отказоустойчивость, а не формальное соответствие требованиям.</li>
@@ -311,6 +383,61 @@
         </ul>
       </div>
     </article>
+
+    <article class="about-filter-item about-card rounded-xl flex flex-col about-body" data-about-category="links">
+      <div class="about-panel space-y-4">
+        <h4 class="about-section-heading text-sm font-semibold uppercase tracking-[0.12em] text-cyan-300">Ссылки / соцсети</h4>
+        <p class="text-sm leading-8 text-slate-300">Публичные каналы и ссылки, которые можно использовать для связи, просмотра проектов и примеров работы.</p>
+      </div>
+
+      <div class="about-panel space-y-6 text-sm leading-8 text-slate-300">
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--mail" aria-hidden="true">@</span>
+              <span>Email</span>
+            </div>
+            <a class="about-social-link" href="mailto:blackIce6573@DataDef.ae">blackIce6573@DataDef.ae</a>
+          </div>
+        </div>
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--vk" aria-hidden="true">VK</span>
+              <span>VK</span>
+            </div>
+            <a class="about-social-link" href="https://vk.com/datadef" target="_blank" rel="noopener noreferrer">vk.com/datadef</a>
+          </div>
+        </div>
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--tg" aria-hidden="true">TG</span>
+              <span>Telegram</span>
+            </div>
+            <a class="about-social-link" href="https://t.me/datadefru" target="_blank" rel="noopener noreferrer">t.me/datadefru</a>
+          </div>
+        </div>
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--rs" aria-hidden="true">RS</span>
+              <span>RuStore</span>
+            </div>
+            <a class="about-social-link" href="https://www.rustore.ru/catalog/app/ru.datadef.tenarhiva" target="_blank" rel="noopener noreferrer">rustore.ru/catalog/app/ru.datadef.tenarhiva</a>
+          </div>
+        </div>
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--gh" aria-hidden="true">GH</span>
+              <span>GitHub</span>
+            </div>
+            <a class="about-social-link" href="https://github.com/SergMorelli" target="_blank" rel="noopener noreferrer">github.com/SergMorelli</a>
+          </div>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -337,6 +464,11 @@
         title: '',
         audience: 'Для команд и стейкхолдеров, которые знакомятся с профилем.',
         focus: 'Фокус: экспертиза, специализация и опыт в кибербезопасности.'
+      },
+      links: {
+        title: '',
+        audience: 'Для тех, кто хочет быстро перейти к публичным каналам и проектам.',
+        focus: 'Фокус: контакты, GitHub и внешние ссылки на проекты.'
       }
     };
 

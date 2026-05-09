@@ -17,6 +17,7 @@ translation_key: about
     <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
       <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="page">📘 حول الصفحة</button>
       <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="me">👤 نبذة عني</button>
+      <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="links">🔗 الروابط / القنوات</button>
     </div>
   </div>
   <div id="aboutFilterDescription" class="mt-4 rounded-lg bg-slate-900/40 ring-1 ring-cyan-400/20 px-4 py-3 text-right">
@@ -70,15 +71,18 @@ translation_key: about
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
+    width: fit-content;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid rgba(34, 211, 238, 0.28);
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(8, 47, 73, 0.9), rgba(30, 41, 59, 0.78));
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 0 20px rgba(34, 211, 238, 0.12);
+    color: rgb(165, 243, 252);
+    letter-spacing: 0.16em;
   }
 
   .about-section-heading::before {
-    content: '';
-    width: 0.7rem;
-    height: 0.7rem;
-    border-radius: 999px;
-    background: radial-gradient(circle, rgba(34, 211, 238, 0.95) 0%, rgba(34, 211, 238, 0.15) 70%);
-    box-shadow: 0 0 16px rgba(34, 211, 238, 0.35);
+    content: none;
   }
 
   .about-list {
@@ -108,6 +112,72 @@ translation_key: about
     border-right: 1px solid rgba(148, 163, 184, 0.24);
   }
 
+  .about-social-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+  }
+
+  .about-social-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: rgb(241, 245, 249);
+    font-weight: 600;
+  }
+
+  .about-social-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    padding: 0 0.45rem;
+    border-radius: 0.6rem;
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(15, 23, 42, 0.78);
+    color: rgb(226, 232, 240);
+  }
+
+  .about-social-badge--mail {
+    background: rgba(14, 165, 233, 0.14);
+    border-color: rgba(14, 165, 233, 0.28);
+    color: rgb(125, 211, 252);
+  }
+
+  .about-social-badge--gh {
+    background: rgba(148, 163, 184, 0.14);
+    border-color: rgba(148, 163, 184, 0.3);
+    color: rgb(226, 232, 240);
+  }
+
+  .about-social-badge--blog {
+    background: rgba(168, 85, 247, 0.14);
+    border-color: rgba(168, 85, 247, 0.28);
+    color: rgb(216, 180, 254);
+  }
+
+  .about-social-badge--in {
+    background: rgba(37, 99, 235, 0.14);
+    border-color: rgba(37, 99, 235, 0.28);
+    color: rgb(147, 197, 253);
+  }
+
+  .about-social-link {
+    color: rgb(103, 232, 249);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    overflow-wrap: anywhere;
+  }
+
+  .about-social-link:hover {
+    color: rgb(165, 243, 252);
+  }
+
   .about-body {
     gap: 1.9rem;
   }
@@ -122,6 +192,24 @@ translation_key: about
     .about-card:hover .about-title {
       color: rgb(34, 211, 238);
       text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .about-card {
+      padding-top: 1.5rem;
+      padding-left: 1.1rem;
+      padding-right: 1.1rem;
+      padding-bottom: 1.2rem;
+    }
+
+    .about-panel {
+      padding: 1rem;
+    }
+
+    .about-section-heading {
+      padding: 0.45rem 0.75rem;
+      letter-spacing: 0.1em;
     }
   }
 </style>
@@ -143,6 +231,8 @@ translation_key: about
       <div class="about-panel space-y-4">
         <h4 class="about-section-heading text-sm font-semibold uppercase tracking-[0.12em] text-cyan-300">النهج</h4>
         <ul class="about-list space-y-4 text-sm leading-8 text-slate-300">
+          <li>أبحث عن نقاط ضعف غير تقليدية في النظام وفي الأعمال لاكتشاف المخاطر قبل أن تتحول إلى حوادث وخسائر.</li>
+          <li>أسترشد بنظرية المخاطر الاحتمالية وأقيّم التهديدات وفق احتمال التحقق، وحجم الأثر، وقدرة النظام على امتصاص الفشل.</li>
           <li>الأمن عملية تكرارية. إذا لم تنجح الاستراتيجية، تُعاد صياغتها بدل الدفاع عنها.</li>
           <li>أستخدم الذكاء الاصطناعي كأداة تعزيز، لا كبديل عن الحكم الهندسي.</li>
           <li>أعطي الأولوية للرؤية، وقابلية التدقيق، وتحمل الأعطال بدل الاكتفاء بالامتثال الشكلي.</li>
@@ -175,6 +265,52 @@ translation_key: about
         </ul>
       </div>
     </article>
+
+    <article class="about-filter-item about-card rounded-xl flex flex-col about-body text-right" data-about-category="links">
+      <div class="about-panel space-y-4">
+        <h4 class="about-section-heading text-sm font-semibold uppercase tracking-[0.12em] text-cyan-300">الروابط / القنوات</h4>
+        <p class="text-sm leading-8 text-slate-300">روابط وقنوات عامة يمكن استخدامها للتواصل، والوصول إلى المشاريع، ومراجعة أمثلة العمل.</p>
+      </div>
+
+      <div class="about-panel space-y-6 text-sm leading-8 text-slate-300">
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--mail" aria-hidden="true">@</span>
+              <span>البريد الإلكتروني</span>
+            </div>
+            <a class="about-social-link" href="mailto:blackIce6573@DataDef.ae">blackIce6573@DataDef.ae</a>
+          </div>
+        </div>
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--gh" aria-hidden="true">GH</span>
+              <span>GitHub</span>
+            </div>
+            <a class="about-social-link" href="https://github.com/SergMorelli" target="_blank" rel="noopener noreferrer">github.com/SergMorelli</a>
+          </div>
+        </div>
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--blog" aria-hidden="true">BL</span>
+              <span>المدونة</span>
+            </div>
+            <a class="about-social-link" href="https://datadef.ae/blog/" target="_blank" rel="noopener noreferrer">datadef.ae/blog/</a>
+          </div>
+        </div>
+        <div class="about-link-block">
+          <div class="about-social-row">
+            <div class="about-social-meta">
+              <span class="about-social-badge about-social-badge--in" aria-hidden="true">in</span>
+              <span>LinkedIn</span>
+            </div>
+            <a class="about-social-link" href="https://www.linkedin.com/in/novikov-def/" target="_blank" rel="noopener noreferrer">linkedin.com/in/novikov-def/</a>
+          </div>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -201,6 +337,11 @@ translation_key: about
         title: '',
         audience: 'للفرق وأصحاب المصلحة الذين يراجعون الملف الشخصي.',
         focus: 'التركيز: الخبرة والتخصص والخلفية في الأمن السيبراني.'
+      },
+      links: {
+        title: '',
+        audience: 'للزوار الذين يريدون الوصول السريع إلى القنوات العامة وروابط المشاريع.',
+        focus: 'التركيز: وسائل التواصل، GitHub، وروابط المشاريع الخارجية.'
       }
     };
 
