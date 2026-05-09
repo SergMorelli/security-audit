@@ -7,17 +7,17 @@ translation_key: about
 ---
 
 <section class="max-w-6xl mx-auto px-4 pt-32 pb-12">
-  <div class="max-w-4xl rounded-xl border border-cyan-400/10 bg-slate-950/35 px-6 py-5 backdrop-blur-sm">
+  <div class="max-w-4xl rounded-xl border border-cyan-400/10 bg-slate-950/35 px-4 py-5 sm:px-6 backdrop-blur-sm">
     <p class="text-left text-gray-300 text-base sm:text-lg leading-8">I design and implement information security solutions that align with real business operations, not theoretical models.</p>
   </div>
 </section>
 
 <section class="max-w-6xl mx-auto px-4 pb-8" data-about-filter>
-  <div class="overflow-x-auto">
-    <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
-      <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)]" data-filter="page">📘 About this page</button>
-      <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="me">👤 About me</button>
-      <button type="button" class="about-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="links">🔗 Links / Socials</button>
+  <div class="overflow-visible">
+    <div class="flex flex-wrap items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
+      <button type="button" class="about-filter-button rounded-md px-4 py-2 text-xs uppercase tracking-[0.08em] text-slate-300 bg-gradient-to-r from-cyan-500/25 to-fuchsia-500/15 shadow-[0_0_16px_rgba(34,211,238,0.25)] sm:text-sm" data-filter="page">📘 About this page</button>
+      <button type="button" class="about-filter-button rounded-md px-4 py-2 text-xs uppercase tracking-[0.08em] text-slate-300 hover:text-cyan-200 hover:bg-white/5 sm:text-sm" data-filter="me">👤 About me</button>
+      <button type="button" class="about-filter-button rounded-md px-4 py-2 text-xs uppercase tracking-[0.08em] text-slate-300 hover:text-cyan-200 hover:bg-white/5 sm:text-sm" data-filter="links">🔗 Links / Socials</button>
     </div>
   </div>
   <div id="aboutFilterDescription" class="mt-4 rounded-lg bg-slate-900/40 ring-1 ring-cyan-400/20 px-4 py-3">
@@ -210,6 +210,16 @@ translation_key: about
     .about-section-heading {
       padding: 0.45rem 0.75rem;
       letter-spacing: 0.1em;
+    }
+
+    .about-link-block {
+      padding-left: 0.8rem;
+    }
+
+    .about-social-row {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.65rem;
     }
   }
 </style>
