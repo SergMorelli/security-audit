@@ -10,3 +10,448 @@ translation_key: lab
   <h1 class="text-4xl text-cyan-400 mb-6">مختبر الأمن</h1>
   <p class="text-gray-400">عرض لأنظمة IDS ومحاكاة الهجمات وبنى تحتية تجريبية.</p>
 </section>
+
+<!-- ── شريط الفلترة ───────────────────────────────────────────────── -->
+<section class="max-w-6xl mx-auto px-4 pb-8" data-lab-filter>
+  <div class="overflow-x-auto">
+    <div class="flex min-w-max items-center gap-2 rounded-xl p-2 bg-slate-900/45 ring-1 ring-cyan-400/20 backdrop-blur-md shadow-[0_0_30px_rgba(34,211,238,0.14)]">
+      <button type="button" class="lab-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="ids">🛡️ أنظمة IDS</button>
+      <button type="button" class="lab-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="attacks">⚔️ محاكاة الهجمات</button>
+      <button type="button" class="lab-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="infrastructure">🖧 البنية التحتية</button>
+      <button type="button" class="lab-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="defense">🧱 خط الدفاع</button>
+      <button type="button" class="lab-filter-button px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.08em] rounded-md text-slate-300 hover:text-cyan-200 hover:bg-white/5" data-filter="osi">🧅 طبقات OSI</button>
+    </div>
+  </div>
+  <div id="labFilterDescription" class="mt-4 rounded-lg bg-slate-900/40 ring-1 ring-cyan-400/20 px-4 py-3">
+    <h3 id="labFilterDescriptionTitle" class="text-sm sm:text-base text-cyan-200 font-semibold"></h3>
+    <p id="labFilterDescriptionAudience" class="mt-1 text-sm text-gray-300"></p>
+    <p id="labFilterDescriptionFocus" class="mt-1 text-sm text-gray-400"></p>
+  </div>
+</section>
+
+<style>
+  .lab-card {
+    border: 1px solid rgba(71, 85, 105, 0.65);
+    background: linear-gradient(165deg, rgba(8, 14, 28, 0.96), rgba(2, 8, 23, 0.86));
+    padding-top: 2.4rem;
+    padding-left: 2rem;
+    padding-right: 1.25rem;
+    padding-bottom: 1.25rem;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .lab-title {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+  }
+
+  .lab-layer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.2rem 0.65rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 9999px;
+    border: 1px solid rgba(34, 211, 238, 0.4);
+    color: rgb(103, 232, 249);
+    background: rgba(34, 211, 238, 0.08);
+  }
+
+  .lab-diagram {
+    margin-top: 0.5rem;
+    padding: 1.1rem 1.25rem;
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    border-radius: 0.6rem;
+    background: rgba(2, 8, 23, 0.85);
+    color: rgb(165, 243, 252);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    text-align: left;
+  }
+
+  .lab-checklist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.25rem;
+  }
+
+  .lab-check-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.75rem;
+    border-radius: 9999px;
+    border: 1px solid rgba(74, 222, 128, 0.35);
+    color: rgb(134, 239, 172);
+    background: rgba(74, 222, 128, 0.08);
+  }
+
+  .lab-legend {
+    margin-top: 0.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.65rem 1.5rem;
+  }
+
+  .lab-legend dt {
+    color: rgb(103, 232, 249);
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+
+  .lab-legend dd {
+    margin: 0;
+    color: rgb(148, 163, 184);
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .lab-list {
+    margin-top: 0.25rem;
+    padding-left: 1.1rem;
+    list-style: disc;
+    color: rgb(148, 163, 184);
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  .lab-list li {
+    margin-bottom: 0.2rem;
+  }
+
+  @media (hover: hover) {
+    .lab-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(34, 211, 238, 0.85);
+      box-shadow: 0 0 0 1px rgba(34, 211, 238, 0.35), 0 0 28px rgba(34, 211, 238, 0.35);
+    }
+
+    .lab-card:hover .lab-title {
+      color: rgb(34, 211, 238);
+      text-shadow: 0 0 16px rgba(34, 211, 238, 0.45);
+    }
+
+    [data-lab-category="defense"] .lab-card:hover {
+      border-color: rgba(248, 113, 113, 0.95);
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.7), 0 0 18px rgba(239, 68, 68, 0.55), 0 0 42px rgba(185, 28, 28, 0.45);
+    }
+
+    [data-lab-category="osi"] .lab-card:hover {
+      border-color: rgba(192, 132, 252, 0.95);
+      box-shadow: 0 0 0 1px rgba(192, 132, 252, 0.7), 0 0 18px rgba(168, 85, 247, 0.55), 0 0 42px rgba(126, 34, 206, 0.45);
+    }
+  }
+</style>
+
+<!-- ── بطاقات المختبر ─────────────────────────────────────────────── -->
+<section class="max-w-6xl mx-auto px-4 pb-20 space-y-14">
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-10">
+
+    <!-- أنظمة IDS -->
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="ids">
+      <h3 class="lab-title text-xl font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">نظام كشف تسلل شبكي باستخدام Suricata</h3>
+      <p class="text-xs text-slate-400">الأدوات: Suricata، tcpdump، Wireshark</p>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">كشف قائم على التوقيعات والشذوذ في الوقت الفعلي لمراقبة حركة مرور محاكاة.</p>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="ids">
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">تقييم قواعد Snort</h3>
+      <p class="text-xs text-slate-400">الأدوات: Snort، إعادة تشغيل PCAP</p>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">قواعد كشف مخصصة تم اختبارها مقابل عينات حركة هجوم معروفة.</p>
+    </article>
+
+    <!-- محاكاة الهجمات -->
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="attacks">
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">محاكاة هجوم على تطبيق ويب</h3>
+      <p class="text-xs text-slate-400">الأدوات: Burp Suite، OWASP ZAP</p>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">محاولات استغلال تغطي فئات OWASP Top 10 على هدف اختبار معزول.</p>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="attacks">
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">محاكاة تصيد وهندسة اجتماعية</h3>
+      <p class="text-xs text-slate-400">الأدوات: GoPhish، قوالب مخصصة</p>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حملة تصيد إلكتروني محكومة لتقييم وعي المستخدمين وفلترة البريد.</p>
+    </article>
+
+    <!-- البنية التحتية: بنية المراقبة والتنبيه -->
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="infrastructure">
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">بنية المراقبة والتنبيه</h3>
+      <p class="text-xs text-slate-400">الأدوات: Suricata, EveBox, Filebeat, Elasticsearch, Node Exporter, Prometheus, Promtail, Loki, Grafana, Caddy</p>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">يقوم Suricata بفحص كل حركة المرور الواردة وينشئ تنبيهات فقط (eve.json) — تُرسل إلى EveBox للتحليل من قبل المحلل وإلى Elasticsearch عبر Filebeat. تمر مقاييس النظام وسجلاته عبر Prometheus/Promtail إلى Loki وGrafana لعرض لوحة تحكم حية لمركز العمليات الأمنية (SOC)، والتي تُقدّم عبر HTTPS باستخدام Caddy.</p>
+      <pre class="lab-diagram" dir="ltr">                    Internet
+                        │
+                    Suricata
+                        │
+              eve.json (alerts only)
+                        │
+        ┌───────────────┴───────────────┐
+        │                               │
+     EveBox                        Filebeat
+(alert analyst UI)                      │
+                                         ▼
+                                  Elasticsearch
+                                  (alerts only)
+
+Node Exporter ──▶ Prometheus ──┐
+                                │
+System logs ─▶ Promtail ─▶ Loki ┤
+                                ▼
+                            Grafana
+                     (LIVE SOC Dashboard)
+                                │
+                              Caddy
+                         (HTTPS access)</pre>
+
+      <div class="lab-checklist">
+        <span class="lab-check-item">✅ خادم VPS بذاكرة ~4 جيغابايت</span>
+        <span class="lab-check-item">✅ Suricata كنظام IDS</span>
+        <span class="lab-check-item">✅ لوحة تحكم بأسلوب cyberpunk أنيق</span>
+        <span class="lab-check-item">✅ خريطة هجمات حية (LIVE) في Grafana</span>
+        <span class="lab-check-item">✅ بدون nginx → Caddy</span>
+        <span class="lab-check-item">✅ استهلاك موارد ضئيل</span>
+        <span class="lab-check-item">✅ كل شيء مجاني</span>
+      </div>
+
+      <dl class="lab-legend">
+        <div><dt>Suricata</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">محرك IDS/IPS شبكي يفحص حركة المرور وينشئ تنبيهات (eve.json).</dd></div>
+        <div><dt>EveBox</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">واجهة ويب لتحليل وتقصي تنبيهات Suricata من قبل المحلل.</dd></div>
+        <div><dt>Filebeat</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">عميل نقل سجلات خفيف الوزن يرسل تنبيهات eve.json إلى Elasticsearch.</dd></div>
+        <div><dt>Elasticsearch</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">يفهرس التنبيهات فقط، مما يقلل استهلاك التخزين والموارد.</dd></div>
+        <div><dt>Node Exporter</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">يعرض مقاييس النظام على مستوى المضيف (CPU، RAM، القرص) لـ Prometheus.</dd></div>
+        <div><dt>Prometheus</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">قاعدة بيانات سلاسل زمنية تجمع وتخزن مقاييس النظام.</dd></div>
+        <div><dt>Promtail</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">عميل يرسل سجلات النظام إلى Loki.</dd></div>
+        <div><dt>Loki</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">نظام تجميع سجلات خفيف يعتمد على الفهرسة بالوسوم، مبني خصيصًا لـ Grafana.</dd></div>
+        <div><dt>Grafana</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">يعرض المقاييس والسجلات والتنبيهات كلوحة تحكم حية لمركز العمليات الأمنية.</dd></div>
+        <div><dt>Caddy</dt><dd class="font-[Noto_Sans_Arabic,sans-serif]">reverse proxy يوفر HTTPS تلقائيًا للوحة التحكم — دون الحاجة إلى nginx.</dd></div>
+      </dl>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="infrastructure">
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">شبكة مختبر مجزأة</h3>
+      <p class="text-xs text-slate-400">الأدوات: pfSense، VLAN، المحاكاة الافتراضية</p>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">تجزئة الشبكة عبر VLAN تعزل مناطق المهاجم والهدف والمراقبة.</p>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="infrastructure">
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">حزمة SOC افتراضية</h3>
+      <p class="text-xs text-slate-400">الأدوات: Proxmox/VirtualBox، حزمة ELK</p>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حزمة مراقبة وتجميع سجلات مستضافة ذاتيًا لبيانات المختبر.</p>
+    </article>
+
+    <!-- خط الدفاع -->
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="defense">
+      <span class="lab-layer-badge">الطبقة 1 · Firewall</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">جدار الحماية المحيطي</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">خط الدفاع الأول — يقوم بتصفية حركة المرور عند محيط الشبكة استنادًا إلى القواعد والمناطق.</p>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="defense">
+      <span class="lab-layer-badge">الطبقة 2 · WAF</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">جدار حماية تطبيقات الويب</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">يفحص حركة HTTP/S ويحظر الهجمات الشائعة (SQLi، XSS، وغيرها) قبل وصولها إلى التطبيق.</p>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="defense">
+      <span class="lab-layer-badge">الطبقة 3 · IDS/IPS</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">كشف ومنع التسلل</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">يراقب ويحظر النشاط الضار الذي يتجاوز المحيط.</p>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="defense">
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4" data-lab-category="defense">
+      <span class="lab-layer-badge">الطبقة 5 · SIEM</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">SIEM وربط السجلات</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">يجمع السجلات من جميع الطبقات للربط والتنبيه والاستجابة للحوادث.</p>
+    </article>
+
+    <!-- طبقات OSI -->
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="osi">
+      <span class="lab-layer-badge">OSI L1 · Physical</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">الطبقة 1 — الطبقة الفيزيائية</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حماية الوسيط المادي والوصول الفيزيائي إلى الأجهزة.</p>
+      <ul class="lab-list font-[Noto_Sans_Arabic,sans-serif]">
+        <li>الحراسة الفيزيائية لغرف الخوادم والتوزيع (أقفال، أنظمة تحكم الدخول، القياس الحيوي، كاميرات)</li>
+        <li>التحكم في الوصول إلى الخزائن (خزائن قابلة للقفل، حساسات العبث)</li>
+        <li>حماية الكابلات (زوج مجدول محمي / ألياف ضوئية، مسار مخفي، قنوات مقاومة للتخريب)</li>
+        <li>TEMPEST / تدريع ضد الانبعاثات الكهرومغناطيسية</li>
+        <li>تعطيل منافذ المفتاح غير المستخدمة على المحولات</li>
+        <li>التدمير الفيزيائي أو التخلص الآمن من وسائط التخزين</li>
+      </ul>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="osi">
+      <span class="lab-layer-badge">OSI L2 · Data Link</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">الطبقة 2 — طبقة وصلة البيانات</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حماية الإطارات وعناوين MAC والتبديل.</p>
+      <ul class="lab-list font-[Noto_Sans_Arabic,sans-serif]">
+        <li>Port Security (تحديد عدد عناوين MAC لكل منفذ)</li>
+        <li>Dynamic ARP Inspection (DAI) + DHCP Snooping</li>
+        <li>802.1X (مصادقة الأجهزة عند المنفذ)</li>
+        <li>MAC Filtering / Sticky MAC</li>
+        <li>Private VLAN / Isolated VLAN</li>
+        <li>الحماية من MAC Flooding (storm control)</li>
+        <li>التشفير على طبقة وصلة البيانات (MACsec)</li>
+      </ul>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="osi">
+      <span class="lab-layer-badge">OSI L3 · Network</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">الطبقة 3 — الطبقة الشبكية</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حماية التوجيه وحركة مرور IP.</p>
+      <ul class="lab-list font-[Noto_Sans_Arabic,sans-serif]">
+        <li>جدران حماية (Firewall) مع التصفية حسب IP</li>
+        <li>Access Control Lists (ACL) على أجهزة التوجيه</li>
+        <li>تجزئة الشبكة (VLAN + التوجيه بينها)</li>
+        <li>Anti-spoofing (uRPF — Unicast Reverse Path Forwarding)</li>
+        <li>حماية بروتوكولات التوجيه (مصادقة MD5/HMAC لـ OSPF، BGP، EIGRP)</li>
+        <li>Rate-limiting / الحماية من DDoS على مستوى IP</li>
+        <li>IPSec (في وضع النفق)</li>
+      </ul>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="osi">
+      <span class="lab-layer-badge">OSI L4 · Transport</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">الطبقة 4 — طبقة النقل</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حماية جلسات TCP/UDP والمنافذ.</p>
+      <ul class="lab-list font-[Noto_Sans_Arabic,sans-serif]">
+        <li>Stateful Firewall (تتبع حالة الاتصال)</li>
+        <li>التصفية حسب المنافذ والبروتوكولات</li>
+        <li>SYN Cookies / الحماية من SYN Flood</li>
+        <li>Rate limiting حسب عدد الاتصالات</li>
+        <li>TCP Wrappers</li>
+        <li>حظر المنافذ الضارة المعروفة</li>
+        <li>TLS/SSL (يتداخل جزئيًا مع L4–L7)</li>
+      </ul>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="osi">
+      <span class="lab-layer-badge">OSI L5 · Session</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">الطبقة 5 — طبقة الجلسة</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حماية إنشاء الجلسات وإدارتها.</p>
+      <ul class="lab-list font-[Noto_Sans_Arabic,sans-serif]">
+        <li>التحكم في الجلسات وتحديد حدودها (timeout، الحد الأقصى للجلسات)</li>
+        <li>الحماية من اختطاف الجلسة (معرفات جلسة عشوائية، الربط بـ IP/User-Agent)</li>
+        <li>فلاترة RPC وتقييد الاستدعاءات البعيدة</li>
+        <li>حماية جلسات NetBIOS / SMB</li>
+        <li>أنفاق VPN مع مصادقة الجلسة</li>
+      </ul>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="osi">
+      <span class="lab-layer-badge">OSI L6 · Presentation</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">الطبقة 6 — طبقة التقديم</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حماية تنسيق البيانات والتشفير والترميز.</p>
+      <ul class="lab-list font-[Noto_Sans_Arabic,sans-serif]">
+        <li>تشفير البيانات (TLS، SSL، AES وغيرها)</li>
+        <li>التحقق والتحقق من صحة التنسيق (JSON، XML، ASN.1)</li>
+        <li>الحماية من هجمات الترميز (UTF-7، double encoding وغيرها)</li>
+        <li>الشهادات وبنية PKI (التحقق من سلسلة الشهادات)</li>
+        <li>الضغط ومعالجته الآمنة (الحماية من compression bombs)</li>
+      </ul>
+    </article>
+
+    <article class="lab-filter-item lab-card rounded-xl flex flex-col gap-4 col-span-full" data-lab-category="osi">
+      <span class="lab-layer-badge">OSI L7 · Application</span>
+      <h3 class="lab-title text-lg font-semibold text-slate-100 leading-tight font-[Noto_Sans_Arabic,sans-serif]">الطبقة 7 — طبقة التطبيق</h3>
+      <p class="text-sm text-gray-400 font-[Noto_Sans_Arabic,sans-serif]">حماية التطبيقات نفسها وبروتوكولات المستوى الأعلى.</p>
+      <ul class="lab-list font-[Noto_Sans_Arabic,sans-serif]">
+        <li>Web Application Firewall (WAF)</li>
+        <li>Input validation / sanitization</li>
+        <li>الحماية من OWASP Top 10 (SQLi، XSS، CSRF، RCE وغيرها)</li>
+        <li>مكافحة فيروسات / برمجيات خبيثة على مستوى التطبيق</li>
+        <li>Application Control / URL Filtering</li>
+        <li>DNS Security (DNSSEC، DNS Filtering، Response Policy Zones)</li>
+        <li>بوابة API مع المصادقة وتحديد المعدل</li>
+        <li>EDR / XDR (سلوك التطبيقات على مستوى المضيف)</li>
+        <li>SIEM + ربط سجلات التطبيقات</li>
+      </ul>
+    </article>
+  </div>
+
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var filterRoot = document.querySelector('[data-lab-filter]');
+    if (!filterRoot) {
+      return;
+    }
+
+    var buttons = Array.prototype.slice.call(filterRoot.querySelectorAll('.lab-filter-button'));
+    var sections = Array.prototype.slice.call(document.querySelectorAll('.lab-filter-item'));
+    var descriptionTitle = document.getElementById('labFilterDescriptionTitle');
+    var descriptionAudience = document.getElementById('labFilterDescriptionAudience');
+    var descriptionFocus = document.getElementById('labFilterDescriptionFocus');
+
+    var descriptions = {
+      ids: {
+        title: 'أنظمة IDS',
+        audience: 'لمحللي SOC ومهندسي الفريق الأزرق الذين يقيّمون تغطية الكشف.',
+        focus: 'التركيز: كشف التسلل الشبكي في الوقت الفعلي وفرز التنبيهات.'
+      },
+      attacks: {
+        title: 'محاكاة الهجمات',
+        audience: 'لتمارين الفريق الأحمر والتحقق من الثغرات.',
+        focus: 'التركيز: اختبار هجومي محكوم على أهداف المختبر للتحقق من فعالية الدفاعات.'
+      },
+      infrastructure: {
+        title: 'البنية التحتية',
+        audience: 'للمهندسين الذين يبنون ويعززون بيئات المختبر.',
+        focus: 'التركيز: تجزئة الشبكة، المحاكاة الافتراضية، وإعداد حزمة المراقبة.'
+      },
+      defense: {
+        title: 'خط الدفاع',
+        audience: 'ضوابط أمنية متعددة الطبقات وفق مبدأ الدفاع المتعمق (defense-in-depth).',
+        focus: 'التركيز: كل طبقة (Firewall ← WAF ← IDS/IPS ← EDR ← SIEM) تقلل من المخاطر المتبقية.'
+      },
+      osi: {
+        title: 'طبقات OSI',
+        audience: 'للمهندسين الذين يربطون ضوابط الأمان بنموذج OSI المرجعي.',
+        focus: 'التركيز: تدابير الحماية موزعة على الطبقات السبع لـ OSI — من الفيزيائية إلى التطبيق.'
+      }
+    };
+
+    function setFilter(category) {
+      buttons.forEach(function (button) {
+        var isActive = button.getAttribute('data-filter') === category;
+        button.classList.toggle('bg-gradient-to-r', isActive);
+        button.classList.toggle('from-cyan-500/25', isActive);
+        button.classList.toggle('to-fuchsia-500/15', isActive);
+        button.classList.toggle('text-cyan-100', isActive);
+        button.classList.toggle('shadow-[0_0_16px_rgba(34,211,238,0.25)]', isActive);
+        button.classList.toggle('text-slate-300', !isActive);
+        button.classList.toggle('hover:bg-white/5', !isActive);
+      });
+
+      sections.forEach(function (section) {
+        var matches = section.getAttribute('data-lab-category') === category;
+        section.style.display = matches ? '' : 'none';
+      });
+
+      if (descriptionTitle && descriptionAudience && descriptionFocus && descriptions[category]) {
+        descriptionTitle.textContent = descriptions[category].title;
+        descriptionAudience.textContent = descriptions[category].audience;
+        descriptionFocus.textContent = descriptions[category].focus;
+      }
+    }
+
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        setFilter(button.getAttribute('data-filter'));
+      });
+    });
+
+    if (buttons.length > 0) {
+      setFilter(buttons[0].getAttribute('data-filter'));
+    }
+  });
+</script>
