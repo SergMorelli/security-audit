@@ -305,15 +305,6 @@ translation_key: about
             <a class="about-social-link" href="https://www.rustore.ru/catalog/app/ru.datadef.tenarhiva" target="_blank" rel="noopener noreferrer">rustore.ru/catalog/app/ru.datadef.tenarhiva</a>
           </div>
         </div>
-        <div class="about-link-block">
-          <div class="about-social-row">
-            <div class="about-social-meta">
-              <span class="about-social-badge about-social-badge--gh" aria-hidden="true">GH</span>
-              <span>GitHub</span>
-            </div>
-            <a class="about-social-link" href="https://github.com/SergMorelli" target="_blank" rel="noopener noreferrer">github.com/SergMorelli</a>
-          </div>
-        </div>
       </div>
     </article>
   </div>

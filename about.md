@@ -295,15 +295,6 @@ translation_key: about
         <div class="about-link-block">
           <div class="about-social-row">
             <div class="about-social-meta">
-              <span class="about-social-badge about-social-badge--gh" aria-hidden="true">GH</span>
-              <span>GitHub</span>
-            </div>
-            <a class="about-social-link" href="https://github.com/SergMorelli" target="_blank" rel="noopener noreferrer">github.com/SergMorelli</a>
-          </div>
-        </div>
-        <div class="about-link-block">
-          <div class="about-social-row">
-            <div class="about-social-meta">
               <span class="about-social-badge about-social-badge--blog" aria-hidden="true">BL</span>
               <span>Blog</span>
             </div>
